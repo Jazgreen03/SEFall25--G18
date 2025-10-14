@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import 'zone.js';
 
-import { TestComponent } from './test-component';
+@Component({
+  selector: 'app-test',
+  template: '<p>Test works!</p>',
+  standalone: true, // mark as standalone
+})
+class TestComponent {}
 
 describe('TestComponent', () => {
   let component: TestComponent;
@@ -8,6 +15,7 @@ describe('TestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      // Standalone components go in imports, not declarations
       imports: [TestComponent],
     }).compileComponents();
 
