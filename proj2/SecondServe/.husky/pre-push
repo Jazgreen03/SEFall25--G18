@@ -1,17 +1,17 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-set -e  # Exit immediately on error
+echo "🚀 Running pre-push checks..."
 
-echo "Running pre-push checks..."
+set -e  # Exit on error
 
-echo "Linting..."
+echo "🔍 Linting..."
 npm run lint
 
-echo "Running tests in CI mode..."
+echo "🧪 Running tests in CI mode..."
 npm run test:ci
 
-echo "Building project..."
+echo "🏗️ Building project..."
 npm run build
 
-echo "All checks passed! Pushing to repository..."
+echo "✅ All checks passed! Pushing to repository..."
