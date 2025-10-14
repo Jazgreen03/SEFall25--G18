@@ -9,7 +9,10 @@
     "test": "ng test",
     "serve:ssr:SecondServe": "node dist/SecondServe/server/server.mjs",
     "prepare": "husky",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "build:ci": "ng build --configuration production",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss,json}\""
   },
   "prettier": {
     "printWidth": 100,
