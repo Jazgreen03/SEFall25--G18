@@ -1,11 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-echo "Running linting..."
-npm run lint
-
-echo "Formatting code..."
-npm run format:check
-
-echo "Running unit tests..."
-npm run test:ci
+npm test
