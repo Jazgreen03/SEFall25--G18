@@ -1,0 +1,61 @@
+services:
+  db:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      # Use official mongo envs for init:
+      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      # Optional: precreate your app DB (doesn't create a non-root user by itself)
+      MONGO_INITDB_DATABASE: ${DATABASE_NAME}
+    ports:
+      - "${DATABASE_PORT:-27017}:27017"
+    volumes:
+      - mongo_data:/data/db
+      # If you want an app-scoped user instead of root, add an init script:
+      # - ./mongo-init/:/docker-entrypoint-initdb.d:ro
+    env_file:
+      - .env
+    networks: [appnet]
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile   # <-- move under "build"
+    container_name: django-docker
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks: [appnet]
+
+  # Dev Angular (optional) – leave commented if not using:
+  # frontend-dev:
+  #   image: node:20-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend/web:/app
+  #     - ./frontend/proxy.conf.json:/app/../proxy.conf.json:ro
+  #   command: sh -c "npm ci && npx ng serve --host 0.0.0.0 --port 4200 --proxy-config ../proxy.conf.json"
+  #   ports:
+  #     - "4200:4200"
+  #   depends_on: [backend]
+  #   networks: [appnet]
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile  # <-- move under "build"
+    container_name: angular-nginx
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks: [appnet]
+
+networks:
+  appnet:
+
+volumes:
+  mongo_data:
