@@ -12,3 +12,4 @@ export class TestComponent {
 console.log('test without semicolon')
 console.log('test without semicolon')
 console.log('test without semicolon')
+// testing hooks
