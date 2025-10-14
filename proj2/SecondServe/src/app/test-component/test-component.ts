@@ -15,3 +15,4 @@ console.log('test without semicolon')
 // testing hooks
 // test after setting hooksPath
 // test after setting hooksPath
+// testing simple hook
