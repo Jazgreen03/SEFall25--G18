@@ -1,1 +1,10 @@
-npm test
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+set -e  # Exit immediately on error
+
+echo "Running lint-staged..."
+npx lint-staged
+
+echo "Running unit tests..."
+npm run test:ci
