@@ -28,6 +28,7 @@ docker compose down -v
 ```
 
 ## Project Structure
+```
 SecondServe/
 ├─ docker-compose.yml      # Docker configurations for running the project
 ├─ env.template
@@ -47,3 +48,4 @@ SecondServe/
    ├─ nginx.conf           # NGINX Config -> Routes backend calls through/from frontend
    ├─ proxy.conf.json      # dev proxy to backend
    └─ web/                 # Angular workspace
+```
