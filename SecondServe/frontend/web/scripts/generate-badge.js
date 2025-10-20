@@ -19,5 +19,5 @@ lcovParse('coverage/lcov.info', (err, data) => {
   });
 
   fs.writeFileSync('src/assets/coverage-badge.svg', badge)
-  console.log('Coverage badge has been generated!')
+  console.log('Coverage badge was generated!')
 });
