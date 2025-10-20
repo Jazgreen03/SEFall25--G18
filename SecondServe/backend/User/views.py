@@ -3,6 +3,7 @@ Manages User Functionality, called by urls.py
 """
 
 from django.http import HttpRequest, JsonResponse
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_http_methods
 
 @require_http_methods(["POST"])
@@ -33,9 +34,18 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         -> Logs in User
     On Failure:
         If Username/Email Unknown: Error Code 404
-        If Password incorrect: Error Code 406
+        If Username/Email or Password incorrect: Error Code 406
 
     """
+
+    username = request.data.get("username")
+    password = request.data.get("password")
+    email = request.data.get("email")
+
+    if (len(username) <= 0 and len(email) <= 0) or (len(password) <= 0):
+        # Invalid Username/Password
+        return JsonResponse({"details": "Must Provide Username/Email and Password"}, status=406)
+
 
     # Using the HTTP Request, parse out the information for the User object
     # being sure to check that it is valid and then attempt to log in
@@ -53,10 +63,12 @@ def logoutUser(request: HttpRequest) -> JsonResponse:
         -> Error Code 404 (If no User is logged in)
 
     """
-
-    # Attempt to Logout the User and return Status Code
-
-    return
+    if request.user.is_authenticated:
+        # Logout the user
+        return
+    else:
+        # Throw an error
+        return
 
 @require_http_methods(["PUT"])
 def updateUser(request: HttpRequest) -> JsonResponse:
