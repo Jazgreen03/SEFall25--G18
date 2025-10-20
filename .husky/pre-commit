@@ -1,4 +1,4 @@
-echo "🔎 Checking staged files for proj2/SecondServe changes..."
+echo "🔎 Checking staged files for SecondServe/frontend/web changes..."
 
 set -e
 
@@ -9,13 +9,13 @@ if [ -z "$STAGED_FILES" ]; then
   exit 0
 fi
 
-printf '%s\n' "$STAGED_FILES" | grep -E '^proj2/SecondServe/' >/dev/null || {
-  echo "No changes in proj2/SecondServe — skipping Angular checks."
+printf '%s\n' "$STAGED_FILES" | grep -E '^SecondServe/frontend/web' >/dev/null || {
+  echo "No changes in SecondServe/frontend/web — skipping Angular checks."
   exit 0
 }
 
-echo "Changes detected under proj2/SecondServe — running Angular checks..."
-cd proj2/SecondServe || exit 1
+echo "Changes detected under SecondServe/frontend/web — running Angular checks..."
+cd SecondServe/frontend/web || exit 1
 
 echo "📝 Running lint..."
 npm run lint
