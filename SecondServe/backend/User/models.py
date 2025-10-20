@@ -50,6 +50,32 @@ class User(AbstractUser):
     def get_username(self):
         return self.username
     
+    # Helpful methods
+    def getUserInfo(self):
+    
+        userDetails = {
+            "email": self.get_email(),
+            "username": self.get_username()
+        }
+
+        return userDetails
+    
+    def updateAttribute(self, attribute: str, newValue: str):
+        # Change the attribute based on what it is
+        match attribute:
+            case "email":
+                self.set_email(newValue)
+            case "username":
+                self.set_username(newValue)
+            case "password":
+                self.set_password(newValue)
+            case default:
+                return None
+        
+        # Save the updated user object
+        self.save()
+        return self
+    
     pass
 
 
@@ -70,16 +96,4 @@ class UserManager(DjangoUserManager):
     
     def create_superuser(self, username, email, password, **extra_fields):
         return super().create_superuser(username, email, password, **extra_fields)
-    
-    def updateAttribute(self, user: User, attribute: str, newValue: str):
-        # Change the attribute based on what it is
-        match attribute:
-            case "email":
-                user.set_email(self.normalize_email(newValue))
-            case "username":
-                user.set_username(newValue)
-            case "password":
-                user.set_password(newValue)
-        
-        # Save the updated user object
-        user.save()
+
