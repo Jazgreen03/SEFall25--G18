@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-
 echo "Generating Angular documentation for frontend/web..."
 
 # Move into the Angular project directory

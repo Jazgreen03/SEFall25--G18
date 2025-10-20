@@ -65,6 +65,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "lcov-result-merger": "^5.0.1",
     "lint-staged": "^16.2.4",
+    "puppeteer": "^24.25.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.46.0"
   }
