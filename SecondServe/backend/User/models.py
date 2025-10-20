@@ -81,11 +81,7 @@ class User(AbstractUser):
 
 class UserManager(DjangoUserManager):
     """
-    Manager of the User object
-    
-    Performs the current functions
-        1. Creation of user or superuser accounts
-        2. Update User attributes
+    Manager of the User object which handles User creation
     """
 
     def create_user(self, username: str, email: str, password: str, **extra_fields):
