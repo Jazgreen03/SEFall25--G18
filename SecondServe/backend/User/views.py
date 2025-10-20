@@ -12,11 +12,12 @@ def createUser(request: HttpRequest) -> JsonResponse:
     Creates a User given the parameters provided in the HTTP Request
 
     On Success:
-        -> Returns HTTP Response with Code 200 
-        -> Saves User to Database
+        -> Returns Code 200 
+        -> Creates User and saves to Database
         -> Logs in User
     On Failure:
-        -> Returns HTTP Response with Code 406 (details of response contain failing fields)
+        -> Returns Code 406 if Invalid Parameters
+        -> Returns Code 409 if Username/Email already exists for a User
 
     """
     # Verify the required feilds have been passed
@@ -42,11 +43,13 @@ def createUser(request: HttpRequest) -> JsonResponse:
     User = get_user_model()
     user = User.objects.create(username=username, email=email, password=password, **optional_fields)
 
-    # TODO: Check that the user was actually created, if not something went wrong
+    # If User wasn't created, it because it already exists in some way
+    if user is None:
+        return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
-    # Using the HTTP Request, parse out the information for the User object
-    # being sure to check that it is valid
-    return
+    # User was created, log them in then return Code 200
+    login(user=user)
+    return JsonResponse({"details": "User Created and Logged in"}, status=200)
 
 @require_http_methods(["GET"])
 def loginUser(request: HttpRequest) -> JsonResponse:
