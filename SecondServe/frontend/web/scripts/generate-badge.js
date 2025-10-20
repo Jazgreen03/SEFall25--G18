@@ -18,6 +18,6 @@ lcovParse('coverage/lcov.info', (err, data) => {
     color: pct >= 90 ? 'green' : pct >= 75 ? 'yellow' : 'red'
   });
 
-  fs.writeFileSync('src/assets/coverage-badge.svg', badge);
-  console.log('Coverage badge generated!');
+  fs.writeFileSync('src/assets/coverage-badge.svg', badge)
+  console.log('Coverage badge was generated!')
 });
