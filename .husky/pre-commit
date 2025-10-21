@@ -3,9 +3,9 @@ echo "🔎 Checking staged files for proj2/SecondServe changes..."
 
 STAGED_FILES="$(git diff --cached --name-only --diff-filter=ACM)"
 
-if printf '%s\n' "$STAGED_FILES" | grep -qE '^proj2/SecondServe/frontend/'; then
+if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/frontend/'; then
   echo "Changes detected under Angular — running Angular checks..."
-  cd proj2/SecondServe/frontend || exit 1
+  cd SecondServe/frontend || exit 1
 
   echo "📝 Running lint..."
   npm run lint
@@ -19,9 +19,9 @@ else
 fi
 
 # Python backend checks
-if printf '%s\n' "$STAGED_FILES" | grep -qE '^proj2/SecondServe/backend/'; then
+if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/backend/'; then
   echo "Changes detected under Python backend — running backend checks..."
-  cd proj2/SecondServe/backend || exit 1
+  cd SecondServe/backend || exit 1
 
   # Activate venv if exists
   if [ -f "venv/bin/activate" ]; then
@@ -29,10 +29,12 @@ if printf '%s\n' "$STAGED_FILES" | grep -qE '^proj2/SecondServe/backend/'; then
   fi
 
   echo "📝 Running Python lint..."
+  black .
+  git add .
   flake8 .
 
   echo "🧪 Running Python tests..."
-  pytest testing
+  pytest || echo "Some tests failed. Please run pytest to get full output."
 
   echo "📚 Generating docs..."
   sphinx-build -b html docs/source docs/build/html

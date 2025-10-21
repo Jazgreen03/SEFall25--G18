@@ -6,6 +6,7 @@ from django.http import HttpRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views.decorators.http import require_http_methods
 
+
 @require_http_methods(["POST"])
 def createUser(request: HttpRequest) -> JsonResponse:
     """
@@ -26,12 +27,14 @@ def createUser(request: HttpRequest) -> JsonResponse:
     email = request.data.get("email")
 
     if username is None or password is None or email is None:
-        return JsonResponse({"details": "Must provide valid Username, Password, and Email"}, status=406)
+        return JsonResponse(
+            {"details": "Must provide valid Username, Password, and Email"}, status=406
+        )
 
     # Check if any of the optional fields have been passed
     firstName = request.data.get("first_name")
     lastName = request.data.get("last_name")
-    
+
     # Add any of the none empty optional fields to the dict variable
     optional_fields = {}
     if firstName:
@@ -41,7 +44,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
 
     # Create the user
     User = get_user_model()
-    user = User.objects.create(username=username, email=email, password=password, **optional_fields)
+    user = User.objects.create(
+        username=username, email=email, password=password, **optional_fields
+    )
 
     # If User wasn't created, it because it already exists in some way
     if user is None:
@@ -52,6 +57,7 @@ def createUser(request: HttpRequest) -> JsonResponse:
     login(user=authuser)
 
     return JsonResponse({"details": "User Created and Logged in"}, status=201)
+
 
 @require_http_methods(["GET"])
 def loginUser(request: HttpRequest) -> JsonResponse:
@@ -73,17 +79,22 @@ def loginUser(request: HttpRequest) -> JsonResponse:
 
     if (len(username) <= 0 and len(email) <= 0) or (len(password) <= 0):
         # Invalid Username/Password
-        return JsonResponse({"details": "Must Provide Username/Email and Password"}, status=406)
+        return JsonResponse(
+            {"details": "Must Provide Username/Email and Password"}, status=406
+        )
 
     user = authenticate(username=username, password=password)
 
     if user is None:
         # Invalid credentials
-        return JsonResponse({"details": "Invalid Username/Email and/or Password"}, status=404)
+        return JsonResponse(
+            {"details": "Invalid Username/Email and/or Password"}, status=404
+        )
     else:
         # Valid credentials log the user in
         login(user=user)
         return JsonResponse({"details": "User logged in"}, status=200)
+
 
 @require_http_methods(["GET"])
 def logoutUser(request: HttpRequest) -> JsonResponse:
@@ -106,6 +117,7 @@ def logoutUser(request: HttpRequest) -> JsonResponse:
     else:
         # Throw an error
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
+
 
 @require_http_methods(["PUT"])
 def updateUser(request: HttpRequest) -> JsonResponse:
@@ -137,6 +149,7 @@ def updateUser(request: HttpRequest) -> JsonResponse:
 
     return
 
+
 @require_http_methods(["GET"])
 def getUserInfo(request: HttpRequest) -> JsonResponse:
     """
@@ -153,7 +166,7 @@ def getUserInfo(request: HttpRequest) -> JsonResponse:
 
         user = request.user
         return JsonResponse(user.getUserInfo(), status=200)
-    
+
     # If no active user
     else:
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)

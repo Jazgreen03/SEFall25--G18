@@ -6,10 +6,11 @@ AppConfig for the users app.
 - Provides a ready() hook where you can import signal handlers
   (e.g., to auto-create default groups/permissions or profile rows).
 """
+
 from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "users"
+    name = "User"
     verbose_name = "Users & Authentication"
