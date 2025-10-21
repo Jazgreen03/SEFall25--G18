@@ -38,6 +38,7 @@ if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/backend/'; then
 
   echo "📚 Generating docs..."
   sphinx-build -b html docs/source docs/build/html
+  git add .
 
   echo "✅ Python backend pre-commit checks passed!"
 else
