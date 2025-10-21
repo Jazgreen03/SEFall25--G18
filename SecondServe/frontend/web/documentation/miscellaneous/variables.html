@@ -154,9 +154,6 @@
                             <a href="#routes" title="src/app/app.routes.ts" ><b>routes</b>&nbsp;&nbsp;&nbsp;(src/.../app.routes.ts)</a>
                         </li>
                         <li>
-                            <a href="#serverConfig" title="src/app/app.config.server.ts" ><b>serverConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.server.ts)</a>
-                        </li>
-                        <li>
                             <a href="#serverRoutes" title="src/app/app.routes.server.ts" ><b>serverRoutes</b>&nbsp;&nbsp;&nbsp;(src/.../app.routes.server.ts)</a>
                         </li>
                     </ul>
@@ -185,6 +182,12 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Angular SSR engine instance for handling server-side rendering of the Angular app.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -205,6 +208,12 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The Express application instance.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -225,6 +234,13 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>The folder containing the browser (client-side) build output.
+This is used to serve static assets like JS, CSS, and images.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -247,8 +263,14 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.</p>
-</div>
+                    <div class="io-description"><p>Request handler for integrating the Angular SSR server with external environments.</p>
+<p>Can be used by:</p>
+<ul>
+<li>Angular CLI dev-server</li>
+<li>Firebase Cloud Functions</li>
+</ul>
+<p>Example usage:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">export const handler = reqHandler;</code></pre></div></div>
                 </td>
             </tr>
 
@@ -280,12 +302,27 @@
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideClientHydration(withEventReplay())
+    provideRouter(routes),
+    provideClientHydration(withEventReplay())
   ]
 }</code>
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Angular client-side application configuration.</p>
+<p>This configuration sets up global providers for the browser application.</p>
+<p>Key features:</p>
+<ul>
+<li>Enables global error listeners for uncaught errors and unhandled promise rejections.</li>
+<li>Configures Angular Zone change detection with event coalescing for performance.</li>
+<li>Provides router configuration with application routes.</li>
+<li>Enables client-side hydration for server-side rendered content with event replay.</li>
+</ul>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -310,6 +347,12 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Bootstraps the Angular application for server-side rendering.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -329,40 +372,33 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>mergeApplicationConfig(appConfig, serverConfig)</code>
-                    </td>
-                </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="serverConfig"></a>
-                    <span class="name">
-                        <span ><b>serverConfig</b></span>
-                        <a href="#serverConfig"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
                         <i>Type : </i>        <code><a href="../components/App.html" target="_self" >ApplicationConfig</a></code>
 
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>{
+                        <i>Default value : </i><code>mergeApplicationConfig(appConfig, {
   providers: [
     provideServerRendering(withRoutes(serverRoutes))
   ]
-}</code>
+})</code>
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Merged Angular application configuration for server-side rendering (SSR).</p>
+<p>This configuration extends the client-side <code>appConfig</code> with server-specific providers.</p>
+<p>Key features:</p>
+<ul>
+<li>Enables server-side rendering for the Angular application.</li>
+<li>Configures the server with application routes for pre-rendering and SSR requests.</li>
+</ul>
+<p>This is the configuration that should be used when bootstrapping the Angular app on the server.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
