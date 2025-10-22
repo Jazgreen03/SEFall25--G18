@@ -1,48 +1,91 @@
-<
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Second Serve</title>
-<style>
-      body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f9f9f9;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-
-      h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #2b2b2b;
-      }
-    </style>
+  <link rel="stylesheet" href="app.css">
 </head>
-<header style="padding:1rem 2rem; border-bottom:1px solid #ccc; background:white; position:sticky; top:0; z-index:100;">
-  <div style="font-weight:bold; font-size:1.5rem;">SECOND SERVE</div>
-  <nav style="margin-top:0.5rem;">
-    <a href="#" style="margin-right:1rem;">Home</a>
-    <a href="#" style="margin-right:1rem;">Features</a>
-    <a href="#" style="margin-right:1rem;">About</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
 
-<section style="padding:4rem 2rem; text-align:center; border-bottom:1px solid #ccc;">
-  <h1>Are you ready to serve smarter?</h1>
-  <p>SecondServe helps restaurants donate soon-to-be expired food to those in need.</p>
-</section>
+<body>
 
-<section style="padding:4rem 2rem; text-align:center;">
-  <h2>ABOUT SECOND SERVE</h2>
-  <p>Individuals facing food insecurity can see participating locations and schedule pickups or deliveries, while participating stores reduce waste and claim charitable action for tax purposes.</p>
-</section>
+  <!-- ---------------- Header ---------------- -->
+  <header>
+    <div class="logo">SECOND SERVE</div>
+    <nav>
+      <div class="dropdown">
+        <a href="#">Find Restaurants & Resources</a>
+        <div class="dropdown-content">
+          <a href="#">Restaurants</a>
+          <a href="#">Grocery Stores</a>
+          <a href="#">Community Centers</a>
+        </div>
+      </div>
 
-<footer style="background-color:#f2f2f2; padding:2rem; text-align:center; border-top:1px solid #ccc;">
-  <p>© 2025 Second Serve — All Rights Reserved.</p>
-</footer>
+      <div class="dropdown">
+        <a href="#">Get Involved</a>
+        <div class="dropdown-content">
+          <a href="#">Volunteer</a>
+          <a href="#">Donate</a>
+          <a href="#">Partner With Us</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="#">News & Media</a>
+        <div class="dropdown-content">
+          <a href="#">Press Releases</a>
+          <a href="#">Events</a>
+          <a href="#">Blog</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="#">About Us</a>
+        <div class="dropdown-content">
+          <a href="#">Mission</a>
+          <a href="#">Team</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ---------------- Hero Section ---------------- -->
+  <section>
+    <h1>Are you ready to serve smarter?</h1>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+      <div class="slide"><img src="photo1.jpg" alt="Restaurant donating meals"></div>
+      <div class="slide"><img src="photo2.jpg" alt="Volunteers sorting food donations"></div>
+      <div class="slide"><img src="photo3.jpg" alt="Grocery store reducing food waste"></div>
+      <div class="slide"><img src="photo4.jpg" alt="Community receiving food support"></div>
+    </div>
+
+    <!-- Pitch paragraph -->
+    <p>
+      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.  
+      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into meaningful meals — 
+      reducing waste, supporting local families, and helping businesses claim charitable contributions.  
+      Together, we can build a future where every meal serves a purpose.
+    </p>
+  </section>
+
+  <!-- ---------------- About Section ---------------- -->
+  <section>
+    <h2>ABOUT SECOND SERVE</h2>
+    <p>
+      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries, 
+      while participating stores reduce waste and claim charitable action for tax purposes. 
+      SecondServe empowers both donors and recipients through a simple, impactful platform.
+    </p>
+  </section>
+
+  <!-- ---------------- Footer ---------------- -->
+  <footer>
+    <p>© 2025 Second Serve — All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
