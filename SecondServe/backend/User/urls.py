@@ -10,12 +10,12 @@ Current API Calls Handled:
 """
 
 from django.urls import path
-import views
+import User.views as views
 
 urlpatterns = [
-    path("create/", views.createUser()),
-    path("login/", views.loginUser()),
-    path("logout/", views.logoutUser()),
-    path("update/", views.updateUser()),
-    path("info/", views.getUserInfo()),
+    path("create/", views.createUser),
+    path("login/", views.loginUser),
+    path("logout/", views.logoutUser),
+    path("update/", views.updateUser),
+    path("info/", views.getUserInfo),
 ]

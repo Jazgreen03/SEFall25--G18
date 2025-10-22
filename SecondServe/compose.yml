@@ -2,6 +2,11 @@ services:
   db:
     image: mongo:7
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1}).ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     environment:
       # Use official mongo envs for init:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
@@ -27,7 +32,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks: [appnet]
 
   # Dev Angular (optional) – leave commented if not using:

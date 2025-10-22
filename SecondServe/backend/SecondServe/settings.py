@@ -145,3 +145,5 @@ MIGRATION_MODULES = {
     "auth": "mongo_migrations.auth",
     "contenttypes": "mongo_migrations.contenttypes",
 }
+
+AUTH_USER_MODEL = "User.User"
