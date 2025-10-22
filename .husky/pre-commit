@@ -38,7 +38,7 @@ if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/backend/'; then
   coverage run -m pytest || echo "Some tests failed. Please run pytest to get full output."
   coverage xml -o coverage.xml || echo ""
   coverage report -m || echo ""
-  coverage-badge -o docs/source/_static/test_coverage.svg || echo "Unable to generate test coverage badge"
+  coverage-badge -o docs/source/_static/test_coverage.svg -f || echo "Unable to generate test coverage badge"
 
   echo "📚 Generating docs..."
   sphinx-apidoc -o docs/source .
