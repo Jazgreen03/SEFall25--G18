@@ -49,15 +49,15 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
 ]
 
 # For dev: allow Angular dev server
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
-    "http://127.0.0.1:4200",
-]
+# CORS_ALLOW_ALL_ORIGINS = False
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:4200",
+#     "http://127.0.0.1:4200",
+# ]
 
 ROOT_URLCONF = "SecondServe.urls"
 
@@ -88,10 +88,10 @@ DATABASES = {
         "HOST": os.getenv("DATABASE_HOST"),  # or "mongodb+srv://<cluster>.mongodb.net"
         "PORT": os.getenv("DATABASE_PORT"),  # omit if using SRV or default port
         "NAME": os.getenv("DATABASE_NAME"),
-        "MONGO_INITDB_ROOT_USERNAME": os.getenv(
+        "USER": os.getenv(
             "DATABASE_USERNAME"
         ),  # omit if not using auth
-        "MONGO_INITDB_ROOT_PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
     },
 }
 
