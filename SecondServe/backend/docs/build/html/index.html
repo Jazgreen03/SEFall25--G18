@@ -35,6 +35,7 @@
   <section id="welcome-to-secondserve-backend-documentation">
 <h1>Welcome to SecondServe Backend Documentation<a class="headerlink" href="#welcome-to-secondserve-backend-documentation" title="Link to this heading">¶</a></h1>
 <img alt="Documentation coverage badge" class="align-right" src="_images/doc_coverage.svg" />
+<img alt="Test coverage badge" class="align-right" src="_images/test_coverage.svg" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>Welcome to the developer documentation for the <strong>SecondServe Backend</strong>.
@@ -66,17 +67,27 @@ data models, and utility modules used throughout the project.</p>
 </section>
 <section id="developer-notes">
 <h2>Developer Notes<a class="headerlink" href="#developer-notes" title="Link to this heading">¶</a></h2>
-<p>For generating documentation and badges:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Source docs</span>
-sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>docs/source<span class="w"> </span>.
-
-<span class="c1"># Generate HTML documentation</span>
-sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build/html
-
-<span class="c1"># Generate documentation coverage badge</span>
-docstr-coverage<span class="w"> </span>backend/<span class="w"> </span>--skip-private<span class="w"> </span>--skip-magic<span class="w"> </span>--badge<span class="w"> </span>docs/source/_static/doc_coverage.svg
-</pre></div>
-</div>
+<p>for running tests and generating badges from ./SecondServe/backend:
+.. code-block:: bash</p>
+<blockquote>
+<div><p># Run a coverage test</p>
+<p>coverage run -m pytest</p>
+<p># Generate and print a coverage report</p>
+<p>coverage xml -o coverage.xml</p>
+<p>coverage report -m</p>
+<p># Generate test coverage badge</p>
+<p>coverage-badge -o docs/source/_static/test_coverage.svg -f</p>
+</div></blockquote>
+<p>For generating documentation and badges from ./SecondServe/backend:
+.. code-block:: bash</p>
+<blockquote>
+<div><p># Source docs</p>
+<p>sphinx-apidoc -o docs/source .</p>
+<p># Generate HTML documentation</p>
+<p>sphinx-build -b html docs/source docs/build/html</p>
+<p># Generate documentation coverage badge</p>
+<p>docstr-coverage . –skip-private –skip-magic –badge docs/source/_static/doc_coverage.svg</p>
+</div></blockquote>
 </section>
 </section>
 <section id="indices-and-tables">

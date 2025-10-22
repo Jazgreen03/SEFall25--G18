@@ -22,9 +22,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
 
     """
     # Verify the required feilds have been passed
-    username = request.data.get("username")
-    password = request.data.get("password")
-    email = request.data.get("email")
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    email = request.POST.get("email")
 
     if username is None or password is None or email is None:
         return JsonResponse(
@@ -32,8 +32,8 @@ def createUser(request: HttpRequest) -> JsonResponse:
         )
 
     # Check if any of the optional fields have been passed
-    firstName = request.data.get("first_name")
-    lastName = request.data.get("last_name")
+    firstName = request.POST.get("first_name")
+    lastName = request.POST.get("last_name")
 
     # Add any of the none empty optional fields to the dict variable
     optional_fields = {}
@@ -73,9 +73,9 @@ def loginUser(request: HttpRequest) -> JsonResponse:
 
     """
 
-    username = request.data.get("username")
-    password = request.data.get("password")
-    email = request.data.get("email")
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    email = request.POST.get("email")
 
     if (len(username) <= 0 and len(email) <= 0) or (len(password) <= 0):
         # Invalid Username/Password
@@ -135,8 +135,8 @@ def updateUser(request: HttpRequest) -> JsonResponse:
     # Attempt to update an Attribute of the User
     if request.user.is_authenticated:
         user = request.user
-        attr = request.data.get("attribute")
-        newVal = request.data.get("new_value")
+        attr = request.POST.get("attribute")
+        newVal = request.POST.get("new_value")
 
         updatedUser = user.updateAttribute(attr, newVal)
 
