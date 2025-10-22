@@ -1,0 +1,144 @@
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+/* HEADER */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c2c2c;
+  color: white;
+  padding: 15px 60px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ddd;
+  margin-left: 25px;
+  font-weight: 500;
+}
+
+nav a.active,
+nav a:hover {
+  color: #ff6347;
+}
+
+/* HERO SECTION */
+.hero {
+  background: url("https://images.unsplash.com/photo-1498575207490-3e6a2a1e4d67?auto=format&fit=crop&w=1600&q=80")
+    center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 140px 30px;
+}
+
+.hero-text h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  max-width: 650px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.cta-btn {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cta-btn:hover {
+  background-color: #e5533c;
+}
+
+.button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c2c2c;
+  color: white;
+  padding: 15px 60px;
+}
+
+/* INFO SECTION */
+.info-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.info-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  color: #2c2c2c;
+}
+
+.info-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fafafa;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  line-height: 1.7;
+}
+
+/* FOOTER */
+footer {
+  background-color: #2c2c2c;
+  color: #ccc;
+  padding: 40px 60px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-content h3 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.footer-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-content a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  color: #ff6347;
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
