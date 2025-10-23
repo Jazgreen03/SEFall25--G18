@@ -1,0 +1,110 @@
+[1mdiff --git a/.husky/pre-commit b/.husky/pre-commit[m
+[1mindex 5c38c1e..c88b459 100755[m
+[1m--- a/.husky/pre-commit[m
+[1m+++ b/.husky/pre-commit[m
+[36m@@ -1,4 +1,7 @@[m
+[31m-echo "🔎 Checking staged files for SecondServe/frontend/web changes..."[m
+[32m+[m[32m#!/usr/bin/env bash[m
+[32m+[m[32m. "$(dirname "$0")/_/husky.sh"[m
+[32m+[m
+[32m+[m[32mecho "Checking staged files for SecondServe/frontend/web changes..."[m
+ [m
+ set -e[m
+ [m
+[36m@@ -17,10 +20,10 @@[m [mprintf '%s\n' "$STAGED_FILES" | grep -E '^SecondServe/frontend/web' >/dev/null |[m
+ echo "Changes detected under SecondServe/frontend/web — running Angular checks..."[m
+ cd SecondServe/frontend/web || exit 1[m
+ [m
+[31m-echo "📝 Running lint..."[m
+[32m+[m[32mecho "Running lint..."[m
+ npm run lint[m
+ [m
+[31m-echo "🧪 Running tests..."[m
+[32m+[m[32mecho "Running tests..."[m
+ npm run test:ci[m
+ [m
+[31m-echo "✅ Angular pre-commit checks passed!"[m
+[32m+[m[32mecho "Angular pre-commit checks passed!"[m
+[1mdiff --git a/.husky/pre-push b/.husky/pre-push[m
+[1mindex 13d16d9..ecc8ad0 100755[m
+[1m--- a/.husky/pre-push[m
+[1m+++ b/.husky/pre-push[m
+[36m@@ -1,11 +1,11 @@[m
+ #!/bin/sh[m
+ . "$(dirname "$0")/_/husky.sh"[m
+ [m
+[31m-echo "📘 Generating Angular documentation for frontend/web..."[m
+[32m+[m[32mecho "Generating Angular documentation for frontend/web..."[m
+ [m
+ # Move into the Angular project directory[m
+ cd SecondServe/frontend/web || {[m
+[31m-  echo "❌ Could not find Angular directory (SecondServe/frontend/web)"[m
+[32m+[m[32m  echo "Could not find Angular directory (SecondServe/frontend/web)"[m
+   exit 1[m
+ }[m
+ [m
+[36m@@ -13,10 +13,10 @@[m [mcd SecondServe/frontend/web || {[m
+ npm run docs[m
+ [m
+ # Stage updated docs for commit (optional)[m
+[31m-echo "📦 Adding updated docs..."[m
+[31m-git add documentation || echo "⚠️ Could not stage docs. Continuing."[m
+[32m+[m[32mecho "Adding updated docs..."[m
+[32m+[m[32mgit add documentation || echo "Could not stage docs. Continuing."[m
+ [m
+ # Return to repo root[m
+ cd ../../../..[m
+ [m
+[31m-echo "✅ Angular documentation successfully generated."[m
+[32m+[m[32mecho "Angular documentation successfully generated."[m
+[1mdiff --git a/SecondServe/frontend/web/scripts/generate-badge.js b/SecondServe/frontend/web/scripts/generate-badge.js[m
+[1mindex f8bb05b..bc30ccf 100644[m
+[1m--- a/SecondServe/frontend/web/scripts/generate-badge.js[m
+[1m+++ b/SecondServe/frontend/web/scripts/generate-badge.js[m
+[36m@@ -1,23 +1,23 @@[m
+[31m-const fs = require('fs');[m
+[31m-const { createBadge } = require('badgen');[m
+[31m-const lcovParse = require('lcov-parse');[m
+[31m-[m
+[31m-lcovParse('coverage/lcov.info', (err, data) => {[m
+[31m-  if (err) throw err;[m
+[31m-[m
+[31m-  let lines = { total: 0, covered: 0 };[m
+[31m-  data.forEach(file => {[m
+[31m-    lines.total += file.lines.found;[m
+[31m-    lines.covered += file.lines.hit;[m
+[31m-  });[m
+[31m-[m
+[31m-  const pct = ((lines.covered / lines.total) * 100).toFixed(0);[m
+[31m-  const badge = createBadge({[m
+[31m-    label: 'coverage',[m
+[31m-    status: `${pct}%`,[m
+[31m-    color: pct >= 90 ? 'green' : pct >= 75 ? 'yellow' : 'red'[m
+[31m-  });[m
+[31m-[m
+[31m-  fs.writeFileSync('src/assets/coverage-badge.svg', badge)[m
+[31m-  console.log('Coverage badge has been generated!')[m
+[31m-});[m
+[32m+[m[32mconst fs = require('fs');[m[41m[m
+[32m+[m[32mconst { createBadge } = require('badgen');[m[41m[m
+[32m+[m[32mconst lcovParse = require('lcov-parse');[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32mlcovParse('coverage/lcov.info', (err, data) => {[m[41m[m
+[32m+[m[32m  if (err) throw err;[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m  let lines = { total: 0, covered: 0 };[m[41m[m
+[32m+[m[32m  data.forEach(file => {[m[41m[m
+[32m+[m[32m    lines.total += file.lines.found;[m[41m[m
+[32m+[m[32m    lines.covered += file.lines.hit;[m[41m[m
+[32m+[m[32m  });[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m  const pct = ((lines.covered / lines.total) * 100).toFixed(0);[m[41m[m
+[32m+[m[32m  const badge = createBadge({[m[41m[m
+[32m+[m[32m    label: 'coverage',[m[41m[m
+[32m+[m[32m    status: `${pct}%`,[m[41m[m
+[32m+[m[32m    color: pct >= 90 ? 'green' : pct >= 75 ? 'yellow' : 'red'[m[41m[m
+[32m+[m[32m  });[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m  fs.writeFileSync('src/assets/coverage-badge.svg', badge)[m[41m[m
+[32m+[m[32m  console.log('Coverage badge was generated!')[m[41m[m
+[32m+[m[32m});[m[41m[m

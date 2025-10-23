@@ -53,6 +53,15 @@ services:
     ports:
       - "80:80"
     networks: [appnet]
+  
+  frontend-test:
+    build:
+      context: .
+      dockerfile: frontend/test.Dockerfile
+    container_name: frontend-test
+    depends_on:
+      - backend   # optional, only if tests need API
+    networks: [appnet]
 
 networks:
   appnet:

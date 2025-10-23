@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Jazgreen03/SEFall25--G18#readme",
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.31",
     "husky": "^9.1.7"
   }
 }
