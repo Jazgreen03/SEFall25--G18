@@ -1,0 +1,19 @@
+echo "Generating Angular documentation for frontend/web..."
+
+# Move into the Angular project directory
+cd SecondServe/frontend/web || {
+  echo "Could not find Angular directory (SecondServe/frontend/web)"
+  exit 1
+}
+
+# Generate documentation
+npm run docs
+
+# Stage updated docs for commit (optional)
+echo "Adding updated docs..."
+git add documentation || echo "Could not stage docs. Continuing."
+
+# Return to repo root
+cd ../../../..
+
+echo "Angular documentation successfully generated."
