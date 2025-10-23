@@ -3,6 +3,8 @@
 /proj1/proj1b1/venv
 /proj1/proj1b1/baeden_page.file
 
+/node_modules/
+
 RAG/API Test/.env
 RAG/API Test/page.file
 RAG/Local Test/.env
