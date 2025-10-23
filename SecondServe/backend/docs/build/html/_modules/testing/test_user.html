@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>testing.test_user &#8212; SecondServe  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for testing.test_user</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">SimpleTestCase</span><span class="p">,</span> <span class="n">RequestFactory</span>
+<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
+<span class="kn">import</span> <span class="nn">User.views</span> <span class="k">as</span> <span class="nn">UserAPI</span>
+
+
+<div class="viewcode-block" id="UserCreation">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation">[docs]</a>
+<span class="k">class</span> <span class="nc">UserCreation</span><span class="p">(</span><span class="n">SimpleTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="UserCreation.setUp">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation.setUp">[docs]</a>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="UserCreation.test_valid_creation">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation.test_valid_creation">[docs]</a>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.get_user_model&quot;</span><span class="p">)</span>  <span class="c1"># Mock get_user_model</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.authenticate&quot;</span><span class="p">)</span>  <span class="c1"># Mock authenticate</span>
+    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.login&quot;</span><span class="p">)</span>  <span class="c1"># Mock login</span>
+    <span class="k">def</span> <span class="nf">test_valid_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_login</span><span class="p">,</span> <span class="n">mock_authenticate</span><span class="p">,</span> <span class="n">mock_get_user_model</span><span class="p">):</span>
+        <span class="c1"># Setup a fake User class</span>
+        <span class="n">mock_user_class</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_user_instance</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_user_class</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_instance</span>
+        <span class="n">mock_get_user_model</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_class</span>
+
+        <span class="c1"># Mock authenticate to return our fake user</span>
+        <span class="n">mock_authenticate</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_instance</span>
+
+        <span class="c1"># Create a POST request</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/create/&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Caleb&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Twigg&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Twiggy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;wctwigg@ncsu.edu&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;TotallySecure123!&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Call the view</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">UserAPI</span><span class="o">.</span><span class="n">createUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Check response</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+
+        <span class="c1"># Ensure create was called with correct parameters</span>
+        <span class="n">mock_user_class</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;Twiggy&quot;</span><span class="p">,</span>
+            <span class="n">email</span><span class="o">=</span><span class="s2">&quot;wctwigg@ncsu.edu&quot;</span><span class="p">,</span>
+            <span class="n">password</span><span class="o">=</span><span class="s2">&quot;TotallySecure123!&quot;</span><span class="p">,</span>
+            <span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Caleb&quot;</span><span class="p">,</span>
+            <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Twigg&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Ensure login was called</span>
+        <span class="n">mock_login</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">mock_user_instance</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">SecondServe</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation Structure:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">backend</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Group 18.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

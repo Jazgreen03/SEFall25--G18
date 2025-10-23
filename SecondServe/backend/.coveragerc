@@ -1,0 +1,8 @@
+[run]
+omit =
+    */__init__.py
+    /SecondServe/asgi.py
+    /SecondServe/wsgi.py
+    /SecondServe/apps.py
+    /SecondServe/settings.py
+    testing/*

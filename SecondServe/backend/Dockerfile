@@ -45,6 +45,7 @@ USER appuser
  
 # Expose the application port
 EXPOSE 8000 
- 
+
+WORKDIR /app/backend
 # Start the application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
