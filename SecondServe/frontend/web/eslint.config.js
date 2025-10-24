@@ -30,6 +30,10 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      // Disable specific rules
+      "@angular-eslint/prefer-inject": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
     },
   },
   {

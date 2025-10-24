@@ -5,14 +5,14 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  standalone: true, 
+  standalone: true,
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 
 export class App {
-  currentRoute: string = '';
+  currentRoute = '';
   protected readonly title = signal('web');
   constructor(private router: Router) {
     this.router.events.pipe(
@@ -22,7 +22,7 @@ export class App {
     });
   }
   onLogin() {
-     this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
   showLayout(): boolean {
     return this.currentRoute !== '/login';

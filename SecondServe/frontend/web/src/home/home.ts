@@ -34,11 +34,11 @@ export class Home implements OnInit {
   restaurants: Restaurant[] = [];
   loading = false;
   error: string | null = null;
-  
+
   // Backend API base URL - update with your actual backend URL
   private apiUrl = 'http://localhost:8080/api';
-  
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadRestaurants();
@@ -64,7 +64,7 @@ export class Home implements OnInit {
   }
 
   // GET: Fetch restaurants by location
-  loadRestaurantsByLocation(latitude: number, longitude: number, radius: number = 10): void {
+  loadRestaurantsByLocation(latitude: number, longitude: number, radius = 10): void {
     this.loading = true;
     this.error = null;
 
@@ -148,7 +148,7 @@ export class Home implements OnInit {
   // POST: Register user interest
   registerInterest(email: string): void {
     const interest = { email, timestamp: new Date().toISOString() };
-    
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -173,7 +173,7 @@ export class Home implements OnInit {
       deliveryType: 'pickup',
       items: []
     };
-    
+
     this.schedulePickup(pickupRequest);
   }
 

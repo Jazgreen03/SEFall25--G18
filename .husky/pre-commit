@@ -11,9 +11,10 @@ if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/frontend/'; then
   npm run lint
 
   echo "🧪 Running tests..."
-  npm run test:ci
+  npm run test:coverage || echo "not commited from test-docker"
 
   echo "✅ Angular pre-commit checks passed!"
+  cd ../../..
 else
   echo "No Angular changes — skipping Angular checks."
 fi

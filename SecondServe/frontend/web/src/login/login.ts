@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'login',
+  selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
@@ -50,7 +50,7 @@ export class Login {
       // Simulate API call
       setTimeout(() => {
         const { email, password } = this.loginForm.value;
-        
+
 
         // Mock authentication logic
         if (email && password.length >= 6) {
@@ -65,7 +65,7 @@ export class Login {
             "password": password,
           }
           this.http.post("http://localhost:8000/api/login", this.data).subscribe((response: any) => {
-          this.obj = response;
+            this.obj = response;
           });
           // if(this.obj == 'success'){
           //   //add route to the next page
