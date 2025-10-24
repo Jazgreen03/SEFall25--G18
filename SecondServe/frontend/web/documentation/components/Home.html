@@ -1136,11 +1136,11 @@ export class Home implements OnInit {
   restaurants: Restaurant[] &#x3D; [];
   loading &#x3D; false;
   error: string | null &#x3D; null;
-  
+
   // Backend API base URL - update with your actual backend URL
   private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
-  
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadRestaurants();
@@ -1166,7 +1166,7 @@ export class Home implements OnInit {
   }
 
   // GET: Fetch restaurants by location
-  loadRestaurantsByLocation(latitude: number, longitude: number, radius: number &#x3D; 10): void {
+  loadRestaurantsByLocation(latitude: number, longitude: number, radius &#x3D; 10): void {
     this.loading &#x3D; true;
     this.error &#x3D; null;
 
@@ -1250,7 +1250,7 @@ export class Home implements OnInit {
   // POST: Register user interest
   registerInterest(email: string): void {
     const interest &#x3D; { email, timestamp: new Date().toISOString() };
-    
+
     const headers &#x3D; new HttpHeaders({
       &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
     });
@@ -1275,7 +1275,7 @@ export class Home implements OnInit {
       deliveryType: &#x27;pickup&#x27;,
       items: []
     };
-    
+
     this.schedulePickup(pickupRequest);
   }
 
@@ -1559,7 +1559,7 @@ export class Home implements OnInit {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="home-container">  <header class="hero-section">    <h1>SecondServe</h1>    <p class="mission">Connecting surplus food with those who need it most</p>    <p class="tagline">Reducing food waste, fighting food insecurity</p>  </header>  <div class="search-section">    <button (click)="loadRestaurants()" class="btn-primary">      Find Available Food Near You    </button>  </div>  <div *ngIf="loading" class="loading">    <p>Loading restaurants...</p>  </div>  <div *ngIf="error" class="error">    <p>{{ error }}</p>    <button (click)="refreshRestaurants()">Try Again</button>  </div>  <div class="restaurants-grid" *ngIf="!loading && restaurants.length > 0">    <div *ngFor="let restaurant of restaurants" class="restaurant-card">      <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="restaurant-image">            <div class="restaurant-info">        <h3>{{ restaurant.name }}</h3>        <p class="address">{{ restaurant.address }}</p>        <p class="distance">{{ restaurant.distance }} miles away</p>                <div class="food-types">          <span *ngFor="let type of restaurant.foodTypes" class="food-tag">            {{ type }}          </span>        </div>                <div class="availability">          <p><strong>{{ restaurant.availableItems }}</strong> items available</p>          <p class="expiry">Best by: {{ restaurant.expiryDate | date:\'short\' }}</p>          <p class="hours">Open until: {{ restaurant.openUntil }}</p>        </div>                <div class="actions">          <button (click)="onPickupClick(restaurant)" class="btn-pickup">            Schedule Pickup          </button>          <button (click)="onDeliveryClick(restaurant)" class="btn-delivery">            Request Delivery          </button>        </div>      </div>    </div>  </div>  <div *ngIf="!loading && restaurants.length === 0" class="no-results">    <p>No restaurants with available food at this time.</p>    <p>Check back soon or expand your search area.</p>  </div></div></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Login', 'selector': 'login'}];
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Login', 'selector': 'app-login'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Home'};
 </script>

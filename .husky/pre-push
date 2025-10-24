@@ -12,6 +12,7 @@ npm run docs
 # Stage updated docs for commit (optional)
 echo "Adding updated docs..."
 git add documentation || echo "Could not stage docs. Continuing."
+git commit -m "add docs" || echo "Could not commit docs"
 
 # Return to repo root
 cd ../../../..
