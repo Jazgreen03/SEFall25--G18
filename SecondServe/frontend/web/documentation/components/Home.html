@@ -1,0 +1,1654 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Home</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/home/home.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-home</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./home.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./home.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#apiUrl" >apiUrl</a>
+                            </li>
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#restaurants" >restaurants</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getRestaurantDetails" >getRestaurantDetails</a>
+                            </li>
+                            <li>
+                                <a href="#loadRestaurants" >loadRestaurants</a>
+                            </li>
+                            <li>
+                                <a href="#loadRestaurantsByLocation" >loadRestaurantsByLocation</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onDeliveryClick" >onDeliveryClick</a>
+                            </li>
+                            <li>
+                                <a href="#onPickupClick" >onPickupClick</a>
+                            </li>
+                            <li>
+                                <a href="#refreshRestaurants" >refreshRestaurants</a>
+                            </li>
+                            <li>
+                                <a href="#registerInterest" >registerInterest</a>
+                            </li>
+                            <li>
+                                <a href="#requestDelivery" >requestDelivery</a>
+                            </li>
+                            <li>
+                                <a href="#schedulePickup" >schedulePickup</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/home/home.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRestaurantDetails"></a>
+                    <span class="name">
+                        <span ><b>getRestaurantDetails</b></span>
+                        <a href="#getRestaurantDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRestaurantDetails(restaurantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/home/home.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>restaurantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Restaurant.html" target="_self" >Observable&lt;Restaurant&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRestaurants"></a>
+                    <span class="name">
+                        <span ><b>loadRestaurants</b></span>
+                        <a href="#loadRestaurants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadRestaurants()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/home/home.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadRestaurantsByLocation"></a>
+                    <span class="name">
+                        <span ><b>loadRestaurantsByLocation</b></span>
+                        <a href="#loadRestaurantsByLocation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadRestaurantsByLocation(latitude: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, longitude: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, radius: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/home/home.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>latitude</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>longitude</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>radius</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>10</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/home/home.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDeliveryClick"></a>
+                    <span class="name">
+                        <span ><b>onDeliveryClick</b></span>
+                        <a href="#onDeliveryClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDeliveryClick(restaurant: <a href="../interfaces/Restaurant.html" target="_self">Restaurant</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">src/home/home.ts:181</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>restaurant</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Restaurant.html" target="_self" >Restaurant</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPickupClick"></a>
+                    <span class="name">
+                        <span ><b>onPickupClick</b></span>
+                        <a href="#onPickupClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPickupClick(restaurant: <a href="../interfaces/Restaurant.html" target="_self">Restaurant</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/home/home.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>restaurant</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Restaurant.html" target="_self" >Restaurant</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshRestaurants"></a>
+                    <span class="name">
+                        <span ><b>refreshRestaurants</b></span>
+                        <a href="#refreshRestaurants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshRestaurants()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/home/home.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerInterest"></a>
+                    <span class="name">
+                        <span ><b>registerInterest</b></span>
+                        <a href="#registerInterest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>registerInterest(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="149"
+                                    class="link-to-prism">src/home/home.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="requestDelivery"></a>
+                    <span class="name">
+                        <span ><b>requestDelivery</b></span>
+                        <a href="#requestDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>requestDelivery(restaurantId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, deliveryAddress: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/home/home.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>restaurantId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>deliveryAddress</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="schedulePickup"></a>
+                    <span class="name">
+                        <span ><b>schedulePickup</b></span>
+                        <a href="#schedulePickup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>schedulePickup(request: <a href="../interfaces/PickupRequest.html" target="_self">PickupRequest</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/home/home.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>request</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PickupRequest.html" target="_self" >PickupRequest</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="apiUrl"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>apiUrl</b></span>
+                        <a href="#apiUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;http://localhost:8080/api&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/home/home.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/home/home.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/home/home.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="restaurants"></a>
+                    <span class="name">
+                        <span ><b>restaurants</b></span>
+                        <a href="#restaurants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Restaurant.html" target="_self" >Restaurant[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/home/home.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+
+interface Restaurant {
+  id: number;
+  name: string;
+  address: string;
+  distance: number;
+  availableItems: number;
+  expiryDate: string;
+  imageUrl: string;
+  foodTypes: string[];
+  openUntil: string;
+}
+
+interface PickupRequest {
+  restaurantId: number;
+  userId: number;
+  pickupTime: string;
+  deliveryType: &#x27;pickup&#x27; | &#x27;delivery&#x27;;
+  items: number[];
+}
+
+@Component({
+  selector: &#x27;app-home&#x27;,
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: &#x27;./home.html&#x27;,
+  styleUrls: [&#x27;./home.css&#x27;]
+})
+export class Home implements OnInit {
+  restaurants: Restaurant[] &#x3D; [];
+  loading &#x3D; false;
+  error: string | null &#x3D; null;
+  
+  // Backend API base URL - update with your actual backend URL
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
+  
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.loadRestaurants();
+  }
+
+  // GET: Fetch all available restaurants
+  loadRestaurants(): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
+      .subscribe({
+        next: (data) &#x3D;&gt; {
+          this.restaurants &#x3D; data;
+          this.loading &#x3D; false;
+        },
+        error: (err) &#x3D;&gt; {
+          this.error &#x3D; &#x27;Failed to load restaurants. Please try again.&#x27;;
+          this.loading &#x3D; false;
+          console.error(&#x27;Error loading restaurants:&#x27;, err);
+        }
+      });
+  }
+
+  // GET: Fetch restaurants by location
+  loadRestaurantsByLocation(latitude: number, longitude: number, radius: number &#x3D; 10): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    const params &#x3D; {
+      lat: latitude.toString(),
+      lng: longitude.toString(),
+      radius: radius.toString()
+    };
+
+    this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/nearby&#x60;, { params })
+      .subscribe({
+        next: (data) &#x3D;&gt; {
+          this.restaurants &#x3D; data;
+          this.loading &#x3D; false;
+        },
+        error: (err) &#x3D;&gt; {
+          this.error &#x3D; &#x27;Failed to load nearby restaurants.&#x27;;
+          this.loading &#x3D; false;
+          console.error(&#x27;Error loading nearby restaurants:&#x27;, err);
+        }
+      });
+  }
+
+  // GET: Fetch restaurant details
+  getRestaurantDetails(restaurantId: number): Observable&lt;Restaurant&gt; {
+    return this.http.get&lt;Restaurant&gt;(&#x60;${this.apiUrl}/restaurants/${restaurantId}&#x60;);
+  }
+
+  // POST: Schedule a pickup
+  schedulePickup(request: PickupRequest): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    const headers &#x3D; new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+    });
+
+    this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
+      .subscribe({
+        next: (response) &#x3D;&gt; {
+          alert(&#x27;Pickup scheduled successfully!&#x27;);
+          this.loading &#x3D; false;
+        },
+        error: (err) &#x3D;&gt; {
+          this.error &#x3D; &#x27;Failed to schedule pickup. Please try again.&#x27;;
+          this.loading &#x3D; false;
+          console.error(&#x27;Error scheduling pickup:&#x27;, err);
+        }
+      });
+  }
+
+  // POST: Request delivery
+  requestDelivery(restaurantId: number, deliveryAddress: string): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    const deliveryRequest &#x3D; {
+      restaurantId,
+      deliveryAddress,
+      requestedTime: new Date().toISOString()
+    };
+
+    const headers &#x3D; new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+    });
+
+    this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
+      .subscribe({
+        next: (response) &#x3D;&gt; {
+          alert(&#x27;Delivery request submitted successfully!&#x27;);
+          this.loading &#x3D; false;
+        },
+        error: (err) &#x3D;&gt; {
+          this.error &#x3D; &#x27;Failed to request delivery. Please try again.&#x27;;
+          this.loading &#x3D; false;
+          console.error(&#x27;Error requesting delivery:&#x27;, err);
+        }
+      });
+  }
+
+  // POST: Register user interest
+  registerInterest(email: string): void {
+    const interest &#x3D; { email, timestamp: new Date().toISOString() };
+    
+    const headers &#x3D; new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+    });
+
+    this.http.post(&#x60;${this.apiUrl}/users/register-interest&#x60;, interest, { headers })
+      .subscribe({
+        next: () &#x3D;&gt; {
+          alert(&#x27;Thank you for your interest!&#x27;);
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Error registering interest:&#x27;, err);
+        }
+      });
+  }
+
+  // Helper method to handle pickup button click
+  onPickupClick(restaurant: Restaurant): void {
+    const pickupRequest: PickupRequest &#x3D; {
+      restaurantId: restaurant.id,
+      userId: 1, // Replace with actual logged-in user ID
+      pickupTime: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
+      deliveryType: &#x27;pickup&#x27;,
+      items: []
+    };
+    
+    this.schedulePickup(pickupRequest);
+  }
+
+  // Helper method to handle delivery button click
+  onDeliveryClick(restaurant: Restaurant): void {
+    const address &#x3D; prompt(&#x27;Please enter your delivery address:&#x27;);
+    if (address) {
+      this.requestDelivery(restaurant.id, address);
+    }
+  }
+
+  // Refresh restaurant list
+  refreshRestaurants(): void {
+    this.loadRestaurants();
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;home-container&quot;&gt;
+  &lt;header class&#x3D;&quot;hero-section&quot;&gt;
+    &lt;h1&gt;SecondServe&lt;/h1&gt;
+    &lt;p class&#x3D;&quot;mission&quot;&gt;Connecting surplus food with those who need it most&lt;/p&gt;
+    &lt;p class&#x3D;&quot;tagline&quot;&gt;Reducing food waste, fighting food insecurity&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;div class&#x3D;&quot;search-section&quot;&gt;
+    &lt;button (click)&#x3D;&quot;loadRestaurants()&quot; class&#x3D;&quot;btn-primary&quot;&gt;
+      Find Available Food Near You
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div *ngIf&#x3D;&quot;loading&quot; class&#x3D;&quot;loading&quot;&gt;
+    &lt;p&gt;Loading restaurants...&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div *ngIf&#x3D;&quot;error&quot; class&#x3D;&quot;error&quot;&gt;
+    &lt;p&gt;{{ error }}&lt;/p&gt;
+    &lt;button (click)&#x3D;&quot;refreshRestaurants()&quot;&gt;Try Again&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;restaurants-grid&quot; *ngIf&#x3D;&quot;!loading &amp;&amp; restaurants.length &gt; 0&quot;&gt;
+    &lt;div *ngFor&#x3D;&quot;let restaurant of restaurants&quot; class&#x3D;&quot;restaurant-card&quot;&gt;
+      &lt;img [src]&#x3D;&quot;restaurant.imageUrl&quot; [alt]&#x3D;&quot;restaurant.name&quot; class&#x3D;&quot;restaurant-image&quot;&gt;
+      
+      &lt;div class&#x3D;&quot;restaurant-info&quot;&gt;
+        &lt;h3&gt;{{ restaurant.name }}&lt;/h3&gt;
+        &lt;p class&#x3D;&quot;address&quot;&gt;{{ restaurant.address }}&lt;/p&gt;
+        &lt;p class&#x3D;&quot;distance&quot;&gt;{{ restaurant.distance }} miles away&lt;/p&gt;
+        
+        &lt;div class&#x3D;&quot;food-types&quot;&gt;
+          &lt;span *ngFor&#x3D;&quot;let type of restaurant.foodTypes&quot; class&#x3D;&quot;food-tag&quot;&gt;
+            {{ type }}
+          &lt;/span&gt;
+        &lt;/div&gt;
+        
+        &lt;div class&#x3D;&quot;availability&quot;&gt;
+          &lt;p&gt;&lt;strong&gt;{{ restaurant.availableItems }}&lt;/strong&gt; items available&lt;/p&gt;
+          &lt;p class&#x3D;&quot;expiry&quot;&gt;Best by: {{ restaurant.expiryDate | date:&#x27;short&#x27; }}&lt;/p&gt;
+          &lt;p class&#x3D;&quot;hours&quot;&gt;Open until: {{ restaurant.openUntil }}&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;div class&#x3D;&quot;actions&quot;&gt;
+          &lt;button (click)&#x3D;&quot;onPickupClick(restaurant)&quot; class&#x3D;&quot;btn-pickup&quot;&gt;
+            Schedule Pickup
+          &lt;/button&gt;
+          &lt;button (click)&#x3D;&quot;onDeliveryClick(restaurant)&quot; class&#x3D;&quot;btn-delivery&quot;&gt;
+            Request Delivery
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div *ngIf&#x3D;&quot;!loading &amp;&amp; restaurants.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;no-results&quot;&gt;
+    &lt;p&gt;No restaurants with available food at this time.&lt;/p&gt;
+    &lt;p&gt;Check back soon or expand your search area.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./home.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #6f7d1c 0%, #8a9b24 100%);
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.hero-section h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.mission {
+  font-size: 1.3em;
+  margin: 10px 0;
+}
+
+.tagline {
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+.search-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #6f7d1c;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #5a6517;
+}
+
+.loading, .error, .no-results {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.restaurant-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.restaurant-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.restaurant-info {
+  padding: 15px;
+}
+
+.restaurant-info h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.address {
+  color: #666;
+  margin: 5px 0;
+}
+
+.distance {
+  color: #6f7d1c;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.food-types {
+  margin: 10px 0;
+}
+
+.food-tag {
+  display: inline-block;
+  background-color: #e8edd5;
+  color: #6f7d1c;
+  padding: 5px 10px;
+  margin: 3px;
+  border-radius: 15px;
+  font-size: 0.85em;
+}
+
+.availability {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.expiry {
+  color: #ff6b6b;
+  font-size: 0.9em;
+}
+
+.hours {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-pickup, .btn-delivery {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-pickup {
+  background-color: #6f7d1c;
+  color: white;
+}
+
+.btn-pickup:hover {
+  background-color: #5a6517;
+}
+
+.btn-delivery {
+  background-color: #8a9b24;
+  color: white;
+}
+
+.btn-delivery:hover {
+  background-color: #6f7d1c;
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="home-container">  <header class="hero-section">    <h1>SecondServe</h1>    <p class="mission">Connecting surplus food with those who need it most</p>    <p class="tagline">Reducing food waste, fighting food insecurity</p>  </header>  <div class="search-section">    <button (click)="loadRestaurants()" class="btn-primary">      Find Available Food Near You    </button>  </div>  <div *ngIf="loading" class="loading">    <p>Loading restaurants...</p>  </div>  <div *ngIf="error" class="error">    <p>{{ error }}</p>    <button (click)="refreshRestaurants()">Try Again</button>  </div>  <div class="restaurants-grid" *ngIf="!loading && restaurants.length > 0">    <div *ngFor="let restaurant of restaurants" class="restaurant-card">      <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="restaurant-image">            <div class="restaurant-info">        <h3>{{ restaurant.name }}</h3>        <p class="address">{{ restaurant.address }}</p>        <p class="distance">{{ restaurant.distance }} miles away</p>                <div class="food-types">          <span *ngFor="let type of restaurant.foodTypes" class="food-tag">            {{ type }}          </span>        </div>                <div class="availability">          <p><strong>{{ restaurant.availableItems }}</strong> items available</p>          <p class="expiry">Best by: {{ restaurant.expiryDate | date:\'short\' }}</p>          <p class="hours">Open until: {{ restaurant.openUntil }}</p>        </div>                <div class="actions">          <button (click)="onPickupClick(restaurant)" class="btn-pickup">            Schedule Pickup          </button>          <button (click)="onDeliveryClick(restaurant)" class="btn-delivery">            Request Delivery          </button>        </div>      </div>    </div>  </div>  <div *ngIf="!loading && restaurants.length === 0" class="no-results">    <p>No restaurants with available food at this time.</p>    <p>Check back soon or expand your search area.</p>  </div></div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Login', 'selector': 'login'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Home'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Home.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

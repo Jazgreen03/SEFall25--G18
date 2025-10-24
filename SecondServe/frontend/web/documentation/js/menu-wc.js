@@ -59,6 +59,28 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <li class="link">
                                 <a href="components/App.html" data-type="entity-link" >App</a>
                             </li>
+                            <li class="link">
+                                <a href="components/Home.html" data-type="entity-link" >Home</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/Login.html" data-type="entity-link" >Login</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#interfaces-links"' :
+                            'data-bs-target="#xs-interfaces-links"' }>
+                            <span class="icon ion-md-information-circle-outline"></span>
+                            <span>Interfaces</span>
+                            <span class="icon ion-ios-arrow-down"></span>
+                        </div>
+                        <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/PickupRequest.html" data-type="entity-link" >PickupRequest</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/Restaurant.html" data-type="entity-link" >Restaurant</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="chapter">

@@ -53,7 +53,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="User.apps.UsersConfig.default_auto_field">
-<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#User.apps.UsersConfig.default_auto_field" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_mongodb_backend.fields.ObjectIdAutoField'</span></em><a class="headerlink" href="#User.apps.UsersConfig.default_auto_field" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -213,6 +213,21 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="User.models.User.logentry_set">
+<span class="sig-name descname"><span class="pre">logentry_set</span></span><a class="headerlink" href="#User.models.User.logentry_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="User.models.User.password">
 <span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#User.models.User.password" title="Link to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -294,8 +309,19 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 </section>
-<section id="user-urls-module">
-<h2>User.urls module<a class="headerlink" href="#user-urls-module" title="Link to this heading">¶</a></h2>
+<section id="module-User.urls">
+<span id="user-urls-module"></span><h2>User.urls module<a class="headerlink" href="#module-User.urls" title="Link to this heading">¶</a></h2>
+<p>Manages the API calls for any operations related to the User</p>
+<dl class="simple">
+<dt>Current API Calls Handled:</dt><dd><ol class="arabic simple">
+<li><p>Create User Account</p></li>
+<li><p>Login User</p></li>
+<li><p>Logout User</p></li>
+<li><p>Update User Attribute</p></li>
+<li><p>Get User Info</p></li>
+</ol>
+</dd>
+</dl>
 </section>
 <section id="module-User.views">
 <span id="user-views-module"></span><h2>User.views module<a class="headerlink" href="#module-User.views" title="Link to this heading">¶</a></h2>
@@ -309,30 +335,15 @@ object the first time, the query is executed.</p>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>On Success:</dt><dd><p>-&gt; Returns Code 201
--&gt; Creates User and saves to Database
--&gt; Logs in User</p>
-</dd>
-<dt>On Failure:</dt><dd><p>-&gt; Returns Code 406 if Invalid Parameters
--&gt; Returns Code 409 if Username/Email already exists for a User</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="User.views.getUserInfo">
 <span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">getUserInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#getUserInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.getUserInfo" title="Link to this definition">¶</a></dt>
-<dd><p>Attempts to return basic details of a User</p>
+<dd><p>Returns basic details of the authenticated User</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>On Success:</dt><dd><p>-&gt; Returns HTTP Response with Code 200 (Details include User info)</p>
-</dd>
-<dt>On Failure:</dt><dd><p>-&gt; Error Code 404 if no User is logged in</p>
 </dd>
 </dl>
 </dd></dl>
@@ -340,18 +351,10 @@ object the first time, the query is executed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="User.views.loginUser">
 <span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">loginUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#loginUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.loginUser" title="Link to this definition">¶</a></dt>
-<dd><p>Attempts to login in a User when provided with Username/Email and a Password</p>
+<dd><p>Attempts to login a User with Username/Email and a Password</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>On Success:</dt><dd><p>-&gt; Returns Code 200
--&gt; Logs in User</p>
-</dd>
-<dt>On Failure:</dt><dd><p>-&gt; Returns Error Code 406 if Lacking Credentials
--&gt; Returns Error Code 404 if Invalid Credentials</p>
 </dd>
 </dl>
 </dd></dl>
@@ -359,17 +362,10 @@ object the first time, the query is executed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="User.views.logoutUser">
 <span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">logoutUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#logoutUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.logoutUser" title="Link to this definition">¶</a></dt>
-<dd><p>Attempts to logout a User</p>
+<dd><p>Logs out the authenticated user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>On Success:</dt><dd><p>-&gt; Returns Code 200
--&gt; Logs out the User</p>
-</dd>
-<dt>On Failure:</dt><dd><p>-&gt; Returns Error Code 400 if no User is Logged in</p>
 </dd>
 </dl>
 </dd></dl>
@@ -377,18 +373,10 @@ object the first time, the query is executed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="User.views.updateUser">
 <span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">updateUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#updateUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.updateUser" title="Link to this definition">¶</a></dt>
-<dd><p>Attempts to update an attribute of the User</p>
+<dd><p>Updates an attribute of the authenticated User</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>On Success:</dt><dd><p>-&gt; Returns Code 200
--&gt; Updates User entry with “New Value” for “Attribute”</p>
-</dd>
-<dt>On Failure:</dt><dd><p>-&gt; Error Code 404 if no User is logged in
--&gt; Error Code 406 if “New Value” is not acceptable for the “Attribute”</p>
 </dd>
 </dl>
 </dd></dl>

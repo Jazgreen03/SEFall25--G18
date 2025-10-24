@@ -26,15 +26,18 @@ services:
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile   # <-- move under "build"
+      dockerfile: backend/Dockerfile
     container_name: django-docker
     env_file: .env
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app/backend  # <- Mount local backend folder
     depends_on:
       db:
         condition: service_healthy
     networks: [appnet]
+
 
   # Dev Angular (optional) – leave commented if not using:
   # frontend-dev:

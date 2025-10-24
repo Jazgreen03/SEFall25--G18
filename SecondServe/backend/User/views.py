@@ -5,168 +5,131 @@ Manages User Functionality, called by urls.py
 from django.http import HttpRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views.decorators.http import require_http_methods
+import json
 
 
 @require_http_methods(["POST"])
 def createUser(request: HttpRequest) -> JsonResponse:
     """
     Creates a User given the parameters provided in the HTTP Request
-
-    On Success:
-        -> Returns Code 201
-        -> Creates User and saves to Database
-        -> Logs in User
-    On Failure:
-        -> Returns Code 406 if Invalid Parameters
-        -> Returns Code 409 if Username/Email already exists for a User
-
     """
-    # Verify the required feilds have been passed
     username = request.POST.get("username")
     password = request.POST.get("password")
     email = request.POST.get("email")
 
-    if username is None or password is None or email is None:
+    if not username or not password or not email:
         return JsonResponse(
             {"details": "Must provide valid Username, Password, and Email"}, status=406
         )
 
-    # Check if any of the optional fields have been passed
-    firstName = request.POST.get("first_name")
-    lastName = request.POST.get("last_name")
+    first_name = request.POST.get("first_name", "")
+    last_name = request.POST.get("last_name", "")
 
-    # Add any of the none empty optional fields to the dict variable
-    optional_fields = {}
-    if firstName:
-        optional_fields["first_name"] = firstName
-    if lastName:
-        optional_fields["last_name"] = lastName
-
-    # Create the user
     User = get_user_model()
-    user = User.objects.create(
-        username=username, email=email, password=password, **optional_fields
-    )
-
-    # If User wasn't created, it because it already exists in some way
-    if user is None:
+    if (
+        User.objects.filter(username=username).exists()
+        or User.objects.filter(email=email).exists()
+    ):
         return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
-    # User was created, log them in then return Code 200
+    user = User(
+        username=username, email=email, first_name=first_name, last_name=last_name
+    )
+    user.set_password(password)  # hash the password
+    user.save()
+
     authuser = authenticate(username=username, password=password)
-    login(user=authuser)
+    if authuser is not None:
+        login(request, authuser)
+        return JsonResponse({"details": "User Created and Logged in"}, status=201)
+    return JsonResponse({"details": "Authentication Failed"}, status=500)
 
-    return JsonResponse({"details": "User Created and Logged in"}, status=201)
 
-
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def loginUser(request: HttpRequest) -> JsonResponse:
     """
-    Attempts to login in a User when provided with Username/Email and a Password
-
-    On Success:
-        -> Returns Code 200
-        -> Logs in User
-    On Failure:
-        -> Returns Error Code 406 if Lacking Credentials
-        -> Returns Error Code 404 if Invalid Credentials
-
+    Attempts to login a User with Username/Email and a Password
     """
-
     username = request.POST.get("username")
     password = request.POST.get("password")
     email = request.POST.get("email")
 
-    if (len(username) <= 0 and len(email) <= 0) or (len(password) <= 0):
-        # Invalid Username/Password
+    if (not username and not email) or not password:
         return JsonResponse(
             {"details": "Must Provide Username/Email and Password"}, status=406
         )
 
-    user = authenticate(username=username, password=password)
+    User = get_user_model()
+    if email and not username:
+        try:
+            user_obj = User.objects.get(email=email)
+            username = user_obj.username
+        except User.DoesNotExist:
+            return JsonResponse({"details": "Invalid credentials"}, status=404)
 
+    user = authenticate(username=username, password=password)
     if user is None:
-        # Invalid credentials
         return JsonResponse(
             {"details": "Invalid Username/Email and/or Password"}, status=404
         )
-    else:
-        # Valid credentials log the user in
-        login(user=user)
-        return JsonResponse({"details": "User logged in"}, status=200)
+
+    login(request, user)
+    return JsonResponse({"details": "User logged in"}, status=200)
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def logoutUser(request: HttpRequest) -> JsonResponse:
     """
-    Attempts to logout a User
-
-    On Success:
-        -> Returns Code 200
-        -> Logs out the User
-    On Failure:
-        -> Returns Error Code 400 if no User is Logged in
-
+    Logs out the authenticated user
     """
-
-    # User must already be authenticated/logged in to log out
     if request.user.is_authenticated:
-        # Logout the user
         logout(request)
         return JsonResponse({"details": "User Logged Out"}, status=200)
-    else:
-        # Throw an error
-        return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
+    return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
 
 
 @require_http_methods(["PUT"])
 def updateUser(request: HttpRequest) -> JsonResponse:
     """
-    Attempts to update an attribute of the User
-
-    On Success:
-        -> Returns Code 200
-        -> Updates User entry with "New Value" for "Attribute"
-    On Failure:
-        -> Error Code 404 if no User is logged in
-        -> Error Code 406 if “New Value” is not acceptable for the “Attribute”
+    Updates an attribute of the authenticated User
     """
-
-    # Attempt to update an Attribute of the User
-    if request.user.is_authenticated:
-        user = request.user
-        attr = request.POST.get("attribute")
-        newVal = request.POST.get("new_value")
-
-        updatedUser = user.updateAttribute(attr, newVal)
-
-        if updatedUser is None:
-            return JsonResponse({"details": "Invalid Attribute"}, status=406)
-        else:
-            return JsonResponse({"details": "Attribute Updated"}, status=200)
-    else:
+    if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
 
-    return
+    # Parse JSON body for PUT requests
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"details": "Invalid JSON"}, status=400)
+
+    attr = data.get("attribute")
+    new_val = data.get("new_value")
+
+    if not attr or new_val is None:
+        return JsonResponse({"details": "Attribute or new value missing"}, status=406)
+
+    allowed_attrs = ["first_name", "last_name", "email", "username"]
+    if attr not in allowed_attrs:
+        return JsonResponse({"details": "Invalid Attribute"}, status=406)
+
+    setattr(request.user, attr, new_val)
+    request.user.save()
+    return JsonResponse({"details": "Attribute Updated"}, status=200)
 
 
 @require_http_methods(["GET"])
 def getUserInfo(request: HttpRequest) -> JsonResponse:
     """
-    Attempts to return basic details of a User
-
-    On Success:
-        -> Returns HTTP Response with Code 200 (Details include User info)
-    On Failure:
-        -> Error Code 404 if no User is logged in
+    Returns basic details of the authenticated User
     """
-
-    # Attempt to get the details on the current User
     if request.user.is_authenticated:
-
         user = request.user
-        return JsonResponse(user.getUserInfo(), status=200)
+        info = {
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
+        return JsonResponse(info, status=200)
 
-    # If no active user
-    else:
-        return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
+    return JsonResponse({"details": "No User is Currently Logged In"}, status=400)

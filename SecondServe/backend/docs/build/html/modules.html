@@ -54,10 +54,13 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#secondserve-asgi-module">SecondServe.asgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#module-SecondServe.asgi">SecondServe.asgi module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SecondServe.html#module-SecondServe.settings">SecondServe.settings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#secondserve-urls-module">SecondServe.urls module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#secondserve-wsgi-module">SecondServe.wsgi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#module-SecondServe.urls">SecondServe.urls module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="SecondServe.html#SecondServe.urls.health"><code class="docutils literal notranslate"><span class="pre">health()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.html#module-SecondServe.wsgi">SecondServe.wsgi module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="SecondServe.html#module-SecondServe">Module contents</a></li>
 </ul>
 </li>
@@ -93,6 +96,7 @@
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.is_superuser"><code class="docutils literal notranslate"><span class="pre">User.is_superuser</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.last_login"><code class="docutils literal notranslate"><span class="pre">User.last_login</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.last_name"><code class="docutils literal notranslate"><span class="pre">User.last_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.logentry_set"><code class="docutils literal notranslate"><span class="pre">User.logentry_set</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.password"><code class="docutils literal notranslate"><span class="pre">User.password</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.role"><code class="docutils literal notranslate"><span class="pre">User.role</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="User.html#User.models.User.set_email"><code class="docutils literal notranslate"><span class="pre">User.set_email()</span></code></a></li>
@@ -111,7 +115,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="User.html#user-urls-module">User.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html#module-User.urls">User.urls module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="User.html#module-User.views">User.views module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="User.html#User.views.createUser"><code class="docutils literal notranslate"><span class="pre">createUser()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="User.html#User.views.getUserInfo"><code class="docutils literal notranslate"><span class="pre">getUserInfo()</span></code></a></li>
@@ -156,9 +160,26 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html#module-testing.test_core">testing.test_core module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html#module-testing.test_user">testing.test_user module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testing.html#testing.test_user.UserCreation"><code class="docutils literal notranslate"><span class="pre">UserCreation</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserCreation.setUp"><code class="docutils literal notranslate"><span class="pre">UserCreation.setUp()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserCreation.test_valid_creation"><code class="docutils literal notranslate"><span class="pre">UserCreation.test_valid_creation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.databases"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.databases</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.setUp"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_create_user_duplicate_username_email"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_create_user_duplicate_username_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_create_user_missing_fields"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_create_user_missing_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_create_user_success"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_create_user_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_get_user_info_not_logged_in"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_get_user_info_not_logged_in()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_get_user_info_success"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_get_user_info_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_login_user_invalid_credentials"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_login_user_invalid_credentials()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_login_user_missing_fields"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_login_user_missing_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_login_user_success_email"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_login_user_success_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_login_user_success_username"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_login_user_success_username()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_logout_user_not_logged_in"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_logout_user_not_logged_in()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_logout_user_success"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_logout_user_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_methods_not_allowed"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_methods_not_allowed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_update_user_invalid_attribute"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_update_user_invalid_attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_update_user_invalid_json"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_update_user_invalid_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_update_user_missing_fields"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_update_user_missing_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_update_user_not_logged_in"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_update_user_not_logged_in()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#testing.test_user.UserViewsFullTest.test_update_user_success"><code class="docutils literal notranslate"><span class="pre">UserViewsFullTest.test_update_user_success()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -31,64 +31,240 @@
           <div class="body" role="main">
             
   <h1>Source code for testing.test_user</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">SimpleTestCase</span><span class="p">,</span> <span class="n">RequestFactory</span>
-<span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
-<span class="kn">import</span> <span class="nn">User.views</span> <span class="k">as</span> <span class="nn">UserAPI</span>
+<span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">get_user_model</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="UserCreation">
-<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation">[docs]</a>
-<span class="k">class</span> <span class="nc">UserCreation</span><span class="p">(</span><span class="n">SimpleTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="UserCreation.setUp">
-<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation.setUp">[docs]</a>
+<div class="viewcode-block" id="UserViewsFullTest">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest">[docs]</a>
+<span class="k">class</span> <span class="nc">UserViewsFullTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="n">databases</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span>
+
+<div class="viewcode-block" id="UserViewsFullTest.setUp">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.setUp">[docs]</a>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span></div>
+        <span class="c1"># Create a base user for testing login, update, logout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;existinguser&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;existing@example.com&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s2">&quot;SecurePass123!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;Existing&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s2">&quot;User&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="UserCreation.test_valid_creation">
-<a class="viewcode-back" href="../../testing.html#testing.test_user.UserCreation.test_valid_creation">[docs]</a>
-    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.get_user_model&quot;</span><span class="p">)</span>  <span class="c1"># Mock get_user_model</span>
-    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.authenticate&quot;</span><span class="p">)</span>  <span class="c1"># Mock authenticate</span>
-    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;User.views.login&quot;</span><span class="p">)</span>  <span class="c1"># Mock login</span>
-    <span class="k">def</span> <span class="nf">test_valid_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_login</span><span class="p">,</span> <span class="n">mock_authenticate</span><span class="p">,</span> <span class="n">mock_get_user_model</span><span class="p">):</span>
-        <span class="c1"># Setup a fake User class</span>
-        <span class="n">mock_user_class</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
-        <span class="n">mock_user_instance</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
-        <span class="n">mock_user_class</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_instance</span>
-        <span class="n">mock_get_user_model</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_class</span>
-
-        <span class="c1"># Mock authenticate to return our fake user</span>
-        <span class="n">mock_authenticate</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_user_instance</span>
-
-        <span class="c1"># Create a POST request</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="c1"># ---------------- CREATE USER ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_create_user_success">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_create_user_success">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
             <span class="s2">&quot;/user/create/&quot;</span><span class="p">,</span>
             <span class="p">{</span>
-                <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Caleb&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Twigg&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;Twiggy&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;wctwigg@ncsu.edu&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;TotallySecure123!&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;newuser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;new@example.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;Password123!&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;New&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">)</span>
-
-        <span class="c1"># Call the view</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">UserAPI</span><span class="o">.</span><span class="n">createUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="c1"># Check response</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;newuser&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;details&quot;</span><span class="p">],</span> <span class="s2">&quot;User Created and Logged in&quot;</span><span class="p">)</span></div>
 
-        <span class="c1"># Ensure create was called with correct parameters</span>
-        <span class="n">mock_user_class</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span>
-            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;Twiggy&quot;</span><span class="p">,</span>
-            <span class="n">email</span><span class="o">=</span><span class="s2">&quot;wctwigg@ncsu.edu&quot;</span><span class="p">,</span>
-            <span class="n">password</span><span class="o">=</span><span class="s2">&quot;TotallySecure123!&quot;</span><span class="p">,</span>
-            <span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Caleb&quot;</span><span class="p">,</span>
-            <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Twigg&quot;</span><span class="p">,</span>
+
+<div class="viewcode-block" id="UserViewsFullTest.test_create_user_missing_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_create_user_missing_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_missing_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/create/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;missing&quot;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">406</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s2">&quot;details&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_create_user_duplicate_username_email">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_create_user_duplicate_username_email">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_duplicate_username_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># duplicate username</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/create/&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;existinguser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;new@example.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;Pass123!&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">409</span><span class="p">)</span>
+        <span class="c1"># duplicate email</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/create/&quot;</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;newuser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;existing@example.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;Pass123!&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">409</span><span class="p">)</span></div>
 
-        <span class="c1"># Ensure login was called</span>
-        <span class="n">mock_login</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">mock_user_instance</span><span class="p">)</span></div>
+
+    <span class="c1"># ---------------- LOGIN USER ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_login_user_success_username">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_login_user_success_username">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_login_user_success_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;existinguser&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;SecurePass123!&quot;</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;details&quot;</span><span class="p">],</span> <span class="s2">&quot;User logged in&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_login_user_success_email">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_login_user_success_email">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_login_user_success_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;existing@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;SecurePass123!&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;details&quot;</span><span class="p">],</span> <span class="s2">&quot;User logged in&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_login_user_invalid_credentials">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_login_user_invalid_credentials">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_login_user_invalid_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;existinguser&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;Wrong&quot;</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;nonexistent@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;Whatever&quot;</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_login_user_missing_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_login_user_missing_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_login_user_missing_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">406</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/login/&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;SecurePass123!&quot;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">406</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------------- LOGOUT USER ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_logout_user_success">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_logout_user_success">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_logout_user_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/logout/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;details&quot;</span><span class="p">],</span> <span class="s2">&quot;User Logged Out&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_logout_user_not_logged_in">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_logout_user_not_logged_in">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_logout_user_not_logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/logout/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------------- UPDATE USER ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_update_user_success">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_update_user_success">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_user_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="s2">&quot;/user/update/&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;new_value&quot;</span><span class="p">:</span> <span class="s2">&quot;Updated&quot;</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;details&quot;</span><span class="p">],</span> <span class="s2">&quot;Attribute Updated&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="s2">&quot;Updated&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_update_user_invalid_attribute">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_update_user_invalid_attribute">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_user_invalid_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="s2">&quot;/user/update/&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span> <span class="s2">&quot;new_value&quot;</span><span class="p">:</span> <span class="s2">&quot;val&quot;</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">406</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_update_user_missing_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_update_user_missing_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_user_missing_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="s2">&quot;/user/update/&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;first_name&quot;</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">406</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_update_user_invalid_json">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_update_user_invalid_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_user_invalid_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="s2">&quot;/user/update/&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;invalid json&quot;</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_update_user_not_logged_in">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_update_user_not_logged_in">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_user_not_logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="s2">&quot;/user/update/&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;new_value&quot;</span><span class="p">:</span> <span class="s2">&quot;Updated&quot;</span><span class="p">}),</span>
+            <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------------- GET USER INFO ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_get_user_info_success">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_get_user_info_success">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_get_user_info_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/user/info/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">],</span> <span class="s2">&quot;existinguser&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">],</span> <span class="s2">&quot;existing@example.com&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UserViewsFullTest.test_get_user_info_not_logged_in">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_get_user_info_not_logged_in">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_get_user_info_not_logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/user/info/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------------- HTTP METHOD TESTS ----------------</span>
+<div class="viewcode-block" id="UserViewsFullTest.test_methods_not_allowed">
+<a class="viewcode-back" href="../../testing.html#testing.test_user.UserViewsFullTest.test_methods_not_allowed">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_methods_not_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># GET on login</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/user/login/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">405</span><span class="p">)</span>
+        <span class="c1"># GET on create</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/user/create/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">405</span><span class="p">)</span>
+        <span class="c1"># POST on getUserInfo</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/info/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">405</span><span class="p">)</span>
+        <span class="c1"># POST on update</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/user/update/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">405</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

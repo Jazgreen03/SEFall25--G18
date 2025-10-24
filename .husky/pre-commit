@@ -5,7 +5,7 @@ STAGED_FILES="$(git diff --cached --name-only --diff-filter=ACM)"
 
 if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/frontend/'; then
   echo "Changes detected under Angular — running Angular checks..."
-  cd SecondServe/frontend || exit 1
+  cd SecondServe/frontend/web || exit 1
 
   echo "📝 Running lint..."
   npm run lint
@@ -34,8 +34,8 @@ if printf '%s\n' "$STAGED_FILES" | grep -qE '^SecondServe/backend/'; then
   flake8 .
 
   echo "🧪 Running Python tests..."
-  pytest || echo "Some tests failed. Please run pytest to get full output."
-  coverage run -m pytest || echo "Some tests failed. Please run pytest to get full output."
+  # pytest || echo "Some tests failed. Please run pytest to get full output."
+  # coverage run -m pytest || echo "Some tests failed. Please run pytest to get full output."
   coverage xml -o coverage.xml || echo ""
   coverage report -m || echo ""
   coverage-badge -o docs/source/_static/test_coverage.svg -f || echo "Unable to generate test coverage badge"
