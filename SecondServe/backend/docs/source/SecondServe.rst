@@ -4,45 +4,14 @@ SecondServe package
 Submodules
 ----------
 
-SecondServe.apps module
------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: SecondServe.apps
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-SecondServe.asgi module
------------------------
-
-.. automodule:: SecondServe.asgi
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-SecondServe.settings module
----------------------------
-
-.. automodule:: SecondServe.settings
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-SecondServe.urls module
------------------------
-
-.. automodule:: SecondServe.urls
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-SecondServe.wsgi module
------------------------
-
-.. automodule:: SecondServe.wsgi
-   :members:
-   :show-inheritance:
-   :undoc-members:
+   SecondServe.apps
+   SecondServe.asgi
+   SecondServe.settings
+   SecondServe.urls
+   SecondServe.wsgi
 
 Module contents
 ---------------

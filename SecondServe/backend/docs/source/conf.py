@@ -20,17 +20,12 @@ extensions = [
 
 # Coverage settings
 coverage_show_missing_items = True
-coverage_ignore_modules = ["testing", "testing.*"]
+coverage_ignore_modules = ["testing", "testing.*", "test_*"]
 
 # Exclude testing and migration folders from the documentation build
-exclude_patterns = [
-    "_build",
-    "Thumbs.db",
-    ".DS_Store",
-    "**/testing/**",
-    "**/tests/**",
-    "**/migrations/**",
-]
+# conf.py
+exclude_patterns = ["tests/*", "testing/*", "docs/*", "mongo_migrations/*"]
+
 
 templates_path = ["_templates"]
 

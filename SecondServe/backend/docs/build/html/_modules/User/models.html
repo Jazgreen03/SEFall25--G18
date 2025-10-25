@@ -32,7 +32,7 @@
             
   <h1>Source code for User.models</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">AbstractUser</span><span class="p">,</span> <span class="n">UserManager</span> <span class="k">as</span> <span class="n">DjangoUserManager</span>
-<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">IntegrityError</span>
 
 <span class="n">ROLE_USER</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
 <span class="n">ROLE_DRIVER</span> <span class="o">=</span> <span class="s2">&quot;driver&quot;</span>
@@ -47,81 +47,230 @@
 <span class="p">)</span>
 
 
+<div class="viewcode-block" id="UserManager">
+<a class="viewcode-back" href="../../User.models.html#User.models.UserManager">[docs]</a>
+<span class="k">class</span> <span class="nc">UserManager</span><span class="p">(</span><span class="n">DjangoUserManager</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom manager for User model.</span>
+
+<span class="sd">    Handles creation of regular users and superusers with validation,</span>
+<span class="sd">    role assignment, and duplicate entry checks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UserManager.create_user">
+<a class="viewcode-back" href="../../User.models.html#User.models.UserManager.create_user">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create and return a regular User instance.</span>
+
+<span class="sd">        :param username: The username of the user</span>
+<span class="sd">        :type username: str</span>
+<span class="sd">        :param email: The user&#39;s email address</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        :param password: The user&#39;s password. If None, sets an unusable password.</span>
+<span class="sd">        :type password: str or None</span>
+<span class="sd">        :param extra_fields: Additional fields for the user</span>
+<span class="sd">        :type extra_fields: dict</span>
+<span class="sd">        :return: The created User instance</span>
+<span class="sd">        :rtype: User</span>
+<span class="sd">        :raises TypeError: If username or email are not strings</span>
+<span class="sd">        :raises ValueError: If username or email are empty</span>
+<span class="sd">        :raises IntegrityError: If username or email already exist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Username and email must be strings.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Username and email are required.&quot;</span><span class="p">)</span>
+
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="n">ROLE_USER</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+                <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">IntegrityError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate user data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">set_unusable_password</span><span class="p">()</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">update_fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">user</span></div>
+
+
+<div class="viewcode-block" id="UserManager.create_superuser">
+<a class="viewcode-back" href="../../User.models.html#User.models.UserManager.create_superuser">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_superuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create and return a superuser instance.</span>
+
+<span class="sd">        :param username: Superuser username</span>
+<span class="sd">        :type username: str</span>
+<span class="sd">        :param email: Superuser email</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        :param password: Superuser password (cannot be None)</span>
+<span class="sd">        :type password: str</span>
+<span class="sd">        :param extra_fields: Additional fields for superuser</span>
+<span class="sd">        :type extra_fields: dict</span>
+<span class="sd">        :return: The created superuser</span>
+<span class="sd">        :rtype: User</span>
+<span class="sd">        :raises TypeError: If username or email are not strings</span>
+<span class="sd">        :raises ValueError: If password is None or flags are invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Username and email must be strings.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Superuser must have a password.&quot;</span><span class="p">)</span>
+
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;is_staff&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;is_superuser&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="n">ROLE_ADMIN</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extra_fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_staff&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Superuser must have is_staff=True.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extra_fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_superuser&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Superuser must have is_superuser=True.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_superuser</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span></div>
+</div>
+
+
+
 <div class="viewcode-block" id="User">
-<a class="viewcode-back" href="../../User.html#User.models.User">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User">[docs]</a>
 <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AbstractUser</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom User model extending Django&#39;s AbstractUser.</span>
 
-    <span class="c1"># Fields that come with AbstractUser</span>
-    <span class="c1">#   -&gt; email</span>
-    <span class="c1">#   -&gt; username</span>
-    <span class="c1">#   -&gt; password</span>
-    <span class="c1">#   -&gt; date_joined</span>
+<span class="sd">    Adds `role` field and utility methods for role-based access and</span>
+<span class="sd">    dynamic attribute updates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># Roles for the user are limited to the following:</span>
-    <span class="c1"># -&gt; user</span>
-    <span class="c1"># -&gt; driver</span>
-    <span class="c1"># -&gt; supplier</span>
-    <span class="c1"># -&gt; admin</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">role</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">ROLE_CHOICES</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ROLE_USER</span><span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">UserManager</span><span class="p">()</span>
 
     <span class="c1"># Setters</span>
 <div class="viewcode-block" id="User.set_email">
-<a class="viewcode-back" href="../../User.html#User.models.User.set_email">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.set_email">[docs]</a>
     <span class="k">def</span> <span class="nf">set_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user&#39;s email.</span>
+
+<span class="sd">        :param email: New email address</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span></div>
 
 
 <div class="viewcode-block" id="User.set_role">
-<a class="viewcode-back" href="../../User.html#User.models.User.set_role">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.set_role">[docs]</a>
     <span class="k">def</span> <span class="nf">set_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user&#39;s role.</span>
+
+<span class="sd">        :param role: New role for the user</span>
+<span class="sd">        :type role: str</span>
+<span class="sd">        :raises ValueError: If role is not one of ROLE_CHOICES</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ROLE_CHOICES</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid role: </span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">=</span> <span class="n">role</span></div>
 
 
 <div class="viewcode-block" id="User.set_username">
-<a class="viewcode-back" href="../../User.html#User.models.User.set_username">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.set_username">[docs]</a>
     <span class="k">def</span> <span class="nf">set_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user&#39;s username.</span>
+
+<span class="sd">        :param username: New username</span>
+<span class="sd">        :type username: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span></div>
 
 
 <div class="viewcode-block" id="User.set_password">
-<a class="viewcode-back" href="../../User.html#User.models.User.set_password">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.set_password">[docs]</a>
     <span class="k">def</span> <span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user&#39;s password using Django&#39;s built-in hashing.</span>
+
+<span class="sd">        :param raw_password: Plaintext password</span>
+<span class="sd">        :type raw_password: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">raw_password</span><span class="p">)</span></div>
 
 
     <span class="c1"># Getters</span>
 <div class="viewcode-block" id="User.get_email">
-<a class="viewcode-back" href="../../User.html#User.models.User.get_email">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.get_email">[docs]</a>
     <span class="k">def</span> <span class="nf">get_email</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the user&#39;s email.</span>
+
+<span class="sd">        :return: Email address</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">email</span></div>
 
 
 <div class="viewcode-block" id="User.get_role">
-<a class="viewcode-back" href="../../User.html#User.models.User.get_role">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.get_role">[docs]</a>
     <span class="k">def</span> <span class="nf">get_role</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the user&#39;s role.</span>
+
+<span class="sd">        :return: Role string</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span></div>
 
 
 <div class="viewcode-block" id="User.get_username">
-<a class="viewcode-back" href="../../User.html#User.models.User.get_username">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.get_username">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_username</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the user&#39;s username.</span>
+
+<span class="sd">        :return: Username string</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span></div>
 
 
-    <span class="c1"># Helpful methods</span>
+    <span class="c1"># Utility methods</span>
 <div class="viewcode-block" id="User.getUserInfo">
-<a class="viewcode-back" href="../../User.html#User.models.User.getUserInfo">[docs]</a>
-    <span class="k">def</span> <span class="nf">getUserInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.getUserInfo">[docs]</a>
+    <span class="k">def</span> <span class="nf">getUserInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return basic identifying information of the user.</span>
 
-        <span class="n">userDetails</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_username</span><span class="p">()}</span>
-
-        <span class="k">return</span> <span class="n">userDetails</span></div>
+<span class="sd">        :return: Dictionary with &#39;email&#39; and &#39;username&#39;</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span> <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_username</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="User.updateAttribute">
-<a class="viewcode-back" href="../../User.html#User.models.User.updateAttribute">[docs]</a>
+<a class="viewcode-back" href="../../User.models.html#User.models.User.updateAttribute">[docs]</a>
     <span class="k">def</span> <span class="nf">updateAttribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">newValue</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="c1"># Change the attribute based on what it is</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dynamically update a core user attribute.</span>
+
+<span class="sd">        :param attribute: Attribute name (&#39;email&#39;, &#39;username&#39;, &#39;password&#39;, &#39;role&#39;)</span>
+<span class="sd">        :type attribute: str</span>
+<span class="sd">        :param newValue: New value to set</span>
+<span class="sd">        :type newValue: str</span>
+<span class="sd">        :return: Updated User instance or None if attribute invalid</span>
+<span class="sd">        :rtype: User or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">match</span> <span class="n">attribute</span><span class="p">:</span>
             <span class="k">case</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_email</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
@@ -129,39 +278,23 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_username</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
             <span class="k">case</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s2">&quot;role&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_role</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
             <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># Save the updated user object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 
-    <span class="k">pass</span></div>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return string representation of the user.</span>
 
-
-
-<div class="viewcode-block" id="UserManager">
-<a class="viewcode-back" href="../../User.html#User.models.UserManager">[docs]</a>
-<span class="k">class</span> <span class="nc">UserManager</span><span class="p">(</span><span class="n">DjangoUserManager</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Manager of the User object which handles User creation</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="UserManager.create_user">
-<a class="viewcode-back" href="../../User.html#User.models.UserManager.create_user">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
-        <span class="n">extra_fields</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="n">ROLE_USER</span><span class="p">)</span>
-        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="UserManager.create_superuser">
-<a class="viewcode-back" href="../../User.html#User.models.UserManager.create_superuser">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_superuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_superuser</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_fields</span><span class="p">)</span></div>
-</div>
+<span class="sd">        :return: Username string</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span></div>
 
 </pre></div>
 

@@ -12,6 +12,14 @@ testing.test\_core module
    :show-inheritance:
    :undoc-members:
 
+testing.test\_models module
+---------------------------
+
+.. automodule:: testing.test_models
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 testing.test\_user module
 -------------------------
 

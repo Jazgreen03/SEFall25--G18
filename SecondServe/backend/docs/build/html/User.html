@@ -14,8 +14,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="manage module" href="manage.html" />
-    <link rel="prev" title="SecondServe package" href="SecondServe.html" />
+    <link rel="next" title="User.apps module" href="User.apps.html" />
+    <link rel="prev" title="SecondServe.wsgi module" href="SecondServe.wsgi.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,113 +37,69 @@
 <h1>User package<a class="headerlink" href="#user-package" title="Link to this heading">¶</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
-</section>
-<section id="module-User.apps">
-<span id="user-apps-module"></span><h2>User.apps module<a class="headerlink" href="#module-User.apps" title="Link to this heading">¶</a></h2>
-<p>AppConfig for the users app.</p>
-<ul class="simple">
-<li><p>Sets a clear verbose name for the Django admin.</p></li>
-<li><p>Uses BigAutoField for primary keys by default.</p></li>
-<li><p>Provides a ready() hook where you can import signal handlers
-(e.g., to auto-create default groups/permissions or profile rows).</p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="User.apps.html">User.apps module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="User.apps.html#User.apps.UsersConfig"><code class="docutils literal notranslate"><span class="pre">UsersConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.apps.html#User.apps.UsersConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">UsersConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.apps.html#User.apps.UsersConfig.name"><code class="docutils literal notranslate"><span class="pre">UsersConfig.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.apps.html#User.apps.UsersConfig.verbose_name"><code class="docutils literal notranslate"><span class="pre">UsersConfig.verbose_name</span></code></a></li>
 </ul>
-<dl class="py class">
-<dt class="sig sig-object py" id="User.apps.UsersConfig">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">User.apps.</span></span><span class="sig-name descname"><span class="pre">UsersConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/apps.html#UsersConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.apps.UsersConfig" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="User.apps.UsersConfig.default_auto_field">
-<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_mongodb_backend.fields.ObjectIdAutoField'</span></em><a class="headerlink" href="#User.apps.UsersConfig.default_auto_field" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="User.apps.UsersConfig.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'User'</span></em><a class="headerlink" href="#User.apps.UsersConfig.name" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="User.apps.UsersConfig.verbose_name">
-<span class="sig-name descname"><span class="pre">verbose_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Users</span> <span class="pre">&amp;</span> <span class="pre">Authentication'</span></em><a class="headerlink" href="#User.apps.UsersConfig.verbose_name" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="user-models-module">
-<h2>User.models module<a class="headerlink" href="#user-models-module" title="Link to this heading">¶</a></h2>
-</section>
-<section id="module-User.urls">
-<span id="user-urls-module"></span><h2>User.urls module<a class="headerlink" href="#module-User.urls" title="Link to this heading">¶</a></h2>
-<p>Manages the API calls for any operations related to the User</p>
-<dl class="simple">
-<dt>Current API Calls Handled:</dt><dd><ol class="arabic simple">
-<li><p>Create User Account</p></li>
-<li><p>Login User</p></li>
-<li><p>Logout User</p></li>
-<li><p>Update User Attribute</p></li>
-<li><p>Get User Info</p></li>
-</ol>
-</dd>
-</dl>
-</section>
-<section id="module-User.views">
-<span id="user-views-module"></span><h2>User.views module<a class="headerlink" href="#module-User.views" title="Link to this heading">¶</a></h2>
-<p>Manages User Functionality, called by urls.py</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="User.views.createUser">
-<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">createUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#createUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.createUser" title="Link to this definition">¶</a></dt>
-<dd><p>Creates a User given the parameters provided in the HTTP Request</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="User.views.getUserInfo">
-<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">getUserInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#getUserInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.getUserInfo" title="Link to this definition">¶</a></dt>
-<dd><p>Returns basic details of the authenticated User</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="User.views.loginUser">
-<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">loginUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#loginUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.loginUser" title="Link to this definition">¶</a></dt>
-<dd><p>Attempts to login a User with Username/Email and a Password</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="User.views.logoutUser">
-<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">logoutUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#logoutUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.logoutUser" title="Link to this definition">¶</a></dt>
-<dd><p>Logs out the authenticated user</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="User.views.updateUser">
-<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">updateUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#updateUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.updateUser" title="Link to this definition">¶</a></dt>
-<dd><p>Updates an attribute of the authenticated User</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="User.models.html">User.models module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="User.models.html#User.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">User.DoesNotExist</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">User.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.date_joined"><code class="docutils literal notranslate"><span class="pre">User.date_joined</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.email"><code class="docutils literal notranslate"><span class="pre">User.email</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.first_name"><code class="docutils literal notranslate"><span class="pre">User.first_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.getUserInfo"><code class="docutils literal notranslate"><span class="pre">User.getUserInfo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_email"><code class="docutils literal notranslate"><span class="pre">User.get_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_next_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_next_by_date_joined()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_previous_by_date_joined"><code class="docutils literal notranslate"><span class="pre">User.get_previous_by_date_joined()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_role"><code class="docutils literal notranslate"><span class="pre">User.get_role()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_role_display"><code class="docutils literal notranslate"><span class="pre">User.get_role_display()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.get_username"><code class="docutils literal notranslate"><span class="pre">User.get_username()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.groups"><code class="docutils literal notranslate"><span class="pre">User.groups</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.id"><code class="docutils literal notranslate"><span class="pre">User.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.is_active"><code class="docutils literal notranslate"><span class="pre">User.is_active</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.is_staff"><code class="docutils literal notranslate"><span class="pre">User.is_staff</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.is_superuser"><code class="docutils literal notranslate"><span class="pre">User.is_superuser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.last_login"><code class="docutils literal notranslate"><span class="pre">User.last_login</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.last_name"><code class="docutils literal notranslate"><span class="pre">User.last_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.logentry_set"><code class="docutils literal notranslate"><span class="pre">User.logentry_set</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.objects"><code class="docutils literal notranslate"><span class="pre">User.objects</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.password"><code class="docutils literal notranslate"><span class="pre">User.password</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.role"><code class="docutils literal notranslate"><span class="pre">User.role</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.set_email"><code class="docutils literal notranslate"><span class="pre">User.set_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.set_password"><code class="docutils literal notranslate"><span class="pre">User.set_password()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.set_role"><code class="docutils literal notranslate"><span class="pre">User.set_role()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.set_username"><code class="docutils literal notranslate"><span class="pre">User.set_username()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.updateAttribute"><code class="docutils literal notranslate"><span class="pre">User.updateAttribute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.user_permissions"><code class="docutils literal notranslate"><span class="pre">User.user_permissions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.User.username"><code class="docutils literal notranslate"><span class="pre">User.username</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.models.html#User.models.UserManager"><code class="docutils literal notranslate"><span class="pre">UserManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.UserManager.create_superuser"><code class="docutils literal notranslate"><span class="pre">UserManager.create_superuser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="User.models.html#User.models.UserManager.create_user"><code class="docutils literal notranslate"><span class="pre">UserManager.create_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="User.urls.html">User.urls module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User.views.html">User.views module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="User.views.html#User.views.createUser"><code class="docutils literal notranslate"><span class="pre">createUser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.views.html#User.views.getUserInfo"><code class="docutils literal notranslate"><span class="pre">getUserInfo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.views.html#User.views.loginUser"><code class="docutils literal notranslate"><span class="pre">loginUser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.views.html#User.views.logoutUser"><code class="docutils literal notranslate"><span class="pre">logoutUser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.views.html#User.views.updateUser"><code class="docutils literal notranslate"><span class="pre">updateUser()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 <section id="module-User">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-User" title="Link to this heading">¶</a></h2>
@@ -182,8 +138,6 @@
 <li class="toctree-l2"><a class="reference internal" href="SecondServe.html">SecondServe package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">User package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mongo_migrations.html">mongo_migrations package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html">testing package</a></li>
 </ul>
 </li>
 </ul>
@@ -193,8 +147,8 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">backend</a><ul>
-      <li>Previous: <a href="SecondServe.html" title="previous chapter">SecondServe package</a></li>
-      <li>Next: <a href="manage.html" title="next chapter">manage module</a></li>
+      <li>Previous: <a href="SecondServe.wsgi.html" title="previous chapter">SecondServe.wsgi module</a></li>
+      <li>Next: <a href="User.apps.html" title="next chapter">User.apps module</a></li>
   </ul></li>
   </ul></li>
 </ul>

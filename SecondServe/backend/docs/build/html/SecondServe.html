@@ -14,7 +14,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="User package" href="User.html" />
+    <link rel="next" title="SecondServe.apps module" href="SecondServe.apps.html" />
     <link rel="prev" title="backend" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -37,93 +37,32 @@
 <h1>SecondServe package<a class="headerlink" href="#secondserve-package" title="Link to this heading">¶</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
-</section>
-<section id="module-SecondServe.apps">
-<span id="secondserve-apps-module"></span><h2>SecondServe.apps module<a class="headerlink" href="#module-SecondServe.apps" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoAdminConfig">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SecondServe.apps.</span></span><span class="sig-name descname"><span class="pre">MongoAdminConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SecondServe/apps.html#MongoAdminConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SecondServe.apps.MongoAdminConfig" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AdminConfig</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoAdminConfig.default_auto_field">
-<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_mongodb_backend.fields.ObjectIdAutoField'</span></em><a class="headerlink" href="#SecondServe.apps.MongoAdminConfig.default_auto_field" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoAuthConfig">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SecondServe.apps.</span></span><span class="sig-name descname"><span class="pre">MongoAuthConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SecondServe/apps.html#MongoAuthConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SecondServe.apps.MongoAuthConfig" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AuthConfig</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoAuthConfig.default_auto_field">
-<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_mongodb_backend.fields.ObjectIdAutoField'</span></em><a class="headerlink" href="#SecondServe.apps.MongoAuthConfig.default_auto_field" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoContentTypesConfig">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SecondServe.apps.</span></span><span class="sig-name descname"><span class="pre">MongoContentTypesConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SecondServe/apps.html#MongoContentTypesConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SecondServe.apps.MongoContentTypesConfig" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ContentTypesConfig</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="SecondServe.apps.MongoContentTypesConfig.default_auto_field">
-<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django_mongodb_backend.fields.ObjectIdAutoField'</span></em><a class="headerlink" href="#SecondServe.apps.MongoContentTypesConfig.default_auto_field" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-SecondServe.asgi">
-<span id="secondserve-asgi-module"></span><h2>SecondServe.asgi module<a class="headerlink" href="#module-SecondServe.asgi" title="Link to this heading">¶</a></h2>
-<p>ASGI config for SecondServe project.</p>
-<p>It exposes the ASGI callable as a module-level variable named <code class="docutils literal notranslate"><span class="pre">application</span></code>.</p>
-<p>For more information on this file, see
-<a class="reference external" href="https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/">https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/</a></p>
-</section>
-<section id="module-SecondServe.settings">
-<span id="secondserve-settings-module"></span><h2>SecondServe.settings module<a class="headerlink" href="#module-SecondServe.settings" title="Link to this heading">¶</a></h2>
-<p>Django settings for SecondServe project.</p>
-</section>
-<section id="module-SecondServe.urls">
-<span id="secondserve-urls-module"></span><h2>SecondServe.urls module<a class="headerlink" href="#module-SecondServe.urls" title="Link to this heading">¶</a></h2>
-<p>URL configuration for SecondServe project.</p>
-<dl class="simple">
-<dt>The <cite>urlpatterns</cite> list routes URLs to views. For more information please see:</dt><dd><p><a class="reference external" href="https://docs.djangoproject.com/en/5.2/topics/http/urls/">https://docs.djangoproject.com/en/5.2/topics/http/urls/</a></p>
-</dd>
-</dl>
-<p>Examples:
-Function views</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>Add an import:  from my_app import views</p></li>
-<li><p>Add a URL to urlpatterns:  path(‘’, views.home, name=’home’)</p></li>
-</ol>
-</div></blockquote>
-<dl class="simple">
-<dt>Class-based views</dt><dd><ol class="arabic simple">
-<li><p>Add an import:  from other_app.views import Home</p></li>
-<li><p>Add a URL to urlpatterns:  path(‘’, Home.as_view(), name=’home’)</p></li>
-</ol>
-</dd>
-<dt>Including another URLconf</dt><dd><ol class="arabic simple">
-<li><p>Import the include() function: from django.urls import include, path</p></li>
-<li><p>Add a URL to urlpatterns:  path(‘blog/’, include(‘blog.urls’))</p></li>
-</ol>
-</dd>
-</dl>
-<dl class="py function">
-<dt class="sig sig-object py" id="SecondServe.urls.health">
-<span class="sig-prename descclassname"><span class="pre">SecondServe.urls.</span></span><span class="sig-name descname"><span class="pre">health</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/SecondServe/urls.html#health"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SecondServe.urls.health" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-SecondServe.wsgi">
-<span id="secondserve-wsgi-module"></span><h2>SecondServe.wsgi module<a class="headerlink" href="#module-SecondServe.wsgi" title="Link to this heading">¶</a></h2>
-<p>WSGI config for SecondServe project.</p>
-<p>It exposes the WSGI callable as a module-level variable named <code class="docutils literal notranslate"><span class="pre">application</span></code>.</p>
-<p>For more information on this file, see
-<a class="reference external" href="https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/">https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="SecondServe.apps.html">SecondServe.apps module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoAdminConfig"><code class="docutils literal notranslate"><span class="pre">MongoAdminConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoAdminConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">MongoAdminConfig.default_auto_field</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoAuthConfig"><code class="docutils literal notranslate"><span class="pre">MongoAuthConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoAuthConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">MongoAuthConfig.default_auto_field</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoContentTypesConfig"><code class="docutils literal notranslate"><span class="pre">MongoContentTypesConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="SecondServe.apps.html#SecondServe.apps.MongoContentTypesConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">MongoContentTypesConfig.default_auto_field</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SecondServe.asgi.html">SecondServe.asgi module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SecondServe.settings.html">SecondServe.settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SecondServe.urls.html">SecondServe.urls module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="SecondServe.urls.html#SecondServe.urls.health"><code class="docutils literal notranslate"><span class="pre">health()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SecondServe.wsgi.html">SecondServe.wsgi module</a></li>
+</ul>
+</div>
 </section>
 <section id="module-SecondServe">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-SecondServe" title="Link to this heading">¶</a></h2>
@@ -162,8 +101,6 @@ Function views</p>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SecondServe package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="User.html">User package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mongo_migrations.html">mongo_migrations package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html">testing package</a></li>
 </ul>
 </li>
 </ul>
@@ -174,7 +111,7 @@ Function views</p>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="modules.html">backend</a><ul>
       <li>Previous: <a href="modules.html" title="previous chapter">backend</a></li>
-      <li>Next: <a href="User.html" title="next chapter">User package</a></li>
+      <li>Next: <a href="SecondServe.apps.html" title="next chapter">SecondServe.apps module</a></li>
   </ul></li>
   </ul></li>
 </ul>

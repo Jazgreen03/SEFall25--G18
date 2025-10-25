@@ -58,8 +58,6 @@ data models, and utility modules used throughout the project.</p>
 <li class="toctree-l2"><a class="reference internal" href="SecondServe.html">SecondServe package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="User.html">User package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mongo_migrations.html">mongo_migrations package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="testing.html">testing package</a></li>
 </ul>
 </li>
 </ul>
@@ -82,11 +80,11 @@ data models, and utility modules used throughout the project.</p>
 .. code-block:: bash</p>
 <blockquote>
 <div><p># Source docs</p>
-<p>sphinx-apidoc -o docs/source .</p>
+<p>sphinx-apidoc -o docs/source . testing/* mongo_migrations/* docs/* –separate</p>
 <p># Generate HTML documentation</p>
 <p>sphinx-build -b html docs/source docs/build/html</p>
 <p># Generate documentation coverage badge</p>
-<p>docstr-coverage . –skip-private –skip-magic –badge docs/source/_static/doc_coverage.svg</p>
+<p>docstr-coverage User SecondServe –skip-private –skip-magic –badge docs/source/_static/doc_coverage.svg</p>
 </div></blockquote>
 </section>
 </section>

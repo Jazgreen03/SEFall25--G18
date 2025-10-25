@@ -58,7 +58,7 @@ For generating documentation and badges from ./SecondServe/backend:
 
    # Source docs
    
-   sphinx-apidoc -o docs/source . 
+   sphinx-apidoc -o docs/source . testing/* mongo_migrations/* docs/* --separate 
 
    # Generate HTML documentation
    
@@ -66,7 +66,7 @@ For generating documentation and badges from ./SecondServe/backend:
 
    # Generate documentation coverage badge
    
-   docstr-coverage . --skip-private --skip-magic --badge docs/source/_static/doc_coverage.svg
+   docstr-coverage User SecondServe --skip-private --skip-magic --badge docs/source/_static/doc_coverage.svg
 
 Indices and Tables
 ==================

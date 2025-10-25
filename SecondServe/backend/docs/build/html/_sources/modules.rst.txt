@@ -7,5 +7,3 @@ backend
    SecondServe
    User
    manage
-   mongo_migrations
-   testing
