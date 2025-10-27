@@ -1,12 +1,7 @@
 """
-Manages the API calls for any operations related to the User
+Manages the API calls for any operations related to the Organization
 
-Current API Calls Handled:
-    1. Create User Account
-    2. Login User
-    3. Logout User
-    4. Update User Attribute
-    5. Get User Info
+Currently, the only API Call handled is for the creation of an Organization
 """
 
 from django.urls import path

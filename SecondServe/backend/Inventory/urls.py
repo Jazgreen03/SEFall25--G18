@@ -1,12 +1,11 @@
 """
-Manages the API calls for any operations related to the User
+Manages the API calls for any operations related to the Inventory
 
-Current API Calls Handled:
-    1. Create User Account
-    2. Login User
-    3. Logout User
-    4. Update User Attribute
-    5. Get User Info
+Current API Calls Are:
+1. Get Inventory
+2. Add Item to Inventory
+3. Bulk Edit Inventory Items (Update)
+4. Edit Item in Inventory
 """
 
 from django.urls import path
