@@ -21,7 +21,7 @@ class Inventory(models.Model):
     """
 
     # The ID of the org that holds this Inventory
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    organization = models.CharField(max_length=256, unique=True)
 
 
 class Item(models.Model):

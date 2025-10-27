@@ -1,5 +1,6 @@
 from django.db import models
 from Inventory.models import Inventory
+from User.models import User
 
 TYPE_FOODBANK = "foodbank"
 TYPE_GROCERYSTORE = "grocery"
@@ -13,21 +14,41 @@ TYPE_CHOICES = (
     (TYPE_OTHER, "Other")
 )
 
+class OrganizationManager(models.Manager):
+    # Create Organization
+    def createOrganization(self, user: User, name: str, orgType: str, location: str):
+
+        # Create the Organizations Inventory
+        inv = Inventory.objects.create(organization=name)
+
+        # Create the Organization with all the necessary variables and save to database
+        Organization.objects.create(name=name, orgType=orgType, location=location, inventory=inv, creator=user)
+        
+
 class Organization(models.Model):
     """
     Custom Inventory Model
+    
+    Fields:
+    * Name of the Organization
+    * Type of the Organization
+    * Location of the Organization
+    * Inventory ID for Organization
+    * Creator of Organization Account
 
-    Contains One to Many Items through indirect association (each Item claims the Inventory)
+    Note: Inventory has 1 to Many Items
     """
 
-    # The ID of the org that holds this Inventory
-    name = models.CharField(max_length=256)
-
+    # The name of the org
+    name = models.CharField(max_length=256, unique=True)
     # What type of organization it is
-    orgType = models.CharField(choices=TYPE_CHOICES, default=TYPE_OTHER)
-
+    orgType = models.CharField(max_length=30, choices=TYPE_CHOICES, default=TYPE_OTHER)
     # Where the organization is located
-    location = models.CharField(unique=True)
-
+    location = models.CharField(max_length=256, unique=True)
     # The associated inventory
-    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    inventory = models.OneToOneField(Inventory, on_delete=models.CASCADE, related_name="organization")
+    # The creator User account
+    creator = models.ForeignKey(User, on_delete=models.PROTECT, related_name="organizations")
+
+    # The Manager for Organization
+    objects = OrganizationManager()
