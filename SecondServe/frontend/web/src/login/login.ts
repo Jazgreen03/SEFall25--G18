@@ -64,7 +64,7 @@ export class Login {
             "username": email,
             "password": password,
           }
-          this.http.post("http://localhost:8000/api/login", this.data).subscribe((response: any) => {
+          this.http.post("http://localhost:8000/user/login", this.data).subscribe((response: any) => {
             this.obj = response;
           });
           // if(this.obj == 'success'){
