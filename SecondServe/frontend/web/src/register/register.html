@@ -18,63 +18,38 @@
     <div class="user-type-toggle">
       <button type="button" [class.active]="userType === 'individual'" (click)="setUserType('individual')"
         class="toggle-btn">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M10 9C11.6569 9 13 7.65685 13 6C13 4.34315 11.6569 3 10 3C8.34315 3 7 4.34315 7 6C7 7.65685 8.34315 9 10 9Z" />
-          <path d="M3 18C3 14.134 6.13401 11 10 11C13.866 11 17 14.134 17 18H3Z" />
-        </svg>
         Individual
       </button>
-
       <button type="button" [class.active]="userType === 'business'" (click)="setUserType('business')"
         class="toggle-btn">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M4 4C4 2.89543 4.89543 2 6 2H14C15.1046 2 16 2.89543 16 4V18H17C17.5523 18 18 17.5523 18 17C18 16.4477 17.5523 16 17 16V6C17 5.44772 16.5523 5 16 5H15V4C15 3.44772 14.5523 3 14 3H6C5.44772 3 5 3.44772 5 4V5H4C3.44772 5 3 5.44772 3 6V16C2.44772 16 2 16.4477 2 17C2 17.5523 2.44772 18 3 18H4V4Z" />
-        </svg>
         Restaurant/Store
       </button>
-
       <button type="button" [class.active]="userType === 'driver'" (click)="setUserType('driver')" class="toggle-btn">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M4 8C4 6.34315 5.34315 5 7 5H13C14.6569 5 16 6.34315 16 8V14H17C17.5523 14 18 14.4477 18 15V16H2V15C2 14.4477 2.44772 14 3 14H4V8Z" />
-          <circle cx="6" cy="16" r="2" />
-          <circle cx="14" cy="16" r="2" />
-        </svg>
         Driver
       </button>
     </div>
 
-    <!-- Register Form -->
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-      <!-- Email Field -->
+    <!-- Step 1: Email & Password -->
+    <form *ngIf="currentStep === 1" [formGroup]="registerForm" (ngSubmit)="goToNextStep()" class="register-form">
       <div class="form-group">
         <label for="email">Email Address</label>
-        <input type="email" id="email" formControlName="email" placeholder="Enter your email"
-          [class.error]="email?.invalid && email?.touched" />
+        <input id="email" formControlName="email" type="email" placeholder="Enter your email"
+          [class.error]="email?.invalid && email?.touched">
         <span class="error-message" *ngIf="email?.invalid && email?.touched">
           <span *ngIf="email?.errors?.['required']">Email is required</span>
-          <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+          <span *ngIf="email?.errors?.['email']">Enter a valid email</span>
         </span>
       </div>
 
-      <!-- Password Field -->
       <div class="form-group">
         <label for="password">Password</label>
         <div class="password-input-wrapper">
           <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
-            placeholder="Enter your password" [class.error]="password?.invalid && password?.touched" />
+            placeholder="Enter your password" [class.error]="password?.invalid && password?.touched">
           <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"
-            aria-label="Toggle password visibility">
-            <svg *ngIf="!showPassword" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                d="M10 4C5 4 1.73 7.11 1 10c.73 2.89 4 6 9 6s8.27-3.11 9-6c-.73-2.89-4-6-9-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-            </svg>
-            <svg *ngIf="showPassword" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019 10C18.27 7.11 15 4 10 4c-1.33 0-2.57.29-3.68.79L3.707 2.293zM10 6c2.21 0 4 1.79 4 4 0 .73-.21 1.41-.55 2l-1.86-1.86c.27-.38.41-.83.41-1.14 0-1.1-.9-2-2-2-.31 0-.76.14-1.14.41L6.55 5.55C7.59 5.79 8.76 6 10 6zM2 10c.73-2.89 4-6 9-6l-1.26 1.26c-1.88.31-3.45 1.51-4.46 3.24L2 10z" />
-            </svg>
+            aria-label="Toggle password">
+            <span *ngIf="!showPassword">👁️</span>
+            <span *ngIf="showPassword">🙈</span>
           </button>
         </div>
         <span class="error-message" *ngIf="password?.invalid && password?.touched">
@@ -83,38 +58,51 @@
         </span>
       </div>
 
-      <!-- Error Message -->
-      <div class="alert-error" *ngIf="errorMessage">
-        {{ errorMessage }}
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" formControlName="confirmPassword" type="password"
+          placeholder="Confirm your password" [class.error]="confirmPassword?.invalid && confirmPassword?.touched">
+        <span class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+          <span *ngIf="confirmPassword?.errors?.['required']">Confirmation is required</span>
+          <span *ngIf="registerForm?.errors?.['mismatch']">Passwords do not match</span>
+        </span>
       </div>
 
-      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">Next</button>
+    </form>
+
+    <!-- Step 2: Additional Details -->
+    <form *ngIf="currentStep === 2" [formGroup]="detailsForm" (ngSubmit)="onSubmitFinal()" class="register-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" formControlName="name" type="text" placeholder="Enter your name">
+      </div>
+
+      <div class="form-group" *ngIf="userType !== 'driver'">
+        <label for="address">Address</label>
+        <input id="address" formControlName="address" type="text" placeholder="Enter your address">
+      </div>
+
+      <div class="form-group" *ngIf="userType === 'business'">
+        <label for="businessType">Business Type</label>
+        <input id="businessType" formControlName="businessType" type="text" placeholder="Enter your business type">
+      </div>
+
+      <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <button type="button" class="submit-btn" (click)="goBack()">Back</button>
       <button type="submit" class="submit-btn" [disabled]="isLoading">
         <span *ngIf="!isLoading">Register</span>
-        <span *ngIf="isLoading" class="loading-spinner">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-dasharray="50" />
-          </svg>
-          Creating Account...
-        </span>
+        <span *ngIf="isLoading">Registering...</span>
       </button>
-
-      <!-- Additional Links -->
-      <div class="form-footer">
-        <div class="divider">
-          <span>Already have an account?</span>
-        </div>
-        <a href="/login" class="link-secondary">Login Instead</a>
-      </div>
     </form>
   </div>
 
-  <!-- Mission Statement Footer -->
   <div class="mission-statement">
     <p>
       <strong>Our Mission:</strong> Connecting local restaurants and grocery stores with individuals facing food
-      insecurity — reducing waste while providing nutritious meals to those in need.
+      insecurity, reducing waste while providing nutritious meals to those in need.
     </p>
   </div>
 </div>

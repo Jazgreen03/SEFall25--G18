@@ -12,10 +12,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./register.css']
 })
 export class Register {
-  registerForm: FormGroup;
+  currentStep = 1;
   userType: 'individual' | 'business' | 'driver' = 'individual';
+
+  registerForm: FormGroup;
+  detailsForm: FormGroup;
+
   showPassword = false;
-  showConfirmPassword = false;
   isLoading = false;
   errorMessage = '';
   successMessage = '';
@@ -25,71 +28,96 @@ export class Register {
     private router: Router,
     private http: HttpClient
   ) {
+    // Step 1 form: email/password
     this.registerForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-      userType: ['individual']
+      confirmPassword: ['', [Validators.required]]
     }, { validator: this.passwordsMatchValidator });
+
+    // Step 2 form: additional details
+    this.detailsForm = this.fb.group({
+      name: [''],
+      address: [''],
+      businessType: ['']
+    });
   }
 
-  // ✅ Validate that passwords match
   private passwordsMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
+    const pass = form.get('password')?.value;
     const confirm = form.get('confirmPassword')?.value;
-    return password === confirm ? null : { passwordsMismatch: true };
-  }
-
-  togglePasswordVisibility(field: 'password' | 'confirmPassword') {
-    if (field === 'password') this.showPassword = !this.showPassword;
-    else this.showConfirmPassword = !this.showConfirmPassword;
+    return pass === confirm ? null : { mismatch: true };
   }
 
   setUserType(type: 'individual' | 'business' | 'driver') {
     this.userType = type;
-    this.registerForm.patchValue({ userType: type });
   }
 
-  onSubmit() {
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  /** Step 1 submit: go to details step if valid */
+  goToNextStep() {
     if (this.registerForm.valid) {
+      this.currentStep = 2;
+      this.errorMessage = '';
+    } else {
+      this.markFormGroupTouched(this.registerForm);
+    }
+  }
+
+  /** Step 2 submit: send registration payload to API */
+  onSubmitFinal() {
+    if (this.detailsForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
-      this.successMessage = '';
 
-      const { fullName, email, password, userType } = this.registerForm.value;
+      const baseData = this.registerForm.value;
+      const extraData = this.detailsForm.value;
+
       const payload = {
-        username: email,
-        password,
-        full_name: fullName,
-        user_type: userType
+        username: baseData.email,
+        password: baseData.password,
+        user_type: this.userType,
+        ...extraData
       };
 
       this.http.post('http://localhost:8000/user/create', payload).subscribe({
-        next: (response: any) => {
+        next: (res: any) => {
           this.isLoading = false;
           this.successMessage = 'Registration successful! Redirecting...';
           setTimeout(() => this.router.navigate(['/login']), 1500);
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
+          this.errorMessage = err.error?.message || 'Registration failed.';
         }
       });
     } else {
-      this.markFormGroupTouched(this.registerForm);
+      this.markFormGroupTouched(this.detailsForm);
     }
   }
 
+  /** Go back to previous step */
+  goBack() {
+    this.currentStep = 1;
+  }
+
+  /** Mark all controls as touched to show validation errors */
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(key => {
-      const control = formGroup.get(key);
-      control?.markAsTouched();
+      formGroup.get(key)?.markAsTouched();
     });
   }
 
-  get fullName() { return this.registerForm.get('fullName'); }
+  // Step 1 getters
   get email() { return this.registerForm.get('email'); }
   get password() { return this.registerForm.get('password'); }
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
+
+  // Step 2 getters
+  get name() { return this.detailsForm.get('name'); }
+  get address() { return this.detailsForm.get('address'); }
+  get businessType() { return this.detailsForm.get('businessType'); }
 }
