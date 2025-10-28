@@ -1,79 +1,94 @@
 services:
+  # === MongoDB Database ===
   db:
     image: mongo:7
+    container_name: mongo-db
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1}).ok"]
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
       interval: 5s
       timeout: 3s
       retries: 20
     environment:
-      # Use official mongo envs for init:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      # Optional: precreate your app DB (doesn't create a non-root user by itself)
       MONGO_INITDB_DATABASE: ${DATABASE_NAME}
     ports:
       - "${DATABASE_PORT:-27017}:27017"
     volumes:
       - mongo_data:/data/db
-      # If you want an app-scoped user instead of root, add an init script:
+      # Optional: initialization scripts (e.g., users or schema setup)
       # - ./mongo-init/:/docker-entrypoint-initdb.d:ro
     env_file:
       - .env
-    networks: [appnet]
+    networks:
+      - appnet
 
+  # === Django Backend ===
   backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    container_name: django-docker
+    container_name: django-backend
     env_file: .env
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app/backend  # <- Mount local backend folder
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
-    networks: [appnet]
+    networks:
+      - appnet
 
-
-  # Dev Angular (optional) – leave commented if not using:
-  # frontend-dev:
-  #   image: node:20-alpine
-  #   working_dir: /app
-  #   volumes:
-  #     - ./frontend/web:/app
-  #     - ./frontend/proxy.conf.json:/app/../proxy.conf.json:ro
-  #   command: sh -c "npm ci && npx ng serve --host 0.0.0.0 --port 4200 --proxy-config ../proxy.conf.json"
-  #   ports:
-  #     - "4200:4200"
-  #   depends_on: [backend]
-  #   networks: [appnet]
-
+  # === Angular Frontend (Production via Nginx) ===
   frontend:
     build:
       context: .
-      dockerfile: frontend/Dockerfile  # <-- move under "build"
+      dockerfile: frontend/Dockerfile
     container_name: angular-nginx
     depends_on:
       - backend
     ports:
       - "80:80"
-    networks: [appnet]
-  
+    networks:
+      - appnet
+
+  # === Angular Frontend (Development Mode with Hot Reload) ===
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.dev
+    container_name: angular-dev
+    volumes:
+      - ./frontend/web:/app              # Mount local source for live reload
+      - ./frontend/proxy.conf.json:/app/proxy.conf.json:ro
+      - /app/node_modules                # Avoid overwriting node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true         # Required for file change detection inside Docker
+    command: npm run start -- --host 0.0.0.0 --port 4200 --poll=1000 --proxy-config /app/proxy.conf.json
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+  # === Optional Frontend Test Runner ===
   frontend-test:
     build:
       context: .
       dockerfile: frontend/test.Dockerfile
     container_name: frontend-test
     depends_on:
-      - backend   # optional, only if tests need API
-    networks: [appnet]
+      - backend
+    networks:
+      - appnet
 
+# === Shared Docker Network ===
 networks:
   appnet:
 
+# === Persistent Mongo Volume ===
 volumes:
   mongo_data:

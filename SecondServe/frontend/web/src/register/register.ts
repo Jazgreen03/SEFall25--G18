@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { getCookie } from '../../utils';
 
 @Component({
   selector: 'app-register',
@@ -67,23 +68,45 @@ export class Register {
     }
   }
 
+  /** Fetch CSRF cookie from backend */
+  private getCsrfToken(): Promise<void> {
+    return this.http.get('http://localhost:8000/api/csrf/', { withCredentials: true })
+      .toPromise()
+      .then(() => console.log('CSRF cookie set'));
+  }
+
   /** Step 2 submit: send registration payload to API */
-  onSubmitFinal() {
-    if (this.detailsForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = '';
+  async onSubmitFinal() {
+    if (!this.detailsForm.valid) {
+      this.markFormGroupTouched(this.detailsForm);
+      return;
+    }
 
-      const baseData = this.registerForm.value;
-      const extraData = this.detailsForm.value;
+    this.isLoading = true;
+    this.errorMessage = '';
 
-      const payload = {
-        username: baseData.email,
-        password: baseData.password,
-        user_type: this.userType,
-        ...extraData
-      };
+    // Ensure CSRF cookie exists
+    await this.getCsrfToken();
 
-      this.http.post('http://localhost:8000/user/create', payload).subscribe({
+    const baseData = this.registerForm.value;
+    const extraData = this.detailsForm.value;
+
+    const payload = {
+      username: baseData.email,
+      password: baseData.password,
+      user_type: this.userType,
+      ...extraData
+    };
+
+    const csrfToken = getCookie('csrftoken') || '';
+    const headers = new HttpHeaders({
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json',      // <--- Explicitly tell Django it's JSON
+      'Accept': 'application/json'
+    });
+
+    this.http.post('http://localhost:8000/user/create/', payload, { headers, withCredentials: true })
+      .subscribe({
         next: (res: any) => {
           this.isLoading = false;
           this.successMessage = 'Registration successful! Redirecting...';
@@ -94,9 +117,6 @@ export class Register {
           this.errorMessage = err.error?.message || 'Registration failed.';
         }
       });
-    } else {
-      this.markFormGroupTouched(this.detailsForm);
-    }
   }
 
   /** Go back to previous step */

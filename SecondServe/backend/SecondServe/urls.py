@@ -18,14 +18,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 def health(_):
     return JsonResponse({"status": "ok"})
 
 
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({"detail": "CSRF cookie set"})
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/health/", health),
     path("user/", include(("User.urls", "user"))),
+    path("api/csrf/", csrf),
 ]
