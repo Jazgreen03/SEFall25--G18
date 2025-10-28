@@ -2,13 +2,13 @@ from django.db import models
 
 TYPE_PREPAREDFOOD = "prepared"
 TYPE_PRODUCE = "produce"
-TYPE_REFRIDERGATED = "refridergated"
+TYPE_REFRIGERATED = "refrigerated"
 TYPE_SHELFSTABLE = "stable"
 
 TYPE_CHOICES = (
     (TYPE_PREPAREDFOOD, "Prepared"),
     (TYPE_PRODUCE, "Produce"),
-    (TYPE_REFRIDERGATED, "Refridergated"),
+    (TYPE_REFRIGERATED, "Refrigerated"),
     (TYPE_SHELFSTABLE, "Shelf Stable")
 )
 
@@ -21,6 +21,9 @@ class Inventory(models.Model):
 
     # The name of the org that holds this Inventory
     organization = models.CharField(max_length=256, unique=True)
+
+    def has_item(self, itemName: str) -> bool:
+        return self.items.filter(name=itemName).exists()
 
 
 class Item(models.Model):
