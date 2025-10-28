@@ -35,9 +35,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "User",
+    "corsheaders",  # Enable CORS support
 ]
 
+# -------------------------------------------------------------------
+# MIDDLEWARE
+# -------------------------------------------------------------------
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # Must be at the top
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -77,10 +82,7 @@ DATABASES = {
         "NAME": os.getenv("DATABASE_NAME", "SecondServe"),
         "USER": os.getenv("DATABASE_USERNAME", ""),
         "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),
-        "TEST": {
-            # Use a separate database for tests
-            "NAME": os.getenv("DATABASE_TEST_NAME", "SecondServe_test")
-        },
+        "TEST": {"NAME": os.getenv("DATABASE_TEST_NAME", "SecondServe_test")},
     },
 }
 
@@ -122,6 +124,38 @@ MIGRATION_MODULES = {
     "auth": "mongo_migrations.auth",
     "contenttypes": "mongo_migrations.contenttypes",
 }
+
+# -------------------------------------------------------------------
+# CORS SETTINGS (fix preflight and Angular dev)
+# -------------------------------------------------------------------
+# Allow localhost:4200 (Angular dev server) or all origins during dev
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:4200",
+    ]
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:4200"]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "x-csrftoken",  # <-- Add this
+    "accept",
+    "authorization",
+    "x-requested-with",
+    "accept-encoding",
+    "origin",
+    "user-agent",
+    "accept-language",
+    "dnt",
+    "cache-control",
+    "pragma",
+]
+
+# Optional: disable automatic slash redirect for APIs
+APPEND_SLASH = True  # Or False if you want URLs without trailing slash
 
 # -------------------------------------------------------------------
 # DEBUG OUTPUT (optional)
