@@ -1,5 +1,4 @@
 from django.db import models
-from Organization.models import Organization
 
 TYPE_PREPAREDFOOD = "prepared"
 TYPE_PRODUCE = "produce"
@@ -20,7 +19,7 @@ class Inventory(models.Model):
     Contains One to Many Items through indirect association (each Item claims the Inventory)
     """
 
-    # The ID of the org that holds this Inventory
+    # The name of the org that holds this Inventory
     organization = models.CharField(max_length=256, unique=True)
 
 
