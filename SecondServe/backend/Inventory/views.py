@@ -186,3 +186,33 @@ def edit_inventory(request: HttpRequest) -> JsonResponse:
 
     # Get the Inventory
     inv = getInv(request.user)
+
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({"error": "Invalid JSON format."}, status=400)
+    
+    item_name = data.get("item_name")
+    attributes = data.get("attribute", [])
+    values = data.get("new_value", [])
+
+    # Check that the attribute and value arrays match
+    if item_name is None or len(attributes) != len(values):
+        return JsonResponse({"details": "Invalid Parameter Values"}, status=406)
+        
+    # Check if the item exists in the inventory
+    if inv.has_item(itemName=item_name) is False:
+        return JsonResponse({"details": "Item (" + item_name + ") does not exist"}, status=404)
+    
+    currentItem = inv.get_item(itemName=item_name)
+
+    # Iterate through all the attributes/values updating the item as we go
+    for attr, val in zip(attributes, values):
+        # This edits and saves the item for each valid attribute/value
+        # Is this a bad idea? Probably, but its for a future Twiggy or dev
+        # to fix.
+        response = editItem(attr, val, currentItem)
+        if response is not None:
+            return response
+    
+    return JsonResponse({"details": "Item Edited!"}, status=200)
