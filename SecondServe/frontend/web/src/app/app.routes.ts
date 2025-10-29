@@ -3,10 +3,12 @@ import { Landing } from '../landing/landing';
 import { Home } from '../home/home';
 import { Login } from '../login/login';
 import { Register } from '../register/register';
+import { AccountManagement } from '../manage-account/manage-account'
 
 export const routes: Routes = [
     { path: '', component: Landing },
     { path: 'home', component: Home },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
+    { path: 'account', component: AccountManagement },
 ];

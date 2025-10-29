@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 interface Restaurant {
@@ -35,16 +36,36 @@ export class Home implements OnInit {
   loading = false;
   error: string | null = null;
 
-  // Backend API base URL - update with your actual backend URL
   private apiUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.loadRestaurants();
   }
 
-  // GET: Fetch all available restaurants
+  // --- Navigation Methods --- //
+  goToAccount(): void {
+    this.router.navigate(['/account']);
+  }
+
+  goToHome(): void {
+    // Navigate to orders page
+    window.location.href = '/home';
+  }
+
+  goToOrders(): void {
+    this.router.navigate(['/orders']);
+  }
+
+  logout(): void {
+    // clear token and navigate to login
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
+  }
+
+  // --- API Methods --- //
+
   loadRestaurants(): void {
     this.loading = true;
     this.error = null;
@@ -56,136 +77,68 @@ export class Home implements OnInit {
           this.loading = false;
         },
         error: (err) => {
-          this.error = 'Failed to load restaurants. Please try again.';
+          this.error = 'Failed to load restaurants.';
           this.loading = false;
           console.error('Error loading restaurants:', err);
         }
       });
   }
 
-  // GET: Fetch restaurants by location
-  loadRestaurantsByLocation(latitude: number, longitude: number, radius = 10): void {
-    this.loading = true;
-    this.error = null;
-
-    const params = {
-      lat: latitude.toString(),
-      lng: longitude.toString(),
-      radius: radius.toString()
-    };
-
-    this.http.get<Restaurant[]>(`${this.apiUrl}/restaurants/nearby`, { params })
-      .subscribe({
-        next: (data) => {
-          this.restaurants = data;
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Failed to load nearby restaurants.';
-          this.loading = false;
-          console.error('Error loading nearby restaurants:', err);
-        }
-      });
-  }
-
-  // GET: Fetch restaurant details
-  getRestaurantDetails(restaurantId: number): Observable<Restaurant> {
-    return this.http.get<Restaurant>(`${this.apiUrl}/restaurants/${restaurantId}`);
-  }
-
-  // POST: Schedule a pickup
   schedulePickup(request: PickupRequest): void {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.loading = true;
-    this.error = null;
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
 
     this.http.post(`${this.apiUrl}/pickups/schedule`, request, { headers })
       .subscribe({
-        next: (response) => {
+        next: () => {
           alert('Pickup scheduled successfully!');
           this.loading = false;
         },
         error: (err) => {
-          this.error = 'Failed to schedule pickup. Please try again.';
+          this.error = 'Failed to schedule pickup.';
           this.loading = false;
-          console.error('Error scheduling pickup:', err);
+          console.error(err);
         }
       });
   }
 
-  // POST: Request delivery
-  requestDelivery(restaurantId: number, deliveryAddress: string): void {
-    this.loading = true;
-    this.error = null;
-
-    const deliveryRequest = {
-      restaurantId,
-      deliveryAddress,
-      requestedTime: new Date().toISOString()
-    };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    this.http.post(`${this.apiUrl}/deliveries/request`, deliveryRequest, { headers })
-      .subscribe({
-        next: (response) => {
-          alert('Delivery request submitted successfully!');
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Failed to request delivery. Please try again.';
-          this.loading = false;
-          console.error('Error requesting delivery:', err);
-        }
-      });
-  }
-
-  // POST: Register user interest
-  registerInterest(email: string): void {
-    const interest = { email, timestamp: new Date().toISOString() };
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    this.http.post(`${this.apiUrl}/users/register-interest`, interest, { headers })
-      .subscribe({
-        next: () => {
-          alert('Thank you for your interest!');
-        },
-        error: (err) => {
-          console.error('Error registering interest:', err);
-        }
-      });
-  }
-
-  // Helper method to handle pickup button click
   onPickupClick(restaurant: Restaurant): void {
     const pickupRequest: PickupRequest = {
       restaurantId: restaurant.id,
-      userId: 1, // Replace with actual logged-in user ID
-      pickupTime: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
+      userId: 1,
+      pickupTime: new Date(Date.now() + 3600000).toISOString(),
       deliveryType: 'pickup',
       items: []
     };
-
     this.schedulePickup(pickupRequest);
   }
 
-  // Helper method to handle delivery button click
   onDeliveryClick(restaurant: Restaurant): void {
-    const address = prompt('Please enter your delivery address:');
-    if (address) {
-      this.requestDelivery(restaurant.id, address);
-    }
+    const address = prompt('Enter delivery address:');
+    if (!address) return;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const deliveryRequest = {
+      restaurantId: restaurant.id,
+      deliveryAddress: address,
+      requestedTime: new Date().toISOString()
+    };
+
+    this.loading = true;
+    this.http.post(`${this.apiUrl}/deliveries/request`, deliveryRequest, { headers })
+      .subscribe({
+        next: () => {
+          alert('Delivery requested!');
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = 'Delivery request failed.';
+          this.loading = false;
+          console.error(err);
+        }
+      });
   }
 
-  // Refresh restaurant list
   refreshRestaurants(): void {
     this.loadRestaurants();
   }
