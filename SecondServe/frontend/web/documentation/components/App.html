@@ -497,62 +497,54 @@ export class App {
 
 &lt;body&gt;
   &lt;router-outlet&gt;&lt;/router-outlet&gt;
-  &lt;!-- ---------------- Header ---------------- --&gt;
+  &lt;!-- ---------------- Header Page ---------------- --&gt;
   &lt;!-- &lt;header&gt;
     &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
     &lt;nav&gt;
       &lt;div class&#x3D;&quot;dropdown&quot;&gt;
         &lt;a href&#x3D;&quot;#&quot;&gt;Find Restaurants &amp; Resources&lt;/a&gt;
         &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Restaurants&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Grocery Stores&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;a href&#x3D;&quot;restaurants.html&quot;&gt;Restaurants&lt;/a&gt;
+          &lt;a href&#x3D;&quot;grocery.html&quot;&gt;Grocery Stores&lt;/a&gt;
+          &lt;a href&#x3D;&quot;community.html&quot;&gt;Community Centers&lt;/a&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
       &lt;div class&#x3D;&quot;dropdown&quot;&gt;
         &lt;a href&#x3D;&quot;#&quot;&gt;Get Involved&lt;/a&gt;
         &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Volunteer&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Donate&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Partner With Us&lt;/a&gt;
+          &lt;a href&#x3D;&quot;volunteer.html&quot;&gt;Volunteer&lt;/a&gt;
+          &lt;a href&#x3D;&quot;donate.html&quot;&gt;Donate&lt;/a&gt;
+          &lt;a href&#x3D;&quot;partner.html&quot;&gt;Partner With Us&lt;/a&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
       &lt;div class&#x3D;&quot;dropdown&quot;&gt;
         &lt;a href&#x3D;&quot;#&quot;&gt;News &amp; Media&lt;/a&gt;
         &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Press Releases&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Events&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Blog&lt;/a&gt;
+          &lt;a href&#x3D;&quot;press.html&quot;&gt;Press Releases&lt;/a&gt;
+          &lt;a href&#x3D;&quot;events.html&quot;&gt;Events&lt;/a&gt;
+          &lt;a href&#x3D;&quot;blog.html&quot;&gt;Blog&lt;/a&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
       &lt;div class&#x3D;&quot;dropdown&quot;&gt;
         &lt;a href&#x3D;&quot;#&quot;&gt;About Us&lt;/a&gt;
         &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Mission&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Team&lt;/a&gt;
-          &lt;a href&#x3D;&quot;#&quot;&gt;Contact&lt;/a&gt;
+          &lt;a href&#x3D;&quot;mission.html&quot;&gt;Mission&lt;/a&gt;
+          &lt;a href&#x3D;&quot;team.html&quot;&gt;Team&lt;/a&gt;
+          &lt;a href&#x3D;&quot;contact.html&quot;&gt;Contact&lt;/a&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt; --&gt;
 
-  &lt;!-- ---------------- Hero Section ---------------- --&gt;
-  &lt;!-- &lt;section&gt;
-    &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt; --&gt;
-
-  &lt;!-- Slideshow --&gt;
-  &lt;!-- &lt;div class&#x3D;&quot;slideshow-container&quot;&gt;
-      &lt;div class&#x3D;&quot;slide&quot;&gt;&lt;img src&#x3D;&quot;photo1.jpg&quot; alt&#x3D;&quot;Restaurant donating meals&quot;&gt;&lt;/div&gt;
-      &lt;div class&#x3D;&quot;slide&quot;&gt;&lt;img src&#x3D;&quot;photo2.jpg&quot; alt&#x3D;&quot;Volunteers sorting food donations&quot;&gt;&lt;/div&gt;
-      &lt;div class&#x3D;&quot;slide&quot;&gt;&lt;img src&#x3D;&quot;photo3.jpg&quot; alt&#x3D;&quot;Grocery store reducing food waste&quot;&gt;&lt;/div&gt;
-      &lt;div class&#x3D;&quot;slide&quot;&gt;&lt;img src&#x3D;&quot;photo4.jpg&quot; alt&#x3D;&quot;Community receiving food support&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt; --&gt;
-
-  &lt;!-- Pitch paragraph --&gt;
-  &lt;!-- &lt;p&gt;
+  &lt;!-- ---------------- Img ---------------- --&gt;
+  &lt;!-- &lt;section class&#x3D;&quot;hero-section&quot;&gt;
+    &lt;img src&#x3D;&quot;https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg&quot;
+      alt&#x3D;&quot;Family enjoying a meal&quot;&gt;
+    &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt;
+    &lt;p&gt;
       &lt;strong&gt;SecondServe&lt;/strong&gt; is redefining how communities fight food waste and hunger.
       By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into
       meaningful meals —
@@ -607,8 +599,8 @@ export class App {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="app.css"></head><body>  <router-outlet></router-outlet>  <!-- ---------------- Header ---------------- -->  <!-- <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a href="#">Restaurants</a>          <a href="#">Grocery Stores</a>          <a href="#">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a href="#">Volunteer</a>          <a href="#">Donate</a>          <a href="#">Partner With Us</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a href="#">Press Releases</a>          <a href="#">Events</a>          <a href="#">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a href="#">Mission</a>          <a href="#">Team</a>          <a href="#">Contact</a>        </div>      </div>    </nav>  </header> -->  <!-- ---------------- Hero Section ---------------- -->  <!-- <section>    <h1>Are you ready to serve smarter?</h1> -->  <!-- Slideshow -->  <!-- <div class="slideshow-container">      <div class="slide"><img src="photo1.jpg" alt="Restaurant donating meals"></div>      <div class="slide"><img src="photo2.jpg" alt="Volunteers sorting food donations"></div>      <div class="slide"><img src="photo3.jpg" alt="Grocery store reducing food waste"></div>      <div class="slide"><img src="photo4.jpg" alt="Community receiving food support"></div>    </div> -->  <!-- Pitch paragraph -->  <!-- <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section> -->  <!-- ---------------- About Section ---------------- -->  <!-- <section>    <h2>ABOUT SECOND SERVE</h2>    <p>      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries,      while participating stores reduce waste and claim charitable action for tax purposes.      SecondServe empowers both donors and recipients through a simple, impactful platform.    </p>  </section> -->  <!-- ---------------- Footer ---------------- -->  <!-- <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer> --></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Register', 'selector': 'app-register'}];
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="app.css"></head><body>  <router-outlet></router-outlet>  <!-- ---------------- Header Page ---------------- -->  <!-- <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a href="restaurants.html">Restaurants</a>          <a href="grocery.html">Grocery Stores</a>          <a href="community.html">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a href="volunteer.html">Volunteer</a>          <a href="donate.html">Donate</a>          <a href="partner.html">Partner With Us</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a href="press.html">Press Releases</a>          <a href="events.html">Events</a>          <a href="blog.html">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a href="mission.html">Mission</a>          <a href="team.html">Team</a>          <a href="contact.html">Contact</a>        </div>      </div>    </nav>  </header> -->  <!-- ---------------- Img ---------------- -->  <!-- <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section> -->  <!-- ---------------- About Section ---------------- -->  <!-- <section>    <h2>ABOUT SECOND SERVE</h2>    <p>      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries,      while participating stores reduce waste and claim charitable action for tax purposes.      SecondServe empowers both donors and recipients through a simple, impactful platform.    </p>  </section> -->  <!-- ---------------- Footer ---------------- -->  <!-- <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer> --></body></html></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Home', 'selector': 'app-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Register', 'selector': 'app-register'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'App'};
 </script>

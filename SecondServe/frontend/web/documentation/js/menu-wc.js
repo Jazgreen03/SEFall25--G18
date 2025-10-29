@@ -63,6 +63,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/Home.html" data-type="entity-link" >Home</a>
                             </li>
                             <li class="link">
+                                <a href="components/Landing.html" data-type="entity-link" >Landing</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/Login.html" data-type="entity-link" >Login</a>
                             </li>
                             <li class="link">
