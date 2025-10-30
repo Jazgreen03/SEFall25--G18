@@ -1,13 +1,17 @@
 import { Routes } from '@angular/router';
 import { Landing } from '../landing/landing';
-import { Home } from '../home/home';
+import { UserHome } from '../user-home/user-home';
+import { OrgHome } from '../org-home/org-home';
+import { DriverHome } from '../driver-home/driver-home';
 import { Login } from '../login/login';
 import { Register } from '../register/register';
 import { AccountManagement } from '../manage-account/manage-account'
 
 export const routes: Routes = [
     { path: '', component: Landing },
-    { path: 'home', component: Home },
+    { path: 'user-home', component: UserHome },
+    { path: 'org-home', component: OrgHome },
+    { path: 'driver-home', component: DriverHome },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'account', component: AccountManagement },

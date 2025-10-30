@@ -31,7 +31,7 @@ interface PickupRequest {
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class Home implements OnInit {
+export class OrgHome implements OnInit {
   restaurants: Restaurant[] = [];
   loading = false;
   error: string | null = null;

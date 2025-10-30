@@ -71,7 +71,7 @@ export class AccountManagement implements OnInit {
   }
 
   goToHome(): void {
-    // Navigate to orders page
+    // Navigate to home page
     window.location.href = '/home';
   }
 
