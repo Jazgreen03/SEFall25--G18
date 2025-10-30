@@ -18,9 +18,9 @@ orgLocation = "NC State University"
 orgLocationTwo = "UNC Chapel Hill"
 
 
-class TestCreateOrganization(TestCase):
+class TestValidUserCreateOrganization(TestCase):
 
-    # Creates a user with the location permission for testing purposes
+    # Creates a user with the location permission for testing purposes and logins them into the system
     def setUp(self):
         self.user = User.objects.create(
             username="orgUser",
@@ -30,7 +30,27 @@ class TestCreateOrganization(TestCase):
         self.user.role = "location"
         self.user.save()
 
+        self.client.post(
+            "/user/login",
+            {
+                "email": "org@email.com",
+                "password": "123abc"
+            }
+        )
+
+
     # Create a valid Organization and verify the response
+    def test_valid_org_create(self):
+        response = self.client.post(
+            "org/", 
+            {
+                "name": orgName,
+                "type": valid_orgType,
+                "location": orgLocation
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
 
     # Attempt to create Invalid Organization and verify the response
 
