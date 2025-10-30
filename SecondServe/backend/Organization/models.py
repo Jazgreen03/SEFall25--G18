@@ -1,6 +1,7 @@
 from django.db import models
 from Inventory.models import Inventory
 from User.models import User
+from django.core.exceptions import ValidationError
 
 TYPE_FOODBANK = "foodbank"
 TYPE_GROCERYSTORE = "grocery"
@@ -17,6 +18,9 @@ TYPE_CHOICES = (
 class OrganizationManager(models.Manager):
     # Create Organization
     def createOrganization(self, user: User, name: str, orgType: str, location: str):
+
+        if orgType not in TYPE_CHOICES:
+            raise ValidationError(f"Invalid orgType: {orgType}")
 
         # Create the Organizations Inventory
         inv = Inventory.objects.create(organization=name)

@@ -45,3 +45,12 @@ class Item(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     lastUpdated = models.DateTimeField(auto_now=True)
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='items')
+
+    def to_dict(self):
+        dictVal = {
+            "name": self.name,
+            "type": self.type,
+            "quantity": self.quantity,
+            "expiration": self.expiration
+        }
+        return dictVal
