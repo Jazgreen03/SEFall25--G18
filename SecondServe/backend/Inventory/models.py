@@ -24,6 +24,9 @@ class Inventory(models.Model):
 
     def has_item(self, itemName: str) -> bool:
         return self.items.filter(name=itemName).exists()
+    
+    def get_item(self, itemName: str) -> "Item":
+        return self.items.filter(name=itemName).first()
 
 
 class Item(models.Model):
