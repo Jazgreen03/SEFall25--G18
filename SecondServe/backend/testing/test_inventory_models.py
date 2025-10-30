@@ -1,9 +1,7 @@
-import pytest
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from Inventory.models import Inventory, Item
 from Organization.models import Organization
 
 User = get_user_model()
@@ -18,7 +16,7 @@ orgLocation = "NC State University"
 orgLocationTwo = "UNC Chapel Hill"
 
 
-class TestModels(TestCase):
+class TestOrganizationModel(TestCase):
 
     # Creates a user with the location permission for testing purposes
     def setUp(self):
