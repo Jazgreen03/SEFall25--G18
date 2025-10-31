@@ -2,75 +2,78 @@
   <!-- Header -->
   <header class="main-header">
     <div class="logo">
-      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"
-        style="cursor: pointer;">
+      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()">
         SecondServe
       </h1>
     </div>
 
     <div class="nav-actions">
-      <button class="nav-btn" (click)="goToAccount()">Account</button>
-      <button class="nav-btn" (click)="goToOrders()">Order History</button>
+      <button
+        class="nav-btn"
+        [ngClass]="{'active': currentTab === 'account'}"
+        (click)="goToAccount()"
+      >
+        Account
+      </button>
+      <button
+        class="nav-btn"
+        [ngClass]="{'active': currentTab === 'deliveries'}"
+        (click)="goToDeliveries()"
+      >
+        Available Deliveries
+      </button>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
-
   </header>
 
   <!-- Hero Section -->
   <section class="hero-section">
-    <h2 class="hero-title">Connecting surplus food with those who need it most</h2>
-    <p class="tagline">Reducing food waste, fighting food insecurity</p>
+    <h2 class="hero-title">Helping connect surplus food to those in need</h2>
+    <p class="tagline">Take on deliveries and reduce food waste</p>
 
     <div class="search-section">
-      <button (click)="loadRestaurants()" class="btn-primary">
-        Find Available Food Near You
-      </button>
+      <button (click)="loadDeliveries()" class="btn-primary">Load Available Deliveries</button>
     </div>
   </section>
 
   <!-- Loading & Error States -->
   <div *ngIf="loading" class="loading">
-    <p>Loading restaurants...</p>
+    <p>Loading deliveries...</p>
   </div>
 
   <div *ngIf="error" class="error">
     <p>{{ error }}</p>
-    <button (click)="refreshRestaurants()" class="btn-secondary">Try Again</button>
+    <button (click)="refreshDeliveries()" class="btn-secondary">Try Again</button>
   </div>
 
-  <!-- Restaurant Cards -->
-  <section *ngIf="!loading && restaurants.length > 0" class="restaurants-grid">
-    <div *ngFor="let restaurant of restaurants" class="restaurant-card">
-      <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="restaurant-image" />
-
-      <div class="restaurant-info">
-        <h3>{{ restaurant.name }}</h3>
-        <p class="address">{{ restaurant.address }}</p>
-        <p class="distance">{{ restaurant.distance }} miles away</p>
+  <!-- Delivery Cards -->
+  <section *ngIf="!loading && deliveries.length > 0" class="delivery-grid">
+    <div *ngFor="let delivery of deliveries" class="delivery-card">
+      <div class="delivery-info">
+        <h3>{{ delivery.restaurantName }}</h3>
+        <p class="address">{{ delivery.pickupAddress }}</p>
+        <p class="">to</p>
+        <p class="address">{{ delivery.deliveryAddress }}</p>
 
         <div class="food-types">
-          <span *ngFor="let type of restaurant.foodTypes" class="food-tag">
-            {{ type }}
-          </span>
+          <span *ngFor="let item of delivery.items" class="food-tag">{{ item }}</span>
         </div>
 
         <div class="availability">
-          <p><strong>{{ restaurant.availableItems }}</strong> items available</p>
-          <p class="expiry">Best by: {{ restaurant.expiryDate | date: 'short' }}</p>
-          <p class="hours">Open until: {{ restaurant.openUntil }}</p>
+          <p><strong>{{ delivery.items.length }}</strong> items to deliver</p>
+          <!--<p class="expiry">Pickup by: {{ delivery.pickupBy | date:'short' }}</p>-->
         </div>
 
         <div class="actions">
-          <button (click)="onPickupClick(restaurant)" class="btn-pickup">Schedule Pickup</button>
-          <button (click)="onDeliveryClick(restaurant)" class="btn-delivery">Request Delivery</button>
+          <button (click)="acceptDelivery(delivery)" class="btn-pickup">Accept Delivery</button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- No Results -->
-  <div *ngIf="!loading && restaurants.length === 0" class="no-results">
-    <p>No restaurants with available food at this time.</p>
-    <p>Check back soon or expand your search area.</p>
+  <div *ngIf="!loading && deliveries.length === 0" class="no-results">
+    <p>No deliveries available at this time.</p>
+    <p>Check back soon or refresh the list.</p>
   </div>
 </div>
