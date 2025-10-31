@@ -63,7 +63,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/App.html" data-type="entity-link" >App</a>
                             </li>
                             <li class="link">
-                                <a href="components/Home.html" data-type="entity-link" >Home</a>
+                                <a href="components/DriverHome.html" data-type="entity-link" >DriverHome</a>
                             </li>
                             <li class="link">
                                 <a href="components/Landing.html" data-type="entity-link" >Landing</a>
@@ -72,7 +72,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/Login.html" data-type="entity-link" >Login</a>
                             </li>
                             <li class="link">
+                                <a href="components/OrderHistory.html" data-type="entity-link" >OrderHistory</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/OrgHome.html" data-type="entity-link" >OrgHome</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/Register.html" data-type="entity-link" >Register</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/UserHome.html" data-type="entity-link" >UserHome</a>
                             </li>
                         </ul>
                     </li>
@@ -85,10 +94,25 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
+                                <a href="interfaces/Order.html" data-type="entity-link" >Order</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/PickupRequest.html" data-type="entity-link" >PickupRequest</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/PickupRequest-1.html" data-type="entity-link" >PickupRequest</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/PickupRequest-2.html" data-type="entity-link" >PickupRequest</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/Restaurant.html" data-type="entity-link" >Restaurant</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/Restaurant-1.html" data-type="entity-link" >Restaurant</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/Restaurant-2.html" data-type="entity-link" >Restaurant</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/User.html" data-type="entity-link" >User</a>

@@ -140,7 +140,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/driver-home/driver-home.ts</code>
+            <code>src/user-home/user-home.ts</code>
         </p>
 
 
@@ -555,10 +555,10 @@ interface PickupRequest {
   selector: &#x27;app-home&#x27;,
   standalone: true,
   imports: [CommonModule],
-  templateUrl: &#x27;./driver-home.html&#x27;,
-  styleUrls: [&#x27;./driver-home.css&#x27;]
+  templateUrl: &#x27;./user-home.html&#x27;,
+  styleUrls: [&#x27;./user-home.css&#x27;]
 })
-export class DriverHome implements OnInit {
+export class UserHome implements OnInit {
   restaurants: Restaurant[] &#x3D; [];
   loading &#x3D; false;
   error: string | null &#x3D; null;
@@ -578,11 +578,11 @@ export class DriverHome implements OnInit {
 
   goToHome(): void {
     // Navigate to orders page
-    window.location.href &#x3D; &#x27;/driver-home&#x27;;
+    window.location.href &#x3D; &#x27;/user-home&#x27;;
   }
 
   goToOrders(): void {
-    this.router.navigate([&#x27;/orders&#x27;]);
+    this.router.navigate([&#x27;/history&#x27;]);
   }
 
   logout(): void {
@@ -707,7 +707,7 @@ export class DriverHome implements OnInit {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'Restaurant.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'Restaurant-2.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

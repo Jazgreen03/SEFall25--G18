@@ -140,7 +140,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/home/home.ts</code>
+            <code>src/driver-home/driver-home.ts</code>
         </p>
 
 
@@ -399,10 +399,10 @@ interface PickupRequest {
   selector: &#x27;app-home&#x27;,
   standalone: true,
   imports: [CommonModule],
-  templateUrl: &#x27;./home.html&#x27;,
-  styleUrls: [&#x27;./home.css&#x27;]
+  templateUrl: &#x27;./driver-home.html&#x27;,
+  styleUrls: [&#x27;./driver-home.css&#x27;]
 })
-export class Home implements OnInit {
+export class DriverHome implements OnInit {
   restaurants: Restaurant[] &#x3D; [];
   loading &#x3D; false;
   error: string | null &#x3D; null;
@@ -422,7 +422,7 @@ export class Home implements OnInit {
 
   goToHome(): void {
     // Navigate to orders page
-    window.location.href &#x3D; &#x27;/home&#x27;;
+    window.location.href &#x3D; &#x27;/driver-home&#x27;;
   }
 
   goToOrders(): void {
