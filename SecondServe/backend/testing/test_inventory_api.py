@@ -309,13 +309,90 @@ class TestUpdateInventory(TestCase):
                 case _:
                     self.fail("Invalid Item in Inventory")
 
+    def test_valid_multi_attr_val_update(self):        
+        item1Update = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        item4Update = {"item_name": "pizza", "attributes": ["type", "expiration"], "values": ["refrigerated", "November 21, 2025"]}
+        
+        response = self.client.put(
+            "/inventory/update/", 
+            {
+                "items": [item1Update, item4Update]
+            }
+        )
 
+        self.assertEqual(response.status_code, 200)
 
+        # Verify the items were changed
+        response = self.client.get("/inventory/")
+        data = response.json()
+        inventory = data["inventory"]
+
+        for item in inventory:
+            match item["item_name"]:
+                # Only the quantity should have changed
+                case "macaroni":
+                    self.assertEqual(item["quantity"], 50)
+                    self.assertEqual(item["expiration"], "December 31, 2030")
+                    self.assertEqual(item["type"], "Shelf Stable")
+
+                # Only the expiration date should have changed
+                case "milk":
+                    self.assertEqual(item["quantity"], 5)
+                    self.assertEqual(item["expiration"], "November 30, 2025")
+                    self.assertEqual(item["type"], "Refrigerated")
+
+                # Lettuce should remain untouched
+                case "lettuce":
+                    self.assertEqual(item["quantity"], 15)
+                    self.assertEqual(item["expiration"], "November 15, 2025")
+                    self.assertEqual(item["type"], "Produce")
+
+                # Only the type should have changed
+                case "pizza":
+                    self.assertEqual(item["quantity"], 1)
+                    self.assertEqual(item["expiration"], "November 21, 2025")
+                    self.assertEqual(item["type"], "Refrigerated")
+                
+                # If an invalid item name is passed for the test case
+                case _:
+                    self.fail("Invalid Item in Inventory")
+
+    def test_invalid_update(self):
+
+        # Differing lengths between attributes and values
+        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
+        response = self.client.put(
+            "/inventory/update/", 
+            {
+                "items": [itemUpdate]
+            }
+        )
+        self.assertEqual(response.status_code, 406)
+
+        # No Item Name
+        itemUpdate = {"attributes": ["name"], "values": ["macaroni"]}
+        response = self.client.put(
+            "/inventory/update/", 
+            {
+                "items": [itemUpdate]
+            }
+        )
+        self.assertEqual(response.status_code, 406)
+
+        # Nonexistent Item Name
+        itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        response = self.client.put(
+            "/inventory/update/", 
+            {
+                "items": [itemUpdate]
+            }
+        )
+        self.assertEqual(response.status_code, 404)
 
 
 class TestEditItem(TestCase):
 
-    # Creates a user, organization, and items for an inventory
+    # Creates a user, organization, and an item for the inventory
     def setUp(self):
         self.user = User.objects.create(
             username="orgUser",
@@ -336,7 +413,7 @@ class TestEditItem(TestCase):
             }
         )
 
-        # Item 1
+        # Item
         self.client.post(
             "/inventory/add/",
             {
@@ -346,36 +423,65 @@ class TestEditItem(TestCase):
                 "type": "stable"
             }
         )
-
-        # Item 2
-        self.client.post(
-            "/inventory/add/",
-            {
-                "item_name": "milk",
-                "quantity": "5",
-                "expiration": "November 30, 2025",
-                "type": "refrigerated"
-            }
-        )
-
-        # Item 3
-        self.client.post(
-            "/inventory/add/",
-            {
-                "item_name": "lettuce",
-                "quantity": "15",
-                "expiration": "November 15, 2025",
-                "type": "produce"
-            }
-        )
+    
+    def test_valid_single_attr_update(self):
         
-        # Item 4
-        self.client.post(
-            "/inventory/add/",
-            {
-                "item_name": "pizza",
-                "quantity": "1",
-                "expiration": "November 5, 2025",
-                "type": "prepared"
-            }
+        itemUpdate = {"item_name": "pasta", "attributes": ["quantity"], "values": ["50"]}
+        
+        response = self.client.put("/inventory/update/", itemUpdate)
+
+        self.assertEqual(response.status_code, 200)
+
+        # Verify the items were changed
+        response = self.client.get("/inventory/")
+        data = response.json()
+        inventory = data["inventory"]
+        item = inventory[0]
+
+        self.assertEqual(item["item_name"], "pasta")
+        self.assertEqual(item["quantity"], 50)
+        self.assertEqual(item["expiration"], "December 31, 2030")
+        self.assertEqual(item["type"], "Shelf Stable")
+
+    def test_valid_multi_attr_val_update(self):        
+        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        
+        response = self.client.put(
+            "/inventory/update/", itemUpdate
         )
+
+        self.assertEqual(response.status_code, 200)
+
+        # Verify the items were changed
+        response = self.client.get("/inventory/")
+        data = response.json()
+        inventory = data["inventory"]
+        item = inventory[0]
+
+        self.assertEqual(item["item_name"], "macaroni")
+        self.assertEqual(item["quantity"], 50)
+        self.assertEqual(item["expiration"], "December 31, 2030")
+        self.assertEqual(item["type"], "Shelf Stable")
+
+    def test_invalid_update(self):
+
+        # Differing lengths between attributes and values
+        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
+        response = self.client.put(
+            "/inventory/edit/", itemUpdate
+        )
+        self.assertEqual(response.status_code, 406)
+
+        # No Item Name
+        itemUpdate = {"attributes": ["name"], "values": ["macaroni"]}
+        response = self.client.put(
+            "/inventory/edit/", itemUpdate
+        )
+        self.assertEqual(response.status_code, 406)
+
+        # Nonexistent Item Name
+        itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        response = self.client.put(
+            "/inventory/edit/", itemUpdate
+        )
+        self.assertEqual(response.status_code, 404)
