@@ -123,22 +123,73 @@ class TestAddItem(TestCase):
         self.user.role = "location"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
                 "location": orgLocation
             }
         )
+
+    def test_valid_item_add(self):
+        # Add the item
+        response = self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "pasta",
+                "quantity": "30",
+                "expiration": "December 31, 2030",
+                "type": "stable"
+            }
+        )
+
+        self.assertEqual(response.status_code, 201)
+
+        # Get the inventory and verify the item was added
+        response = self.client.get("/inventory/")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        inventory = data["inventory"]
+        self.assertEqual(len(inventory), 1)
+
+        # Verify the item details are correct
+        item = inventory[0]
+        self.assertEqual(item["name"], "pasta")
+        self.assertEqual(item["type"], "Shelf Stable")
+        self.assertEqual(item["quantity"], 30)
+        self.assertEqual(item["expiration"], "December 31, 2030")
+
+        # Add a second item
+        response = self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "milk",
+                "quantity": "5",
+                "expiration": "November 30, 2025",
+                "type": "refrigerated"
+            }
+        )
+        self.assertEqual(response.status_code, 201)
+
+        # Get the inventory and verify the item was added
+        response = self.client.get("/inventory/")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        inventory = data["inventory"]
+        self.assertEqual(len(inventory), 2)
+
+        # Verify the item details are correct
+        if (inventory[1]["name"] is "milk"):
+            item = inventory[1]
+        else:
+            item = inventory[0]
+        self.assertEqual(item["name"], "milk")
+        self.assertEqual(item["type"], "Refrigerated")
+        self.assertEqual(item["quantity"], 5)
+        self.assertEqual(item["expiration"], "November 30, 2025")
 
 
 class TestUpdateInventory(TestCase):
@@ -154,16 +205,10 @@ class TestUpdateInventory(TestCase):
         self.user.role = "location"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -184,16 +229,10 @@ class TestEditItem(TestCase):
         self.user.role = "location"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -214,16 +253,10 @@ class TestGetInventory(TestCase):
         self.user.role = "location"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,

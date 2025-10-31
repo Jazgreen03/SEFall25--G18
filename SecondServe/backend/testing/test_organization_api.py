@@ -30,19 +30,13 @@ class TestValidUserCreateOrganization(TestCase):
         self.user.role = "location"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
 
     # Create a valid Organization and verify the response
     def test_valid_org_create(self):
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -57,7 +51,7 @@ class TestValidUserCreateOrganization(TestCase):
         
         # Create the base case valid organization
         self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -68,7 +62,7 @@ class TestValidUserCreateOrganization(TestCase):
 
         # Invalid Type
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": invalid_orgType,
@@ -80,7 +74,7 @@ class TestValidUserCreateOrganization(TestCase):
 
         # Invalid Name
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -92,7 +86,7 @@ class TestValidUserCreateOrganization(TestCase):
 
         # Invalid Location
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgNameTwo,
                 "type": valid_orgType,
@@ -108,7 +102,7 @@ class TestInvalidUserCreateOrganization(TestCase):
 
     def test_no_logged_in_user(self):
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
@@ -127,16 +121,10 @@ class TestInvalidUserCreateOrganization(TestCase):
         self.user.role = "user"
         self.user.save()
 
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         response = self.client.post(
-            "org/", 
+            "/org/", 
             {
                 "name": orgName,
                 "type": valid_orgType,
