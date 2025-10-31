@@ -194,8 +194,7 @@ class TestAddItem(TestCase):
 
 class TestUpdateInventory(TestCase):
 
-    # Creates a user with the location permission for testing purposes
-    # User is also associated with an organization
+    # Creates a user, organization, and items for an inventory
     def setUp(self):
         self.user = User.objects.create(
             username="orgUser",
@@ -215,11 +214,108 @@ class TestUpdateInventory(TestCase):
                 "location": orgLocation
             }
         )
+
+        # Item 1
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "pasta",
+                "quantity": "30",
+                "expiration": "December 31, 2030",
+                "type": "stable"
+            }
+        )
+
+        # Item 2
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "milk",
+                "quantity": "5",
+                "expiration": "November 30, 2025",
+                "type": "refrigerated"
+            }
+        )
+
+        # Item 3
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "lettuce",
+                "quantity": "15",
+                "expiration": "November 15, 2025",
+                "type": "produce"
+            }
+        )
+        
+        # Item 4
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "pizza",
+                "quantity": "1",
+                "expiration": "November 5, 2025",
+                "type": "prepared"
+            }
+        )
+    
+    def test_valid_single_attr_update(self):
+        
+        item1Update = {"item_name": "pasta", "attributes": ["quantity"], "values": ["50"]}
+        item2Update = {"item_name": "milk", "attributes": ["expiration"], "values": ["November 20, 2025"]}
+        item4Update = {"item_name": "pizza", "attributes": ["type"], "values": ["refrigerated"]}
+        
+        response = self.client.put(
+            "/inventory/update/", 
+            {
+                "items": [item1Update, item2Update, item4Update]
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        # Verify the items were changed
+        response = self.client.get("/inventory/")
+        data = response.json()
+        inventory = data["inventory"]
+
+        for item in inventory:
+            match item["item_name"]:
+                # Only the quantity should have changed
+                case "pasta":
+                    self.assertEqual(item["quantity"], 50)
+                    self.assertEqual(item["expiration"], "December 31, 2030")
+                    self.assertEqual(item["type"], "Shelf Stable")
+
+                # Only the expiration date should have changed
+                case "milk":
+                    self.assertEqual(item["quantity"], 5)
+                    self.assertEqual(item["expiration"], "November 20, 2025")
+                    self.assertEqual(item["type"], "Refrigerated")
+
+                # Lettuce should remain untouched
+                case "lettuce":
+                    self.assertEqual(item["quantity"], 15)
+                    self.assertEqual(item["expiration"], "November 15, 2025")
+                    self.assertEqual(item["type"], "Produce")
+
+                # Only the type should have changed
+                case "pizza":
+                    self.assertEqual(item["quantity"], 1)
+                    self.assertEqual(item["expiration"], "November 5, 2025")
+                    self.assertEqual(item["type"], "Refrigerated")
+                
+                # If an invalid item name is passed for the test case
+                case _:
+                    self.fail("Invalid Item in Inventory")
+
+
+
+
 
 class TestEditItem(TestCase):
 
-    # Creates a user with the location permission for testing purposes
-    # User is also associated with an organization
+    # Creates a user, organization, and items for an inventory
     def setUp(self):
         self.user = User.objects.create(
             username="orgUser",
@@ -240,26 +336,46 @@ class TestEditItem(TestCase):
             }
         )
 
-class TestGetInventory(TestCase):
-    
-    # Creates a user with the location permission for testing purposes
-    # User is also associated with an organization
-    def setUp(self):
-        self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
-        )
-        self.user.role = "location"
-        self.user.save()
-
-        self.client.force_login(self.user)
-
+        # Item 1
         self.client.post(
-            "/org/", 
+            "/inventory/add/",
             {
-                "name": orgName,
-                "type": valid_orgType,
-                "location": orgLocation
+                "item_name": "pasta",
+                "quantity": "30",
+                "expiration": "December 31, 2030",
+                "type": "stable"
+            }
+        )
+
+        # Item 2
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "milk",
+                "quantity": "5",
+                "expiration": "November 30, 2025",
+                "type": "refrigerated"
+            }
+        )
+
+        # Item 3
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "lettuce",
+                "quantity": "15",
+                "expiration": "November 15, 2025",
+                "type": "produce"
+            }
+        )
+        
+        # Item 4
+        self.client.post(
+            "/inventory/add/",
+            {
+                "item_name": "pizza",
+                "quantity": "1",
+                "expiration": "November 5, 2025",
+                "type": "prepared"
             }
         )
