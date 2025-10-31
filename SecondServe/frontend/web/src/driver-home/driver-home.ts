@@ -28,8 +28,8 @@ interface PickupRequest {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  templateUrl: './driver-home.html',
+  styleUrls: ['./driver-home.css']
 })
 export class DriverHome implements OnInit {
   restaurants: Restaurant[] = [];
@@ -51,7 +51,7 @@ export class DriverHome implements OnInit {
 
   goToHome(): void {
     // Navigate to orders page
-    window.location.href = '/home';
+    window.location.href = '/driver-home';
   }
 
   goToOrders(): void {

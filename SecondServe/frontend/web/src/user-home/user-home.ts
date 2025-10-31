@@ -28,8 +28,8 @@ interface PickupRequest {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  templateUrl: './user-home.html',
+  styleUrls: ['./user-home.css']
 })
 export class UserHome implements OnInit {
   restaurants: Restaurant[] = [];
@@ -51,11 +51,11 @@ export class UserHome implements OnInit {
 
   goToHome(): void {
     // Navigate to orders page
-    window.location.href = '/home';
+    window.location.href = '/user-home';
   }
 
   goToOrders(): void {
-    this.router.navigate(['/orders']);
+    this.router.navigate(['/history']);
   }
 
   logout(): void {

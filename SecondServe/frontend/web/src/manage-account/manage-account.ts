@@ -77,7 +77,7 @@ export class AccountManagement implements OnInit {
 
   goToOrders(): void {
     // Navigate to orders page
-    window.location.href = '/orders';
+    window.location.href = '/history';
   }
 
   logout(): void {

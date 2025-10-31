@@ -6,6 +6,7 @@ import { DriverHome } from '../driver-home/driver-home';
 import { Login } from '../login/login';
 import { Register } from '../register/register';
 import { AccountManagement } from '../manage-account/manage-account'
+import { OrderHistory } from '../order-history/order-history';
 
 export const routes: Routes = [
     { path: '', component: Landing },
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'account', component: AccountManagement },
+    { path: 'history', component: OrderHistory }
 ];
