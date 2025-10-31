@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from Organization import views as orgViews
 
 
 def health(_):
@@ -35,4 +36,6 @@ urlpatterns = [
     path("api/health/", health),
     path("user/", include(("User.urls", "user"))),
     path("api/csrf/", csrf),
+    path("inventory/", include(("Inventory.urls", "inventory"))),
+    path("org/", orgViews.createOrganization)
 ]

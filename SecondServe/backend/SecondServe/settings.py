@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "User",
+    "Inventory",
+    "Organization",
     "corsheaders",  # Enable CORS support
 ]
 
