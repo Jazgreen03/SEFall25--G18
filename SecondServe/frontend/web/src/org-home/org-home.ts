@@ -1,145 +1,133 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
-interface Restaurant {
+interface Delivery {
   id: number;
-  name: string;
-  address: string;
-  distance: number;
-  availableItems: number;
-  expiryDate: string;
-  imageUrl: string;
-  foodTypes: string[];
-  openUntil: string;
+  foodName: string;
+  quantity: number;
+  recipient: string;
+  pickupTime: string;
+  driver?: string;
+  status: string;
 }
 
-interface PickupRequest {
-  restaurantId: number;
-  userId: number;
-  pickupTime: string;
-  deliveryType: 'pickup' | 'delivery';
-  items: number[];
+interface InventoryItem {
+  id: number;
+  name: string;
+  quantity: number;
+  expiryDate: string;
 }
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-org-home',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './org-home.html',
-  styleUrls: ['./org-home.css']
+  styleUrls: ['./org-home.css'],
 })
 export class OrgHome implements OnInit {
-  restaurants: Restaurant[] = [];
+  activeDeliveries: Delivery[] = [];
+  inventory: InventoryItem[] = [];
   loading = false;
   error: string | null = null;
 
   private apiUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
-    this.loadRestaurants();
+    this.loadData();
+  }
+
+  /** Load both active deliveries and inventory items */
+  loadData(): void {
+    this.loading = true;
+    this.error = null;
+
+    // Simulated parallel API calls
+    setTimeout(() => {
+      try {
+        this.activeDeliveries = [
+          {
+            id: 1,
+            foodName: 'Fresh Sandwiches',
+            quantity: 25,
+            recipient: 'Downtown Shelter',
+            pickupTime: new Date('2025-10-31T13:00:00').toISOString(),
+            driver: 'John Doe',
+            status: 'Out for Delivery',
+          },
+          {
+            id: 2,
+            foodName: 'Canned Soup',
+            quantity: 50,
+            recipient: 'Food Aid Center',
+            pickupTime: new Date('2025-10-31T15:30:00').toISOString(),
+            status: 'Pending Pickup',
+          },
+        ];
+
+        this.inventory = [
+          { id: 1, name: 'Bread Loaves', quantity: 40, expiryDate: '2025-11-05' },
+          { id: 2, name: 'Apples', quantity: 100, expiryDate: '2025-11-10' },
+          { id: 3, name: 'Cereal Boxes', quantity: 25, expiryDate: '2025-12-01' },
+        ];
+      } catch (e) {
+        console.error(e);
+        this.error = 'Failed to load data. Please try again.';
+      } finally {
+        this.loading = false;
+      }
+    }, 800);
+  }
+
+  /** Reload data manually */
+  reloadData(): void {
+    this.loadData();
+  }
+
+  /** Mark inventory item for donation */
+  donateItem(item: InventoryItem): void {
+    const confirmed = confirm(`Mark "${item.name}" as donated?`);
+    if (!confirmed) return;
+
+    // Simulated API update
+    this.inventory = this.inventory.filter((i) => i.id !== item.id);
+    alert(`${item.name} marked for donation!`);
+  }
+
+  /** View more details about a delivery */
+  viewDeliveryDetails(delivery: Delivery): void {
+    alert(`Viewing details for: ${delivery.foodName}`);
+    // Optionally navigate to delivery details page:
+    // this.router.navigate(['/delivery', delivery.id]);
   }
 
   // --- Navigation Methods --- //
+
   goToAccount(): void {
     this.router.navigate(['/account']);
   }
 
   goToHome(): void {
-    // Navigate to orders page
-    window.location.href = '/org-home';
+    this.router.navigate(['/org-home']);
   }
 
   goToOrders(): void {
     this.router.navigate(['/orders']);
   }
 
+  goToInventory(): void {
+    this.router.navigate(['/inventory']);
+  }
+
   logout(): void {
-    // clear token and navigate to login
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
-  }
-
-  // --- API Methods --- //
-
-  loadRestaurants(): void {
-    this.loading = true;
-    this.error = null;
-
-    this.http.get<Restaurant[]>(`${this.apiUrl}/restaurants/available`)
-      .subscribe({
-        next: (data) => {
-          this.restaurants = data;
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Failed to load restaurants.';
-          this.loading = false;
-          console.error('Error loading restaurants:', err);
-        }
-      });
-  }
-
-  schedulePickup(request: PickupRequest): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.loading = true;
-
-    this.http.post(`${this.apiUrl}/pickups/schedule`, request, { headers })
-      .subscribe({
-        next: () => {
-          alert('Pickup scheduled successfully!');
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Failed to schedule pickup.';
-          this.loading = false;
-          console.error(err);
-        }
-      });
-  }
-
-  onPickupClick(restaurant: Restaurant): void {
-    const pickupRequest: PickupRequest = {
-      restaurantId: restaurant.id,
-      userId: 1,
-      pickupTime: new Date(Date.now() + 3600000).toISOString(),
-      deliveryType: 'pickup',
-      items: []
-    };
-    this.schedulePickup(pickupRequest);
-  }
-
-  onDeliveryClick(restaurant: Restaurant): void {
-    const address = prompt('Enter delivery address:');
-    if (!address) return;
-
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const deliveryRequest = {
-      restaurantId: restaurant.id,
-      deliveryAddress: address,
-      requestedTime: new Date().toISOString()
-    };
-
-    this.loading = true;
-    this.http.post(`${this.apiUrl}/deliveries/request`, deliveryRequest, { headers })
-      .subscribe({
-        next: () => {
-          alert('Delivery requested!');
-          this.loading = false;
-        },
-        error: (err) => {
-          this.error = 'Delivery request failed.';
-          this.loading = false;
-          console.error(err);
-        }
-      });
-  }
-
-  refreshRestaurants(): void {
-    this.loadRestaurants();
   }
 }
