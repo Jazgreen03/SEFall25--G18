@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from Organization import views as orgViews
 
 
 def health(_):

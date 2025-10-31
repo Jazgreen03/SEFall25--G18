@@ -5,7 +5,7 @@ Manages Inventory Functionality, called by urls.py
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from User.models import User
-from Organization.models import Organization, OrganizationManager
+from Organization.models import Organization
 from Inventory.models import Inventory, Item
 import json
 
