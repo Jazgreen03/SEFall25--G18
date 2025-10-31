@@ -12,8 +12,8 @@ from django.urls import path
 import Inventory.views as views
 
 urlpatterns = [
-    path("", views.get_inventory),
-    path("add/", views.add_to_inventory),
-    path("update/", views.update_inventory),
-    path("edit/", views.edit_inventory)
+    path("/", views.get_inventory),
+    path("/add/", views.add_to_inventory),
+    path("/update/", views.update_inventory),
+    path("/edit/", views.edit_inventory)
 ]

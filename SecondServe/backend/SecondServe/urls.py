@@ -36,6 +36,6 @@ urlpatterns = [
     path("api/health/", health),
     path("user/", include(("User.urls", "user"))),
     path("api/csrf/", csrf),
-    path("inventory/", include(("Inventory.urls", "inventory"))),
-    path("org/", orgViews.createOrganization)
+    path("inventory", include(("Inventory.urls", "inventory"))),
+    path("org", include(("Organization.urls", "organization")))
 ]
