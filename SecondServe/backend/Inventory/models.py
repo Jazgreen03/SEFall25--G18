@@ -20,7 +20,7 @@ class Inventory(models.Model):
     """
 
     # The name of the org that holds this Inventory
-    organization = models.CharField(max_length=256, unique=True)
+    org = models.CharField(max_length=256, unique=True)
 
     def has_item(self, itemName: str) -> bool:
         return self.items.filter(name=itemName).exists()

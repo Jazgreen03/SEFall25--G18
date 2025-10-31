@@ -22,7 +22,7 @@ def checkUser(user: User) -> JsonResponse | None:
     if user.is_authenticated is False:
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
     
-    if (user.get_role() is "location") is False:
+    if (user.get_role() == "location") is False:
         return JsonResponse({"details": "User has Invalid Role"}, status=401)
     
     if Organization.objects.filter(creator=user).first() is None:

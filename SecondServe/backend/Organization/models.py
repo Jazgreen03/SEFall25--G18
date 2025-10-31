@@ -50,7 +50,7 @@ class Organization(models.Model):
     # Where the organization is located
     location = models.CharField(max_length=256, unique=True)
     # The associated inventory
-    inventory = models.OneToOneField(Inventory, on_delete=models.CASCADE, related_name="organization")
+    inv = models.OneToOneField(Inventory, on_delete=models.CASCADE, related_name="organization")
     # The creator User account
     creator = models.ForeignKey(User, on_delete=models.PROTECT, related_name="organizations")
 

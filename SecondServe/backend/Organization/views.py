@@ -14,7 +14,7 @@ def userHasLocationPerm(user: User) -> bool:
     """
     Checks if the Current User has the Location Role
     """
-    return user.get_role() is "location"
+    return user.get_role() == "location"
 
 @require_http_methods(["POST"])
 def createOrganization(request: HttpRequest) -> JsonResponse:

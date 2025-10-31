@@ -38,11 +38,38 @@ SecondServe/
 │  ├─ Dockerfile
 │  ├─ requirements.txt
 │  ├─ manage.py
-│  └─ SecondServe/
-│     ├─ __init__.py
-│     ├─ settings.py
-│     ├─ urls.py
-│     └─ wsgi.py
+│  ├─ SecondServe/
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ settings.py       # Django settings used for Project management
+│  |  ├─ urls.py           # API Call Routing (Primarily to the different apps)
+|  |  ├─ asgi.py
+│  |  └─ wsgi.py
+│  ├─ Inventory/           # The Inventory "app" containing all Inventory-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for Inventory and Item
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  ├─ Organization/        # The Organization "app" containing all Organization-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for Organization
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  ├─ User/                # The User "app" containing all User-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for User
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  └─ testing/             # All the test cases for the backend
+│     ├─ test_core.py
+|     ├─ test_inventory_api.py
+|     ├─ test_inventory_models.py
+|     ├─ test_organization_api.py
+|     ├─ test_user_api.py
+│     └─ test_user_models.py
 └─ frontend/               # The Angular Project (handles Frontend functions)
    ├─ Dockerfile
    ├─ nginx.conf           # NGINX Config -> Routes backend calls through/from frontend
