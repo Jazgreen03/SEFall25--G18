@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "User",
     "Inventory",
     "Organization",
-    "corsheaders",  # Enable CORS support
+    # "corsheaders",  # Enable CORS support
 ]
 
 # -------------------------------------------------------------------
@@ -84,6 +84,7 @@ DATABASES = {
         "NAME": os.getenv("DATABASE_NAME", "SecondServe"),
         "USER": os.getenv("DATABASE_USERNAME", ""),
         "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),
+        "OPTIONS": {"authSource": os.getenv("DATABASE_AUTH_SOURCE", "admin")},
         "TEST": {"NAME": os.getenv("DATABASE_TEST_NAME", "SecondServe_test")},
     },
 }
@@ -139,22 +140,22 @@ else:
     ]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:4200"]
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "x-csrftoken",  # <-- Add this
-    "accept",
-    "authorization",
-    "x-requested-with",
-    "accept-encoding",
-    "origin",
-    "user-agent",
-    "accept-language",
-    "dnt",
-    "cache-control",
-    "pragma",
-]
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+# CORS_ALLOW_HEADERS = [
+#     "content-type",
+#     "x-csrftoken",  # <-- Add this
+#     "accept",
+#     "authorization",
+#     "x-requested-with",
+#     "accept-encoding",
+#     "origin",
+#     "user-agent",
+#     "accept-language",
+#     "dnt",
+#     "cache-control",
+#     "pragma",
+# ]
 
 # Optional: disable automatic slash redirect for APIs
 APPEND_SLASH = True  # Or False if you want URLs without trailing slash
