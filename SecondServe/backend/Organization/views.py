@@ -7,7 +7,7 @@ Currently just used for the Creation of an Organization
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from User.models import User
-from Organization.models import Organization, OrganizationManager
+from Organization.models import Organization
 
 
 def userHasLocationPerm(user: User) -> bool:
@@ -39,7 +39,7 @@ def createOrganization(request: HttpRequest) -> JsonResponse:
         
         # Attempt to create the Organization
         try:
-            OrganizationManager.createOrganization(user=request.user, name=name, orgType=orgType, location=location)
+            Organization.objects.createOrganization(user=request.user, name=name, orgType=orgType, location=location)
         except:
             return JsonResponse({"details": "Invalid Details"}, status=404)
         

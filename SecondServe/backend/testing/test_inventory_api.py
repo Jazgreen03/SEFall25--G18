@@ -27,13 +27,7 @@ class TestInvalidUser(TestCase):
         self.user.save()
 
         # Log user in
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         # Try to get an inventory
         response = self.client.get("/inventory/")
@@ -81,13 +75,7 @@ class TestInvalidUser(TestCase):
         self.user.save()
 
         # Log user in
-        self.client.post(
-            "/user/login/",
-            {
-                "email": "org@email.com",
-                "password": "123abc"
-            }
-        )
+        self.client.force_login(self.user)
 
         # Try to get an inventory
         response = self.client.get("/inventory/")

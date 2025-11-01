@@ -15,18 +15,20 @@ TYPE_CHOICES = (
     (TYPE_OTHER, "Other")
 )
 
+VALID_TYPES = {c[0] for c in TYPE_CHOICES}
+
 class OrganizationManager(models.Manager):
     # Create Organization
     def createOrganization(self, user: User, name: str, orgType: str, location: str):
 
-        if orgType not in TYPE_CHOICES:
+        if orgType not in VALID_TYPES:
             raise ValidationError(f"Invalid orgType: {orgType}")
 
         # Create the Organizations Inventory
-        inv = Inventory.objects.create(organization=name)
+        inv = Inventory.objects.create(org=name)
 
         # Create the Organization with all the necessary variables and save to database
-        Organization.objects.create(name=name, orgType=orgType, location=location, inventory=inv, creator=user)
+        Organization.objects.create(name=name, orgType=orgType, location=location, inv=inv, creator=user)
         
 
 class Organization(models.Model):
