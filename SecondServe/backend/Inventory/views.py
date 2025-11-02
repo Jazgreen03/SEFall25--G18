@@ -34,7 +34,7 @@ def getInv(user: User) -> Inventory:
     """
     org = Organization.objects.filter(creator=user).first()
     
-    inv = Inventory.objects.filter(organization=org.name).first()
+    inv = Inventory.objects.filter(org=org.name).first()
 
     return inv
 

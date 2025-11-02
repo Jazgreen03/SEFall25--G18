@@ -23,7 +23,7 @@ class UserManager(DjangoUserManager):
     """
 
     def create_user(
-        self, username: str, email: str, password: str | None = None, **extra_fields
+        self, username: str | None = None, email: str | None = None, password: str | None = None, **extra_fields
     ):
         """
         Create and return a regular User instance.
@@ -42,14 +42,17 @@ class UserManager(DjangoUserManager):
         :raises ValueError: If username or email are empty
         :raises IntegrityError: If username or email already exist
         """
-        if not isinstance(username, str) or not isinstance(email, str):
-            raise TypeError("Username and email must be strings.")
 
-        if not username or not email:
-            raise ValueError("Username and email are required.")
+        if not username and not email:
+            raise ValueError("Username and/or Email are required.")
+        
+        if email:
+            email = self.normalize_email(email)
+
+        if not username and email:
+            username = email
 
         extra_fields.setdefault("role", ROLE_USER)
-        email = self.normalize_email(email)
 
         try:
             user = super().create_user(
@@ -107,7 +110,7 @@ class User(AbstractUser):
     dynamic attribute updates.
     """
 
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=ROLE_USER)
 
     objects = UserManager()

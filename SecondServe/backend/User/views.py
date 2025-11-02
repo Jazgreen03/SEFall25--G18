@@ -17,9 +17,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
     password = request.POST.get("password")
     email = request.POST.get("email")
 
-    if not username or not password or not email:
+    if (not username and not email) or not password:
         return JsonResponse(
-            {"details": "Must provide valid Username, Password, and Email"}, status=406
+            {"details": "Must provide valid Username/Email and Password"}, status=406
         )
 
     first_name = request.POST.get("first_name", "")
