@@ -24,10 +24,10 @@ interface InventoryItem {
   selector: 'app-org-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './org-home.html',
-  styleUrls: ['./org-home.css'],
+  templateUrl: './inventory-management.html',
+  styleUrls: ['./inventory-management.css'],
 })
-export class OrgHome implements OnInit {
+export class InventoryManagement implements OnInit {
   activeDeliveries: Delivery[] = [];
   inventory: InventoryItem[] = [];
   loading = false;
@@ -119,7 +119,7 @@ export class OrgHome implements OnInit {
   }
 
   goToOrders(): void {
-    this.router.navigate(['/orders']);
+    this.router.navigate(['/org-history']);
   }
 
   goToInventory(): void {

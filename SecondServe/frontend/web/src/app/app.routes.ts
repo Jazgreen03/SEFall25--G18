@@ -5,10 +5,13 @@ import { OrgHome } from '../org-home/org-home';
 import { DriverHome } from '../driver-home/driver-home';
 import { Login } from '../login/login';
 import { Register } from '../register/register';
-import { AccountManagement } from '../manage-account/manage-account';
+import { UserAccountManagement } from '../user-manage-account/user-manage-account';
+import { OrgAccountManagement } from '../org-manage-account/org-manage-account';
+import { DriverAccountManagement } from '../driver-manage-account/driver-manage-account';
 import { UserOrderHistory } from '../user-order-history/user-order-history';
 import { OrgOrderHistory } from '../org-order-history/org-order-history';
 import { DriverOrderHistory } from '../driver-order-history/driver-order-history';
+import { InventoryManagement } from '../inventory-management/inventory-management';
 
 export const routes: Routes = [
   { path: '', component: Landing },
@@ -17,8 +20,11 @@ export const routes: Routes = [
   { path: 'driver-home', component: DriverHome },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
-  { path: 'account', component: AccountManagement },
+  { path: 'user-account', component: UserAccountManagement },
+  { path: 'org-account', component: OrgAccountManagement },
+  { path: 'driver-account', component: DriverAccountManagement },
   { path: 'user-history', component: UserOrderHistory },
   { path: 'org-history', component: OrgOrderHistory },
   { path: 'driver-history', component: DriverOrderHistory },
+  { path: 'inventory', component: InventoryManagement },
 ];
