@@ -1,4 +1,4 @@
-<div class="home-container">
+<div class="deliveries-container">
   <!-- Header -->
   <header class="main-header">
     <div class="logo">
@@ -9,21 +9,11 @@
 
     <div class="nav-actions">
       <button class="nav-btn" (click)="goToAccount()">Account</button>
-      <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
+      <button class="nav-btn active" (click)="goToDeliveries()">Available Deliveries</button>
       <button class="nav-btn" (click)="goToOrders()">Order History</button>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </header>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <h2 class="hero-title">Helping connect surplus food to those in need</h2>
-    <p class="tagline">Take on deliveries and reduce food waste</p>
-
-    <div class="search-section">
-      <button (click)="loadDeliveries()" class="btn-primary">Load Available Deliveries</button>
-    </div>
-  </section>
 
   <!-- Loading & Error States -->
   <div *ngIf="loading" class="loading">

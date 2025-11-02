@@ -8,13 +8,8 @@
     </div>
 
     <div class="nav-actions">
-      <button
-        class="nav-btn"
-        [ngClass]="{'active': activeTab === 'account'}"
-        (click)="goToAccount()"
-      >
-        Account
-      </button>
+      <button class="nav-btn" (click)="goToAccount()">Account</button>
+      <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
       <button class="nav-btn active" (click)="goToOrders()">Order History</button>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>

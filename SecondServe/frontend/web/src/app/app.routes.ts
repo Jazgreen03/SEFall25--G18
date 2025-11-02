@@ -12,6 +12,7 @@ import { UserOrderHistory } from '../user-order-history/user-order-history';
 import { OrgOrderHistory } from '../org-order-history/org-order-history';
 import { DriverOrderHistory } from '../driver-order-history/driver-order-history';
 import { InventoryManagement } from '../inventory-management/inventory-management';
+import { Deliveries } from '../deliveries/deliveries';
 
 export const routes: Routes = [
   { path: '', component: Landing },
@@ -27,4 +28,5 @@ export const routes: Routes = [
   { path: 'org-history', component: OrgOrderHistory },
   { path: 'driver-history', component: DriverOrderHistory },
   { path: 'inventory', component: InventoryManagement },
+  { path: 'deliveries', component: Deliveries },
 ];

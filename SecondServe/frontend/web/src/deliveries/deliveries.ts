@@ -17,10 +17,10 @@ interface Delivery {
   selector: 'app-driver-home',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './driver-home.html',
-  styleUrls: ['./driver-home.css'],
+  templateUrl: './deliveries.html',
+  styleUrls: ['./deliveries.css'],
 })
-export class DriverHome implements OnInit {
+export class Deliveries implements OnInit {
   currentTab: 'account' | 'orders' | 'deliveries' | 'history' = 'deliveries';
   deliveries: Delivery[] = [];
   loading = false;
@@ -53,7 +53,7 @@ export class DriverHome implements OnInit {
   }
 
   goToDeliveries(): void {
-    window.location.href = '/deliveries';
+    window.location.href = '/driver-home';
   }
 
   logout(): void {

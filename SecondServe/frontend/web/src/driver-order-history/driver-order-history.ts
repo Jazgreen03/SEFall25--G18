@@ -18,6 +18,7 @@ interface Order {
   styleUrls: ['./driver-order-history.css'],
 })
 export class DriverOrderHistory implements OnInit {
+  currentTab: 'account' | 'orders' | 'deliveries' = 'deliveries';
   orders: Order[] = [];
   loading = false;
   error: string | null = null;
@@ -40,12 +41,16 @@ export class DriverOrderHistory implements OnInit {
   }
 
   goToAccount(): void {
-    this.router.navigate(['/account']);
+    this.router.navigate(['/driver-account']);
   }
 
   goToOrders(): void {
     this.activeTab = 'orders';
     this.loadOrders();
+  }
+
+  goToDeliveries(): void {
+    window.location.href = '/deliveries';
   }
 
   logout(): void {
