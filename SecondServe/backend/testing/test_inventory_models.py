@@ -38,7 +38,7 @@ class TestOrganizationModel(TestCase):
         self.assertEqual(org.orgType, valid_orgType)
         self.assertEqual(org.location, orgLocation)
 
-        self.assertIsNotNone(org.inventory)
+        self.assertIsNotNone(org.inv)
 
     # Attempt to create Organization with invalid parameters
     def test_invalid_Org_create(self):

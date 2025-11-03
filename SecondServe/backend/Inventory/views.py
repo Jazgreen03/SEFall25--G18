@@ -8,6 +8,7 @@ from User.models import User
 from Organization.models import Organization
 from Inventory.models import Inventory, Item
 import json
+from datetime import datetime
 
 #################################################
 ###             Helper Methods                ###
@@ -47,28 +48,32 @@ def editItem(attr: str, val: str, item: Item) -> JsonResponse | None:
     updatedAttr = ""
 
     match attr:
-        case "item_name":
+        case "name":
             updatedAttr = "name"
             item.name = val
-        case "item_type":
+        case "type":
             updatedAttr = "type"
             item.type = val
-        case "item_quantity":
+        case "quantity":
             updatedAttr = "quantity"
-            item.quantity = val
-        case "item_expiration":
+            try:
+                quantity = int(val)
+                item.quantity = quantity
+            except:
+                return JsonResponse({"details": "Invalid Attribute Passed"}, status=406)
+        case "expiration":
             updatedAttr = "expiration"
-            item.expiration = val
+            eDate = datetime.strptime(val, "%B %d, %Y").date()
+            item.expiration = eDate
         case _:
             return JsonResponse({"details": "Invalid Attribute Passed"}, status=406)
 
     try:
         item.full_clean()
+        item.save(update_fields=[updatedAttr])
     except:
         # Don't save the item cause its wrong
         return JsonResponse({"details": "Invalid Parameter Values"}, status=406)
-    
-    item.save(update_fields=updatedAttr)
     
 
 #################################################
@@ -87,9 +92,11 @@ def get_inventory(request: HttpRequest) -> JsonResponse:
     # Get the Inventory
     inv = getInv(request.user)
 
-    items = list(inv.items.values('name', 'type', 'quantity', 'expiration', 'added', 'lastUpdated'))
+    items = inv.get_items()
 
-    return JsonResponse({"inventory": items}, status=200)
+    items_return = [item.to_dict() for item in items]
+
+    return JsonResponse({"inventory": items_return}, status=200)
 
 
 
@@ -121,7 +128,9 @@ def add_to_inventory(request: HttpRequest) -> JsonResponse:
 
     # Attempt to create the Item
     try:
-        Item.objects.create(name=itemName, quantity=itemQuantity, expiration=itemExpiration, type=itemType, inventory=inv)
+        # Convert the expiration date to the proper format
+        eDate = datetime.strptime(itemExpiration, "%B %d, %Y").date()
+        Item.objects.create(name=itemName, quantity=itemQuantity, expiration=eDate, type=itemType, inventory=inv)
     except:
         return JsonResponse({"details": "Invalid Parameter Values"}, status=404)
     
@@ -147,7 +156,7 @@ def update_inventory(request: HttpRequest) -> JsonResponse:
         return JsonResponse({"error": "Invalid JSON format."}, status=400)
     
     for item in items:
-        item_name = item.get("item_name")
+        item_name = item.get("item_name", None)
         attributes = item.get("attributes", [])
         values = item.get("values", [])
 
@@ -192,9 +201,9 @@ def edit_inventory(request: HttpRequest) -> JsonResponse:
     except:
         return JsonResponse({"error": "Invalid JSON format."}, status=400)
     
-    item_name = data.get("item_name")
-    attributes = data.get("attribute", [])
-    values = data.get("new_value", [])
+    item_name = data.get("item_name", None)
+    attributes = data.get("attributes", [])
+    values = data.get("values", [])
 
     # Check that the attribute and value arrays match
     if item_name is None or len(attributes) != len(values):

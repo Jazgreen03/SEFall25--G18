@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+import json
 
 User = get_user_model()
 
@@ -165,7 +166,7 @@ class TestAddItem(TestCase):
         self.assertEqual(len(inventory), 2)
 
         # Verify the item details are correct
-        if (inventory[1]["name"] is "milk"):
+        if (inventory[1]["name"] == "milk"):
             item = inventory[1]
         else:
             item = inventory[0]
@@ -250,9 +251,8 @@ class TestUpdateInventory(TestCase):
         
         response = self.client.put(
             "/inventory/update/", 
-            {
-                "items": [item1Update, item2Update, item4Update]
-            }
+            data=json.dumps({"items": [item1Update, item2Update, item4Update]}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
@@ -263,7 +263,7 @@ class TestUpdateInventory(TestCase):
         inventory = data["inventory"]
 
         for item in inventory:
-            match item["item_name"]:
+            match item["name"]:
                 # Only the quantity should have changed
                 case "pasta":
                     self.assertEqual(item["quantity"], 50)
@@ -298,9 +298,8 @@ class TestUpdateInventory(TestCase):
         
         response = self.client.put(
             "/inventory/update/", 
-            {
-                "items": [item1Update, item4Update]
-            }
+            data=json.dumps({"items": [item1Update, item4Update]}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
@@ -311,7 +310,7 @@ class TestUpdateInventory(TestCase):
         inventory = data["inventory"]
 
         for item in inventory:
-            match item["item_name"]:
+            match item["name"]:
                 # Only the quantity should have changed
                 case "macaroni":
                     self.assertEqual(item["quantity"], 50)
@@ -345,30 +344,27 @@ class TestUpdateInventory(TestCase):
         # Differing lengths between attributes and values
         itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
         response = self.client.put(
-            "/inventory/update/", 
-            {
-                "items": [itemUpdate]
-            }
+            "/inventory/update/",
+            data=json.dumps({"items": [itemUpdate]}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 406)
 
         # No Item Name
         itemUpdate = {"attributes": ["name"], "values": ["macaroni"]}
         response = self.client.put(
-            "/inventory/update/", 
-            {
-                "items": [itemUpdate]
-            }
+            "/inventory/update/",
+            data=json.dumps({"items": [itemUpdate]}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 406)
 
         # Nonexistent Item Name
         itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
         response = self.client.put(
-            "/inventory/update/", 
-            {
-                "items": [itemUpdate]
-            }
+            "/inventory/update/",
+            data=json.dumps({"items": [itemUpdate]}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)
 
@@ -401,18 +397,21 @@ class TestEditItem(TestCase):
             "/inventory/add/",
             {
                 "item_name": "pasta",
-                "quantity": "30",
+                "quantity": 30,
                 "expiration": "December 31, 2030",
                 "type": "stable"
             }
         )
     
-    def test_valid_single_attr_update(self):
+    def test_valid_single_attr_edit(self):
         
-        itemUpdate = {"item_name": "pasta", "attributes": ["quantity"], "values": ["50"]}
+        itemUpdate = {"item_name": "pasta", "attributes": ["quantity"], "values": [50]}
         
-        response = self.client.put("/inventory/update/", itemUpdate)
-
+        response = self.client.put(
+            "/inventory/edit/",
+            data=json.dumps(itemUpdate),
+            content_type="application/json",
+        )
         self.assertEqual(response.status_code, 200)
 
         # Verify the items were changed
@@ -421,16 +420,18 @@ class TestEditItem(TestCase):
         inventory = data["inventory"]
         item = inventory[0]
 
-        self.assertEqual(item["item_name"], "pasta")
+        self.assertEqual(item["name"], "pasta")
         self.assertEqual(item["quantity"], 50)
         self.assertEqual(item["expiration"], "December 31, 2030")
         self.assertEqual(item["type"], "Shelf Stable")
 
-    def test_valid_multi_attr_val_update(self):        
-        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+    def test_valid_multi_attr_val_edit(self):        
+        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", 50]}
         
         response = self.client.put(
-            "/inventory/update/", itemUpdate
+            "/inventory/edit/",
+            data=json.dumps(itemUpdate),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
@@ -439,32 +440,39 @@ class TestEditItem(TestCase):
         response = self.client.get("/inventory/")
         data = response.json()
         inventory = data["inventory"]
-        item = inventory[0]
 
-        self.assertEqual(item["item_name"], "macaroni")
+        item = next(i for i in inventory if i["name"] == "macaroni")
+
+        self.assertEqual(item["name"], "macaroni")
         self.assertEqual(item["quantity"], 50)
         self.assertEqual(item["expiration"], "December 31, 2030")
         self.assertEqual(item["type"], "Shelf Stable")
 
-    def test_invalid_update(self):
+    def test_invalid_edit(self):
 
         # Differing lengths between attributes and values
         itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
         response = self.client.put(
-            "/inventory/edit/", itemUpdate
+            "/inventory/edit/", 
+            data=json.dumps(itemUpdate),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 406)
 
         # No Item Name
         itemUpdate = {"attributes": ["name"], "values": ["macaroni"]}
         response = self.client.put(
-            "/inventory/edit/", itemUpdate
+            "/inventory/edit/", 
+            data=json.dumps(itemUpdate),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 406)
 
         # Nonexistent Item Name
         itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
         response = self.client.put(
-            "/inventory/edit/", itemUpdate
+            "/inventory/edit/", 
+            data=json.dumps(itemUpdate),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)

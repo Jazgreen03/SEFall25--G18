@@ -23,11 +23,11 @@ def createOrganization(request: HttpRequest) -> JsonResponse:
     
     """
 
-    if userHasLocationPerm(request.user) is False:
-        return JsonResponse({"details": "User has Invalid Role"}, status=401)
-
     if request.user.is_authenticated:
 
+        if userHasLocationPerm(request.user) is False:
+            return JsonResponse({"details": "User has Invalid Role"}, status=401)
+    
         # Parse the data from the request
         name = request.POST.get("name", "")
         orgType = request.POST.get("type", "")

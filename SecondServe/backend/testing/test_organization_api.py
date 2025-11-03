@@ -59,9 +59,9 @@ class TestValidUserCreateOrganization(TestCase):
         response = self.client.post(
             "/org/", 
             {
-                "name": orgName,
+                "name": orgNameTwo,
                 "type": invalid_orgType,
-                "location": orgLocation
+                "location": orgLocationTwo
             }
         )
 
