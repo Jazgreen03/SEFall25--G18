@@ -7,422 +7,130 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	    <link rel="stylesheet" href="./styles/style.css">
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">web documentation</a>
-            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-            <div id="book-search-input" role="search">
-                <input type="text" placeholder="Type to search">
-            </div>
-            <nav>
-            
-                <ul class="list">
-            
-                    <li class="title">
-                        <a href="./">web documentation</a>
-                    </li>
-            
-                    <li class="divider"></li>
-            
-            
-                    <li class="chapter">
-                        <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
-                        <ul class="links">
-                                <li class="link">
-                                    <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
-                                </li>
-                                <li class="link">
-                                    <a 
-                                        
-                                         href="./overview.html" 
-                                         href="./overview.html" 
-                                        >
-                                        <span class="fa fa-th"></span>Overview
-                                    </a>
-                                </li>
-                        </ul>
-                    </li>
-            
-            
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-cogs"></span>
-                            <span>Components</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-components-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-components-links"
-                            >
-                                <li class="link">
-                                    <a href="components/App.html" >App</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Blog.html" >Blog</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Community.html" >Community</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Contact.html" >Contact</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Deliveries.html" >Deliveries</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Donate.html"  class="active" >Donate</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/DriverAccountManagement.html" >DriverAccountManagement</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/DriverHome.html" >DriverHome</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Events.html" >Events</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/InventoryManagement.html" >InventoryManagement</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Landing.html" >Landing</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Login.html" >Login</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Mission.html" >Mission</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/OrgAccountManagement.html" >OrgAccountManagement</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/OrgHome.html" >OrgHome</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/OrgOrderHistory.html" >OrgOrderHistory</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Register.html" >Register</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/Restaurants.html" >Restaurants</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/UserHome.html" >UserHome</a>
-                                </li>
-                                <li class="link">
-                                    <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
-                                </li>
-                        </ul>
-                    </li>
-            
-            
-            
-                    <li class="chapter">
-                        <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
-                    </li>
-            
-            
-                    <li class="chapter">
-                        <div class="simple">
-                            <span class="fa fa-info"></span>
-                            <span>Interfaces</span>
-                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                    data-target="#xs-interfaces-links"
-                                ></span>
-                        </div>
-                        <ul class="links collapse in"
-                                id="xs-interfaces-links"
-                            >
-                                <li class="link">
-                                    <a href="interfaces/Delivery.html" >Delivery</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Delivery.html" >Delivery</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Delivery.html" >Delivery</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Delivery.html" >Delivery</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/InventoryItem.html" >InventoryItem</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/InventoryItem.html" >InventoryItem</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Order.html" >Order</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Order.html" >Order</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/OrgOrder.html" >OrgOrder</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/PickupRequest.html" >PickupRequest</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/Restaurant.html" >Restaurant</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/User.html" >User</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/User.html" >User</a>
-                                </li>
-                                <li class="link">
-                                    <a href="interfaces/User.html" >User</a>
-                                </li>
-                        </ul>
-                    </li>
-            
-            
-                    <li class="chapter">
-                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
-                    </li>
-            
-                    <li class="chapter">
-                        <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
-                    </li>
-            
-            
-                </ul>
-            
-            </nav>
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
-                   <nav>
-                   
-                       <ul class="list">
-                   
-                           <li class="title">
-                               <a href="./">web documentation</a>
-                           </li>
-                   
-                           <li class="divider"></li>
-                   
-                               <div id="book-search-input" role="search">
-                                   <input type="text" placeholder="Type to search">
-                               </div>
-                   
-                           <li class="chapter">
-                               <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
-                               <ul class="links">
-                                       <li class="link">
-                                           <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
-                                       </li>
-                                       <li class="link">
-                                           <a 
-                                               
-                                                href="./overview.html" 
-                                                href="./overview.html" 
-                                               >
-                                               <span class="fa fa-th"></span>Overview
-                                           </a>
-                                       </li>
-                               </ul>
-                           </li>
-                   
-                   
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-cogs"></span>
-                                   <span>Components</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#components-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="components-links"
-                   >
-                                       <li class="link">
-                                           <a href="components/App.html" >App</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Blog.html" >Blog</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Community.html" >Community</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Contact.html" >Contact</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Deliveries.html" >Deliveries</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Donate.html"  class="active" >Donate</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/DriverAccountManagement.html" >DriverAccountManagement</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/DriverHome.html" >DriverHome</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Events.html" >Events</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/InventoryManagement.html" >InventoryManagement</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Landing.html" >Landing</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Login.html" >Login</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Mission.html" >Mission</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/OrgAccountManagement.html" >OrgAccountManagement</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/OrgHome.html" >OrgHome</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/OrgOrderHistory.html" >OrgOrderHistory</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Register.html" >Register</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/Restaurants.html" >Restaurants</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/UserHome.html" >UserHome</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
-                                       </li>
-                               </ul>
-                           </li>
-                   
-                   
-                   
-                           <li class="chapter">
-                               <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
-                           </li>
-                   
-                   
-                           <li class="chapter">
-                               <div class="simple">
-                                   <span class="fa fa-info"></span>
-                                   <span>Interfaces</span>
-                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
-                                           data-target="#interfaces-links"
-                   ></span>
-                               </div>
-                               <ul class="links collapse in"
-                                       id="interfaces-links"
-                   >
-                                       <li class="link">
-                                           <a href="interfaces/Delivery.html" >Delivery</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Delivery.html" >Delivery</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Delivery.html" >Delivery</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Delivery.html" >Delivery</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/InventoryItem.html" >InventoryItem</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/InventoryItem.html" >InventoryItem</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Order.html" >Order</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Order.html" >Order</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/OrgOrder.html" >OrgOrder</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/PickupRequest.html" >PickupRequest</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/Restaurant.html" >Restaurant</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/User.html" >User</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/User.html" >User</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="interfaces/User.html" >User</a>
-                                       </li>
-                               </ul>
-                           </li>
-                   
-                   
-                           <li class="chapter">
-                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
-                           </li>
-                   
-                           <li class="chapter">
-                               <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
-                           </li>
-                   
-                   
-                       </ul>
-                   
-                   </nav>
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
                </div>
+               <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
 
 
+
+
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>Donate</li>
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Donate</li>
 </ol>
 
-
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li>
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
-    </ul>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
 
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="infos"><p class="comment">
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -431,9 +139,12 @@
 
 
 
-<section>
+
+
+
+<section data-compodoc="block-metadata">
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover metadata">
         <tbody>
 
 
@@ -452,13 +163,36 @@
                 <td class="col-md-9"><code>app-donate</code></td>
             </tr>
 
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterModule</code>
+                </td>
+            </tr>
+
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>donate.html</code></td>
+                <td class="col-md-9"><code>./donate.html</code></td>
             </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./donate.css</code></td>
+            </tr>
+
+
+
 
 
         </tbody>
@@ -469,9 +203,15 @@
 
 
 
+
+
+
+
 </div>
-        <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
@@ -484,8 +224,124 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
 })
 export class Donate {}
 </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;header&gt;
+  &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+&lt;/header&gt;
+
+&lt;section class&#x3D;&quot;hero-section&quot;&gt;
+  &lt;h1&gt;Make a Donation&lt;/h1&gt;
+  &lt;p&gt;
+    Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish communities.
+  &lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section class&#x3D;&quot;donate-form&quot;&gt;
+  &lt;h2&gt;Donate Now&lt;/h2&gt;
+  &lt;form&gt;
+    &lt;!-- Name &amp; Email --&gt;
+    &lt;label for&#x3D;&quot;name&quot;&gt;Name&lt;/label&gt;
+    &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Your Name&quot;&gt;
+
+    &lt;label for&#x3D;&quot;email&quot;&gt;Email&lt;/label&gt;
+    &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Your Email&quot;&gt;
+
+    &lt;label for&#x3D;&quot;company&quot;&gt;Donor&lt;/label&gt;
+    &lt;select id&#x3D;&quot;company&quot;&gt;
+      &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donor Type&lt;/option&gt;
+      &lt;option value&#x3D;&quot;restaurant&quot;&gt;Restaurant&lt;/option&gt;
+      &lt;option value&#x3D;&quot;grocery&quot;&gt;Grocery Store&lt;/option&gt;
+      &lt;option value&#x3D;&quot;self&quot;&gt;Self&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;label for&#x3D;&quot;donation-type&quot;&gt;Donation Type&lt;/label&gt;
+    &lt;select id&#x3D;&quot;donation-type&quot;&gt;
+      &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donation Type&lt;/option&gt;
+      &lt;option value&#x3D;&quot;amount&quot;&gt;Amount&lt;/option&gt;
+      &lt;option value&#x3D;&quot;food&quot;&gt;Food&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;div id&#x3D;&quot;amount-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
+      &lt;label for&#x3D;&quot;donation-amount&quot;&gt;Donation Amount&lt;/label&gt;
+      &lt;input type&#x3D;&quot;number&quot; id&#x3D;&quot;donation-amount&quot; placeholder&#x3D;&quot;$50&quot;&gt;
+    &lt;/div&gt;
+
+    &lt;div id&#x3D;&quot;food-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
+      &lt;label for&#x3D;&quot;food-details&quot;&gt;Food Details&lt;/label&gt;
+      &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;food-details&quot; placeholder&#x3D;&quot;e.g., 10 lbs of rice&quot;&gt;
+    &lt;/div&gt;
+
+    &lt;button type&#x3D;&quot;submit&quot;&gt;Donate&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;
+
+&lt;script&gt;
+  const donationSelect &#x3D; document.getElementById(&quot;donation-type&quot;);
+  const amountInput &#x3D; document.getElementById(&quot;amount-input&quot;);
+  const foodInput &#x3D; document.getElementById(&quot;food-input&quot;);
+
+  donationSelect.addEventListener(&quot;change&quot;, function() {
+    if (this.value &#x3D;&#x3D;&#x3D; &quot;amount&quot;) {
+      amountInput.style.display &#x3D; &quot;block&quot;;
+      foodInput.style.display &#x3D; &quot;none&quot;;
+    } else if (this.value &#x3D;&#x3D;&#x3D; &quot;food&quot;) {
+      amountInput.style.display &#x3D; &quot;none&quot;;
+      foodInput.style.display &#x3D; &quot;block&quot;;
+    } else {
+      amountInput.style.display &#x3D; &quot;none&quot;;
+      foodInput.style.display &#x3D; &quot;none&quot;;
+    }
+  });
+&lt;/script&gt;
+
+
+&lt;footer&gt;
+  &lt;p&gt;© 2025 Second Serve — All Rights Reserved.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
         </div>
     </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><header>  <div class="logo">SECOND SERVE</div></header><section class="hero-section">  <h1>Make a Donation</h1>  <p>    Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish communities.  </p></section><section class="donate-form">  <h2>Donate Now</h2>  <form>    <!-- Name & Email -->    <label for="name">Name</label>    <input type="text" id="name" placeholder="Your Name">    <label for="email">Email</label>    <input type="email" id="email" placeholder="Your Email">    <label for="company">Donor</label>    <select id="company">      <option value="" disabled selected>Select Donor Type</option>      <option value="restaurant">Restaurant</option>      <option value="grocery">Grocery Store</option>      <option value="self">Self</option>    </select>    <label for="donation-type">Donation Type</label>    <select id="donation-type">      <option value="" disabled selected>Select Donation Type</option>      <option value="amount">Amount</option>      <option value="food">Food</option>    </select>    <div id="amount-input" style="display:none;">      <label for="donation-amount">Donation Amount</label>      <input type="number" id="donation-amount" placeholder="$50">    </div>    <div id="food-input" style="display:none;">      <label for="food-details">Food Details</label>      <input type="text" id="food-details" placeholder="e.g., 10 lbs of rice">    </div>    <button type="submit">Donate</button>  </form></section><script>  const donationSelect = document.getElementById("donation-type");  const amountInput = document.getElementById("amount-input");  const foodInput = document.getElementById("food-input");  donationSelect.addEventListener("change", function() {    if (this.value === "amount") {      amountInput.style.display = "block";      foodInput.style.display = "none";    } else if (this.value === "food") {      amountInput.style.display = "none";      foodInput.style.display = "block";    } else {      amountInput.style.display = "none";      foodInput.style.display = "none";    }  });</script><footer>  <p>© 2025 Second Serve — All Rights Reserved.</p></footer></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Donate'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
 
 
 
@@ -506,32 +362,64 @@ export class Donate {}
     </div>
 </div>
 </div>
+               <!-- END CONTENT -->
            </div>
        </div>
 
-       <script src="./js/libs/bootstrap-native.js"></script>
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
 
-       <script src="./js/libs/es6-shim.min.js"></script>
-       <script src="./js/libs/EventDispatcher.js"></script>
-       <script src="./js/libs/promise.min.js"></script>
-       <script src="./js/libs/zepto.min.js"></script>
-
-       <script src="./js/compodoc.js"></script>
-
-       <script src="./js/search/search.js"></script>
-       <script src="./js/search/lunr.min.js"></script>
-       <script src="./js/search/search-lunr.js"></script>
-
-       <script src="./js/menu.js"></script>
-       <script src="./js/libs/highlight.pack.js"></script>
-       <script src="./js/libs/highlightjs-line-numbers.min.js"></script>
-       <script src="./js/search/search_index.js"></script>
        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                hljs.initHighlightingOnLoad();
-                hljs.initLineNumbersOnLoad();
-            });
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Donate.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
 
     </body>
 </html>
