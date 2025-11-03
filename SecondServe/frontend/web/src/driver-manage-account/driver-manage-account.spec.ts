@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageAccount } from './manage-account';
+import { DriverAccountManagement } from './driver-manage-account';
 
 describe('ManageAccount', () => {
-  let component: ManageAccount;
-  let fixture: ComponentFixture<ManageAccount>;
+  let component: DriverAccountManagement;
+  let fixture: ComponentFixture<DriverAccountManagement>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManageAccount]
-    })
-    .compileComponents();
+      imports: [DriverAccountManagement],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(ManageAccount);
+    fixture = TestBed.createComponent(DriverAccountManagement);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
