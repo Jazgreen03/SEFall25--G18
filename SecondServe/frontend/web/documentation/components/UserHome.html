@@ -843,7 +843,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;http://localhost:8080/api&#x27;</code>
+                        <i>Default value : </i><code>&#x27;http://localhost:8080/api/user&#x27;</code>
                     </td>
                 </tr>
                     <tr>
@@ -986,7 +986,7 @@ export class UserHome implements OnInit {
   loading &#x3D; false;
   error: string | null &#x3D; null;
 
-  private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api/user&#x27;;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -1017,80 +1017,80 @@ export class UserHome implements OnInit {
   // --- API Methods --- //
 
   loadRestaurants(): void {
-    this.loading &#x3D; true;
-    this.error &#x3D; null;
+    // this.loading &#x3D; true;
+    // this.error &#x3D; null;
 
-    this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
-      .subscribe({
-        next: (data) &#x3D;&gt; {
-          this.restaurants &#x3D; data;
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
-          this.loading &#x3D; false;
-          console.error(&#x27;Error loading restaurants:&#x27;, err);
-        }
-      });
+    // this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
+    //   .subscribe({
+    //     next: (data) &#x3D;&gt; {
+    //       this.restaurants &#x3D; data;
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(&#x27;Error loading restaurants:&#x27;, err);
+    //     }
+    //   });
   }
 
   schedulePickup(request: PickupRequest): void {
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    this.loading &#x3D; true;
+    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    // this.loading &#x3D; true;
 
-    this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
-      .subscribe({
-        next: () &#x3D;&gt; {
-          alert(&#x27;Pickup scheduled successfully!&#x27;);
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
-          this.loading &#x3D; false;
-          console.error(err);
-        }
-      });
+    // this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
+    //   .subscribe({
+    //     next: () &#x3D;&gt; {
+    //       alert(&#x27;Pickup scheduled successfully!&#x27;);
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(err);
+    //     }
+    //   });
   }
 
   onPickupClick(restaurant: Restaurant): void {
-    const pickupRequest: PickupRequest &#x3D; {
-      restaurantId: restaurant.id,
-      userId: 1,
-      pickupTime: new Date(Date.now() + 3600000).toISOString(),
-      deliveryType: &#x27;pickup&#x27;,
-      items: []
-    };
-    this.schedulePickup(pickupRequest);
+    // const pickupRequest: PickupRequest &#x3D; {
+    //   restaurantId: restaurant.id,
+    //   userId: 1,
+    //   pickupTime: new Date(Date.now() + 3600000).toISOString(),
+    //   deliveryType: &#x27;pickup&#x27;,
+    //   items: []
+    // };
+    // this.schedulePickup(pickupRequest);
   }
 
   onDeliveryClick(restaurant: Restaurant): void {
-    const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
-    if (!address) return;
+    // const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
+    // if (!address) return;
 
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    const deliveryRequest &#x3D; {
-      restaurantId: restaurant.id,
-      deliveryAddress: address,
-      requestedTime: new Date().toISOString()
-    };
+    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    // const deliveryRequest &#x3D; {
+    //   restaurantId: restaurant.id,
+    //   deliveryAddress: address,
+    //   requestedTime: new Date().toISOString()
+    // };
 
-    this.loading &#x3D; true;
-    this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
-      .subscribe({
-        next: () &#x3D;&gt; {
-          alert(&#x27;Delivery requested!&#x27;);
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Delivery request failed.&#x27;;
-          this.loading &#x3D; false;
-          console.error(err);
-        }
-      });
+    // this.loading &#x3D; true;
+    // this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
+    //   .subscribe({
+    //     next: () &#x3D;&gt; {
+    //       alert(&#x27;Delivery requested!&#x27;);
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Delivery request failed.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(err);
+    //     }
+    //   });
   }
 
   refreshRestaurants(): void {
-    this.loadRestaurants();
+    //this.loadRestaurants();
   }
 }
 </code></pre>
@@ -1503,7 +1503,7 @@ header h1 {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="home-container">  <!-- Header -->  <header class="main-header">    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer;">        SecondServe      </h1>    </div>    <div class="nav-actions">      <button class="nav-btn" (click)="goToAccount()">Account</button>      <button class="nav-btn" (click)="goToOrders()">Order History</button>      <button class="logout-btn" (click)="logout()">Logout</button>    </div>  </header>  <!-- Hero Section -->  <section class="hero-section">    <h2 class="hero-title">Connecting surplus food with those who need it most</h2>    <p class="tagline">Reducing food waste, fighting food insecurity</p>    <div class="search-section">      <button (click)="loadRestaurants()" class="btn-primary">        Find Available Food Near You      </button>    </div>  </section>  <!-- Loading & Error States -->  <div *ngIf="loading" class="loading">    <p>Loading restaurants...</p>  </div>  <div *ngIf="error" class="error">    <p>{{ error }}</p>    <button (click)="refreshRestaurants()" class="btn-secondary">Try Again</button>  </div>  <!-- Restaurant Cards -->  <section *ngIf="!loading && restaurants.length > 0" class="restaurants-grid">    <div *ngFor="let restaurant of restaurants" class="restaurant-card">      <img [src]="restaurant.imageUrl" [alt]="restaurant.name" class="restaurant-image" />      <div class="restaurant-info">        <h3>{{ restaurant.name }}</h3>        <p class="address">{{ restaurant.address }}</p>        <p class="distance">{{ restaurant.distance }} miles away</p>        <div class="food-types">          <span *ngFor="let type of restaurant.foodTypes" class="food-tag">            {{ type }}          </span>        </div>        <div class="availability">          <p><strong>{{ restaurant.availableItems }}</strong> items available</p>          <p class="expiry">Best by: {{ restaurant.expiryDate | date: \'short\' }}</p>          <p class="hours">Open until: {{ restaurant.openUntil }}</p>        </div>        <div class="actions">          <button (click)="onPickupClick(restaurant)" class="btn-pickup">Schedule Pickup</button>          <button (click)="onDeliveryClick(restaurant)" class="btn-delivery">Request Delivery</button>        </div>      </div>    </div>  </section>  <!-- No Results -->  <div *ngIf="!loading && restaurants.length === 0" class="no-results">    <p>No restaurants with available food at this time.</p>    <p>Check back soon or expand your search area.</p>  </div></div></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserHome'};
 </script>

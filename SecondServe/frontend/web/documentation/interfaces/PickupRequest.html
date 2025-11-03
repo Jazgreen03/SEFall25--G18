@@ -407,7 +407,7 @@ export class UserHome implements OnInit {
   loading &#x3D; false;
   error: string | null &#x3D; null;
 
-  private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api/user&#x27;;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -438,80 +438,80 @@ export class UserHome implements OnInit {
   // --- API Methods --- //
 
   loadRestaurants(): void {
-    this.loading &#x3D; true;
-    this.error &#x3D; null;
+    // this.loading &#x3D; true;
+    // this.error &#x3D; null;
 
-    this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
-      .subscribe({
-        next: (data) &#x3D;&gt; {
-          this.restaurants &#x3D; data;
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
-          this.loading &#x3D; false;
-          console.error(&#x27;Error loading restaurants:&#x27;, err);
-        }
-      });
+    // this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
+    //   .subscribe({
+    //     next: (data) &#x3D;&gt; {
+    //       this.restaurants &#x3D; data;
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(&#x27;Error loading restaurants:&#x27;, err);
+    //     }
+    //   });
   }
 
   schedulePickup(request: PickupRequest): void {
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    this.loading &#x3D; true;
+    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    // this.loading &#x3D; true;
 
-    this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
-      .subscribe({
-        next: () &#x3D;&gt; {
-          alert(&#x27;Pickup scheduled successfully!&#x27;);
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
-          this.loading &#x3D; false;
-          console.error(err);
-        }
-      });
+    // this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
+    //   .subscribe({
+    //     next: () &#x3D;&gt; {
+    //       alert(&#x27;Pickup scheduled successfully!&#x27;);
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(err);
+    //     }
+    //   });
   }
 
   onPickupClick(restaurant: Restaurant): void {
-    const pickupRequest: PickupRequest &#x3D; {
-      restaurantId: restaurant.id,
-      userId: 1,
-      pickupTime: new Date(Date.now() + 3600000).toISOString(),
-      deliveryType: &#x27;pickup&#x27;,
-      items: []
-    };
-    this.schedulePickup(pickupRequest);
+    // const pickupRequest: PickupRequest &#x3D; {
+    //   restaurantId: restaurant.id,
+    //   userId: 1,
+    //   pickupTime: new Date(Date.now() + 3600000).toISOString(),
+    //   deliveryType: &#x27;pickup&#x27;,
+    //   items: []
+    // };
+    // this.schedulePickup(pickupRequest);
   }
 
   onDeliveryClick(restaurant: Restaurant): void {
-    const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
-    if (!address) return;
+    // const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
+    // if (!address) return;
 
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    const deliveryRequest &#x3D; {
-      restaurantId: restaurant.id,
-      deliveryAddress: address,
-      requestedTime: new Date().toISOString()
-    };
+    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    // const deliveryRequest &#x3D; {
+    //   restaurantId: restaurant.id,
+    //   deliveryAddress: address,
+    //   requestedTime: new Date().toISOString()
+    // };
 
-    this.loading &#x3D; true;
-    this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
-      .subscribe({
-        next: () &#x3D;&gt; {
-          alert(&#x27;Delivery requested!&#x27;);
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Delivery request failed.&#x27;;
-          this.loading &#x3D; false;
-          console.error(err);
-        }
-      });
+    // this.loading &#x3D; true;
+    // this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
+    //   .subscribe({
+    //     next: () &#x3D;&gt; {
+    //       alert(&#x27;Delivery requested!&#x27;);
+    //       this.loading &#x3D; false;
+    //     },
+    //     error: (err) &#x3D;&gt; {
+    //       this.error &#x3D; &#x27;Delivery request failed.&#x27;;
+    //       this.loading &#x3D; false;
+    //       console.error(err);
+    //     }
+    //   });
   }
 
   refreshRestaurants(): void {
-    this.loadRestaurants();
+    //this.loadRestaurants();
   }
 }
 </code></pre>

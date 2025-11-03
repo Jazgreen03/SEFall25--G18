@@ -87,6 +87,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/Events.html" data-type="entity-link" >Events</a>
                             </li>
                             <li class="link">
+                                <a href="components/Home.html" data-type="entity-link" >Home</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/InventoryManagement.html" data-type="entity-link" >InventoryManagement</a>
                             </li>
                             <li class="link">
@@ -124,6 +127,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                         </ul>
                     </li>
+                        <li class="chapter">
+                            <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#injectables-links"' :
+                                'data-bs-target="#xs-injectables-links"' }>
+                                <span class="icon ion-md-arrow-round-down"></span>
+                                <span>Injectables</span>
+                                <span class="icon ion-ios-arrow-down"></span>
+                            </div>
+                            <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
+                                <li class="link">
+                                    <a href="injectables/AuthService.html" data-type="entity-link" >AuthService</a>
+                                </li>
+                            </ul>
+                        </li>
                     <li class="chapter">
                         <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#interfaces-links"' :
                             'data-bs-target="#xs-interfaces-links"' }>
