@@ -136,11 +136,9 @@ MIGRATION_MODULES = {
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:4200",
-    ]
+    CORS_ALLOWED_ORIGINS = [os.getenv("CSRF_ALLOWED_HOSTS", "http://localhost")]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:4200"]
+CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_ALLOWED_HOSTS", "http://localhost")]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 CORS_ALLOW_HEADERS = [

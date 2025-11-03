@@ -18,90 +18,73 @@ def createUser(request: HttpRequest) -> JsonResponse:
         data = json.loads(request.body)
     except json.JSONDecodeError:
         return JsonResponse({"details": "Invalid JSON"}, status=400)
-    # username = request.POST.get("username")
-    # password = request.POST.get("password")
-    # email = request.POST.get("email")
 
+    username = data.get("username")
     password = data.get("password")
     email = data.get("email")
-    role = data.get("role", "user").lower()
-    # password = request.POST.get("password")
-    # email = request.POST.get("email")
-    # user_type = request.POST.get("user_type", "user").lower()
 
-    if not password or not email:
+    if (username is None and email is None) or password is None:
         return JsonResponse(
-            {"details": "Must provide valid Email and Password"}, status=406
+            {"details": "Must provide valid Username/Email and Password" & password }, status=406
         )
 
-    if (not username and not email) or not password:
-        return JsonResponse(
-            {"details": "Must provide valid Username/Email and Password"}, status=406
-        )
-
-    # first_name = request.POST.get("first_name", "")
-    # last_name = request.POST.get("last_name", "")
-    first_name = data.get("name")
+    first_name = request.POST.get("first_name", "")
+    last_name = request.POST.get("last_name", "")
 
     User = get_user_model()
-    if User.objects.filter(email=email).exists():
-        return JsonResponse({"details": "Email Already Exists!"}, status=409)
+    if (
+        User.objects.filter(username=username).exists()
+        or User.objects.filter(email=email).exists()
+    ):
+        return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
-    # Create user
     user = User(
-        email=email,
-        first_name=first_name,
-        # last_name=last_name,
-        role=role,
+        username=username, email=email, first_name=first_name, last_name=last_name
     )
-    user.set_password(password)
+    user.set_password(password)  # hash the password
     user.save()
 
-    # Authenticate and login
-    authuser = authenticate(request, email=email, password=password)
+    if username is None:
+        username = email
+
+    authuser = authenticate(username=username, password=password)
     if authuser is not None:
         login(request, authuser)
-        return JsonResponse(
-            {"details": "User Created and Logged in", "user_type": role},
-            status=201,
-        )
+        return JsonResponse({"details": "User Created and Logged in"}, status=201)
+    
     return JsonResponse({"details": "Authentication Failed"}, status=500)
 
 
 @require_http_methods(["POST"])
 def loginUser(request: HttpRequest) -> JsonResponse:
     """
-    Attempts to login a User using Email and Password only
+    Attempts to login a User with Username/Email and a Password
     """
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
         return JsonResponse({"details": "Invalid JSON"}, status=400)
-    # username = request.POST.get("username")
-    # password = request.POST.get("password")
-    # email = request.POST.get("email")
 
+    username = data.get("username")
     password = data.get("password")
     email = data.get("email")
 
-    if not email or not password:
+    if (username is None and email is None) or password is None:
         return JsonResponse(
-            {"details": "Must Provide an Email and a Password"}, status=406
+            {"details": "Must Provide Username/Email and Password"}, status=406
         )
 
-    user = authenticate(request, email=email, password=password)
+    if username is None:
+        username = email
+
+    user = authenticate(username=username, password=password)
     if user is None:
-        return JsonResponse({"details": "Invalid Email and/or Password"}, status=404)
+        return JsonResponse(
+            {"details": "Invalid Username/Email and/or Password"}, status=404
+        )
 
     login(request, user)
-    return JsonResponse(
-        {
-            "details": "User logged in",
-            "email": user.email,
-            "role": user.role,
-        },
-        status=200,
-    )
+    return JsonResponse({"details": "User logged in"}, status=200)
 
 
 @require_http_methods(["POST"])
