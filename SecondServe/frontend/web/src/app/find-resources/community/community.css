@@ -1,0 +1,140 @@
+/* General Page Styling */
+body {
+  margin: 0;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+}
+
+/* ---------------- Header ---------------- */
+header {
+  padding: 2rem 3rem;
+  background-color: #1d684c;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+  font-weight: 500;
+}
+
+nav a:hover, nav a.active {
+  text-decoration: underline;
+}
+
+/* ---------------- Hero Section ---------------- */
+.hero-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #eaf7f1;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #3b3b3b;
+}
+
+/* ---------------- Community Page ---------------- */
+#community-page {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 4rem 2rem;
+  background-color: #f0f8f5;
+}
+
+.community-section {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.community-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1d684c;
+}
+
+.community-section p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  background-color: #1d684c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #15503a;
+}
+
+/* ---------------- Calendar Popup ---------------- */
+#calendar-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  max-width: 800px;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 2000;
+  overflow: auto;
+  padding: 1rem;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#close-calendar {
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+#close-calendar:hover {
+  color: red;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #community-page {
+    padding: 2rem 1rem;
+  }
+
+  .community-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+}

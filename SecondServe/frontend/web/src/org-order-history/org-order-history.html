@@ -1,0 +1,68 @@
+<div class="order-history-container">
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()">
+        SecondServe
+      </h1>
+    </div>
+
+    <div class="nav-actions">
+      <button
+        class="nav-btn"
+        [ngClass]="{'active': activeTab === 'account'}"
+        (click)="goToAccount()"
+      >
+        Account
+      </button>
+      <button class="nav-btn" (click)="goToInventory()">Manage Inventory</button>
+      <button class="nav-btn active" (click)="goToOrders()">Order History</button>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Banner / Page Title -->
+  <div class="hero-section">
+    <div class="hero-banner">
+      <h2>Organization Order History</h2>
+      <p>Review all your orders and their delivery status</p>
+    </div>
+  </div>
+
+  <!-- Loading & Error -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading orders...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="refreshOrders()" class="btn-secondary">Try Again</button>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngIf="!loading && orders.length > 0" class="orders-section">
+    <div class="order-card" *ngFor="let order of orders">
+      <div class="order-header">
+        <h3>Order #{{ order.id }}</h3>
+        <span class="order-status" [ngClass]="order.status.toLowerCase()">{{ order.status }}</span>
+      </div>
+
+      <div class="order-details">
+        <p class="order-date"><strong>Date:</strong> {{ order.date | date:'medium' }}</p>
+        <p class="order-restaurant"><strong>From:</strong> {{ order.restaurantName }}</p>
+        <p class="order-items">
+          <strong>Items:</strong>
+          <span *ngFor="let item of order.items">{{ item }}</span>
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="btn-secondary" (click)="viewOrder(order.id)">View Details</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && orders.length === 0" class="no-orders">
+    <p>You have no past orders.</p>
+  </div>
+</div>

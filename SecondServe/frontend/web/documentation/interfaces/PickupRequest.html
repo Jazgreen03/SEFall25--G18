@@ -140,7 +140,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/home/home.ts</code>
+            <code>src/user-home/user-home.ts</code>
         </p>
 
 
@@ -372,6 +372,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 
 interface Restaurant {
@@ -398,24 +399,44 @@ interface PickupRequest {
   selector: &#x27;app-home&#x27;,
   standalone: true,
   imports: [CommonModule],
-  templateUrl: &#x27;./home.html&#x27;,
-  styleUrls: [&#x27;./home.css&#x27;]
+  templateUrl: &#x27;./user-home.html&#x27;,
+  styleUrls: [&#x27;./user-home.css&#x27;]
 })
-export class Home implements OnInit {
+export class UserHome implements OnInit {
   restaurants: Restaurant[] &#x3D; [];
   loading &#x3D; false;
   error: string | null &#x3D; null;
 
-  // Backend API base URL - update with your actual backend URL
   private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.loadRestaurants();
   }
 
-  // GET: Fetch all available restaurants
+  // --- Navigation Methods --- //
+  goToAccount(): void {
+    this.router.navigate([&#x27;/account&#x27;]);
+  }
+
+  goToHome(): void {
+    // Navigate to orders page
+    window.location.href &#x3D; &#x27;/user-home&#x27;;
+  }
+
+  goToOrders(): void {
+    this.router.navigate([&#x27;/history&#x27;]);
+  }
+
+  logout(): void {
+    // clear token and navigate to login
+    localStorage.removeItem(&#x27;authToken&#x27;);
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+
+  // --- API Methods --- //
+
   loadRestaurants(): void {
     this.loading &#x3D; true;
     this.error &#x3D; null;
@@ -427,140 +448,73 @@ export class Home implements OnInit {
           this.loading &#x3D; false;
         },
         error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to load restaurants. Please try again.&#x27;;
+          this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
           this.loading &#x3D; false;
           console.error(&#x27;Error loading restaurants:&#x27;, err);
         }
       });
   }
 
-  // GET: Fetch restaurants by location
-  loadRestaurantsByLocation(latitude: number, longitude: number, radius &#x3D; 10): void {
-    this.loading &#x3D; true;
-    this.error &#x3D; null;
-
-    const params &#x3D; {
-      lat: latitude.toString(),
-      lng: longitude.toString(),
-      radius: radius.toString()
-    };
-
-    this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/nearby&#x60;, { params })
-      .subscribe({
-        next: (data) &#x3D;&gt; {
-          this.restaurants &#x3D; data;
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to load nearby restaurants.&#x27;;
-          this.loading &#x3D; false;
-          console.error(&#x27;Error loading nearby restaurants:&#x27;, err);
-        }
-      });
-  }
-
-  // GET: Fetch restaurant details
-  getRestaurantDetails(restaurantId: number): Observable&lt;Restaurant&gt; {
-    return this.http.get&lt;Restaurant&gt;(&#x60;${this.apiUrl}/restaurants/${restaurantId}&#x60;);
-  }
-
-  // POST: Schedule a pickup
   schedulePickup(request: PickupRequest): void {
+    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
     this.loading &#x3D; true;
-    this.error &#x3D; null;
-
-    const headers &#x3D; new HttpHeaders({
-      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
-    });
 
     this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
       .subscribe({
-        next: (response) &#x3D;&gt; {
+        next: () &#x3D;&gt; {
           alert(&#x27;Pickup scheduled successfully!&#x27;);
           this.loading &#x3D; false;
         },
         error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to schedule pickup. Please try again.&#x27;;
+          this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
           this.loading &#x3D; false;
-          console.error(&#x27;Error scheduling pickup:&#x27;, err);
+          console.error(err);
         }
       });
   }
 
-  // POST: Request delivery
-  requestDelivery(restaurantId: number, deliveryAddress: string): void {
-    this.loading &#x3D; true;
-    this.error &#x3D; null;
-
-    const deliveryRequest &#x3D; {
-      restaurantId,
-      deliveryAddress,
-      requestedTime: new Date().toISOString()
-    };
-
-    const headers &#x3D; new HttpHeaders({
-      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
-    });
-
-    this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
-      .subscribe({
-        next: (response) &#x3D;&gt; {
-          alert(&#x27;Delivery request submitted successfully!&#x27;);
-          this.loading &#x3D; false;
-        },
-        error: (err) &#x3D;&gt; {
-          this.error &#x3D; &#x27;Failed to request delivery. Please try again.&#x27;;
-          this.loading &#x3D; false;
-          console.error(&#x27;Error requesting delivery:&#x27;, err);
-        }
-      });
-  }
-
-  // POST: Register user interest
-  registerInterest(email: string): void {
-    const interest &#x3D; { email, timestamp: new Date().toISOString() };
-
-    const headers &#x3D; new HttpHeaders({
-      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
-    });
-
-    this.http.post(&#x60;${this.apiUrl}/users/register-interest&#x60;, interest, { headers })
-      .subscribe({
-        next: () &#x3D;&gt; {
-          alert(&#x27;Thank you for your interest!&#x27;);
-        },
-        error: (err) &#x3D;&gt; {
-          console.error(&#x27;Error registering interest:&#x27;, err);
-        }
-      });
-  }
-
-  // Helper method to handle pickup button click
   onPickupClick(restaurant: Restaurant): void {
     const pickupRequest: PickupRequest &#x3D; {
       restaurantId: restaurant.id,
-      userId: 1, // Replace with actual logged-in user ID
-      pickupTime: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
+      userId: 1,
+      pickupTime: new Date(Date.now() + 3600000).toISOString(),
       deliveryType: &#x27;pickup&#x27;,
       items: []
     };
-
     this.schedulePickup(pickupRequest);
   }
 
-  // Helper method to handle delivery button click
   onDeliveryClick(restaurant: Restaurant): void {
-    const address &#x3D; prompt(&#x27;Please enter your delivery address:&#x27;);
-    if (address) {
-      this.requestDelivery(restaurant.id, address);
-    }
+    const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
+    if (!address) return;
+
+    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    const deliveryRequest &#x3D; {
+      restaurantId: restaurant.id,
+      deliveryAddress: address,
+      requestedTime: new Date().toISOString()
+    };
+
+    this.loading &#x3D; true;
+    this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
+      .subscribe({
+        next: () &#x3D;&gt; {
+          alert(&#x27;Delivery requested!&#x27;);
+          this.loading &#x3D; false;
+        },
+        error: (err) &#x3D;&gt; {
+          this.error &#x3D; &#x27;Delivery request failed.&#x27;;
+          this.loading &#x3D; false;
+          console.error(err);
+        }
+      });
   }
 
-  // Refresh restaurant list
   refreshRestaurants(): void {
     this.loadRestaurants();
   }
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

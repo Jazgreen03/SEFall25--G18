@@ -180,3 +180,45 @@ footer {
   p { font-size: 1rem; }
   .slideshow-container { height: 250px; }
 }
+
+ /* ---------------- Hero Section CSS important ---------------- */
+    .hero-section {
+      width: 100%;
+      height: 600px; /* keep the same height */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* push content down */
+      align-items: center;
+      overflow: hidden;
+      background: none; /* remove black background */
+      padding-top: 50px; /* moves image down from top */
+      position: relative;
+    }
+
+    .hero-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* fills section without stretching */
+      object-position: center 70%;
+    }
+
+    .hero-section h1 {
+      position: absolute;
+      color: #fff;
+      font-size: 2.5rem;
+      text-align: center;
+      z-index: 2;
+      padding: 0 20px;
+      top: 20%; /* move heading lower */
+    }
+
+    .hero-section p {
+      position: absolute;
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+      max-width: 800px;
+      z-index: 2;
+      padding: 0 20px;
+      top: 50%; /* move paragraph lower */
+    }
