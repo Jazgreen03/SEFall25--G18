@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './restaurants.html',
-  styleUrl: './restaurants.css'
+  styleUrl: './restaurants.css',
 })
-export class Restaurants {
-
-}
+export class Restaurants {}

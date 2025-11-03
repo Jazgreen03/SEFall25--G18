@@ -7,134 +7,422 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	    <link rel="stylesheet" href="./styles/style.css">
     </head>
     <body>
-          <script>
-               // Blocking script to avoid flickering dark mode
-               // Dark mode toggle button
-               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
-               var darkModeState = useDark.matches;
-               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
-               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
-               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-               function checkToggle(check) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].checked = check;
-                    }
-               }
-
-               function toggleDarkMode(state) {
-                    if (window.localStorage) {
-                         localStorage.setItem('compodoc_darkmode-state', state);
-                    }
-
-                    checkToggle(state);
-
-                    const hasClass = document.body.classList.contains('dark');
-
-                    if (state) {
-                         for (var i = 0; i < $darkModeToggles.length; i++) {
-                              $darkModeToggles[i].classList.add('dark');
-                         }
-                         if (!hasClass) {
-                              document.body.classList.add('dark');
-                         }
-                    } else {
-                         for (var i = 0; i < $darkModeToggles.length; i++) {
-                              $darkModeToggles[i].classList.remove('dark');
-                         }
-                         if (hasClass) {
-                              document.body.classList.remove('dark');
-                         }
-                    }
-               }
-
-               useDark.addEventListener('change', function (evt) {
-                    toggleDarkMode(evt.matches);
-               });
-               if (darkModeStateLocal) {
-                    darkModeState = darkModeStateLocal === 'true';
-               }
-               toggleDarkMode(darkModeState);
-          </script>
-          <script>
-              // --- Iframe navigation tracking for Template Playground ---
-              function sendCurrentUrlToParent() {
-                  if (window.parent && window.parent !== window) {
-                      window.parent.postMessage({
-                          type: 'compodoc-iframe-navigate',
-                          url: window.location.pathname + window.location.hash
-                      }, '*');
-                  }
-              }
-              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
-              window.addEventListener('popstate', sendCurrentUrlToParent, false);
-              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
-          </script>
-
-        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
-               <div class="d-flex">
-                    <a href="../" class="navbar-brand">web documentation</a>
-                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
-               </div>
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">web documentation</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="./">web documentation</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                    <a 
+                                        
+                                         href="./overview.html" 
+                                         href="./overview.html" 
+                                        >
+                                        <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-cogs"></span>
+                            <span>Components</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-components-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-components-links"
+                            >
+                                <li class="link">
+                                    <a href="components/App.html" >App</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Blog.html" >Blog</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Community.html" >Community</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Contact.html" >Contact</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Deliveries.html" >Deliveries</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Donate.html" >Donate</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/DriverAccountManagement.html" >DriverAccountManagement</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/DriverHome.html" >DriverHome</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Events.html" >Events</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/InventoryManagement.html" >InventoryManagement</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Login.html" >Login</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Mission.html" >Mission</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/OrgAccountManagement.html" >OrgAccountManagement</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/OrgHome.html" >OrgHome</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/OrgOrderHistory.html" >OrgOrderHistory</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Register.html" >Register</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/Restaurants.html" >Restaurants</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/UserHome.html" >UserHome</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-interfaces-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="interfaces/Delivery.html" >Delivery</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Delivery.html" >Delivery</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Delivery.html" >Delivery</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Delivery.html" >Delivery</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InventoryItem.html" >InventoryItem</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InventoryItem.html" >InventoryItem</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Order.html" >Order</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Order.html" >Order</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/OrgOrder.html" >OrgOrder</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/PickupRequest.html" >PickupRequest</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/Restaurant.html" >Restaurant</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/User.html" >User</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/User.html" >User</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/User.html" >User</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                    </li>
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
+            
+            
+                </ul>
+            
+            </nav>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="d-none d-md-block menu">
-                   <compodoc-menu mode="normal"></compodoc-menu>
+               <div class="hidden-xs menu">
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="./">web documentation</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                           <a 
+                                               
+                                                href="./overview.html" 
+                                                href="./overview.html" 
+                                               >
+                                               <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-cogs"></span>
+                                   <span>Components</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#components-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="components-links"
+                   >
+                                       <li class="link">
+                                           <a href="components/App.html" >App</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Blog.html" >Blog</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Community.html" >Community</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Contact.html" >Contact</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Deliveries.html" >Deliveries</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Donate.html" >Donate</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/DriverAccountManagement.html" >DriverAccountManagement</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/DriverHome.html" >DriverHome</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Events.html" >Events</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/InventoryManagement.html" >InventoryManagement</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Login.html" >Login</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Mission.html" >Mission</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/OrgAccountManagement.html" >OrgAccountManagement</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/OrgHome.html" >OrgHome</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/OrgOrderHistory.html" >OrgOrderHistory</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Register.html" >Register</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/Restaurants.html" >Restaurants</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/UserHome.html" >UserHome</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#interfaces-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="interfaces/Delivery.html" >Delivery</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Delivery.html" >Delivery</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Delivery.html" >Delivery</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Delivery.html" >Delivery</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InventoryItem.html" >InventoryItem</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InventoryItem.html" >InventoryItem</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Order.html" >Order</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Order.html" >Order</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/OrgOrder.html" >OrgOrder</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/PickupRequest.html" >PickupRequest</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/Restaurant.html" >Restaurant</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/User.html" >User</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/User.html" >User</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/User.html" >User</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                           </li>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
+                   
+                   
+                       </ul>
+                   
+                   </nav>
                </div>
-               <!-- START CONTENT -->
                <div class="content component">
                    <div class="content-data">
 
 
-
-
-
-
-
-
 <ol class="breadcrumb">
-  <li class="breadcrumb-item">Components</li>
-  <li class="breadcrumb-item"
-  >
-  Landing</li>
+  <li>Components</li>
+  <li>Landing</li>
 </ol>
 
-<ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a href="#info" class="nav-link active"
-                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
-        </li>
-        <li class="nav-item">
-            <a href="#source" class="nav-link"
-                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
-        </li>
-        <li class="nav-item">
-            <a href="#templateData" class="nav-link"
-                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
-        </li>
-        <li class="nav-item">
-            <a href="#styleData" class="nav-link"
-                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
-        </li>
-        <li class="nav-item">
-            <a href="#tree" class="nav-link"
-                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
-        </li>
-</ul>
 
-<div class="tab-content">
-    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
+        </li>
+        <li>
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="infos"><p class="comment">
     <h3>File</h3>
 </p>
 <p class="comment">
@@ -143,12 +431,9 @@
 
 
 
-
-
-
-<section data-compodoc="block-metadata">
+<section>
     <h3>Metadata</h3>
-    <table class="table table-sm table-hover metadata">
+    <table class="table table-sm table-hover">
         <tbody>
 
 
@@ -168,34 +453,16 @@
             </tr>
 
             <tr>
-                <td class="col-md-3">standalone</td>
-                <td class="col-md-9"><code>true</code></td>
-            </tr>
-
-            <tr>
-                <td class="col-md-3">imports</td>
-                <td class="col-md-9">
-                            <code>CommonModule</code>
-                </td>
-            </tr>
-
-            <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>./landing.css</code></td>
+                <td class="col-md-9"><code>landing.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./landing.html</code></td>
+                <td class="col-md-9"><code>landing.html</code></td>
             </tr>
-
-
-
-
-
-
 
 
         </tbody>
@@ -206,434 +473,22 @@
 
 
 
-
-
-
-
 </div>
-
-
-    <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+        <div class="tab-pane fade tab-source-code" id="source">
+            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
 
 @Component({
   selector: &#x27;app-landing&#x27;,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: &#x27;./landing.html&#x27;,
   styleUrls: [&#x27;./landing.css&#x27;]
 })
 export class Landing { }</code></pre>
-    </div>
-
-    <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang&#x3D;&quot;en&quot;&gt;
-
-&lt;head&gt;
-  &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
-  &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
-  &lt;title&gt;Second Serve&lt;/title&gt;
-  &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;landing.css&quot;&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-  &lt;!-- ---------------- Header Page ---------------- --&gt;
-  &lt;header&gt;
-    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
-    &lt;nav&gt;
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;Find Restaurants &amp; Resources&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;restaurants.html&quot;&gt;Restaurants&lt;/a&gt;
-          &lt;a href&#x3D;&quot;grocery.html&quot;&gt;Grocery Stores&lt;/a&gt;
-          &lt;a href&#x3D;&quot;community.html&quot;&gt;Community Centers&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;Get Involved&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;volunteer.html&quot;&gt;Volunteer&lt;/a&gt;
-          &lt;a href&#x3D;&quot;donate.html&quot;&gt;Donate&lt;/a&gt;
-          &lt;a href&#x3D;&quot;partner.html&quot;&gt;Partner With Us&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;News &amp; Media&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;press.html&quot;&gt;Press Releases&lt;/a&gt;
-          &lt;a href&#x3D;&quot;events.html&quot;&gt;Events&lt;/a&gt;
-          &lt;a href&#x3D;&quot;blog.html&quot;&gt;Blog&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;About Us&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a href&#x3D;&quot;mission.html&quot;&gt;Mission&lt;/a&gt;
-          &lt;a href&#x3D;&quot;team.html&quot;&gt;Team&lt;/a&gt;
-          &lt;a href&#x3D;&quot;contact.html&quot;&gt;Contact&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/nav&gt;
-  &lt;/header&gt;
-
-  &lt;!-- ---------------- Img ---------------- --&gt;
-  &lt;section class&#x3D;&quot;hero-section&quot;&gt;
-    &lt;img src&#x3D;&quot;https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg&quot;
-      alt&#x3D;&quot;Family enjoying a meal&quot;&gt;
-    &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt;
-    &lt;p&gt;
-      &lt;strong&gt;SecondServe&lt;/strong&gt; is redefining how communities fight food waste and hunger.
-      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into
-      meaningful meals —
-      reducing waste, supporting local families, and helping businesses claim charitable contributions.
-      Together, we can build a future where every meal serves a purpose.
-    &lt;/p&gt;
-  &lt;/section&gt;
-
-  &lt;!-- ---------------- About Section ---------------- --&gt;
-  &lt;section&gt;
-    &lt;h2&gt;ABOUT SECOND SERVE&lt;/h2&gt;
-    &lt;p&gt;
-      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries,
-      while participating stores reduce waste and claim charitable action for tax purposes.
-      SecondServe empowers both donors and recipients through a simple, impactful platform.
-    &lt;/p&gt;
-  &lt;/section&gt;
-
-  &lt;!-- ---------------- Footer ---------------- --&gt;
-  &lt;footer&gt;
-    &lt;p&gt;© 2025 Second Serve — All Rights Reserved.&lt;/p&gt;
-  &lt;/footer&gt;
-
-&lt;/body&gt;
-
-&lt;/html&gt;</code></pre>
-    </div>
-
-    <div class="tab-pane fade " id="styleData">
-                <p class="comment">
-                    <code>./landing.css</code>
-                </p>
-                <pre class="line-numbers"><code class="language-scss">/* app.css */
-
-body {
-  margin: 0;
-  background-color: #f9f9f9;
-  font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
-  color: #2b2b2b;
-}
-
-/* ---------------- Header ---------------- */
-header {
-  padding: 3rem 3rem;
-  background-color: #1d684c;
-  /* solid green */
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 3.5rem;
-  /* big logo text */
-}
-
-nav {
-  display: flex;
-  gap: 2rem;
-  /* space between main menu items */
-}
-
-/* Dropdown container */
-.dropdown {
-  position: relative;
-}
-
-/* Main dropdown link */
-.dropdown&gt;a {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.3rem;
-  transition: color 0.3s ease;
-}
-
-/* Arrow indicator */
-.dropdown&gt;a::after {
-  content: &quot; ▼&quot;;
-  font-size: 0.8rem;
-}
-
-/* Dropdown content */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 180px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  overflow: hidden;
-  top: 100%;
-  left: 0;
-  z-index: 200;
-}
-
-/* Dropdown links */
-.dropdown-content a {
-  color: #1d684c;
-  padding: 0.8rem 1rem;
-  display: block;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.dropdown-content a:hover {
-  background-color: #f2f2f2;
-}
-
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-nav a:hover {
-  color: #a8e0c3;
-  /* lighter green hover */
-}
-
-/* ---------------- Sections ---------------- */
-section {
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #1d684c;
-  margin-bottom: 1.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-}
-
-/* ---------------- Slideshow ---------------- */
-.slideshow-container {
-  position: relative;
-  max-width: 2000px;
-  height: 600px;
-  margin: 0 auto 2rem;
-  overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* automatic slideshow animation */
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  25% {
-    opacity: 1;
-  }
-
-  35% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-.slide:nth-child(1) {
-  animation: fade 16s infinite;
-  animation-delay: 0s;
-}
-
-.slide:nth-child(2) {
-  animation: fade 16s infinite;
-  animation-delay: 4s;
-}
-
-.slide:nth-child(3) {
-  animation: fade 16s infinite;
-  animation-delay: 8s;
-}
-
-.slide:nth-child(4) {
-  animation: fade 16s infinite;
-  animation-delay: 12s;
-}
-
-/* ---------------- Footer ---------------- */
-footer {
-  background-color: #f2f2f2;
-  padding: 2rem;
-  text-align: center;
-  border-top: 1px solid #ccc;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-/* ---------------- Responsive ---------------- */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 2rem;
-  }
-
-  nav {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .dropdown-content {
-    position: relative;
-    box-shadow: none;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  .slideshow-container {
-    height: 250px;
-  }
-}
-
-/* ---------------- Hero Section CSS important ---------------- */
-.hero-section {
-  width: 100%;
-  height: 600px;
-  /* keep the same height */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  /* push content down */
-  align-items: center;
-  overflow: hidden;
-  background: none;
-  /* remove black background */
-  padding-top: 50px;
-  /* moves image down from top */
-  position: relative;
-}
-
-.hero-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* fills section without stretching */
-  object-position: center 70%;
-}
-
-.hero-section h1 {
-  position: absolute;
-  color: #fff;
-  font-size: 2.5rem;
-  text-align: center;
-  z-index: 2;
-  padding: 0 20px;
-  top: 20%;
-  /* move heading lower */
-}
-
-.hero-section p {
-  position: absolute;
-  color: #fff;
-  font-size: 1.2rem;
-  text-align: center;
-  max-width: 800px;
-  z-index: 2;
-  padding: 0 20px;
-  top: 50%;
-  /* move paragraph lower */
-}</code></pre>
-    </div>
-
-    <div class="tab-pane fade " id="tree">
-        <div id="tree-container"></div>
-        <div class="tree-legend">
-            <div class="title">
-                <b>Legend</b>
-            </div>
-            <div>
-                <div class="color htmlelement"></div><span>Html element</span>
-            </div>
-            <div>
-                <div class="color component"></div><span>Component</span>
-            </div>
-            <div>
-                <div class="color directive"></div><span>Html element with directive</span>
-            </div>
         </div>
     </div>
-
-    
-</div>
-
-<script src="../js/libs/vis-network.min.js"></script>
-<script src="../js/libs/htmlparser.js"></script>
-<script src="../js/libs/deep-iterator.js"></script>
-<script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="landing.css"></head><body>  <!-- ---------------- Header Page ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a href="restaurants.html">Restaurants</a>          <a href="grocery.html">Grocery Stores</a>          <a href="community.html">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a href="volunteer.html">Volunteer</a>          <a href="donate.html">Donate</a>          <a href="partner.html">Partner With Us</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a href="press.html">Press Releases</a>          <a href="events.html">Events</a>          <a href="blog.html">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a href="mission.html">Mission</a>          <a href="team.html">Team</a>          <a href="contact.html">Contact</a>        </div>      </div>    </nav>  </header>  <!-- ---------------- Img ---------------- -->  <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section>  <!-- ---------------- About Section ---------------- -->  <section>    <h2>ABOUT SECOND SERVE</h2>    <p>      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries,      while participating stores reduce waste and claim charitable action for tax purposes.      SecondServe empowers both donors and recipients through a simple, impactful platform.    </p>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer></body></html></div>'
-    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-manage-account'},{'name': 'App', 'selector': 'app-root'},{'name': 'DriverHome', 'selector': 'app-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'OrderHistory', 'selector': 'app-order-history'},{'name': 'OrgHome', 'selector': 'app-home'},{'name': 'Register', 'selector': 'app-register'},{'name': 'UserHome', 'selector': 'app-home'}];
-    var DIRECTIVES = [];
-    var ACTUAL_COMPONENT = {'name': 'Landing'};
-</script>
-<script src="../js/tree.js"></script>
-
-
-
-
-
-
-
 
 
 
@@ -654,64 +509,32 @@ footer {
     </div>
 </div>
 </div>
-               <!-- END CONTENT -->
            </div>
        </div>
 
-          <label class="dark-mode-switch">
-               <input type="checkbox">
-               <span class="slider">
-                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                    </svg>
-               </span>
-          </label>
+       <script src="./js/libs/bootstrap-native.js"></script>
 
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
+
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/highlight.pack.js"></script>
+       <script src="./js/libs/highlightjs-line-numbers.min.js"></script>
+       <script src="./js/search/search_index.js"></script>
        <script>
-            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
-            var COMPODOC_CURRENT_PAGE_URL = 'Landing.html';
-            var MAX_SEARCH_RESULTS = 15;
+            document.addEventListener('DOMContentLoaded', function() {
+                hljs.initHighlightingOnLoad();
+                hljs.initLineNumbersOnLoad();
+            });
        </script>
-
-       <script>
-               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
-               checkToggle(darkModeState);
-               if ($darkModeToggleSwitchers.length > 0) {
-                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
-                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
-                              darkModeState = !darkModeState;
-                              toggleDarkMode(darkModeState);
-                         });
-                    }
-               }
-          </script>
-
-       <script src="../js/libs/custom-elements.min.js"></script>
-       <script src="../js/libs/lit-html.js"></script>
-
-       <script src="../js/menu-wc.js" defer></script>
-       <script nomodule src="../js/menu-wc_es5.js" defer></script>
-
-       <script src="../js/libs/bootstrap-native.js"></script>
-
-       <script src="../js/libs/es6-shim.min.js"></script>
-       <script src="../js/libs/EventDispatcher.js"></script>
-       <script src="../js/libs/promise.min.js"></script>
-
-       <script src="../js/compodoc.js"></script>
-
-       <script src="../js/tabs.js"></script>
-       <script src="../js/menu.js"></script>
-       <script src="../js/libs/clipboard.min.js"></script>
-       <script src="../js/libs/prism.js"></script>
-       <script src="../js/sourceCode.js"></script>
-          <script src="../js/search/search.js"></script>
-          <script src="../js/search/lunr.min.js"></script>
-          <script src="../js/search/search-lunr.js"></script>
-          <script src="../js/search/search_index.js"></script>
-       <script src="../js/lazy-load-graphs.js"></script>
-
 
     </body>
 </html>

@@ -13,6 +13,13 @@ import { OrgOrderHistory } from '../org-order-history/org-order-history';
 import { DriverOrderHistory } from '../driver-order-history/driver-order-history';
 import { InventoryManagement } from '../inventory-management/inventory-management';
 import { Deliveries } from '../deliveries/deliveries';
+import { Donate } from './get-involved/donate/donate';
+import { Restaurants } from './find-resources/restaurants/restaurants';
+import { Community } from './find-resources/community/community';
+import { Events } from './news-media/events/events';
+import { Blog } from './news-media/blog/blog';
+import { Mission } from './about-us/mission/mission';
+import { Contact } from './about-us/contact/contact';
 
 export const routes: Routes = [
   { path: '', component: Landing },
@@ -29,25 +36,11 @@ export const routes: Routes = [
   { path: 'driver-history', component: DriverOrderHistory },
   { path: 'inventory', component: InventoryManagement },
   { path: 'deliveries', component: Deliveries },
-  { path: '', component: Landing },
-  //{ path: 'home', component: Home },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'account', component: AccountManagement },
   { path: 'donate', component: Donate },
   { path: 'restaurants', component: Restaurants },
   { path: 'community', component: Community },
   { path: 'events', component: Events },
   { path: 'blog', component: Blog },
   { path: 'mission', component: Mission },
-  { path: 'contact', component: Contact },
+  { path: 'contact', component: Contact }
 ];
-//import { AccountManagement } from '../manage-account/manage-account'
-import { Donate } from './get-involved/donate/donate';
-import { Restaurants } from './find-resources/restaurants/restaurants';
-import { Community } from './find-resources/community/community';
-import { Events } from './news-media/events/events';
-import { Blog } from './news-media/blog/blog';
-import { Mission } from './about-us/mission/mission';
-import { Contact } from './about-us/contact/contact';
-

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-donate',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './donate.html',
-  styleUrl: './donate.css'
+  styleUrl: './donate.css',
 })
-export class Donate {
-
-}
+export class Donate {}
