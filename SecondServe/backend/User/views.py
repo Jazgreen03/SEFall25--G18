@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+User = get_user_model()
 
 @require_http_methods(["POST"])
 def createUser(request: HttpRequest) -> JsonResponse:
@@ -23,13 +24,13 @@ def createUser(request: HttpRequest) -> JsonResponse:
     password = data.get("password")
     email = data.get("email")
 
-    if (username is None and email is None) or password is None:
+    if (not username and not email) or not password:
         return JsonResponse(
-            {"details": "Must provide valid Username/Email and Password" & password }, status=406
+            {"details": "Must provide valid Username/Email and Password"}, status=406
         )
 
-    first_name = request.POST.get("first_name", "")
-    last_name = request.POST.get("last_name", "")
+    first_name = data.get("first_name", "")
+    last_name = data.get("last_name", "")
 
     User = get_user_model()
     if (
@@ -38,20 +39,11 @@ def createUser(request: HttpRequest) -> JsonResponse:
     ):
         return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
-    user = User(
-        username=username, email=email, first_name=first_name, last_name=last_name
-    )
-    user.set_password(password)  # hash the password
-    user.save()
+    user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
 
-    if username is None:
-        username = email
-
-    authuser = authenticate(username=username, password=password)
-    if authuser is not None:
-        login(request, authuser)
+    if user is not None:
+        login(request, user)
         return JsonResponse({"details": "User Created and Logged in"}, status=201)
-    
     return JsonResponse({"details": "Authentication Failed"}, status=500)
 
 
@@ -75,7 +67,13 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         )
 
     if username is None:
-        username = email
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
+            return JsonResponse({"details": "Invalid Username/Email and/or Password"}, status=404
+        )
+
+        username = user.username
 
     user = authenticate(username=username, password=password)
     if user is None:
@@ -137,10 +135,11 @@ def getUserInfo(request: HttpRequest) -> JsonResponse:
     if request.user.is_authenticated:
         user = request.user
         info = {
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "user_type": user.user_type,
+            "username": user.get_username(),
+            "email": user.get_email(),
+            "first_name": user.get_first_name(),
+            "last_name": user.get_last_name(),
+            "user_type": user.get_role(),
         }
         return JsonResponse(info, status=200)
 

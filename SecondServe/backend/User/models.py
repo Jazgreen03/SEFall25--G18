@@ -1,8 +1,4 @@
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    PermissionsMixin,
-    BaseUserManager,
-)
+from django.contrib.auth.models import AbstractUser, UserManager as DjangoUserManager
 from django.db import models, IntegrityError
 from django.utils import timezone
 
@@ -19,7 +15,7 @@ ROLE_CHOICES = (
 )
 
 
-class UserManager(BaseUserManager):
+class UserManager(DjangoUserManager):
     """
     Custom manager for the User model.
     Handles creation of regular users and superusers with email as the unique identifier.
@@ -64,23 +60,31 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email: str, password: str, **extra_fields):
+    def create_superuser(self, username, email, password, **extra_fields):
         """
         Create and return a superuser instance.
 
+        :param username: Superuser username
+        :type username: str
         :param email: Superuser email
         :type email: str
-        :param password: Superuser password (required)
+        :param password: Superuser password (cannot be None)
         :type password: str
-        :param extra_fields: Additional attributes for the superuser
+        :param extra_fields: Additional fields for superuser
         :type extra_fields: dict
-        :return: Created superuser
+        :return: The created superuser
         :rtype: User
+        :raises TypeError: If username or email are not strings
+        :raises ValueError: If password is None or flags are invalid
         """
-        if not email:
-            raise ValueError("Superuser must have an email address.")
-        if not password:
+        if username is None and email is None:
+            raise ValueError("Must have either Username or Email")
+
+        if password is None:
             raise ValueError("Superuser must have a password.")
+        
+        if username is None:
+            username = email
 
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
@@ -91,59 +95,125 @@ class UserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self.create_user(email, password, **extra_fields)
+        return super().create_superuser(username, email, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     """
     Custom User model using email as the unique identifier.
     Includes role-based access and convenience methods.
+
+    Abstract User already includes the following fields:
+    -> Username
+    -> First_Name
+    -> Last_Name
+    -> is_active
+    -> date_joined
     """
-    username = models.CharField(max_length=150, unique=True, null=True, blank=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     role = models.CharField(max_length=15, choices=ROLE_CHOICES, default=ROLE_USER)
-
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     
-    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: list[str] = []  # no username required
 
     objects = UserManager()
 
-    # ===== Utility Methods =====
+    # Setters
+    def set_email(self, email: str):
+        """
+        Set the user's email.
+
+        :param email: New email address
+        :type email: str
+        """
+        self.email = email
+
     def set_role(self, role: str):
-        """Set the user's role."""
+        """
+        Set the user's role.
+
+        :param role: New role for the user
+        :type role: str
+        :raises ValueError: If role is not one of ROLE_CHOICES
+        """
         if role not in dict(ROLE_CHOICES):
             raise ValueError(f"Invalid role: {role}")
         self.role = role
-        self.save(update_fields=["role"])
 
-    def update_attribute(self, attribute: str, new_value: str):
-        """Dynamically update a user attribute."""
-        valid_attrs = {"email", "first_name", "last_name", "password", "role"}
-        if attribute not in valid_attrs:
-            raise ValueError(f"Invalid attribute: {attribute}")
+    def set_username(self, username: str):
+        """
+        Set the user's username.
 
-        if attribute == "password":
-            self.set_password(new_value)
-        else:
-            setattr(self, attribute, new_value)
-        self.save(update_fields=[attribute])
+        :param username: New username
+        :type username: str
+        """
+        self.username = username
 
-    def get_user_info(self) -> dict:
-        """Return basic identifying information."""
-        return {
-            "email": self.email,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "role": self.role,
-        }
+    def set_password(self, raw_password):
+        """
+        Set the user's password using Django's built-in hashing.
+
+        :param raw_password: Plaintext password
+        :type raw_password: str
+        """
+        return super().set_password(raw_password)
+
+    # Getters
+    def get_email(self) -> str | None:
+        return self.email
+
+    def get_role(self) -> str:
+        return self.role
+
+    def get_username(self) -> str:
+        return self.username
+
+    def get_first_name(self) -> str:
+        return self.first_name
+
+    def get_last_name(self) -> str:
+        return self.last_name
+
+    # Utility methods
+    def getUserInfo(self) -> dict:
+        """
+        Return basic identifying information of the user.
+
+        :return: Dictionary with 'email' and 'username'
+        :rtype: dict
+        """
+        return {"email": self.get_email(), "username": self.get_username()}
+
+    def updateAttribute(self, attribute: str, newValue: str):
+        """
+        Dynamically update a core user attribute.
+
+        :param attribute: Attribute name ('email', 'username', 'password', 'role')
+        :type attribute: str
+        :param newValue: New value to set
+        :type newValue: str
+        :return: Updated User instance or None if attribute invalid
+        :rtype: User or None
+        """
+        match attribute:
+            case "email":
+                self.set_email(newValue)
+            case "username":
+                self.set_username(newValue)
+            case "password":
+                self.set_password(newValue)
+            case "role":
+                self.set_role(newValue)
+            case _:
+                return None
+
+        self.save()
+        return self
 
     def __str__(self) -> str:
-        """String representation of the user."""
-        return f"{self.email} ({self.role})"
+        """
+        Return string representation of the user.
+
+        :return: Username string
+        :rtype: str
+        """
+        return self.username

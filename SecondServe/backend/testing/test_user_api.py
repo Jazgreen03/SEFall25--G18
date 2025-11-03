@@ -22,20 +22,23 @@ class UserViewsFullTest(TestCase):
     def test_create_user_success(self):
         response = self.client.post(
             "/user/create/",
-            {
+            data=json.dumps({
                 "username": "newuser",
                 "email": "new@example.com",
                 "password": "Password123!",
                 "first_name": "New",
                 "last_name": "User",
-            },
+            }),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 201)
         self.assertTrue(User.objects.filter(username="newuser").exists())
         self.assertEqual(response.json()["details"], "User Created and Logged in")
 
     def test_create_user_missing_fields(self):
-        response = self.client.post("/user/create/", {"username": "missing"})
+        response = self.client.post("/user/create/", 
+                                    data=json.dumps({"username": "missing"}),
+                                    content_type="application/json")
         self.assertEqual(response.status_code, 406)
         self.assertIn("details", response.json())
 
@@ -43,28 +46,32 @@ class UserViewsFullTest(TestCase):
         # duplicate username
         response = self.client.post(
             "/user/create/",
-            {
+            data=json.dumps({
                 "username": "existinguser",
                 "email": "new@example.com",
                 "password": "Pass123!",
-            },
+            }),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 409)
         # duplicate email
         response = self.client.post(
             "/user/create/",
-            {
+            data=json.dumps({
                 "username": "newuser",
                 "email": "existing@example.com",
                 "password": "Pass123!",
-            },
+            }),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 409)
 
     # ---------------- LOGIN USER ----------------
     def test_login_user_success_username(self):
         response = self.client.post(
-            "/user/login/", {"username": "existinguser", "password": "SecurePass123!"}
+            "/user/login/", 
+            data=json.dumps({"username": "existinguser", "password": "SecurePass123!"}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["details"], "User logged in")
@@ -72,25 +79,34 @@ class UserViewsFullTest(TestCase):
     def test_login_user_success_email(self):
         response = self.client.post(
             "/user/login/",
-            {"email": "existing@example.com", "password": "SecurePass123!"},
+            data=json.dumps({"email": "existing@example.com", "password": "SecurePass123!"}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["details"], "User logged in")
 
     def test_login_user_invalid_credentials(self):
         response = self.client.post(
-            "/user/login/", {"username": "existinguser", "password": "Wrong"}
+            "/user/login/", 
+            data=json.dumps({"username": "existinguser", "password": "Wrong"}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)
         response = self.client.post(
-            "/user/login/", {"email": "nonexistent@example.com", "password": "Whatever"}
+            "/user/login/", 
+            data=json.dumps({"email": "nonexistent@example.com", "password": "Whatever"}),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)
 
     def test_login_user_missing_fields(self):
-        response = self.client.post("/user/login/", {"username": ""})
+        response = self.client.post("/user/login/", 
+                                    data=json.dumps({"username": ""}),
+                                    content_type="application/json",)
         self.assertEqual(response.status_code, 406)
-        response = self.client.post("/user/login/", {"password": "SecurePass123!"})
+        response = self.client.post("/user/login/", 
+                                    data=json.dumps({"password": "SecurePass123!"}),
+                                    content_type="application/json",)
         self.assertEqual(response.status_code, 406)
 
     # ---------------- LOGOUT USER ----------------
