@@ -4,11 +4,6 @@ services:
     image: mongo:7
     container_name: mongo-db
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
@@ -35,9 +30,10 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app/backend
+    links:
+      - db
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - appnet
 

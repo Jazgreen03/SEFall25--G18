@@ -34,12 +34,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
             {"details": "Must provide valid Email and Password"}, status=406
         )
 
-    if role not in ["user", "organization", "driver"]:
+    if (not username and not email) or not password:
         return JsonResponse(
-            {
-                "details": "Invalid user type. Must be 'user', 'organization', or 'driver'."
-            },
-            status=406,
+            {"details": "Must provide valid Username/Email and Password"}, status=406
         )
 
     # first_name = request.POST.get("first_name", "")

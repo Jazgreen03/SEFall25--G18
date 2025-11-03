@@ -202,7 +202,7 @@ To contribute:
 ## 🪪 License
 
 This project is licensed under the MIT License.
-```
+
 Copyright 2025 SecondServe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -210,4 +210,53 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Project Structure:
+```
+SecondServe/
+├─ docker-compose.yml      # Docker configurations for running the project
+├─ env.template
+├─ .env                    # Local environment Variables
+├─ README.md
+├─ backend/                # The Django Project (handles Backend and Database functions)
+│  ├─ Dockerfile
+│  ├─ requirements.txt
+│  ├─ manage.py
+│  ├─ SecondServe/
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ settings.py       # Django settings used for Project management
+│  |  ├─ urls.py           # API Call Routing (Primarily to the different apps)
+|  |  ├─ asgi.py
+│  |  └─ wsgi.py
+│  ├─ Inventory/           # The Inventory "app" containing all Inventory-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for Inventory and Item
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  ├─ Organization/        # The Organization "app" containing all Organization-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for Organization
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  ├─ User/                # The User "app" containing all User-related functionality
+│  |  ├─ __init__.py
+|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
+│  |  ├─ models.py         # Data structures for User
+│  |  ├─ urls.py           # API Call Routing
+|  |  └─ views.py          # API Call Management and Execution
+│  └─ testing/             # All the test cases for the backend
+│     ├─ test_core.py
+|     ├─ test_inventory_api.py
+|     ├─ test_inventory_models.py
+|     ├─ test_organization_api.py
+|     ├─ test_user_api.py
+│     └─ test_user_models.py
+└─ frontend/               # The Angular Project (handles Frontend functions)
+   ├─ Dockerfile
+   ├─ nginx.conf           # NGINX Config -> Routes backend calls through/from frontend
+   ├─ proxy.conf.json      # dev proxy to backend
+   └─ web/                 # Angular workspace
 ```
