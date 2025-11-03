@@ -90,11 +90,28 @@ export class Register {
 
     const baseData = this.registerForm.value;
     const extraData = this.detailsForm.value;
+    
+    let mappedUserType = '';
+    switch (this.userType) {
+  case 'individual':
+    mappedUserType = 'user';
+    break;
 
+  case 'business':
+    mappedUserType = 'organization';
+    break;
+
+  case 'driver':
+    mappedUserType = 'driver';
+    break;
+
+  default:
+    mappedUserType = 'user';  // fallback
+}
     const payload = {
-      username: baseData.email,
+      email: baseData.email,
       password: baseData.password,
-      user_type: this.userType,
+      role: mappedUserType,
       ...extraData
     };
 

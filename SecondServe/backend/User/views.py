@@ -5,6 +5,7 @@ Manages User Functionality, called by urls.py
 from django.http import HttpRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 
@@ -13,16 +14,27 @@ def createUser(request: HttpRequest) -> JsonResponse:
     """
     Creates a User given the parameters provided in the HTTP Request
     """
-    password = request.POST.get("password")
-    email = request.POST.get("email")
-    user_type = request.POST.get("user_type", "user").lower()
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"details": "Invalid JSON"}, status=400)
+    # username = request.POST.get("username")
+    # password = request.POST.get("password")
+    # email = request.POST.get("email")
+
+    password = data.get("password")
+    email = data.get("email")
+    role = data.get("role", "user").lower()
+    # password = request.POST.get("password")
+    # email = request.POST.get("email")
+    # user_type = request.POST.get("user_type", "user").lower()
 
     if not password or not email:
         return JsonResponse(
             {"details": "Must provide valid Email and Password"}, status=406
         )
 
-    if user_type not in ["user", "organization", "driver"]:
+    if role not in ["user", "organization", "driver"]:
         return JsonResponse(
             {
                 "details": "Invalid user type. Must be 'user', 'organization', or 'driver'."
@@ -30,8 +42,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
             status=406,
         )
 
-    first_name = request.POST.get("first_name", "")
-    last_name = request.POST.get("last_name", "")
+    # first_name = request.POST.get("first_name", "")
+    # last_name = request.POST.get("last_name", "")
+    first_name = data.get("name")
 
     User = get_user_model()
     if User.objects.filter(email=email).exists():
@@ -41,8 +54,8 @@ def createUser(request: HttpRequest) -> JsonResponse:
     user = User(
         email=email,
         first_name=first_name,
-        last_name=last_name,
-        user_type=user_type,
+        # last_name=last_name,
+        role=role,
     )
     user.set_password(password)
     user.save()
@@ -52,7 +65,7 @@ def createUser(request: HttpRequest) -> JsonResponse:
     if authuser is not None:
         login(request, authuser)
         return JsonResponse(
-            {"details": "User Created and Logged in", "user_type": user_type},
+            {"details": "User Created and Logged in", "user_type": role},
             status=201,
         )
     return JsonResponse({"details": "Authentication Failed"}, status=500)
@@ -63,8 +76,16 @@ def loginUser(request: HttpRequest) -> JsonResponse:
     """
     Attempts to login a User using Email and Password only
     """
-    password = request.POST.get("password")
-    email = request.POST.get("email")
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"details": "Invalid JSON"}, status=400)
+    # username = request.POST.get("username")
+    # password = request.POST.get("password")
+    # email = request.POST.get("email")
+
+    password = data.get("password")
+    email = data.get("email")
 
     if not email or not password:
         return JsonResponse(
@@ -80,7 +101,7 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         {
             "details": "User logged in",
             "email": user.email,
-            "user_type": user.user_type,
+            "role": user.role,
         },
         status=200,
     )
