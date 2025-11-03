@@ -22,7 +22,11 @@ class UserManager(DjangoUserManager):
     """
 
     def create_user(
-        self, username: str | None = None, email: str | None = None, password: str | None = None, **extra_fields
+        self,
+        username: str | None = None,
+        email: str | None = None,
+        password: str | None = None,
+        **extra_fields,
     ):
         """
         Create and return a regular user with email and password.
@@ -38,7 +42,7 @@ class UserManager(DjangoUserManager):
 
         if not username and not email:
             raise ValueError("Username and/or Email are required.")
-        
+
         if email:
             email = self.normalize_email(email)
 
@@ -82,7 +86,7 @@ class UserManager(DjangoUserManager):
 
         if password is None:
             raise ValueError("Superuser must have a password.")
-        
+
         if username is None:
             username = email
 
@@ -110,9 +114,10 @@ class User(AbstractUser):
     -> is_active
     -> date_joined
     """
+
     email = models.EmailField(unique=True, blank=True, null=True)
     role = models.CharField(max_length=15, choices=ROLE_CHOICES, default=ROLE_USER)
-    
+
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()

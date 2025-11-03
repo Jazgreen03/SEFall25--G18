@@ -113,7 +113,7 @@ class TestUserModel(TestCase):
 
         for role in roles:
             user = User.objects.create_user(
-            f"{role}_user", f"{role}@example.com", "pw123", role=role
+                f"{role}_user", f"{role}@example.com", "pw123", role=role
             )
             self.assertEqual(user.role, role)
 
@@ -145,7 +145,9 @@ class TestUserManager(TestCase):
 
     def test_create_user_normalizes_email(self):
         user = User.objects.create_user("norm", "Norm@Example.Com", "pw123")
-        self.assertEqual(user.email, "Norm@example.com")  # Django normalization may lowercase
+        self.assertEqual(
+            user.email, "Norm@example.com"
+        )  # Django normalization may lowercase
 
     def test_create_user_sets_default_role(self):
         user = User.objects.create_user("bob", "bob@example.com", "pw123")

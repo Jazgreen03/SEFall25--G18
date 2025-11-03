@@ -22,8 +22,7 @@ load_dotenv(dotenv_path)
 # -------------------------------------------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dummy-secret-key-for-dev")
 DEBUG = True
-# ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]  # Allow all during development
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -130,20 +129,39 @@ MIGRATION_MODULES = {
 }
 
 # -------------------------------------------------------------------
-# CORS SETTINGS (fix preflight and Angular dev)
+# CORS & CSRF SETTINGS (Angular frontend)
 # -------------------------------------------------------------------
-# Allow localhost:4200 (Angular dev server) or all origins during dev
 if DEBUG:
+    # Allow all origins in dev mode
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [os.getenv("CSRF_ALLOWED_HOSTS", "http://localhost")]
+    # Use environment variable for production-safe configuration
+    CORS_ALLOWED_ORIGINS = os.getenv(
+        "CORS_ALLOWED_ORIGINS", "http://localhost:4200,http://127.0.0.1:4200"
+    ).split(",")
 
-CSRF_TRUSTED_ORIGINS = [os.getenv("CSRF_ALLOWED_HOSTS", "http://localhost")]
+# ✅ CSRF trusted origins (Angular must be included here)
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+    "http://localhost",
+    "http://127.0.0.1",
+]
+
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
 CORS_ALLOW_HEADERS = [
     "content-type",
-    "x-csrftoken",  # <-- Add this
+    "x-csrftoken",
     "accept",
     "authorization",
     "x-requested-with",
@@ -157,7 +175,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 # Optional: disable automatic slash redirect for APIs
-APPEND_SLASH = True  # Or False if you want URLs without trailing slash
+APPEND_SLASH = True  # Change to False if you prefer URLs without a trailing slash
 
 # -------------------------------------------------------------------
 # DEBUG OUTPUT (optional)
@@ -165,4 +183,5 @@ APPEND_SLASH = True  # Or False if you want URLs without trailing slash
 if DEBUG:
     print(f"BASE_DIR: {BASE_DIR}")
     print(f"Loaded .env from: {dotenv_path}")
-    print(f"DATABASES: {DATABASES}")
+    print(f"Database host: {os.getenv('DATABASE_HOST', 'db')}")
+    print(f"CSRF_TRUSTED_ORIGINS: {CSRF_TRUSTED_ORIGINS}")

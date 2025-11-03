@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Landing } from '../landing/landing';
+import { Home } from '../home/home';
 import { UserHome } from '../user-home/user-home';
 import { OrgHome } from '../org-home/org-home';
 import { DriverHome } from '../driver-home/driver-home';
@@ -23,7 +24,8 @@ import { Contact } from './about-us/contact/contact';
 
 export const routes: Routes = [
   { path: '', component: Landing },
-  { path: 'user-home', component: UserHome },
+  { path: 'home', component: Home },
+  //{ path: 'user-home', component: UserHome },
   { path: 'org-home', component: OrgHome },
   { path: 'driver-home', component: DriverHome },
   { path: 'login', component: Login },

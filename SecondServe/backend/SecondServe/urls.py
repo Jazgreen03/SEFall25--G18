@@ -36,5 +36,5 @@ urlpatterns = [
     path("user/", include(("User.urls", "user"))),
     path("inventory/", include(("Inventory.urls"))),
     path("org/", include(("Organization.urls"))),
-    path("api/csrf/", csrf)
+    path("api/csrf/", csrf),
 ]

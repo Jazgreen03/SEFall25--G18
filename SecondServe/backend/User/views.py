@@ -10,6 +10,7 @@ import json
 
 User = get_user_model()
 
+
 @require_http_methods(["POST"])
 def createUser(request: HttpRequest) -> JsonResponse:
     """
@@ -39,7 +40,13 @@ def createUser(request: HttpRequest) -> JsonResponse:
     ):
         return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
-    user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+    user = User.objects.create_user(
+        username=username,
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
+    )
 
     if user is not None:
         login(request, user)
@@ -70,8 +77,9 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         user = User.objects.filter(email=email).first()
 
         if user is None:
-            return JsonResponse({"details": "Invalid Username/Email and/or Password"}, status=404
-        )
+            return JsonResponse(
+                {"details": "Invalid Username/Email and/or Password"}, status=404
+            )
 
         username = user.username
 
@@ -82,7 +90,14 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         )
 
     login(request, user)
-    return JsonResponse({"details": "User logged in"}, status=200)
+    return JsonResponse(
+        {
+            "details": "User logged in",
+            "email": user.email,
+            "role": user.role,
+        },
+        status=200,
+    )
 
 
 @require_http_methods(["POST"])

@@ -7,6 +7,4 @@ Currently only handles Organization creation
 from django.urls import path
 import Organization.views as views
 
-urlpatterns = [
-    path("", views.createOrganization)
-]
+urlpatterns = [path("", views.createOrganization)]

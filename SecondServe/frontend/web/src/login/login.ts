@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getCookie } from '../../utils';
+import { AuthService } from '../app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -81,10 +83,12 @@ export class Login {
 
           const userRole = res['role'];
 
+          this.authService.setRole(userRole);
+
           // ✅ Redirect based on role
           switch (userRole) {
             case 'user':
-              this.router.navigate(['/user-home']);
+              this.router.navigate(['/home']);
               break;
             case 'organization':
               this.router.navigate(['/org-home']);

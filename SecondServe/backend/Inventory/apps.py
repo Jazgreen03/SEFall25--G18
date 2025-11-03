@@ -15,6 +15,7 @@ class ItemsConfig(AppConfig):
     name = "Item"
     verbose_name = "Item Management"
 
+
 class InventoriesConfig(AppConfig):
     default_auto_field = "django_mongodb_backend.fields.ObjectIdAutoField"
     name = "Inventory"

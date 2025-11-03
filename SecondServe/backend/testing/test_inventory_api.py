@@ -20,9 +20,7 @@ class TestInvalidUser(TestCase):
     def test_no_associated_org(self):
         # Create user
         self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
+            username="orgUser", email="org@email.com", password="123abc"
         )
         self.user.role = "location"
         self.user.save()
@@ -68,9 +66,7 @@ class TestInvalidUser(TestCase):
     def test_invalid_role(self):
         # Create user
         self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
+            username="orgUser", email="org@email.com", password="123abc"
         )
         self.user.role = "user"
         self.user.save()
@@ -94,15 +90,14 @@ class TestInvalidUser(TestCase):
         response = self.client.put("/inventory/edit/")
         self.assertEqual(response.status_code, 401)
 
+
 class TestAddItem(TestCase):
 
     # Creates a user with the location permission for testing purposes
     # User is also associated with an organization
     def setUp(self):
         self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
+            username="orgUser", email="org@email.com", password="123abc"
         )
         self.user.role = "location"
         self.user.save()
@@ -110,12 +105,7 @@ class TestAddItem(TestCase):
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", 
-            {
-                "name": orgName,
-                "type": valid_orgType,
-                "location": orgLocation
-            }
+            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
         )
 
     def test_valid_item_add(self):
@@ -126,8 +116,8 @@ class TestAddItem(TestCase):
                 "item_name": "pasta",
                 "quantity": "30",
                 "expiration": "December 31, 2030",
-                "type": "stable"
-            }
+                "type": "stable",
+            },
         )
 
         self.assertEqual(response.status_code, 201)
@@ -153,8 +143,8 @@ class TestAddItem(TestCase):
                 "item_name": "milk",
                 "quantity": "5",
                 "expiration": "November 30, 2025",
-                "type": "refrigerated"
-            }
+                "type": "refrigerated",
+            },
         )
         self.assertEqual(response.status_code, 201)
 
@@ -166,7 +156,7 @@ class TestAddItem(TestCase):
         self.assertEqual(len(inventory), 2)
 
         # Verify the item details are correct
-        if (inventory[1]["name"] == "milk"):
+        if inventory[1]["name"] == "milk":
             item = inventory[1]
         else:
             item = inventory[0]
@@ -181,9 +171,7 @@ class TestUpdateInventory(TestCase):
     # Creates a user, organization, and items for an inventory
     def setUp(self):
         self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
+            username="orgUser", email="org@email.com", password="123abc"
         )
         self.user.role = "location"
         self.user.save()
@@ -191,12 +179,7 @@ class TestUpdateInventory(TestCase):
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", 
-            {
-                "name": orgName,
-                "type": valid_orgType,
-                "location": orgLocation
-            }
+            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
         )
 
         # Item 1
@@ -206,8 +189,8 @@ class TestUpdateInventory(TestCase):
                 "item_name": "pasta",
                 "quantity": "30",
                 "expiration": "December 31, 2030",
-                "type": "stable"
-            }
+                "type": "stable",
+            },
         )
 
         # Item 2
@@ -217,8 +200,8 @@ class TestUpdateInventory(TestCase):
                 "item_name": "milk",
                 "quantity": "5",
                 "expiration": "November 30, 2025",
-                "type": "refrigerated"
-            }
+                "type": "refrigerated",
+            },
         )
 
         # Item 3
@@ -228,10 +211,10 @@ class TestUpdateInventory(TestCase):
                 "item_name": "lettuce",
                 "quantity": "15",
                 "expiration": "November 15, 2025",
-                "type": "produce"
-            }
+                "type": "produce",
+            },
         )
-        
+
         # Item 4
         self.client.post(
             "/inventory/add/",
@@ -239,18 +222,30 @@ class TestUpdateInventory(TestCase):
                 "item_name": "pizza",
                 "quantity": "1",
                 "expiration": "November 5, 2025",
-                "type": "prepared"
-            }
+                "type": "prepared",
+            },
         )
-    
+
     def test_valid_single_attr_update(self):
-        
-        item1Update = {"item_name": "pasta", "attributes": ["quantity"], "values": ["50"]}
-        item2Update = {"item_name": "milk", "attributes": ["expiration"], "values": ["November 20, 2025"]}
-        item4Update = {"item_name": "pizza", "attributes": ["type"], "values": ["refrigerated"]}
-        
+
+        item1Update = {
+            "item_name": "pasta",
+            "attributes": ["quantity"],
+            "values": ["50"],
+        }
+        item2Update = {
+            "item_name": "milk",
+            "attributes": ["expiration"],
+            "values": ["November 20, 2025"],
+        }
+        item4Update = {
+            "item_name": "pizza",
+            "attributes": ["type"],
+            "values": ["refrigerated"],
+        }
+
         response = self.client.put(
-            "/inventory/update/", 
+            "/inventory/update/",
             data=json.dumps({"items": [item1Update, item2Update, item4Update]}),
             content_type="application/json",
         )
@@ -287,17 +282,25 @@ class TestUpdateInventory(TestCase):
                     self.assertEqual(item["quantity"], 1)
                     self.assertEqual(item["expiration"], "November 5, 2025")
                     self.assertEqual(item["type"], "Refrigerated")
-                
+
                 # If an invalid item name is passed for the test case
                 case _:
                     self.fail("Invalid Item in Inventory")
 
-    def test_valid_multi_attr_val_update(self):        
-        item1Update = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
-        item4Update = {"item_name": "pizza", "attributes": ["type", "expiration"], "values": ["refrigerated", "November 21, 2025"]}
-        
+    def test_valid_multi_attr_val_update(self):
+        item1Update = {
+            "item_name": "pasta",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni", "50"],
+        }
+        item4Update = {
+            "item_name": "pizza",
+            "attributes": ["type", "expiration"],
+            "values": ["refrigerated", "November 21, 2025"],
+        }
+
         response = self.client.put(
-            "/inventory/update/", 
+            "/inventory/update/",
             data=json.dumps({"items": [item1Update, item4Update]}),
             content_type="application/json",
         )
@@ -334,7 +337,7 @@ class TestUpdateInventory(TestCase):
                     self.assertEqual(item["quantity"], 1)
                     self.assertEqual(item["expiration"], "November 21, 2025")
                     self.assertEqual(item["type"], "Refrigerated")
-                
+
                 # If an invalid item name is passed for the test case
                 case _:
                     self.fail("Invalid Item in Inventory")
@@ -342,7 +345,11 @@ class TestUpdateInventory(TestCase):
     def test_invalid_update(self):
 
         # Differing lengths between attributes and values
-        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
+        itemUpdate = {
+            "item_name": "pasta",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni"],
+        }
         response = self.client.put(
             "/inventory/update/",
             data=json.dumps({"items": [itemUpdate]}),
@@ -360,7 +367,11 @@ class TestUpdateInventory(TestCase):
         self.assertEqual(response.status_code, 406)
 
         # Nonexistent Item Name
-        itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        itemUpdate = {
+            "item_name": "Curly Fries",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni", "50"],
+        }
         response = self.client.put(
             "/inventory/update/",
             data=json.dumps({"items": [itemUpdate]}),
@@ -374,9 +385,7 @@ class TestEditItem(TestCase):
     # Creates a user, organization, and an item for the inventory
     def setUp(self):
         self.user = User.objects.create(
-            username="orgUser",
-            email="org@email.com",
-            password="123abc"
+            username="orgUser", email="org@email.com", password="123abc"
         )
         self.user.role = "location"
         self.user.save()
@@ -384,12 +393,7 @@ class TestEditItem(TestCase):
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", 
-            {
-                "name": orgName,
-                "type": valid_orgType,
-                "location": orgLocation
-            }
+            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
         )
 
         # Item
@@ -399,14 +403,14 @@ class TestEditItem(TestCase):
                 "item_name": "pasta",
                 "quantity": 30,
                 "expiration": "December 31, 2030",
-                "type": "stable"
-            }
+                "type": "stable",
+            },
         )
-    
+
     def test_valid_single_attr_edit(self):
-        
+
         itemUpdate = {"item_name": "pasta", "attributes": ["quantity"], "values": [50]}
-        
+
         response = self.client.put(
             "/inventory/edit/",
             data=json.dumps(itemUpdate),
@@ -425,9 +429,13 @@ class TestEditItem(TestCase):
         self.assertEqual(item["expiration"], "December 31, 2030")
         self.assertEqual(item["type"], "Shelf Stable")
 
-    def test_valid_multi_attr_val_edit(self):        
-        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni", 50]}
-        
+    def test_valid_multi_attr_val_edit(self):
+        itemUpdate = {
+            "item_name": "pasta",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni", 50],
+        }
+
         response = self.client.put(
             "/inventory/edit/",
             data=json.dumps(itemUpdate),
@@ -451,9 +459,13 @@ class TestEditItem(TestCase):
     def test_invalid_edit(self):
 
         # Differing lengths between attributes and values
-        itemUpdate = {"item_name": "pasta", "attributes": ["name", "quantity"], "values": ["macaroni"]}
+        itemUpdate = {
+            "item_name": "pasta",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni"],
+        }
         response = self.client.put(
-            "/inventory/edit/", 
+            "/inventory/edit/",
             data=json.dumps(itemUpdate),
             content_type="application/json",
         )
@@ -462,16 +474,20 @@ class TestEditItem(TestCase):
         # No Item Name
         itemUpdate = {"attributes": ["name"], "values": ["macaroni"]}
         response = self.client.put(
-            "/inventory/edit/", 
+            "/inventory/edit/",
             data=json.dumps(itemUpdate),
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 406)
 
         # Nonexistent Item Name
-        itemUpdate = {"item_name": "Curly Fries", "attributes": ["name", "quantity"], "values": ["macaroni", "50"]}
+        itemUpdate = {
+            "item_name": "Curly Fries",
+            "attributes": ["name", "quantity"],
+            "values": ["macaroni", "50"],
+        }
         response = self.client.put(
-            "/inventory/edit/", 
+            "/inventory/edit/",
             data=json.dumps(itemUpdate),
             content_type="application/json",
         )

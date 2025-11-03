@@ -12,10 +12,11 @@ TYPE_CHOICES = (
     (TYPE_FOODBANK, "Food Bank"),
     (TYPE_GROCERYSTORE, "Grocery Store"),
     (TYPE_RESTAURANT, "Restaurant"),
-    (TYPE_OTHER, "Other")
+    (TYPE_OTHER, "Other"),
 )
 
 VALID_TYPES = {c[0] for c in TYPE_CHOICES}
+
 
 class OrganizationManager(models.Manager):
     # Create Organization
@@ -28,13 +29,15 @@ class OrganizationManager(models.Manager):
         inv = Inventory.objects.create(org=name)
 
         # Create the Organization with all the necessary variables and save to database
-        Organization.objects.create(name=name, orgType=orgType, location=location, inv=inv, creator=user)
-        
+        Organization.objects.create(
+            name=name, orgType=orgType, location=location, inv=inv, creator=user
+        )
+
 
 class Organization(models.Model):
     """
     Custom Inventory Model
-    
+
     Fields:
     * Name of the Organization
     * Type of the Organization
@@ -52,9 +55,13 @@ class Organization(models.Model):
     # Where the organization is located
     location = models.CharField(max_length=256, unique=True)
     # The associated inventory
-    inv = models.OneToOneField(Inventory, on_delete=models.CASCADE, related_name="organization")
+    inv = models.OneToOneField(
+        Inventory, on_delete=models.CASCADE, related_name="organization"
+    )
     # The creator User account
-    creator = models.ForeignKey(User, on_delete=models.PROTECT, related_name="organizations")
+    creator = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="organizations"
+    )
 
     # The Manager for Organization
     objects = OrganizationManager()
