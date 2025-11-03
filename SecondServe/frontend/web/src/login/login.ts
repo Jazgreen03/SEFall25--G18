@@ -36,9 +36,9 @@ export class Login {
 
   userType: 'individual' | 'business' | 'driver' = 'individual';
 
-setUserType(type: 'individual' | 'business' | 'driver') {
-  this.userType = type;
-}
+  setUserType(type: 'individual' | 'business' | 'driver') {
+    this.userType = type;
+  }
 
   /** Fetch CSRF cookie from backend */
   private getCsrfToken(): Promise<void> {
@@ -61,7 +61,7 @@ setUserType(type: 'individual' | 'business' | 'driver') {
 
     // Ensure CSRF cookie exists first
     await this.getCsrfToken();
-    
+
 
     const csrfToken = getCookie('csrftoken') || '';
     const headers = new HttpHeaders({
@@ -79,7 +79,7 @@ setUserType(type: 'individual' | 'business' | 'driver') {
           this.successMessage = 'Login successful! Redirecting...';
           console.log('Login response:', res);
 
-          const userRole = res?.user?.role;
+          const userRole = res['role'];
 
           // ✅ Redirect based on role
           switch (userRole) {
