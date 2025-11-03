@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+}
+
+/* ---------------- Header ---------------- */
+header {
+  padding: 2rem 3rem;
+  background-color: #1d684c;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- Hero Section ---------------- */
+.hero-section {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin: 2rem 0 1rem;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+}
+
+/* ---------------- Donate Form ---------------- */
+.donate-form {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.donate-form h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.donate-form label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.donate-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.donate-form button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  background-color: #1d684c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.donate-form button:hover {
+  background-color: #145235;
+}
+
+/* Form dropdown styling */
+.donate-form select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #1d684c;
+  color: white;
+  margin-top: 4rem;
+}

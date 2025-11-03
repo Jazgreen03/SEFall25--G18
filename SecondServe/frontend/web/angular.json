@@ -74,7 +74,6 @@
     }
   },
   "cli": {
-    "analytics": false,
-    "schematicCollections": ["angular-eslint"]
-  }
+  "analytics": false
+}
 }

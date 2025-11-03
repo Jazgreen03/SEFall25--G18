@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Restaurants | SecondServe</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="restaurants.css">
+</head>
+<body>
+  <!-- ---------------- Header ---------------- -->
+  <header>
+    <div class="logo">SECOND SERVE</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="community.html">Community</a>
+      <a href="restaurants.html" class="active">Restaurants</a>
+      <a href="events.html">Events</a>
+      <a href="blog.html">Blog</a>
+      <a href="mission.html">Mission</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ---------------- Sponsor Map Section ---------------- -->
+  <section id="sponsor-map-section">
+    <h2>Find Restaurants / Grocery Stores Supporting SecondServe</h2>
+    <p>Hover over locations to see availability.</p>
+    <div id="sponsor-map"></div>
+  </section>
+
+  <!-- ---------------- Footer ---------------- -->
+  <footer>
+    <p>© 2025 SecondServe | Connecting surplus food to those in need.</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initialize map
+      const map = L.map('sponsor-map').setView([39.8283, -98.5795], 4);
+
+      // Add OpenStreetMap layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Example sponsor locations
+      const sponsors = [
+        { name: "Joe's Deli", type: "Restaurant", coords: [40.7128, -74.0060], availability: "Yes" },
+        { name: "FreshMart", type: "Grocery Store", coords: [34.0522, -118.2437], availability: "Limited" },
+        { name: "Tasty Eats", type: "Restaurant", coords: [41.8781, -87.6298], availability: "Yes" }
+      ];
+
+      // Add markers
+      sponsors.forEach(sponsor => {
+        const marker = L.marker(sponsor.coords).addTo(map);
+        marker.bindPopup(`<b>${sponsor.name}</b><br>${sponsor.type}<br>Availability: ${sponsor.availability}`);
+        marker.on('mouseover', function() { this.openPopup(); });
+        marker.on('mouseout', function() { this.closePopup(); });
+      });
+    });
+  </script>
+</body>
+</html>

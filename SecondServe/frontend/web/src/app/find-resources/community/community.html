@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Second Serve | Community</title>
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="community.css" />
+</head>
+<body>
+
+  <!-- ---------------- Header ---------------- -->
+  <header>
+    <div class="logo">SECOND SERVE</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="donations.html">Donations</a>
+      <a href="community.html" class="active">Community</a>
+    </nav>
+  </header>
+
+  <!-- ---------------- Hero Section ---------------- -->
+  <section class="hero-section">
+    <h1>Join Our Community</h1>
+    <p>Get involved with Second Serve by volunteering or joining our local events that make an impact.</p>
+  </section>
+
+  <!-- ---------------- Community Section ---------------- -->
+  <section id="community-page">
+    <!-- Volunteer Section -->
+    <div class="community-section" id="volunteer-section">
+      <h2>Volunteer Opportunities</h2>
+      <p>Join our mission to reduce food waste and feed our communities. Sign up to become a Second Serve volunteer.</p>
+      <button id="volunteer-signup">Sign Up to Volunteer</button>
+    </div>
+
+    <!-- Events Section -->
+    <div class="community-section" id="events-section">
+      <h2>Upcoming Events</h2>
+      <p>Stay updated with local drives, community gatherings, and charity events near you.</p>
+      <button id="view-calendar">View Calendar</button>
+
+      <!-- Calendar Popup -->
+      <div id="calendar-popup" style="display:none;">
+        <div id="calendar-header">
+          <span id="close-calendar">&times;</span>
+          <h3>Events Calendar</h3>
+        </div>
+        <div id="calendar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+  <!-- ---------------- Script ---------------- -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const calendarPopup = document.getElementById("calendar-popup");
+      const viewCalendarBtn = document.getElementById("view-calendar");
+      const closeCalendarBtn = document.getElementById("close-calendar");
+
+      // Show calendar
+      viewCalendarBtn.addEventListener("click", function() {
+        calendarPopup.style.display = "block";
+
+        // Initialize calendar once
+        if (!window.calendarInitialized) {
+          const calendarEl = document.getElementById("calendar");
+          const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+              { title: 'Food Drive - Dallas', date: '2025-11-15' },
+              { title: 'Volunteer Meetup - Chicago', date: '2025-11-20' },
+              { title: 'Holiday Food Distribution', date: '2025-12-01' }
+            ]
+          });
+          calendar.render();
+          window.calendarInitialized = true;
+        }
+      });
+
+      // Close calendar
+      closeCalendarBtn.addEventListener("click", function() {
+        calendarPopup.style.display = "none";
+      });
+    });
+  </script>
+
+</body>
+</html>
+
