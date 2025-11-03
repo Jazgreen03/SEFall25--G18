@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "User",
+    "Inventory",
+    "Organization",
     "corsheaders",  # Enable CORS support
 ]
 
@@ -83,6 +85,7 @@ DATABASES = {
         "NAME": os.getenv("DATABASE_NAME", "SecondServe"),
         "USER": os.getenv("DATABASE_USERNAME", ""),
         "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),
+        "OPTIONS": {"authSource": os.getenv("DATABASE_AUTH_SOURCE", "admin")},
         "TEST": {"NAME": os.getenv("DATABASE_TEST_NAME", "SecondServe_test")},
     },
 }

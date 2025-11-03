@@ -25,7 +25,9 @@ class UserManager(BaseUserManager):
     Handles creation of regular users and superusers with email as the unique identifier.
     """
 
-    def create_user(self, email: str, password: str | None = None, **extra_fields):
+    def create_user(
+        self, username: str | None = None, email: str | None = None, password: str | None = None, **extra_fields
+    ):
         """
         Create and return a regular user with email and password.
 
@@ -37,10 +39,16 @@ class UserManager(BaseUserManager):
         :return: Created user
         :rtype: User
         """
-        if not email:
-            raise ValueError("The Email field is required")
 
-        email = self.normalize_email(email)
+        if not username and not email:
+            raise ValueError("Username and/or Email are required.")
+        
+        if email:
+            email = self.normalize_email(email)
+
+        if not username and email:
+            username = email
+
         extra_fields.setdefault("role", ROLE_USER)
 
         try:
@@ -90,10 +98,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     Includes role-based access and convenience methods.
     """
 
-    email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=ROLE_USER)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=ROLE_USER)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
