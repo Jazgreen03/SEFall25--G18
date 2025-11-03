@@ -96,7 +96,7 @@
                                     <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -196,7 +196,7 @@
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                        <a data-type="chapter-link" href="./miscellaneous.html"  class="active" ><span class="fa fa-cubes"></span>Miscellaneous</a>
                     </li>
             
                     <li class="chapter">
@@ -290,7 +290,7 @@
                                            <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -390,7 +390,7 @@
                    
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                               <a data-type="chapter-link" href="./miscellaneous.html"  class="active" ><span class="fa fa-cubes"></span>Miscellaneous</a>
                            </li>
                    
                            <li class="chapter">
@@ -402,100 +402,207 @@
                    
                    </nav>
                </div>
-               <div class="content component">
+               <div class="content miscellaneous">
                    <div class="content-data">
 
 
+
+
+
+
+
+
+
 <ol class="breadcrumb">
-  <li>Components</li>
-  <li>Landing</li>
+  <li>Miscellaneous</li>
 </ol>
 
-
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#infos" id="infos-tab" role="tab" data-toggle="tab">Infos</a>
-        </li>
-        <li>
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab">Source</a>
-        </li>
+    <section>
+        <h3 id="inputs">Variables</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> config</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>config:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Merged Angular application configuration for server-side rendering (SSR).</p>
+    <p>This configuration extends the client-side <code>appConfig</code> with server-specific providers.</p>
+    <p>Key features:</p>
+    <ul>
+    <li>Enables server-side rendering for the Angular application.</li>
+    <li>Configures the server with application routes for pre-rendering and SSR requests.</li>
     </ul>
-
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="infos"><p class="comment">
-    <h3>File</h3>
-</p>
-<p class="comment">
-    <code>src/landing/landing.ts</code>
-</p>
-
-
-
-<section>
-    <h3>Metadata</h3>
-    <table class="table table-sm table-hover">
-        <tbody>
-
-
-
-
-
-
-
-
-
-
-
-
-            <tr>
-                <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
-            </tr>
-
-            <tr>
-                <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
-            </tr>
-
-
-
-            <tr>
-                <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
-            </tr>
-
-
-        </tbody>
-    </table>
-</section>
-
-
-
-
-
-</div>
-        <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
-import { CommonModule } from &#x27;@angular/common&#x27;;
-import { RouterModule } from &#x27;@angular/router&#x27;;
-
-@Component({
-  selector: &#x27;app-landing&#x27;,
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
-})
-export class Landing { }</code></pre>
-        </div>
+    <p>This is the configuration that should be used when bootstrapping the Angular app on the server.</p>
     </div>
-
-
-
-
-
-
-
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> appConfig</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>appConfig:     <code>any</code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Angular client-side application configuration.</p>
+    <p>This configuration sets up global providers for the browser application.</p>
+    <p>Key features:</p>
+    <ul>
+    <li>Enables global error listeners for uncaught errors and unhandled promise rejections.</li>
+    <li>Configures Angular Zone change detection with event coalescing for performance.</li>
+    <li>Provides router configuration with application routes.</li>
+    <li>Enables client-side hydration for server-side rendered content with event replay.</li>
+    </ul>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> serverRoutes</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>serverRoutes:     <code>any[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> bootstrap</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>bootstrap:     <code></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Bootstraps the Angular application for server-side rendering.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> browserDistFolder</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>browserDistFolder:     <code></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>The folder containing the browser (client-side) build output.<br>This is used to serve static assets like JS, CSS, and images.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> app</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>app:     <code></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>The Express application instance.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> angularApp</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>angularApp:     <code></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Angular SSR engine instance for handling server-side rendering of the Angular app.</p>
+    </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> reqHandler</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>reqHandler:     <code></code>
+    </bcode>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Request handler for integrating the Angular SSR server with external environments.</p>
+    <p>Can be used by:</p>
+    <ul>
+    <li>Angular CLI dev-server</li>
+    <li>Firebase Cloud Functions</li>
+    </ul>
+    <p>Example usage:</p>
+    <pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> handler = reqHandler;</code></pre></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
 
 

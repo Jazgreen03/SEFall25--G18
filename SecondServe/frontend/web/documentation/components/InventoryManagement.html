@@ -93,10 +93,10 @@
                                     <a href="components/Events.html" >Events</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/InventoryManagement.html" >InventoryManagement</a>
+                                    <a href="components/InventoryManagement.html"  class="active" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -287,10 +287,10 @@
                                            <a href="components/Events.html" >Events</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/InventoryManagement.html" >InventoryManagement</a>
+                                           <a href="components/InventoryManagement.html"  class="active" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -408,7 +408,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>Landing</li>
+  <li>InventoryManagement</li>
 </ol>
 
 
@@ -426,7 +426,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/landing/landing.ts</code>
+    <code>src/inventory-management/inventory-management.ts</code>
 </p>
 
 
@@ -449,19 +449,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
+                <td class="col-md-9"><code>app-org-home</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
+                <td class="col-md-9"><code>inventory-management.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
+                <td class="col-md-9"><code>inventory-management.html</code></td>
             </tr>
 
 
@@ -471,22 +471,472 @@
 
 
 
+    <section>
+        <h3 id="constructor">Constructor</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>constructor(http: HttpClient, router: <a href="https://angular.io/docs/ts/latest/api/router/index/Router-class.html" target="_blank" >Router</a>)</code>
+                        </td>
+                    </tr>
+    
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="methods">Methods</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loadData</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>loadData()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Load both active deliveries and inventory items </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> reloadData</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>reloadData()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Reload data manually </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> donateItem</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>donateItem(item: InventoryItem)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Mark inventory item for donation </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> viewDeliveryDetails</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>viewDeliveryDetails(delivery: Delivery)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>View more details about a delivery </p>
+    </div>
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToAccount</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToAccount()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToHome</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToHome()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToInventory</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToInventory()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> logout</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>logout()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> activeDeliveries</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>activeDeliveries:     <code>Delivery[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> apiUrl</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>apiUrl:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>http://localhost:8080/api</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> error</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>error:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> inventory</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>inventory:     <code>InventoryItem[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loading</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>loading:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>false</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+    </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
+            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { RouterModule } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+
+interface Delivery {
+  id: number;
+  foodName: string;
+  quantity: number;
+  recipient: string;
+  pickupTime: string;
+  driver?: string;
+  status: string;
+}
+
+interface InventoryItem {
+  id: number;
+  name: string;
+  quantity: number;
+  expiryDate: string;
+}
 
 @Component({
-  selector: &#x27;app-landing&#x27;,
+  selector: &#x27;app-org-home&#x27;,
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
+  imports: [CommonModule],
+  templateUrl: &#x27;./inventory-management.html&#x27;,
+  styleUrls: [&#x27;./inventory-management.css&#x27;],
 })
-export class Landing { }</code></pre>
+export class InventoryManagement implements OnInit {
+  activeDeliveries: Delivery[] &#x3D; [];
+  inventory: InventoryItem[] &#x3D; [];
+  loading &#x3D; false;
+  error: string | null &#x3D; null;
+
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  /** Load both active deliveries and inventory items */
+  loadData(): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    // Simulated parallel API calls
+    setTimeout(() &#x3D;&gt; {
+      try {
+        this.activeDeliveries &#x3D; [
+          {
+            id: 1,
+            foodName: &#x27;Fresh Sandwiches&#x27;,
+            quantity: 25,
+            recipient: &#x27;Downtown Shelter&#x27;,
+            pickupTime: new Date(&#x27;2025-10-31T13:00:00&#x27;).toISOString(),
+            driver: &#x27;John Doe&#x27;,
+            status: &#x27;Out for Delivery&#x27;,
+          },
+          {
+            id: 2,
+            foodName: &#x27;Canned Soup&#x27;,
+            quantity: 50,
+            recipient: &#x27;Food Aid Center&#x27;,
+            pickupTime: new Date(&#x27;2025-10-31T15:30:00&#x27;).toISOString(),
+            status: &#x27;Pending Pickup&#x27;,
+          },
+        ];
+
+        this.inventory &#x3D; [
+          { id: 1, name: &#x27;Bread Loaves&#x27;, quantity: 40, expiryDate: &#x27;2025-11-05&#x27; },
+          { id: 2, name: &#x27;Apples&#x27;, quantity: 100, expiryDate: &#x27;2025-11-10&#x27; },
+          { id: 3, name: &#x27;Cereal Boxes&#x27;, quantity: 25, expiryDate: &#x27;2025-12-01&#x27; },
+        ];
+      } catch (e) {
+        console.error(e);
+        this.error &#x3D; &#x27;Failed to load data. Please try again.&#x27;;
+      } finally {
+        this.loading &#x3D; false;
+      }
+    }, 800);
+  }
+
+  /** Reload data manually */
+  reloadData(): void {
+    this.loadData();
+  }
+
+  /** Mark inventory item for donation */
+  donateItem(item: InventoryItem): void {
+    const confirmed &#x3D; confirm(&#x60;Mark &quot;${item.name}&quot; as donated?&#x60;);
+    if (!confirmed) return;
+
+    // Simulated API update
+    this.inventory &#x3D; this.inventory.filter((i) &#x3D;&gt; i.id !&#x3D;&#x3D; item.id);
+    alert(&#x60;${item.name} marked for donation!&#x60;);
+  }
+
+  /** View more details about a delivery */
+  viewDeliveryDetails(delivery: Delivery): void {
+    alert(&#x60;Viewing details for: ${delivery.foodName}&#x60;);
+    // Optionally navigate to delivery details page:
+    // this.router.navigate([&#x27;/delivery&#x27;, delivery.id]);
+  }
+
+  // --- Navigation Methods --- //
+
+  goToAccount(): void {
+    this.router.navigate([&#x27;/org-account&#x27;]);
+  }
+
+  goToHome(): void {
+    this.router.navigate([&#x27;/org-home&#x27;]);
+  }
+
+  goToOrders(): void {
+    this.router.navigate([&#x27;/org-history&#x27;]);
+  }
+
+  goToInventory(): void {
+    this.router.navigate([&#x27;/inventory&#x27;]);
+  }
+
+  logout(): void {
+    localStorage.removeItem(&#x27;authToken&#x27;);
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+}
+</code></pre>
         </div>
     </div>
 

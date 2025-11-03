@@ -90,13 +90,13 @@
                                     <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Events.html" >Events</a>
+                                    <a href="components/Events.html"  class="active" >Events</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -284,13 +284,13 @@
                                            <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Events.html" >Events</a>
+                                           <a href="components/Events.html"  class="active" >Events</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -408,7 +408,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>Landing</li>
+  <li>Events</li>
 </ol>
 
 
@@ -426,7 +426,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/landing/landing.ts</code>
+    <code>src/app/news-media/events/events.ts</code>
 </p>
 
 
@@ -449,19 +449,15 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
+                <td class="col-md-9"><code>app-events</code></td>
             </tr>
 
-            <tr>
-                <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
-            </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
+                <td class="col-md-9"><code>events.html</code></td>
             </tr>
 
 
@@ -480,13 +476,14 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
 @Component({
-  selector: &#x27;app-landing&#x27;,
+  selector: &#x27;app-events&#x27;,
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
+  templateUrl: &#x27;./events.html&#x27;,
+  styleUrl: &#x27;./events.css&#x27;,
 })
-export class Landing { }</code></pre>
+export class Events {}
+</code></pre>
         </div>
     </div>
 

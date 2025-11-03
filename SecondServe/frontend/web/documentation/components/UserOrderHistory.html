@@ -96,7 +96,7 @@
                                     <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -126,7 +126,7 @@
                                     <a href="components/UserHome.html" >UserHome</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
+                                    <a href="components/UserOrderHistory.html"  class="active" >UserOrderHistory</a>
                                 </li>
                         </ul>
                     </li>
@@ -290,7 +290,7 @@
                                            <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -320,7 +320,7 @@
                                            <a href="components/UserHome.html" >UserHome</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/UserOrderHistory.html" >UserOrderHistory</a>
+                                           <a href="components/UserOrderHistory.html"  class="active" >UserOrderHistory</a>
                                        </li>
                                </ul>
                            </li>
@@ -408,7 +408,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>Landing</li>
+  <li>UserOrderHistory</li>
 </ol>
 
 
@@ -426,7 +426,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/landing/landing.ts</code>
+    <code>src/user-order-history/user-order-history.ts</code>
 </p>
 
 
@@ -449,19 +449,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
+                <td class="col-md-9"><code>app-order-history</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
+                <td class="col-md-9"><code>user-order-history.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
+                <td class="col-md-9"><code>user-order-history.html</code></td>
             </tr>
 
 
@@ -471,22 +471,393 @@
 
 
 
+    <section>
+        <h3 id="constructor">Constructor</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>constructor(router: <a href="https://angular.io/docs/ts/latest/api/router/index/Router-class.html" target="_blank" >Router</a>)</code>
+                        </td>
+                    </tr>
+    
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="methods">Methods</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loadOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>loadOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> refreshOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>refreshOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> viewOrder</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>viewOrder(orderId: number)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> viewDetails</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>viewDetails(order: Order)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToAccount</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToAccount()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToHome</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToHome()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> logout</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>logout()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> activeTab</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>activeTab:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>orders</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> error</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>error:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loading</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>loading:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>true</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> orders</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>orders:     <code>Order[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
-import { CommonModule } from &#x27;@angular/common&#x27;;
-import { RouterModule } from &#x27;@angular/router&#x27;;
+            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { CommonModule, DatePipe, NgClass } from &#x27;@angular/common&#x27;;
+import { NgFor, NgIf } from &#x27;@angular/common&#x27;;
+
+interface Order {
+  id: number;
+  date: Date;
+  restaurant: string;
+  status: string;
+  items: string[];
+}
 
 @Component({
-  selector: &#x27;app-landing&#x27;,
+  selector: &#x27;app-order-history&#x27;,
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
+  imports: [CommonModule, NgIf, NgFor, NgClass, DatePipe],
+  templateUrl: &#x27;./user-order-history.html&#x27;,
+  styleUrls: [&#x27;./user-order-history.css&#x27;],
 })
-export class Landing { }</code></pre>
+export class UserOrderHistory implements OnInit {
+  orders: Order[] &#x3D; [];
+  loading &#x3D; true;
+  error: string | null &#x3D; null;
+
+  // Add activeTab for navbar highlighting
+  activeTab &#x3D; &#x27;orders&#x27;;
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.loadOrders();
+  }
+
+  // Simulate fetching orders from API
+  loadOrders() {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    setTimeout(() &#x3D;&gt; {
+      try {
+        this.orders &#x3D; [
+          {
+            id: 101,
+            date: new Date(&#x27;2025-10-25T14:00:00&#x27;),
+            restaurant: &#x27;Fresh Bites Café&#x27;,
+            status: &#x27;Delivered&#x27;,
+            items: [&#x27;Pasta&#x27;, &#x27;Salad&#x27;],
+          },
+          {
+            id: 102,
+            date: new Date(&#x27;2025-10-27T18:30:00&#x27;),
+            restaurant: &#x27;Community Kitchen&#x27;,
+            status: &#x27;In Progress&#x27;,
+            items: [&#x27;Soup&#x27;, &#x27;Bread&#x27;],
+          },
+        ];
+      } catch (e) {
+        this.error &#x3D; &#x27;Failed to load orders. Please try again.&#x27;;
+      } finally {
+        this.loading &#x3D; false;
+      }
+    }, 800);
+  }
+
+  refreshOrders() {
+    this.loadOrders();
+  }
+
+  viewOrder(orderId: number) {
+    const order &#x3D; this.orders.find((o) &#x3D;&gt; o.id &#x3D;&#x3D;&#x3D; orderId);
+    if (order) {
+      this.viewDetails(order);
+    }
+  }
+
+  viewDetails(order: Order) {
+    this.router.navigate([&#x27;/order&#x27;, order.id]);
+  }
+
+  goToAccount() {
+    this.activeTab &#x3D; &#x27;account&#x27;;
+    this.router.navigate([&#x27;/account&#x27;]);
+  }
+
+  goToHome() {
+    this.activeTab &#x3D; &#x27;&#x27;;
+    this.router.navigate([&#x27;/home&#x27;]);
+  }
+
+  // New: goToOrders for the template
+  goToOrders() {
+    this.activeTab &#x3D; &#x27;orders&#x27;;
+    this.router.navigate([&#x27;/orders&#x27;]);
+  }
+
+  logout() {
+    localStorage.removeItem(&#x27;user&#x27;);
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+}
+</code></pre>
         </div>
     </div>
 

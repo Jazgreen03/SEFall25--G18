@@ -87,7 +87,7 @@
                                     <a href="components/DriverHome.html" >DriverHome</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
+                                    <a href="components/DriverOrderHistory.html"  class="active" >DriverOrderHistory</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Events.html" >Events</a>
@@ -96,7 +96,7 @@
                                     <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -281,7 +281,7 @@
                                            <a href="components/DriverHome.html" >DriverHome</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/DriverOrderHistory.html" >DriverOrderHistory</a>
+                                           <a href="components/DriverOrderHistory.html"  class="active" >DriverOrderHistory</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Events.html" >Events</a>
@@ -290,7 +290,7 @@
                                            <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -408,7 +408,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>Landing</li>
+  <li>DriverOrderHistory</li>
 </ol>
 
 
@@ -426,7 +426,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/landing/landing.ts</code>
+    <code>src/driver-order-history/driver-order-history.ts</code>
 </p>
 
 
@@ -449,19 +449,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
+                <td class="col-md-9"><code>app-driver-order-history</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
+                <td class="col-md-9"><code>driver-order-history.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
+                <td class="col-md-9"><code>driver-order-history.html</code></td>
             </tr>
 
 
@@ -471,22 +471,418 @@
 
 
 
+    <section>
+        <h3 id="constructor">Constructor</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>constructor(http: HttpClient, router: <a href="https://angular.io/docs/ts/latest/api/router/index/Router-class.html" target="_blank" >Router</a>)</code>
+                        </td>
+                    </tr>
+    
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="methods">Methods</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToHome</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToHome()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToAccount</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToAccount()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToDeliveries</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToDeliveries()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> logout</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>logout()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loadOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>loadOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> refreshOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>refreshOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> viewOrder</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>viewOrder(orderId: number)</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> activeTab</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>activeTab:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>orders</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> apiUrl</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>apiUrl:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>http://localhost:8080/api</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> currentTab</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>currentTab:     <code>&quot;account&quot; | &quot;orders&quot; | &quot;deliveries&quot;</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>deliveries</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> error</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>error:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loading</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>loading:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>false</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> orders</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>orders:     <code>Order[]</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
+            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { RouterModule } from &#x27;@angular/router&#x27;;
+
+interface Order {
+  id: number;
+  date: string;
+  items: string[];
+  status: &#x27;Pending&#x27; | &#x27;In Transit&#x27; | &#x27;Completed&#x27; | &#x27;Cancelled&#x27;;
+}
 
 @Component({
-  selector: &#x27;app-landing&#x27;,
+  selector: &#x27;app-driver-order-history&#x27;,
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
+  imports: [CommonModule],
+  templateUrl: &#x27;./driver-order-history.html&#x27;,
+  styleUrls: [&#x27;./driver-order-history.css&#x27;],
 })
-export class Landing { }</code></pre>
+export class DriverOrderHistory implements OnInit {
+  currentTab: &#x27;account&#x27; | &#x27;orders&#x27; | &#x27;deliveries&#x27; &#x3D; &#x27;deliveries&#x27;;
+  orders: Order[] &#x3D; [];
+  loading &#x3D; false;
+  error: string | null &#x3D; null;
+  activeTab &#x3D; &#x27;orders&#x27;;
+
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadOrders();
+  }
+
+  // --- Navigation Methods --- //
+  goToHome(): void {
+    this.router.navigate([&#x27;/driver-home&#x27;]);
+  }
+
+  goToAccount(): void {
+    this.router.navigate([&#x27;/driver-account&#x27;]);
+  }
+
+  goToOrders(): void {
+    this.activeTab &#x3D; &#x27;orders&#x27;;
+    this.loadOrders();
+  }
+
+  goToDeliveries(): void {
+    window.location.href &#x3D; &#x27;/deliveries&#x27;;
+  }
+
+  logout(): void {
+    localStorage.removeItem(&#x27;authToken&#x27;);
+    this.router.navigate([&#x27;/login&#x27;]);
+  }
+
+  // --- API Methods --- //
+  loadOrders(): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    this.http.get&lt;Order[]&gt;(&#x60;${this.apiUrl}/driver/orders&#x60;).subscribe({
+      next: (data) &#x3D;&gt; {
+        this.orders &#x3D; data;
+        this.loading &#x3D; false;
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(err);
+        this.error &#x3D; &#x27;Failed to load orders.&#x27;;
+        this.loading &#x3D; false;
+      },
+    });
+  }
+
+  refreshOrders(): void {
+    this.loadOrders();
+  }
+
+  viewOrder(orderId: number): void {
+    this.router.navigate([&#x60;/driver/order/${orderId}&#x60;]);
+  }
+}
+</code></pre>
         </div>
     </div>
 

@@ -96,7 +96,7 @@
                                     <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/Landing.html"  class="active" >Landing</a>
+                                    <a href="components/Landing.html" >Landing</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/Login.html" >Login</a>
@@ -120,7 +120,7 @@
                                     <a href="components/Restaurants.html" >Restaurants</a>
                                 </li>
                                 <li class="link">
-                                    <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
+                                    <a href="components/UserAccountManagement.html"  class="active" >UserAccountManagement</a>
                                 </li>
                                 <li class="link">
                                     <a href="components/UserHome.html" >UserHome</a>
@@ -290,7 +290,7 @@
                                            <a href="components/InventoryManagement.html" >InventoryManagement</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/Landing.html"  class="active" >Landing</a>
+                                           <a href="components/Landing.html" >Landing</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/Login.html" >Login</a>
@@ -314,7 +314,7 @@
                                            <a href="components/Restaurants.html" >Restaurants</a>
                                        </li>
                                        <li class="link">
-                                           <a href="components/UserAccountManagement.html" >UserAccountManagement</a>
+                                           <a href="components/UserAccountManagement.html"  class="active" >UserAccountManagement</a>
                                        </li>
                                        <li class="link">
                                            <a href="components/UserHome.html" >UserHome</a>
@@ -408,7 +408,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>Landing</li>
+  <li>UserAccountManagement</li>
 </ol>
 
 
@@ -426,7 +426,7 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/landing/landing.ts</code>
+    <code>src/user-manage-account/user-manage-account.ts</code>
 </p>
 
 
@@ -449,19 +449,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-landing</code></td>
+                <td class="col-md-9"><code>app-manage-account</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>landing.css</code></td>
+                <td class="col-md-9"><code>user-manage-account.css</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>landing.html</code></td>
+                <td class="col-md-9"><code>user-manage-account.html</code></td>
             </tr>
 
 
@@ -471,22 +471,371 @@
 
 
 
+    <section>
+        <h3 id="constructor">Constructor</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>constructor(http: HttpClient)</code>
+                        </td>
+                    </tr>
+    
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="methods">Methods</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> loadUser</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>loadUser()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> updateAccount</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>updateAccount()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> togglePassword</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>togglePassword()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToAccount</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToAccount()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToHome</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToHome()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> goToOrders</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>goToOrders()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> logout</b>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+    <code>logout()</code>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description">
+                                    <b>Returns: </b>    <code>void</code>
+    
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 
+    <section>
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b><span class="modifier">Private</span> apiUrl</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <span class="modifier-icon fa fa-lock"></span><code>apiUrl:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>http://localhost:8080/api/users</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> errorMessage</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>errorMessage:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> showPassword</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>showPassword:     <code>boolean</code>
+    </bcode>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Default value: </i><code>false</code>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> successMessage</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>successMessage:     <code>string</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <b> user</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <code>user:     <code>User</code>
+    </bcode>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
 </div>
         <div class="tab-pane fade tab-source-code" id="source">
-            <pre><code class="hljs javascript">import { Component } from &#x27;@angular/core&#x27;;
+            <pre><code class="hljs javascript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { RouterModule } from &#x27;@angular/router&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+
+interface User {
+  email: string;
+  name: string;
+  address: string;
+  password?: string;
+}
 
 @Component({
-  selector: &#x27;app-landing&#x27;,
+  selector: &#x27;app-manage-account&#x27;,
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: &#x27;./landing.html&#x27;,
-  styleUrls: [&#x27;./landing.css&#x27;]
+  imports: [CommonModule, FormsModule],
+  templateUrl: &#x27;./user-manage-account.html&#x27;,
+  styleUrls: [&#x27;./user-manage-account.css&#x27;],
 })
-export class Landing { }</code></pre>
+export class UserAccountManagement implements OnInit {
+  user: User &#x3D; {
+    email: &#x27;&#x27;,
+    name: &#x27;&#x27;,
+    address: &#x27;&#x27;,
+  };
+
+  showPassword &#x3D; false;
+  successMessage: string | null &#x3D; null;
+  errorMessage: string | null &#x3D; null;
+
+  private apiUrl &#x3D; &#x27;http://localhost:8080/api/users&#x27;;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.loadUser();
+  }
+
+  loadUser(): void {
+    // Fetch current user info
+    this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/me&#x60;).subscribe({
+      next: (data) &#x3D;&gt; (this.user &#x3D; data),
+      error: (err) &#x3D;&gt; console.error(&#x27;Failed to load user&#x27;, err),
+    });
+  }
+
+  updateAccount(): void {
+    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    this.http.put(&#x60;${this.apiUrl}/update&#x60;, this.user, { headers }).subscribe({
+      next: () &#x3D;&gt; {
+        this.successMessage &#x3D; &#x27;Account updated successfully!&#x27;;
+        this.errorMessage &#x3D; null;
+        this.user.password &#x3D; &#x27;&#x27;; // clear password field
+      },
+      error: (err) &#x3D;&gt; {
+        this.errorMessage &#x3D; &#x27;Failed to update account.&#x27;;
+        this.successMessage &#x3D; null;
+        console.error(err);
+      },
+    });
+  }
+
+  togglePassword(): void {
+    this.showPassword &#x3D; !this.showPassword;
+  }
+
+  // Navigation / Header buttons
+  goToAccount(): void {
+    // Already on account page; can optionally reload
+    this.loadUser();
+  }
+
+  goToHome(): void {
+    // Navigate to home page
+    window.location.href &#x3D; &#x27;/home&#x27;;
+  }
+
+  goToOrders(): void {
+    // Navigate to orders page
+    window.location.href &#x3D; &#x27;/history&#x27;;
+  }
+
+  logout(): void {
+    // Clear session / redirect
+    // Example:
+    window.location.href &#x3D; &#x27;/login&#x27;;
+  }
+}
+</code></pre>
         </div>
     </div>
 
