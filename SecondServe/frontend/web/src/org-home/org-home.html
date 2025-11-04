@@ -1,0 +1,89 @@
+<div class="home-container">
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <h1
+        tabindex="0"
+        (click)="goToHome()"
+        (keyup.enter)="goToHome()"
+        (keyup.space)="goToHome()"
+        style="cursor: pointer"
+      >
+        SecondServe
+      </h1>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" (click)="goToAccount()">Account</button>
+      <button class="nav-btn" (click)="goToInventory()">Manage Inventory</button>
+      <button class="nav-btn" (click)="goToOrders()">Order History</button>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h2 class="hero-title">Organization Dashboard</h2>
+    <p class="tagline">Manage your donations and track active deliveries</p>
+  </section>
+
+  <!-- Loading & Error States -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading data...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="reloadData()" class="btn-secondary">Try Again</button>
+  </div>
+
+  <!-- Active Deliveries Section -->
+  <section *ngIf="!loading" class="section">
+    <h3 class="section-title">🛻 Active Deliveries</h3>
+
+    <div *ngIf="activeDeliveries.length > 0; else noDeliveries" class="card-grid">
+      <div *ngFor="let delivery of activeDeliveries" class="card">
+        <div class="card-header">
+          <h4>{{ delivery.foodName }}</h4>
+          <span class="status">{{ delivery.status }}</span>
+        </div>
+        <p><strong>Quantity:</strong> {{ delivery.quantity }}</p>
+        <p><strong>Recipient:</strong> {{ delivery.recipient }}</p>
+        <p><strong>Pickup Time:</strong> {{ delivery.pickupTime | date:'short' }}</p>
+        <p><strong>Driver:</strong> {{ delivery.driver || 'Unassigned' }}</p>
+        <div class="actions">
+          <button (click)="viewDeliveryDetails(delivery)" class="btn-secondary">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noDeliveries>
+      <p class="no-results">No active deliveries at the moment.</p>
+    </ng-template>
+  </section>
+
+  <!-- Undonated Inventory Section -->
+  <section *ngIf="!loading" class="section">
+    <h3 class="section-title">📦 Inventory Awaiting Donation</h3>
+
+    <div *ngIf="inventory.length > 0; else noInventory" class="card-grid">
+      <div *ngFor="let item of inventory" class="card">
+        <div class="card-header">
+          <h4>{{ item.name }}</h4>
+          <span class="status pending">Not Donated</span>
+        </div>
+        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+        <p><strong>Expires:</strong> {{ item.expiryDate | date:'shortDate' }}</p>
+        <div class="actions">
+          <button (click)="donateItem(item)" class="btn-primary">Mark for Donation</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noInventory>
+      <p class="no-results">All inventory has been donated — great job!</p>
+    </ng-template>
+  </section>
+</div>

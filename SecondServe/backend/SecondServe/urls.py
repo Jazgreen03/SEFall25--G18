@@ -14,14 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 
 def health(_):
     return JsonResponse({"status": "ok"})
 
+
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({"detail": "CSRF cookie set"})
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("api/health/", health),
+    path("user/", include(("User.urls", "user"))),
+    path("inventory/", include(("Inventory.urls"))),
+    path("org/", include(("Organization.urls"))),
+    path("api/csrf/", csrf),
 ]

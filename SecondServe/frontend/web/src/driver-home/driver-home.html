@@ -1,0 +1,68 @@
+<div class="home-container">
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()">
+        SecondServe
+      </h1>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" (click)="goToAccount()">Account</button>
+      <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
+      <button class="nav-btn" (click)="goToOrders()">Order History</button>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h2 class="hero-title">Helping connect surplus food to those in need</h2>
+    <p class="tagline">Take on deliveries and reduce food waste</p>
+
+    <div class="search-section">
+      <button (click)="loadDeliveries()" class="btn-primary">Load Available Deliveries</button>
+    </div>
+  </section>
+
+  <!-- Loading & Error States -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading deliveries...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="refreshDeliveries()" class="btn-secondary">Try Again</button>
+  </div>
+
+  <!-- Delivery Cards -->
+  <section *ngIf="!loading && deliveries.length > 0" class="delivery-grid">
+    <div *ngFor="let delivery of deliveries" class="delivery-card">
+      <div class="delivery-info">
+        <h3>{{ delivery.restaurantName }}</h3>
+        <p class="address">{{ delivery.pickupAddress }}</p>
+        <p class="">to</p>
+        <p class="address">{{ delivery.deliveryAddress }}</p>
+
+        <div class="food-types">
+          <span *ngFor="let item of delivery.items" class="food-tag">{{ item }}</span>
+        </div>
+
+        <div class="availability">
+          <p><strong>{{ delivery.items.length }}</strong> items to deliver</p>
+          <!--<p class="expiry">Pickup by: {{ delivery.pickupBy | date:'short' }}</p>-->
+        </div>
+
+        <div class="actions">
+          <button (click)="acceptDelivery(delivery)" class="btn-pickup">Accept Delivery</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- No Results -->
+  <div *ngIf="!loading && deliveries.length === 0" class="no-results">
+    <p>No deliveries available at this time.</p>
+    <p>Check back soon or refresh the list.</p>
+  </div>
+</div>

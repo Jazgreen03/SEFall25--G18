@@ -1,0 +1,97 @@
+/* ------------- General Styles ------------- */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #2b2b2b;
+}
+
+/* ------------- Header ------------- */
+header {
+  padding: 2rem 3rem;
+  background-color: #1d684c;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline;
+}
+
+/* ------------- Contact Section ------------- */
+.contact-hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #ffffff;
+}
+
+.contact-hero h1 {
+  font-size: 3rem;
+  color: #1d684c;
+  margin-bottom: 1rem;
+}
+
+.contact-hero p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #444;
+}
+
+/* ------------- Contact Info Cards ------------- */
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background-color: #f1f8f4;
+}
+
+.contact-card {
+  background-color: white;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1 1 250px;
+  max-width: 300px;
+}
+
+.contact-card h2 {
+  color: #1d684c;
+  margin-bottom: 0.8rem;
+  font-size: 1.5rem;
+}
+
+.contact-card p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2b2b2b;
+  line-height: 1.6;
+}
+
+/* ------------- Footer ------------- */
+footer {
+  background-color: #1d684c;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}

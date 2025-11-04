@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.6.3
+    hooks:
+      - id: autopep8
+        name: Format Python code
+        entry: autopep8 --in-place --aggressive --aggressive
+        language: python
+        types: [python]
+        files: ^SecondServe/backend/
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        name: Lint Python code
+        language: python
+        files: ^SecondServe/backend/
+
+  - repo: https://github.com/pre-commit/mirrors-pytest
+    rev: v7.4.2
+    hooks:
+      - id: pytest
+        name: Run backend tests
+        entry: pytest
+        language: system
+        types: [python]
+        files: ^SecondServe/backend/
+
+  - repo: local
+    hooks:
+      - id: build-docs
+        name: Build docs
+        entry: bash -c "cd SecondServe/backend && sphinx-build -b html docs/ docs/_build/html"
+        language: system
+        stages: [pre-push]
