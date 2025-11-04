@@ -1,69 +1,209 @@
-/* ------------- General Styles ------------- */
+/* ===== General Layout ===== */
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #1f2937;
   background-color: #f9f9f9;
-  color: #2b2b2b;
+  box-sizing: border-box;
 }
 
-/* ------------- Header ------------- */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* ===== Header Section ===== */
 header {
-  padding: 2rem 3rem;
-  background-color: #1d684c;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100vw;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 2rem;
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  cursor: pointer;
 }
 
-nav a {
-  color: white;
+nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.nav-left {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-right {
+  margin-left: auto;
+  /* push login button to far right */
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown>a {
+  color: #1f2937;
   text-decoration: none;
-  margin-left: 1.5rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+}
+
+.dropdown>a::after {
+  content: " ▼";
+  font-size: 0.7rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  top: 100%;
+  left: 0;
+  z-index: 200;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #059669;
+  padding: 0.8rem 1rem;
+  display: block;
+  text-decoration: none;
   font-weight: 500;
 }
 
-nav a:hover,
-nav a.active {
-  text-decoration: underline;
+.dropdown-content a:hover {
+  background-color: #f2f2f2;
 }
 
-/* ------------- Map Section ------------- */
+/* Login Button */
+.login-btn {
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #059669;
+}
+
+/* ===== Map Section ===== */
 #sponsor-map-section {
+  padding: 3rem 2rem;
   text-align: center;
-  padding: 4rem 2rem;
-  background-color: #e8f5e9; /* soft green background */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 #sponsor-map-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #1d684c;
+  font-size: 2rem;
+  color: #059669;
+  margin-bottom: 0.5rem;
 }
 
 #sponsor-map-section p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+  color: #374151;
 }
 
+/* Map container */
 #sponsor-map {
   width: 100%;
-  height: 600px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  height: 500px;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid #10b981;
 }
 
-/* ------------- Footer ------------- */
+/* ===== Footer ===== */
 footer {
-  background-color: #1d684c;
-  color: white;
+  background-color: #f2f2f2;
+  padding: 2rem;
   text-align: center;
-  padding: 1.5rem 0;
-  margin-top: 2rem;
   font-size: 0.95rem;
+  color: #555;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  #sponsor-map {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1rem;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-right {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+  }
+
+  .dropdown-content {
+    position: relative;
+    right: auto;
+    left: 0;
+    box-shadow: none;
+  }
+
+  #sponsor-map {
+    height: 300px;
+  }
+
+  #sponsor-map-section h2 {
+    font-size: 1.5rem;
+  }
+
+  #sponsor-map-section p {
+    font-size: 0.95rem;
+  }
 }

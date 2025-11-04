@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +12,41 @@
   <!-- Your CSS -->
   <link rel="stylesheet" href="restaurants.css">
 </head>
+
 <body>
   <!-- ---------------- Header ---------------- -->
   <header>
-    <div class="logo">SECOND SERVE</div>
+    <div class="logo">
+      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"
+        style="cursor: pointer">
+        SecondServe
+      </h1>
+    </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="community.html">Community</a>
-      <a href="restaurants.html" class="active">Restaurants</a>
-      <a href="events.html">Events</a>
-      <a href="blog.html">Blog</a>
-      <a href="mission.html">Mission</a>
-      <a href="contact.html">Contact</a>
+      <div class="nav-left">
+        <div class="dropdown">
+          <a href="#">Resources</a>
+          <div class="dropdown-content">
+            <a href="/donate">Donate</a>
+            <a href="/restaurants">Restaurants</a>
+            <a href="/community">Community Centers</a>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <a href="#">Media & About</a>
+          <div class="dropdown-content">
+            <a href="/events">Events</a>
+            <a href="/blog">Blog</a>
+            <a href="/mission">Mission</a>
+            <a href="/contact">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <a href="/login" class="login-btn">Login</a>
+      </div>
     </nav>
   </header>
 
@@ -41,7 +65,7 @@
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       // Initialize map
       const map = L.map('sponsor-map').setView([39.8283, -98.5795], 4);
 
@@ -61,10 +85,11 @@
       sponsors.forEach(sponsor => {
         const marker = L.marker(sponsor.coords).addTo(map);
         marker.bindPopup(`<b>${sponsor.name}</b><br>${sponsor.type}<br>Availability: ${sponsor.availability}`);
-        marker.on('mouseover', function() { this.openPopup(); });
-        marker.on('mouseout', function() { this.closePopup(); });
+        marker.on('mouseover', function () { this.openPopup(); });
+        marker.on('mouseout', function () { this.closePopup(); });
       });
     });
   </script>
 </body>
+
 </html>

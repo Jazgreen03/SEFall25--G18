@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
@@ -9,4 +10,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './blog.html',
   styleUrl: './blog.css',
 })
-export class Blog {}
+export class Blog {
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
+}
