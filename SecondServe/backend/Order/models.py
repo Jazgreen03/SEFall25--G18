@@ -14,13 +14,13 @@ class Order(models.Model):
     Custom Order model
 
     Utilizes the following data points
-    -> Name (name of Order)
-    -> Recipient (User that placed order)
-    -> associatedOrg (Organization responsible for Order)
-    -> orderID (Publicly facing Order Number)
-    -> status (Status of the Order)
-    -> driver (Driver who claims Order)
-    -> driverAssigned (Boolean on if Order has been claimed by Driver)
+    * Name (name of Order)
+    * Recipient (User that placed order)
+    * associatedOrg (Organization responsible for Order)
+    * orderID (Publicly facing Order Number)
+    * status (Status of the Order)
+    * driver (Driver who claims Order)
+    * driverAssigned (Boolean on if Order has been claimed by Driver)
     
     Items will reference the Order in a similar way that Items reference Inventory
 
@@ -50,9 +50,9 @@ class orderItem(models.Model):
     Custom Order Item model
 
     Utilizes the following data points
-    -> associatedItem (The Item that has been ordred)
-    -> associatedOrder (Order this item is apart of)
-    -> numOfItem (Quantity of Item in Order)
+    * associatedItem (The Item that has been ordred)
+    * associatedOrder (Order this item is apart of)
+    * numOfItem (Quantity of Item in Order)
     """
     associatedItem = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="items")
     associatedOrder = models.ForeignKey(Order, on_delete=models.CASCADE)
