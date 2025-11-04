@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>testing.test_models &#8212; SecondServe  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for testing.test_models</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">get_user_model</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">IntegrityError</span>
+
+<span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="TestUserModel">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
+<span class="k">class</span> <span class="nc">TestUserModel</span><span class="p">:</span>
+    <span class="c1"># ---------- Creation and defaults ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_user_creation_default_role">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_user_creation_default_role">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_user_creation_default_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;defaultuser&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;default@example.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;testpass123&quot;</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;user&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;defaultuser&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;default@example.com&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="s2">&quot;testpass123&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_user_creation_with_custom_role">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_user_creation_with_custom_role">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_user_creation_with_custom_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;supplierjoe&quot;</span><span class="p">,</span>
+            <span class="n">email</span><span class="o">=</span><span class="s2">&quot;supplier@example.com&quot;</span><span class="p">,</span>
+            <span class="n">password</span><span class="o">=</span><span class="s2">&quot;pw123&quot;</span><span class="p">,</span>
+            <span class="n">role</span><span class="o">=</span><span class="s2">&quot;supplier&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;supplier&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_create_user_missing_username_raises_error">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_create_user_missing_username_raises_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_missing_username_raises_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;no_username@example.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;pw123&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_create_user_missing_email_raises_error">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_create_user_missing_email_raises_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_missing_email_raises_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;nouser&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;pw123&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_create_user_missing_password_creates_unusable">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_create_user_missing_password_creates_unusable">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_missing_password_creates_unusable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="s2">&quot;nopass&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;nopass@example.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">user</span><span class="o">.</span><span class="n">has_usable_password</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_duplicate_username_raises_integrity_error">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_duplicate_username_raises_integrity_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_duplicate_username_raises_integrity_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;dupe&quot;</span><span class="p">,</span> <span class="s2">&quot;dupe@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">IntegrityError</span><span class="p">):</span>
+            <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;dupe&quot;</span><span class="p">,</span> <span class="s2">&quot;different@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_duplicate_email_raises_integrity_error">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_duplicate_email_raises_integrity_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_duplicate_email_raises_integrity_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;user1&quot;</span><span class="p">,</span> <span class="s2">&quot;same@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">IntegrityError</span><span class="p">):</span>
+            <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;user2&quot;</span><span class="p">,</span> <span class="s2">&quot;same@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------- Setters and Getters ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_getters_and_setters_functional">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_getters_and_setters_functional">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_getters_and_setters_functional</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;john&quot;</span><span class="p">,</span> <span class="s2">&quot;john@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_email</span><span class="p">(</span><span class="s2">&quot;newjohn@example.com&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_role</span><span class="p">(</span><span class="s2">&quot;driver&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_username</span><span class="p">(</span><span class="s2">&quot;johnny&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s2">&quot;newpw&quot;</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">get_email</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;newjohn@example.com&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">get_role</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;driver&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">get_username</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;johnny&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="s2">&quot;newpw&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_set_password_hashes_value">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_set_password_hashes_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_set_password_hashes_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;hasher&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;hasher@example.com&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="s2">&quot;plain&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">!=</span> <span class="s2">&quot;plain&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="s2">&quot;plain&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ---------- getUserInfo ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_get_user_info_contains_expected_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_get_user_info_contains_expected_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_get_user_info_contains_expected_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;info@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">getUserInfo</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">}</span>
+        <span class="k">assert</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;info@example.com&quot;</span>
+        <span class="k">assert</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span></div>
+
+
+    <span class="c1"># ---------- updateAttribute ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_update_attribute_email">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_update_attribute_email">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_attribute_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;alex&quot;</span><span class="p">,</span> <span class="s2">&quot;alex@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">updateAttribute</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;newalex@example.com&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">updated</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;newalex@example.com&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_update_attribute_username">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_update_attribute_username">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_attribute_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;chris&quot;</span><span class="p">,</span> <span class="s2">&quot;chris@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">updateAttribute</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;newchris&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">updated</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;newchris&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_update_attribute_password">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_update_attribute_password">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_attribute_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;lee&quot;</span><span class="p">,</span> <span class="s2">&quot;lee@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">updateAttribute</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;newpw&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">updated</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="s2">&quot;newpw&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_update_attribute_invalid_returns_none_and_does_not_change">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_update_attribute_invalid_returns_none_and_does_not_change">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_attribute_invalid_returns_none_and_does_not_change</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;invalid&quot;</span><span class="p">,</span> <span class="s2">&quot;invalid@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">updateAttribute</span><span class="p">(</span><span class="s2">&quot;not_a_field&quot;</span><span class="p">,</span> <span class="s2">&quot;someval&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;invalid&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_update_attribute_does_not_crash_with_empty_string">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_update_attribute_does_not_crash_with_empty_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_update_attribute_does_not_crash_with_empty_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;empty&quot;</span><span class="p">,</span> <span class="s2">&quot;empty@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">updated</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">updateAttribute</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">updated</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span></div>
+
+
+    <span class="c1"># ---------- Role validation ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_valid_roles_assign_correctly">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_valid_roles_assign_correctly">[docs]</a>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;driver&quot;</span><span class="p">,</span> <span class="s2">&quot;supplier&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_valid_roles_assign_correctly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">_user&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">role</span><span class="si">}</span><span class="s2">@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">role</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">role</span></div>
+
+
+<div class="viewcode-block" id="TestUserModel.test_invalid_role_assignment_is_stored_as_is">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_invalid_role_assignment_is_stored_as_is">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_invalid_role_assignment_is_stored_as_is</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The database does not automatically validate choices unless via ModelForm</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="s2">&quot;badrole&quot;</span><span class="p">,</span> <span class="s2">&quot;badrole@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;random_role&quot;</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;random_role&quot;</span>  <span class="c1"># Stored but invalid logically</span></div>
+
+
+    <span class="c1"># ---------- String representations and sanity ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_user_str_method_inherits_username">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_user_str_method_inherits_username">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_user_str_method_inherits_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;tester&quot;</span><span class="p">,</span> <span class="s2">&quot;tester@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;tester&quot;</span></div>
+
+
+    <span class="c1"># ---------- Save &amp; reload ----------</span>
+
+<div class="viewcode-block" id="TestUserModel.test_save_and_reload_preserves_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserModel.test_save_and_reload_preserves_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_save_and_reload_preserves_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;reload&quot;</span><span class="p">,</span> <span class="s2">&quot;reload@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_email</span><span class="p">(</span><span class="s2">&quot;reload2@example.com&quot;</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">loaded</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">loaded</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;reload2@example.com&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TestUserManager">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
+<span class="k">class</span> <span class="nc">TestUserManager</span><span class="p">:</span>
+    <span class="c1"># ---------- create_user ----------</span>
+
+<div class="viewcode-block" id="TestUserManager.test_create_user_normalizes_email">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager.test_create_user_normalizes_email">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_normalizes_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="s2">&quot;Norm@Example.Com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;Norm@example.com&quot;</span> <span class="ow">or</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;norm@example.com&quot;</span>
+        <span class="p">)</span>  <span class="c1"># Django normalization may lowercase</span></div>
+
+
+<div class="viewcode-block" id="TestUserManager.test_create_user_sets_default_role">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager.test_create_user_sets_default_role">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_sets_default_role</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;bob&quot;</span><span class="p">,</span> <span class="s2">&quot;bob@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;user&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestUserManager.test_create_user_with_extra_fields">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager.test_create_user_with_extra_fields">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_user_with_extra_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+            <span class="s2">&quot;extra&quot;</span><span class="p">,</span> <span class="s2">&quot;extra@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;pw123&quot;</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Ross&quot;</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Bob&quot;</span>
+        <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">==</span> <span class="s2">&quot;Ross&quot;</span></div>
+
+
+    <span class="c1"># ---------- create_superuser ----------</span>
+
+<div class="viewcode-block" id="TestUserManager.test_create_superuser_sets_flags">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager.test_create_superuser_sets_flags">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_superuser_sets_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">superuser</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_superuser</span><span class="p">(</span>
+            <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin@example.com&quot;</span><span class="p">,</span> <span class="s2">&quot;adminpw&quot;</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">superuser</span><span class="o">.</span><span class="n">is_superuser</span>
+        <span class="k">assert</span> <span class="n">superuser</span><span class="o">.</span><span class="n">is_staff</span>
+        <span class="k">assert</span> <span class="n">superuser</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="s2">&quot;adminpw&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestUserManager.test_create_superuser_missing_password_raises_error">
+<a class="viewcode-back" href="../../testing.html#testing.test_models.TestUserManager.test_create_superuser_missing_password_raises_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_create_superuser_missing_password_raises_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_superuser</span><span class="p">(</span><span class="s2">&quot;admin2&quot;</span><span class="p">,</span> <span class="s2">&quot;admin2@example.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">SecondServe</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation Structure:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">backend</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Group 18.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

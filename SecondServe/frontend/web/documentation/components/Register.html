@@ -1,0 +1,1905 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Register</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/register/register.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-register</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./register.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./register.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentStep" >currentStep</a>
+                            </li>
+                            <li>
+                                <a href="#detailsForm" >detailsForm</a>
+                            </li>
+                            <li>
+                                <a href="#errorMessage" >errorMessage</a>
+                            </li>
+                            <li>
+                                <a href="#isLoading" >isLoading</a>
+                            </li>
+                            <li>
+                                <a href="#registerForm" >registerForm</a>
+                            </li>
+                            <li>
+                                <a href="#showPassword" >showPassword</a>
+                            </li>
+                            <li>
+                                <a href="#successMessage" >successMessage</a>
+                            </li>
+                            <li>
+                                <a href="#userType" >userType</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getCsrfToken" >getCsrfToken</a>
+                            </li>
+                            <li>
+                                <a href="#goBack" >goBack</a>
+                            </li>
+                            <li>
+                                <a href="#goToNextStep" >goToNextStep</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#markFormGroupTouched" >markFormGroupTouched</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onSubmitFinal" >onSubmitFinal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#passwordsMatchValidator" >passwordsMatchValidator</a>
+                            </li>
+                            <li>
+                                <a href="#setUserType" >setUserType</a>
+                            </li>
+                            <li>
+                                <a href="#togglePasswordVisibility" >togglePasswordVisibility</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#email" >email</a>
+                                </li>
+                                <li>
+                                    <a href="#password" >password</a>
+                                </li>
+                                <li>
+                                    <a href="#confirmPassword" >confirmPassword</a>
+                                </li>
+                                <li>
+                                    <a href="#name" >name</a>
+                                </li>
+                                <li>
+                                    <a href="#address" >address</a>
+                                </li>
+                                <li>
+                                    <a href="#businessType" >businessType</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: FormBuilder, router: Router, http: HttpClient)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/register/register.ts:25</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCsrfToken"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getCsrfToken</b></span>
+                        <a href="#getCsrfToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCsrfToken()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/register/register.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetch CSRF cookie from backend</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goBack"></a>
+                    <span class="name">
+                        <span ><b>goBack</b></span>
+                        <a href="#goBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goBack()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/register/register.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Go back to previous step</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToNextStep"></a>
+                    <span class="name">
+                        <span ><b>goToNextStep</b></span>
+                        <a href="#goToNextStep"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToNextStep()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/register/register.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Step 1 submit: go to details step if valid</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markFormGroupTouched"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>markFormGroupTouched</b></span>
+                        <a href="#markFormGroupTouched"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>markFormGroupTouched(formGroup: FormGroup)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/register/register.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Mark all controls as touched to show validation errors</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formGroup</td>
+                                            <td>
+                                                        <code>FormGroup</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmitFinal"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>onSubmitFinal</b></span>
+                        <a href="#onSubmitFinal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onSubmitFinal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/register/register.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Step 2 submit: send registration payload to API</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="passwordsMatchValidator"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>passwordsMatchValidator</b></span>
+                        <a href="#passwordsMatchValidator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>passwordsMatchValidator(form: FormGroup)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/register/register.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>form</td>
+                                            <td>
+                                                        <code>FormGroup</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ mismatch: boolean; }</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserType"></a>
+                    <span class="name">
+                        <span ><b>setUserType</b></span>
+                        <a href="#setUserType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserType(type: "individual" | "business" | "driver")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/register/register.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                        <code>&quot;individual&quot; | &quot;business&quot; | &quot;driver&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="togglePasswordVisibility"></a>
+                    <span class="name">
+                        <span ><b>togglePasswordVisibility</b></span>
+                        <a href="#togglePasswordVisibility"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>togglePasswordVisibility()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/register/register.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentStep"></a>
+                    <span class="name">
+                        <span ><b>currentStep</b></span>
+                        <a href="#currentStep"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/register/register.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detailsForm"></a>
+                    <span class="name">
+                        <span ><b>detailsForm</b></span>
+                        <a href="#detailsForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/register/register.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/register/register.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isLoading"></a>
+                    <span class="name">
+                        <span ><b>isLoading</b></span>
+                        <a href="#isLoading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/register/register.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerForm"></a>
+                    <span class="name">
+                        <span ><b>registerForm</b></span>
+                        <a href="#registerForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/register/register.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showPassword"></a>
+                    <span class="name">
+                        <span ><b>showPassword</b></span>
+                        <a href="#showPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/register/register.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="successMessage"></a>
+                    <span class="name">
+                        <span ><b>successMessage</b></span>
+                        <a href="#successMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/register/register.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userType"></a>
+                    <span class="name">
+                        <span ><b>userType</b></span>
+                        <a href="#userType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;individual&quot; | &quot;business&quot; | &quot;driver&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;individual&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/register/register.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="email"></a>
+                        <span class="name"><b>email</b><a href="#email"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>email()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="152" class="link-to-prism">src/register/register.ts:152</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="password"></a>
+                        <span class="name"><b>password</b><a href="#password"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>password()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/register/register.ts:153</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="confirmPassword"></a>
+                        <span class="name"><b>confirmPassword</b><a href="#confirmPassword"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>confirmPassword()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/register/register.ts:154</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="name"></a>
+                        <span class="name"><b>name</b><a href="#name"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>name()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">src/register/register.ts:157</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="address"></a>
+                        <span class="name"><b>address</b><a href="#address"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>address()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">src/register/register.ts:158</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="businessType"></a>
+                        <span class="name"><b>businessType</b><a href="#businessType"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>businessType()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/register/register.ts:159</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { getCookie } from &#x27;../../utils&#x27;;
+
+@Component({
+  selector: &#x27;app-register&#x27;,
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: &#x27;./register.html&#x27;,
+  styleUrls: [&#x27;./register.css&#x27;]
+})
+export class Register {
+  currentStep &#x3D; 1;
+  userType: &#x27;individual&#x27; | &#x27;business&#x27; | &#x27;driver&#x27; &#x3D; &#x27;individual&#x27;;
+
+  registerForm: FormGroup;
+  detailsForm: FormGroup;
+
+  showPassword &#x3D; false;
+  isLoading &#x3D; false;
+  errorMessage &#x3D; &#x27;&#x27;;
+  successMessage &#x3D; &#x27;&#x27;;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    // Step 1 form: email/password
+    this.registerForm &#x3D; this.fb.group({
+      email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+      password: [&#x27;&#x27;, [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [&#x27;&#x27;, [Validators.required]]
+    }, { validator: this.passwordsMatchValidator });
+
+    // Step 2 form: additional details
+    this.detailsForm &#x3D; this.fb.group({
+      name: [&#x27;&#x27;],
+      address: [&#x27;&#x27;],
+      businessType: [&#x27;&#x27;]
+    });
+  }
+
+  private passwordsMatchValidator(form: FormGroup) {
+    const pass &#x3D; form.get(&#x27;password&#x27;)?.value;
+    const confirm &#x3D; form.get(&#x27;confirmPassword&#x27;)?.value;
+    return pass &#x3D;&#x3D;&#x3D; confirm ? null : { mismatch: true };
+  }
+
+  setUserType(type: &#x27;individual&#x27; | &#x27;business&#x27; | &#x27;driver&#x27;) {
+    this.userType &#x3D; type;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword &#x3D; !this.showPassword;
+  }
+
+  /** Step 1 submit: go to details step if valid */
+  goToNextStep() {
+    if (this.registerForm.valid) {
+      this.currentStep &#x3D; 2;
+      this.errorMessage &#x3D; &#x27;&#x27;;
+    } else {
+      this.markFormGroupTouched(this.registerForm);
+    }
+  }
+
+  /** Fetch CSRF cookie from backend */
+  private getCsrfToken(): Promise&lt;void&gt; {
+    return this.http.get(&#x27;http://localhost:8000/api/csrf/&#x27;, { withCredentials: true })
+      .toPromise()
+      .then(() &#x3D;&gt; console.log(&#x27;CSRF cookie set&#x27;));
+  }
+
+  /** Step 2 submit: send registration payload to API */
+  async onSubmitFinal() {
+    if (!this.detailsForm.valid) {
+      this.markFormGroupTouched(this.detailsForm);
+      return;
+    }
+
+    this.isLoading &#x3D; true;
+    this.errorMessage &#x3D; &#x27;&#x27;;
+
+    // Ensure CSRF cookie exists
+    await this.getCsrfToken();
+
+    const baseData &#x3D; this.registerForm.value;
+    const extraData &#x3D; this.detailsForm.value;
+    
+    let mappedUserType &#x3D; &#x27;&#x27;;
+    switch (this.userType) {
+  case &#x27;individual&#x27;:
+    mappedUserType &#x3D; &#x27;user&#x27;;
+    break;
+
+  case &#x27;business&#x27;:
+    mappedUserType &#x3D; &#x27;organization&#x27;;
+    break;
+
+  case &#x27;driver&#x27;:
+    mappedUserType &#x3D; &#x27;driver&#x27;;
+    break;
+
+  default:
+    mappedUserType &#x3D; &#x27;user&#x27;;  // fallback
+}
+    const payload &#x3D; {
+      email: baseData.email,
+      password: baseData.password,
+      role: mappedUserType,
+      ...extraData
+    };
+
+    const csrfToken &#x3D; getCookie(&#x27;csrftoken&#x27;) || &#x27;&#x27;;
+    const headers &#x3D; new HttpHeaders({
+      &#x27;X-CSRFToken&#x27;: csrfToken,
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,      // &lt;--- Explicitly tell Django it&#x27;s JSON
+      &#x27;Accept&#x27;: &#x27;application/json&#x27;
+    });
+
+    this.http.post(&#x27;http://localhost:8000/user/create/&#x27;, payload, { headers, withCredentials: true })
+      .subscribe({
+        next: (res: any) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          this.successMessage &#x3D; &#x27;Registration successful! Redirecting...&#x27;;
+          setTimeout(() &#x3D;&gt; this.router.navigate([&#x27;/login&#x27;]), 1500);
+        },
+        error: (err) &#x3D;&gt; {
+          this.isLoading &#x3D; false;
+          this.errorMessage &#x3D; err.error?.message || &#x27;Registration failed.&#x27;;
+        }
+      });
+  }
+
+  /** Go back to previous step */
+  goBack() {
+    this.currentStep &#x3D; 1;
+  }
+
+  /** Mark all controls as touched to show validation errors */
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key &#x3D;&gt; {
+      formGroup.get(key)?.markAsTouched();
+    });
+  }
+
+  // Step 1 getters
+  get email() { return this.registerForm.get(&#x27;email&#x27;); }
+  get password() { return this.registerForm.get(&#x27;password&#x27;); }
+  get confirmPassword() { return this.registerForm.get(&#x27;confirmPassword&#x27;); }
+
+  // Step 2 getters
+  get name() { return this.detailsForm.get(&#x27;name&#x27;); }
+  get address() { return this.detailsForm.get(&#x27;address&#x27;); }
+  get businessType() { return this.detailsForm.get(&#x27;businessType&#x27;); }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;register-container&quot;&gt;
+  &lt;div class&#x3D;&quot;register-card&quot;&gt;
+    &lt;!-- Logo and Header --&gt;
+    &lt;div class&#x3D;&quot;header&quot;&gt;
+      &lt;div class&#x3D;&quot;logo&quot;&gt;
+        &lt;svg width&#x3D;&quot;48&quot; height&#x3D;&quot;48&quot; viewBox&#x3D;&quot;0 0 48 48&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
+          &lt;path d&#x3D;&quot;M24 4L6 14V34L24 44L42 34V14L24 4Z&quot; fill&#x3D;&quot;#10B981&quot; /&gt;
+          &lt;path
+            d&#x3D;&quot;M24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16Z&quot;
+            fill&#x3D;&quot;white&quot; /&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h1&gt;SecondServe&lt;/h1&gt;
+      &lt;p class&#x3D;&quot;tagline&quot;&gt;Connecting Communities, Reducing Waste&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- User Type Selection --&gt;
+    &lt;div class&#x3D;&quot;user-type-toggle&quot;&gt;
+      &lt;button type&#x3D;&quot;button&quot; [class.active]&#x3D;&quot;userType &#x3D;&#x3D;&#x3D; &#x27;individual&#x27;&quot; (click)&#x3D;&quot;setUserType(&#x27;individual&#x27;)&quot;
+        class&#x3D;&quot;toggle-btn&quot;&gt;
+        Individual
+      &lt;/button&gt;
+      &lt;button type&#x3D;&quot;button&quot; [class.active]&#x3D;&quot;userType &#x3D;&#x3D;&#x3D; &#x27;business&#x27;&quot; (click)&#x3D;&quot;setUserType(&#x27;business&#x27;)&quot;
+        class&#x3D;&quot;toggle-btn&quot;&gt;
+        Restaurant/Store
+      &lt;/button&gt;
+      &lt;button type&#x3D;&quot;button&quot; [class.active]&#x3D;&quot;userType &#x3D;&#x3D;&#x3D; &#x27;driver&#x27;&quot; (click)&#x3D;&quot;setUserType(&#x27;driver&#x27;)&quot; class&#x3D;&quot;toggle-btn&quot;&gt;
+        Driver
+      &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Step 1: Email &amp; Password --&gt;
+    &lt;form *ngIf&#x3D;&quot;currentStep &#x3D;&#x3D;&#x3D; 1&quot; [formGroup]&#x3D;&quot;registerForm&quot; (ngSubmit)&#x3D;&quot;goToNextStep()&quot; class&#x3D;&quot;register-form&quot;&gt;
+      &lt;div class&#x3D;&quot;form-group&quot;&gt;
+        &lt;label for&#x3D;&quot;email&quot;&gt;Email Address&lt;/label&gt;
+        &lt;input id&#x3D;&quot;email&quot; formControlName&#x3D;&quot;email&quot; type&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Enter your email&quot;
+          [class.error]&#x3D;&quot;email?.invalid &amp;&amp; email?.touched&quot;&gt;
+        &lt;span class&#x3D;&quot;error-message&quot; *ngIf&#x3D;&quot;email?.invalid &amp;&amp; email?.touched&quot;&gt;
+          &lt;span *ngIf&#x3D;&quot;email?.errors?.[&#x27;required&#x27;]&quot;&gt;Email is required&lt;/span&gt;
+          &lt;span *ngIf&#x3D;&quot;email?.errors?.[&#x27;email&#x27;]&quot;&gt;Enter a valid email&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-group&quot;&gt;
+        &lt;label for&#x3D;&quot;password&quot;&gt;Password&lt;/label&gt;
+        &lt;div class&#x3D;&quot;password-input-wrapper&quot;&gt;
+          &lt;input [type]&#x3D;&quot;showPassword ? &#x27;text&#x27; : &#x27;password&#x27;&quot; id&#x3D;&quot;password&quot; formControlName&#x3D;&quot;password&quot;
+            placeholder&#x3D;&quot;Enter your password&quot; [class.error]&#x3D;&quot;password?.invalid &amp;&amp; password?.touched&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;toggle-password&quot; (click)&#x3D;&quot;togglePasswordVisibility()&quot;
+            aria-label&#x3D;&quot;Toggle password&quot;&gt;
+            &lt;span *ngIf&#x3D;&quot;!showPassword&quot;&gt;👁️&lt;/span&gt;
+            &lt;span *ngIf&#x3D;&quot;showPassword&quot;&gt;🙈&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;span class&#x3D;&quot;error-message&quot; *ngIf&#x3D;&quot;password?.invalid &amp;&amp; password?.touched&quot;&gt;
+          &lt;span *ngIf&#x3D;&quot;password?.errors?.[&#x27;required&#x27;]&quot;&gt;Password is required&lt;/span&gt;
+          &lt;span *ngIf&#x3D;&quot;password?.errors?.[&#x27;minlength&#x27;]&quot;&gt;Password must be at least 6 characters&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-group&quot;&gt;
+        &lt;label for&#x3D;&quot;confirmPassword&quot;&gt;Confirm Password&lt;/label&gt;
+        &lt;input id&#x3D;&quot;confirmPassword&quot; formControlName&#x3D;&quot;confirmPassword&quot; type&#x3D;&quot;password&quot;
+          placeholder&#x3D;&quot;Confirm your password&quot; [class.error]&#x3D;&quot;confirmPassword?.invalid &amp;&amp; confirmPassword?.touched&quot;&gt;
+        &lt;span class&#x3D;&quot;error-message&quot; *ngIf&#x3D;&quot;confirmPassword?.invalid &amp;&amp; confirmPassword?.touched&quot;&gt;
+          &lt;span *ngIf&#x3D;&quot;confirmPassword?.errors?.[&#x27;required&#x27;]&quot;&gt;Confirmation is required&lt;/span&gt;
+          &lt;span *ngIf&#x3D;&quot;registerForm?.errors?.[&#x27;mismatch&#x27;]&quot;&gt;Passwords do not match&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;submit-btn&quot;&gt;Next&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;!-- Step 2: Additional Details --&gt;
+    &lt;form *ngIf&#x3D;&quot;currentStep &#x3D;&#x3D;&#x3D; 2&quot; [formGroup]&#x3D;&quot;detailsForm&quot; (ngSubmit)&#x3D;&quot;onSubmitFinal()&quot; class&#x3D;&quot;register-form&quot;&gt;
+      &lt;div class&#x3D;&quot;form-group&quot;&gt;
+        &lt;label for&#x3D;&quot;name&quot;&gt;Full Name&lt;/label&gt;
+        &lt;input id&#x3D;&quot;name&quot; formControlName&#x3D;&quot;name&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Enter your name&quot;&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-group&quot; *ngIf&#x3D;&quot;userType !&#x3D;&#x3D; &#x27;driver&#x27;&quot;&gt;
+        &lt;label for&#x3D;&quot;address&quot;&gt;Address&lt;/label&gt;
+        &lt;input id&#x3D;&quot;address&quot; formControlName&#x3D;&quot;address&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Enter your address&quot;&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;form-group&quot; *ngIf&#x3D;&quot;userType &#x3D;&#x3D;&#x3D; &#x27;business&#x27;&quot;&gt;
+        &lt;label for&#x3D;&quot;businessType&quot;&gt;Business Type&lt;/label&gt;
+        &lt;input id&#x3D;&quot;businessType&quot; formControlName&#x3D;&quot;businessType&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Enter your business type&quot;&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;alert-error&quot; *ngIf&#x3D;&quot;errorMessage&quot;&gt;{{ errorMessage }}&lt;/div&gt;
+      &lt;div class&#x3D;&quot;alert-success&quot; *ngIf&#x3D;&quot;successMessage&quot;&gt;{{ successMessage }}&lt;/div&gt;
+
+      &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;submit-btn&quot; (click)&#x3D;&quot;goBack()&quot;&gt;Back&lt;/button&gt;
+      &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;submit-btn&quot; [disabled]&#x3D;&quot;isLoading&quot;&gt;
+        &lt;span *ngIf&#x3D;&quot;!isLoading&quot;&gt;Register&lt;/span&gt;
+        &lt;span *ngIf&#x3D;&quot;isLoading&quot;&gt;Registering...&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;mission-statement&quot;&gt;
+    &lt;p&gt;
+      &lt;strong&gt;Our Mission:&lt;/strong&gt; Connecting local restaurants and grocery stores with individuals facing food
+      insecurity, reducing waste while providing nutritious meals to those in need.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./register.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.register-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.register-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.tagline {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
+}
+
+.user-type-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: #d1fae5;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: #047857;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  color: #065f46;
+}
+
+.toggle-btn.active {
+  background: white;
+  color: #10b981;
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-group input.error {
+  border-color: #ef4444;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: #6b7280;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-spinner svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.link {
+  color: #10b981;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #059669;
+  text-decoration: underline;
+}
+
+.divider {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  margin: 8px 0;
+}
+
+.divider span {
+  background: white;
+  padding: 0 16px;
+  color: #9ca3af;
+  font-size: 13px;
+  position: relative;
+  z-index: 1;
+}
+
+.divider::before {
+  content: &#x27;&#x27;;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.link-secondary {
+  color: #059669;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-secondary:hover {
+  color: #047857;
+  text-decoration: underline;
+}
+
+.mission-statement {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px 32px;
+  margin-top: 24px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mission-statement p {
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mission-statement strong {
+  color: #10b981;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .register-card {
+    padding: 32px 24px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .toggle-btn {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .mission-statement {
+    padding: 16px 20px;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="register-container">  <div class="register-card">    <!-- Logo and Header -->    <div class="header">      <div class="logo">        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">          <path d="M24 4L6 14V34L24 44L42 34V14L24 4Z" fill="#10B981" />          <path            d="M24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16Z"            fill="white" />        </svg>      </div>      <h1>SecondServe</h1>      <p class="tagline">Connecting Communities, Reducing Waste</p>    </div>    <!-- User Type Selection -->    <div class="user-type-toggle">      <button type="button" [class.active]="userType === \'individual\'" (click)="setUserType(\'individual\')"        class="toggle-btn">        Individual      </button>      <button type="button" [class.active]="userType === \'business\'" (click)="setUserType(\'business\')"        class="toggle-btn">        Restaurant/Store      </button>      <button type="button" [class.active]="userType === \'driver\'" (click)="setUserType(\'driver\')" class="toggle-btn">        Driver      </button>    </div>    <!-- Step 1: Email & Password -->    <form *ngIf="currentStep === 1" [formGroup]="registerForm" (ngSubmit)="goToNextStep()" class="register-form">      <div class="form-group">        <label for="email">Email Address</label>        <input id="email" formControlName="email" type="email" placeholder="Enter your email"          [class.error]="email?.invalid && email?.touched">        <span class="error-message" *ngIf="email?.invalid && email?.touched">          <span *ngIf="email?.errors?.[\'required\']">Email is required</span>          <span *ngIf="email?.errors?.[\'email\']">Enter a valid email</span>        </span>      </div>      <div class="form-group">        <label for="password">Password</label>        <div class="password-input-wrapper">          <input [type]="showPassword ? \'text\' : \'password\'" id="password" formControlName="password"            placeholder="Enter your password" [class.error]="password?.invalid && password?.touched">          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"            aria-label="Toggle password">            <span *ngIf="!showPassword">👁️</span>            <span *ngIf="showPassword">🙈</span>          </button>        </div>        <span class="error-message" *ngIf="password?.invalid && password?.touched">          <span *ngIf="password?.errors?.[\'required\']">Password is required</span>          <span *ngIf="password?.errors?.[\'minlength\']">Password must be at least 6 characters</span>        </span>      </div>      <div class="form-group">        <label for="confirmPassword">Confirm Password</label>        <input id="confirmPassword" formControlName="confirmPassword" type="password"          placeholder="Confirm your password" [class.error]="confirmPassword?.invalid && confirmPassword?.touched">        <span class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">          <span *ngIf="confirmPassword?.errors?.[\'required\']">Confirmation is required</span>          <span *ngIf="registerForm?.errors?.[\'mismatch\']">Passwords do not match</span>        </span>      </div>      <button type="submit" class="submit-btn">Next</button>    </form>    <!-- Step 2: Additional Details -->    <form *ngIf="currentStep === 2" [formGroup]="detailsForm" (ngSubmit)="onSubmitFinal()" class="register-form">      <div class="form-group">        <label for="name">Full Name</label>        <input id="name" formControlName="name" type="text" placeholder="Enter your name">      </div>      <div class="form-group" *ngIf="userType !== \'driver\'">        <label for="address">Address</label>        <input id="address" formControlName="address" type="text" placeholder="Enter your address">      </div>      <div class="form-group" *ngIf="userType === \'business\'">        <label for="businessType">Business Type</label>        <input id="businessType" formControlName="businessType" type="text" placeholder="Enter your business type">      </div>      <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>      <div class="alert-success" *ngIf="successMessage">{{ successMessage }}</div>      <button type="button" class="submit-btn" (click)="goBack()">Back</button>      <button type="submit" class="submit-btn" [disabled]="isLoading">        <span *ngIf="!isLoading">Register</span>        <span *ngIf="isLoading">Registering...</span>      </button>    </form>  </div>  <div class="mission-statement">    <p>      <strong>Our Mission:</strong> Connecting local restaurants and grocery stores with individuals facing food      insecurity, reducing waste while providing nutritious meals to those in need.    </p>  </div></div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Register'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Register.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

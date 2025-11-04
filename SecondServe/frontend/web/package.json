@@ -7,7 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:web": "node dist/web/server/server.mjs"
+    "serve:ssr:web": "node dist/web/server/server.mjs",
+    "lint": "ng lint",
+    "test:coverage": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
+    "coverage:badge": "node scripts/generate-badge.js",
+    "precommit": "npm run lint && npm run test:coverage && npm run coverage:badge && git add ./src/assets/*.svg",
+    "docs": "npx compodoc -p tsconfig.app.json -d documentation --disableGraph --hideGenerator",
+    "docs:serve": "npx compodoc -s -d documentation"
   },
   "prettier": {
     "printWidth": 100,
@@ -23,6 +29,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^20.3.6",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
@@ -38,17 +45,29 @@
   },
   "devDependencies": {
     "@angular/build": "^20.3.5",
-    "@angular/cli": "^20.3.5",
+    "@angular/cli": "^20.3.6",
     "@angular/compiler-cli": "^20.3.0",
+    "@compodoc/compodoc": "^1.1.31",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
+    "angular-eslint": "20.4.0",
+    "badgen": "^3.2.3",
+    "coverage-badges": "^1.0.7",
+    "eslint": "^9.37.0",
+    "husky": "^9.1.7",
     "jasmine-core": "~5.9.0",
+    "jest": "^30.2.0",
+    "jest-preset-angular": "^15.0.3",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.9.2"
+    "lcov-result-merger": "^5.0.1",
+    "lint-staged": "^16.2.4",
+    "puppeteer": "^24.25.0",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "8.46.0"
   }
 }

@@ -1,0 +1,92 @@
+/* ------------- General Styles ------------- */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #2b2b2b;
+}
+
+/* ------------- Header ------------- */
+header {
+  padding: 2rem 3rem;
+  background-color: #1d684c;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline;
+}
+
+/* ------------- Mission Section ------------- */
+.mission-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: #ffffff;
+}
+
+.mission-text {
+  flex: 1 1 450px;
+  padding: 2rem;
+}
+
+.mission-text h1 {
+  font-size: 3rem;
+  color: #1d684c;
+  margin-bottom: 1.5rem;
+}
+
+.mission-text p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+.mission-quote {
+  font-style: italic;
+  font-size: 2.0rem;
+  font-weight: bold;
+  color: #1d684c;
+  margin-top: 2rem;
+}
+
+.mission-image {
+  flex: 1 1 400px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.mission-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* ------------- Footer ------------- */
+footer {
+  background-color: #1d684c;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+}

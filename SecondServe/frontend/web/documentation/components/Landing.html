@@ -1,0 +1,834 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">web documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Landing</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/landing/landing.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-landing</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./landing.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./landing.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+
+@Component({
+  selector: &#x27;app-landing&#x27;,
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: &#x27;./landing.html&#x27;,
+  styleUrls: [&#x27;./landing.css&#x27;]
+})
+export class Landing { }</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang&#x3D;&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+  &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+  &lt;title&gt;Second Serve&lt;/title&gt;
+  &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;landing.css&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;!-- ---------------- Header Page ---------------- --&gt;
+  &lt;header&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+    &lt;nav&gt;
+      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+        &lt;a href&#x3D;&quot;#&quot;&gt;Get Involved&lt;/a&gt;
+        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+          &lt;a routerLink&#x3D;&quot;/login&quot;&gt;Login&lt;/a&gt;
+          &lt;a routerLink&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+
+      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+        &lt;a href&#x3D;&quot;#&quot;&gt;Find Restaurants &amp; Resources&lt;/a&gt;
+        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+          &lt;a routerLink&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+          &lt;a routerLink&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+        &lt;a href&#x3D;&quot;#&quot;&gt;News &amp; Media&lt;/a&gt;
+        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+          &lt;a routerLink&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+          &lt;a routerLink&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+        &lt;a href&#x3D;&quot;#&quot;&gt;About Us&lt;/a&gt;
+        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+          &lt;a routerLink&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+          &lt;a routerLink&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;!-- ---------------- Img ---------------- --&gt;
+  &lt;section class&#x3D;&quot;hero-section&quot;&gt;
+    &lt;img src&#x3D;&quot;https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg&quot;
+      alt&#x3D;&quot;Family enjoying a meal&quot;&gt;
+    &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt;
+    &lt;p&gt;
+      &lt;strong&gt;SecondServe&lt;/strong&gt; is redefining how communities fight food waste and hunger.
+      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into
+      meaningful meals —
+      reducing waste, supporting local families, and helping businesses claim charitable contributions.
+      Together, we can build a future where every meal serves a purpose.
+    &lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;mission-quote&quot;&gt;
+    &lt;h2&gt;“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”
+    &lt;/h2&gt;
+  &lt;/section&gt;
+
+  &lt;!-- ---------------- Donation Images ---------------- --&gt;
+  &lt;section class&#x3D;&quot;donation-gallery&quot;&gt;
+    &lt;img src&#x3D;&quot;https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg&quot;
+      alt&#x3D;&quot;Our community workers!&quot;&gt;
+    &lt;img src&#x3D;&quot;https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg&quot; alt&#x3D;&quot;Donation Boxes&quot;&gt;
+  &lt;/section&gt;
+
+  &lt;!-- ---------------- Food Stats ---------------- --&gt;
+  &lt;section class&#x3D;&quot;food-stats&quot;&gt;
+    &lt;h2&gt;Food Insecurity in the United States&lt;/h2&gt;
+    &lt;div class&#x3D;&quot;stats-container&quot;&gt;
+      &lt;div class&#x3D;&quot;stat-box&quot;&gt;
+        &lt;h3&gt;44 Million+&lt;/h3&gt;
+        &lt;p&gt;Americans struggle with food insecurity.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;stat-box&quot;&gt;
+        &lt;h3&gt;1 in 5&lt;/h3&gt;
+        &lt;p&gt;Children experience hunger each year.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;stat-box&quot;&gt;
+        &lt;h3&gt;30-40%&lt;/h3&gt;
+        &lt;p&gt;Of all U.S. food is wasted annually.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2025 Second Serve — All Rights Reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./landing.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">/* app.css */
+
+body {
+  margin: 0;
+  background-color: #f9f9f9;
+  font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
+  color: #2b2b2b;
+}
+
+/* ---------------- Header ---------------- */
+header {
+  padding: 3rem 3rem;
+  background-color: #1d684c;
+  /* solid green */
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 3.5rem;
+  /* big logo text */
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+  /* space between main menu items */
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+}
+
+/* Main dropdown link */
+.dropdown&gt;a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.3rem;
+  transition: color 0.3s ease;
+}
+
+/* Arrow indicator */
+.dropdown&gt;a::after {
+  content: &quot; ▼&quot;;
+  font-size: 0.8rem;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  top: 100%;
+  left: 0;
+  z-index: 200;
+}
+
+/* Dropdown links */
+.dropdown-content a {
+  color: #1d684c;
+  padding: 0.8rem 1rem;
+  display: block;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dropdown-content a:hover {
+  background-color: #f2f2f2;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+nav a:hover {
+  color: #a8e0c3;
+  /* lighter green hover */
+}
+
+/* ---------------- Sections ---------------- */
+section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1d684c;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+/* ---------------- Slideshow ---------------- */
+.slideshow-container {
+  position: relative;
+  max-width: 2000px;
+  height: 600px;
+  margin: 0 auto 2rem;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* automatic slideshow animation */
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.slide:nth-child(1) {
+  animation: fade 16s infinite;
+  animation-delay: 0s;
+}
+
+.slide:nth-child(2) {
+  animation: fade 16s infinite;
+  animation-delay: 4s;
+}
+
+.slide:nth-child(3) {
+  animation: fade 16s infinite;
+  animation-delay: 8s;
+}
+
+.slide:nth-child(4) {
+  animation: fade 16s infinite;
+  animation-delay: 12s;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  background-color: #f2f2f2;
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 2rem;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dropdown-content {
+    position: relative;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .slideshow-container {
+    height: 250px;
+  }
+}
+
+/* ---------------- Hero Section CSS important ---------------- */
+.hero-section {
+  width: 100%;
+  height: 600px;
+  /* keep the same height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* push content down */
+  align-items: center;
+  overflow: hidden;
+  background: none;
+  /* remove black background */
+  padding-top: 50px;
+  /* moves image down from top */
+  position: relative;
+}
+
+.hero-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* fills section without stretching */
+  object-position: center 70%;
+}
+
+.hero-section h1 {
+  position: absolute;
+  color: #fff;
+  font-size: 3.0rem;
+  text-align: center;
+  z-index: 2;
+  padding: 0 20px;
+  top: 20%;
+  /* move heading lower */
+}
+
+.hero-section p {
+  position: absolute;
+  color: #f4eeee;
+  font-size: 1.6rem;
+  text-align: center;
+  max-width: 800px;
+  z-index: 2;
+  padding: 0 20px;
+  top: 50%;
+  /* move paragraph lower */
+}
+
+/* ---------------- Mission Quote ---------------- */
+.mission-quote {
+  background-color: #e8f5e9;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.mission-quote h2 {
+  font-size: 2.5rem;
+  color: #1d684c;
+  font-weight: 800;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* ---------------- Donation Images ---------------- */
+.donation-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 3rem 2rem;
+  background-color: #f9f9f9;
+}
+
+.donation-gallery img {
+  width: 45%;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.donation-gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* ---------------- Food Stats ---------------- */
+.food-stats {
+  background-color: #ffffff;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.food-stats h2 {
+  font-size: 2.3rem;
+  color: #1d684c;
+  margin-bottom: 2rem;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background-color: #e8f5e9;
+  border-radius: 10px;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 260px;
+  transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+}
+
+.stat-box h3 {
+  font-size: 2.5rem;
+  color: #1d684c;
+  margin-bottom: 0.5rem;
+}
+
+.stat-box p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .donation-gallery img {
+    width: 90%;
+  }
+
+  .mission-quote h2 {
+    font-size: 1.8rem;
+  }
+
+  .stat-box {
+    width: 80%;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="landing.css"></head><body>  <!-- ---------------- Header Page ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a routerLink="/login">Login</a>          <a routerLink="/donate">Donate</a>        </div>      </div>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a routerLink="/restaurants">Restaurants</a>          <a routerLink="/community">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a routerLink="/events">Events</a>          <a routerLink="/blog">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a routerLink="/mission">Mission</a>          <a routerLink="/contact">Contact</a>        </div>      </div>    </nav>  </header>  <!-- ---------------- Img ---------------- -->  <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section>  <section class="mission-quote">    <h2>“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”    </h2>  </section>  <!-- ---------------- Donation Images ---------------- -->  <section class="donation-gallery">    <img src="https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg"      alt="Our community workers!">    <img src="https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg" alt="Donation Boxes">  </section>  <!-- ---------------- Food Stats ---------------- -->  <section class="food-stats">    <h2>Food Insecurity in the United States</h2>    <div class="stats-container">      <div class="stat-box">        <h3>44 Million+</h3>        <p>Americans struggle with food insecurity.</p>      </div>      <div class="stat-box">        <h3>1 in 5</h3>        <p>Children experience hunger each year.</p>      </div>      <div class="stat-box">        <h3>30-40%</h3>        <p>Of all U.S. food is wasted annually.</p>      </div>    </div>  </section>  <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer></body></html></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Landing'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Landing.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "source": "./coverage/lcov.info",
+  "output": "./src/assets",
+  "attribute": "statements",
+  "type": "lcov"
+}
