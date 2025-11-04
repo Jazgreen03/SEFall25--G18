@@ -86,19 +86,23 @@ export class Login {
           this.authService.setRole(userRole);
 
           // ✅ Redirect based on role
-          switch (userRole) {
-            case 'user':
-              this.router.navigate(['/home']);
-              break;
-            case 'organization':
-              this.router.navigate(['/org-home']);
-              break;
-            case 'driver':
-              this.router.navigate(['/driver-home']);
-              break;
-            default:
-              this.router.navigate(['/']);
+          if (userRole == 'user' || userRole == "organization" || userRole == "driver") {
+            this.router.navigate(['/home']);
           }
+          else {
+            this.router.navigate(['/']);
+          }
+          // switch (userRole) {
+          //   case 'user':
+          //     break;
+          //   case 'organization':
+          //     this.router.navigate(['/org-home']);
+          //     break;
+          //   case 'driver':
+          //     this.router.navigate(['/driver-home']);
+          //     break;
+          //   default:
+          // }
         },
         error: (err) => {
           this.isLoading = false;

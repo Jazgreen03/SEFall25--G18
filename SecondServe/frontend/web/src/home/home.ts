@@ -1,9 +1,8 @@
-import { Component, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../app/services/auth.service';
 import { Router } from '@angular/router';
 
-// Import your role-specific components
 import { UserHome } from '../user-home/user-home';
 import { OrgHome } from '../org-home/org-home';
 import { DriverHome } from '../driver-home/driver-home';
@@ -15,21 +14,26 @@ import { DriverHome } from '../driver-home/driver-home';
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class Home implements OnInit {
+export class Home implements AfterViewInit {
   @ViewChild('dynamicContent', { read: ViewContainerRef }) dynamicContent!: ViewContainerRef;
 
-  constructor(private authService: AuthService, private router: Router,) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     const role = this.authService.getRole();
     this.loadRoleContent(role);
   }
 
   private loadRoleContent(role: string | null) {
+    if (!this.dynamicContent) return; // safety check
+
     this.dynamicContent.clear();
+
+    console.log(role);
 
     switch (role) {
       case 'user':
+        console.log("Loading user home");
         this.dynamicContent.createComponent(UserHome);
         break;
       case 'organization':
@@ -40,7 +44,6 @@ export class Home implements OnInit {
         break;
       default:
         this.router.navigate(['/']);
-
     }
   }
 }
