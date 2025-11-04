@@ -13,7 +13,7 @@ from django.urls import path
 import Order.views as views
 
 urlpatterns = [
-    path("items/", views.getAvailableItems),
+    path("items/{orgName}", views.getAvailableItems),
     path("order/place/", views.placeOrder),
     path("orders/", views.getActiveOrders),
     path("orders/open", views.getOpenOrders),
