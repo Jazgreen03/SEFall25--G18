@@ -40,12 +40,18 @@ def createUser(request: HttpRequest) -> JsonResponse:
     ):
         return JsonResponse({"details": "Username/Email Already Exists!"}, status=409)
 
+    role = data.get("role", "user")
+
+    if (role is "admin"):
+        role = "user"
+
     user = User.objects.create_user(
         username=username,
         email=email,
         password=password,
         first_name=first_name,
         last_name=last_name,
+        role=role
     )
 
     if user is not None:
