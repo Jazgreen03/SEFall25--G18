@@ -89,6 +89,18 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
     
+    user = request.user
+
+    match user.role:
+        case "user":
+            orders = Order.objects.filter(recipient=user)
+        case "driver":
+            orders = Order.objects.filter(driver=user)
+        case "organization":
+            org = Organization.objects.get(creator=user)
+            orders = Order.objects.filter(associatedOrg=org.name)
+    
+    
 @require_http_methods(["GET"])
 def getOpenOrders(request: HttpRequest) -> JsonResponse:
     
