@@ -67,6 +67,13 @@ class Order(models.Model):
 
         return description
 
+    def get_simple(self):
+        return {
+            "OrderID": self.orderID,
+            "Destination": self.recipient.get_first_name(),
+            "Organization": self.associatedOrg.name,
+            "Current Status": self.status
+        }
 
     def get_order_details_driver(self):
         recpName = self.recipient.get_first_name()

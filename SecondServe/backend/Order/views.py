@@ -123,13 +123,32 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
     return JsonResponse({"details": "Active Orders Found",
                          "Active Orders": returnOrders}, statuscode=200)
 
-    
-    
 @require_http_methods(["GET"])
 def getOpenOrders(request: HttpRequest) -> JsonResponse:
     
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+    
+    user = request.user
+
+    if user.role is "driver":
+        openOrders = Order.objects.filter(driverAssigned=False)
+        allOpen = []
+
+        for order in openOrders:
+            allOpen.append(order.get_simple())
+
+    elif user.role is "organization":
+        openOrders = Order.objects.filter(status__in=[Order.StatusTypes.PLACED, Order.StatusTypes.PREPARING, Order.StatusTypes.READY])
+        allOpen = []
+        for order in openOrders:
+            allOpen.append(order.get_order_details_org())
+    
+    else:
+        return JsonResponse({"details": "Invalid User Role"}, statuscode=400)
+    
+    return JsonResponse({"details": "Open Orders Found",
+                         "Orders": allOpen}, statuscode=200)
     
 @require_http_methods(["PUT"])
 def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
