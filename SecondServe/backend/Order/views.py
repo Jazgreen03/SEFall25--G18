@@ -22,7 +22,7 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
 
     # Drivers can't be here
     if (user.role is "driver"):
-        return JsonResponse({"details": "Driver cannot view items"}, statuscode=404)
+        return JsonResponse({"details": "Driver cannot view items"}, statuscode=403)
     
     org = Organization.objects.get(name=orgName)
 
@@ -118,7 +118,7 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
                 returnOrders.append(order.get_order_details_org())
 
         case _:
-            return JsonResponse({"details": "Invalid Role!"}, statuscode=400)
+            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
         
     return JsonResponse({"details": "Active Orders Found",
                          "Active Orders": returnOrders}, statuscode=200)
