@@ -32,8 +32,6 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
 
     items = org.inv.get_items()
     return JsonResponse({"items": items}, statuscode=200)
-        
-    
     
 @require_http_methods(["POST"])
 def placeOrder(request: HttpRequest) -> JsonResponse:
@@ -80,8 +78,7 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
     # Return the JSONResponse as a success with the OrderID
     return JsonResponse({"details": "Order has been placed",
                          "orderID": order.orderID}, 
-                         status=200)
-
+                         status=201)
 
 @require_http_methods(["GET"])
 def getActiveOrders(request: HttpRequest) -> JsonResponse:
@@ -94,11 +91,38 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
     match user.role:
         case "user":
             orders = Order.objects.filter(recipient=user)
+            returnOrders = []
+
+            for order in orders:
+                returnOrders.append(order.get_order_details_user())
+
         case "driver":
             orders = Order.objects.filter(driver=user)
+            returnOrders = []
+
+            for order in orders:
+                returnOrders.append(order.get_order_details_driver())
         case "organization":
             org = Organization.objects.get(creator=user)
             orders = Order.objects.filter(associatedOrg=org.name)
+            returnOrders = []
+
+            for order in orders:
+                returnOrders.append(order.get_order_details_org())
+
+        case "admin":
+            orders = Order.objects.all()
+            returnOrders = []
+
+            for order in orders:
+                returnOrders.append(order.get_order_details_org())
+
+        case _:
+            return JsonResponse({"details": "Invalid Role!"}, statuscode=400)
+        
+    return JsonResponse({"details": "Active Orders Found",
+                         "Active Orders": returnOrders}, statuscode=200)
+
     
     
 @require_http_methods(["GET"])

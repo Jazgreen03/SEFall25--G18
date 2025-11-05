@@ -43,6 +43,96 @@ class Order(models.Model):
     def get_items(self):
         self.items.filter(associatedOrder=self)
 
+    def get_description(self):
+        allItems = self.items.filter(associatedOrder=self)
+        numItems = 0
+
+        items = []
+
+        for item in allItems:
+            numItems += item.numOfItem
+
+            orgItem = item.associatedItem
+
+            itemDescription = {
+                "Name": orgItem.name,
+                "Quantity": item.numOfItem
+            }
+            items.append(itemDescription)
+
+        description = {
+            "Number of Items": numItems,
+            "Items": items
+        }
+
+        return description
+
+
+    def get_order_details_driver(self):
+        recpName = self.recipient.get_first_name()
+        orgName = self.associatedOrg.name
+        description = self.get_description()
+
+        return {
+            "Order ID": self.orderID,
+            "Status": self.status,
+            "Customer": recpName,
+            "Organization": orgName,
+            "Description": description
+        }
+    
+    def get_order_details_org(self):
+        description = self.get_description()
+
+        if (self.driverAssigned):
+            driverStatus = self.driver.get_first_name() & " is assigned to Order"
+        else:
+            driverStatus = "No Assigned Driver"
+
+        return {
+            "Order ID": self.orderID,
+            "Status": self.status,
+            "Driver Status": driverStatus,
+            "Description": description
+        }
+    
+    def get_order_details_user(self):
+        description = self.get_description()
+        orgName = self.associatedOrg.name
+
+        if (self.driverAssigned):
+            driverStatus = self.driver.get_first_name() & " is assigned to Order"
+        else:
+            driverStatus = "No Assigned Driver"
+
+        return {
+            "Order ID": self.orderID,
+            "Status": self.status,
+            "Organization": orgName,
+            "Driver Status": driverStatus,
+            "Description": description
+        }
+    
+    def get_order_details_admin(self):
+        description = self.get_description()
+        recpName = self.recipient.get_full_name()
+        orgName = self.associatedOrg.name
+
+        if (self.driverAssigned):
+            driverStatus = self.driver.get_full_name()
+        else:
+            driverStatus = "No Assigned Driver"
+
+        return {
+            "Order ID": self.orderID,
+            "Status": self.status,
+            "Organization": orgName,
+            "Customer": recpName,
+            "Driver Status": driverStatus,
+            "Description": description
+        }
+    
+
 
 class OrderedItem(models.Model):
     """
