@@ -33,7 +33,6 @@ class Order(models.Model):
         TRANSIT = STATUS_TRANSIT, "Order in Transit"
         DELIVERED = STATUS_DELIVERED, "Order Delivered"
 
-    name = models.CharField(max_length=100)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE)
     associatedOrg = models.ForeignKey(Organization, on_delete=models.CASCADE)
     orderID = models.IntegerField(unique=True, auto_created=True)
@@ -45,7 +44,7 @@ class Order(models.Model):
         self.items.filter(associatedOrder=self)
 
 
-class orderItem(models.Model):
+class OrderedItem(models.Model):
     """
     Custom Order Item model
 
