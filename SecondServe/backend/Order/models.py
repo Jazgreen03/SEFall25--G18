@@ -43,6 +43,23 @@ class Order(models.Model):
     def get_items(self):
         self.items.filter(associatedOrder=self)
 
+    def check_newStatus(self, newStatus) -> bool:
+        statusProgression = [
+            self.StatusTypes.PLACED,
+            self.StatusTypes.PREPARING,
+            self.StatusTypes.READY,
+            self.StatusTypes.TRANSIT,
+            self.StatusTypes.DELIVERED
+        ]
+
+        currentStatusIn = statusProgression[self.status]
+
+        if statusProgression[newStatus] == currentStatusIn + 1:
+            return True
+        else:
+            return False
+        
+
     def get_description(self):
         allItems = self.items.filter(associatedOrder=self)
         numItems = 0

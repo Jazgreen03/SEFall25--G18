@@ -156,6 +156,46 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
     
+    user = request.user
+
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"details": "Invalid JSON"}, status=400)
+
+    # Does order exist?
+    order = Order.objects.get(orderID=orderID)
+
+    if order is None:
+        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
+    
+    currentStatus = order.status
+
+    driverStatus = [order.StatusTypes.READY, order.StatusTypes.TRANSIT]
+    orgStatus = [order.StatusTypes.PLACED, order.StatusTypes.PREPARING]
+
+    if currentStatus in driverStatus and user.role is not "driver":
+        return JsonResponse({"details": "Invalid Role"}, statuscode=401)
+
+    elif currentStatus in orgStatus and user.role is not "organization":
+        return JsonResponse({"details": "Invalid Role"}, statuscode=401)
+    
+    newStatus = data.get("status")
+
+    if order.check_newStatus(newStatus) is False:
+        return JsonResponse({"details": "Invalid New Status"}, statuscode=406)
+    
+    try:
+        order.status = newStatus
+        order.clean()
+        order.save()
+    except:
+        return JsonResponse({"details": "Invalid New Status"}, statuscode=406)
+    
+    return JsonResponse({"details": "Order Status Updated!"}, statuscode=200)
+
+
+    
 @require_http_methods(["GET"])
 def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     
