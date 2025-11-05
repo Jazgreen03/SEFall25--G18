@@ -194,10 +194,37 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     
     return JsonResponse({"details": "Order Status Updated!"}, statuscode=200)
 
-
-    
 @require_http_methods(["GET"])
 def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+    
+    user = request.user
+
+    order = Order.objects.get(orderID=orderID)
+
+    if order is None:
+        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
+
+    match user.role:
+        case "user":
+            if user is not order.recipient:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_user()
+        case "organization":
+            org = Organization.objects.get(creator=user)
+            if org is None or org is not order.associatedOrg:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_org()
+        case "driver":
+            if user is not order.driver:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_driver()
+        case "admin":
+            orderDets = order.get_order_details_admin()
+        case _:
+            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
+
+    return JsonResponse({"details": "Order Retreived", 
+                         "Order": orderDets}, statuscode=200)
