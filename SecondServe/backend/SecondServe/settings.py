@@ -22,7 +22,7 @@ load_dotenv(dotenv_path)
 # -------------------------------------------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dummy-secret-key-for-dev")
 DEBUG = True
-ALLOWED_HOSTS = ["*"]  # Allow all during development
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
