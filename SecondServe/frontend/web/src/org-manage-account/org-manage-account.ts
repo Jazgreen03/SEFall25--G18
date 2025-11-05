@@ -30,7 +30,7 @@ export class OrgAccountManagement implements OnInit {
 
   private apiUrl = 'http://localhost:8080/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -72,12 +72,12 @@ export class OrgAccountManagement implements OnInit {
 
   goToHome(): void {
     // Navigate to home page
-    window.location.href = '/org-home';
+    window.location.href = '/home';
   }
 
   goToOrders(): void {
     // Navigate to orders page
-    window.location.href = '/org-history';
+    window.location.href = '/history';
   }
 
   goToInventory(): void {

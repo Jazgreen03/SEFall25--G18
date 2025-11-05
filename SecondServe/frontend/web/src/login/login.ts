@@ -36,9 +36,9 @@ export class Login {
     this.showPassword = !this.showPassword;
   }
 
-  userType: 'individual' | 'business' | 'driver' = 'individual';
+  userType: 'user' | 'organization' | 'driver' = 'user';
 
-  setUserType(type: 'individual' | 'business' | 'driver') {
+  setUserType(type: 'user' | 'organization' | 'driver') {
     this.userType = type;
   }
 
@@ -83,6 +83,11 @@ export class Login {
 
           const userRole = res['role'];
 
+          if (userRole !== this.userType) {
+            this.errorMessage = "This account type doesn't match your selection.";
+            return;
+          }
+
           this.authService.setRole(userRole);
 
           // ✅ Redirect based on role
@@ -91,10 +96,10 @@ export class Login {
               this.router.navigate(['/home']);
               break;
             case 'organization':
-              this.router.navigate(['/org-home']);
+              this.router.navigate(['/home']);
               break;
             case 'driver':
-              this.router.navigate(['/driver-home']);
+              this.router.navigate(['/home']);
               break;
             default:
               this.router.navigate(['/']);

@@ -16,8 +16,7 @@
 
     <!-- User Type Selection -->
     <div class="user-type-toggle">
-      <button type="button" [class.active]="userType === 'individual'" (click)="setUserType('individual')"
-        class="toggle-btn">
+      <button type="button" [class.active]="userType === 'user'" (click)="setUserType('user')" class="toggle-btn">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
           <path
             d="M10 9C11.6569 9 13 7.65685 13 6C13 4.34315 11.6569 3 10 3C8.34315 3 7 4.34315 7 6C7 7.65685 8.34315 9 10 9Z" />
@@ -25,7 +24,8 @@
         </svg>
         Individual
       </button>
-      <button type="button" [class.active]="userType === 'business'" (click)="setUserType('business')"
+
+      <button type="button" [class.active]="userType === 'organization'" (click)="setUserType('organization')"
         class="toggle-btn">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
           <path
@@ -33,15 +33,17 @@
         </svg>
         Restaurant/Store
       </button>
-      <button type="button" [class.active]="userType === 'business'" (click)="setUserType('business')"
-        class="toggle-btn">
+
+      <button type="button" [class.active]="userType === 'driver'" (click)="setUserType('driver')" class="toggle-btn">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            d="M4 4C4 2.89543 4.89543 2 6 2H14C15.1046 2 16 2.89543 16 4V18H17C17.5523 18 18 17.5523 18 17C18 16.4477 17.5523 16 17 16V6C17 5.44772 16.5523 5 16 5H15V4C15 3.44772 14.5523 3 14 3H6C5.44772 3 5 3.44772 5 4V5H4C3.44772 5 3 5.44772 3 6V16C2.44772 16 2 16.4477 2 17C2 17.5523 2.44772 18 3 18H4V4Z" />
+          <path d="M3 14H17L19 10L17 6H3L1 10L3 14Z" />
+          <circle cx="5" cy="15" r="2" />
+          <circle cx="15" cy="15" r="2" />
         </svg>
         Driver
       </button>
     </div>
+
 
     <!-- Login Form -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">

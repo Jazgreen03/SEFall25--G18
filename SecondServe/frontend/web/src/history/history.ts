@@ -4,18 +4,18 @@ import { AuthService } from '../app/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { UserHome } from '../user-home/user-home';
-import { OrgHome } from '../org-home/org-home';
-import { DriverHome } from '../driver-home/driver-home';
+import { UserOrderHistory } from '../user-order-history/user-order-history';
+import { OrgOrderHistory } from '../org-order-history/org-order-history';
+import { DriverOrderHistory } from '../driver-order-history/driver-order-history';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-history',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  templateUrl: './history.html',
+  styleUrls: ['./history.css']
 })
-export class Home implements OnInit, AfterViewInit {
+export class OrderHistory implements OnInit, AfterViewInit {
   @ViewChild('dynamicContent', { read: ViewContainerRef }) dynamicContent!: ViewContainerRef;
   private role: string | null = null;
 
@@ -43,13 +43,13 @@ export class Home implements OnInit, AfterViewInit {
         console.log("Role content loading:", role);
         switch (role) {
           case 'user':
-            this.dynamicContent.createComponent(UserHome);
+            this.dynamicContent.createComponent(UserOrderHistory);
             break;
           case 'organization':
-            this.dynamicContent.createComponent(OrgHome);
+            this.dynamicContent.createComponent(OrgOrderHistory);
             break;
           case 'driver':
-            this.dynamicContent.createComponent(DriverHome);
+            this.dynamicContent.createComponent(DriverOrderHistory);
             break;
           default:
             this.router.navigate(['/']);

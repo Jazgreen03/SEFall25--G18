@@ -31,7 +31,7 @@ export class Deliveries implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadDeliveries();
@@ -40,20 +40,20 @@ export class Deliveries implements OnInit {
   // --- Navigation Methods --- //
   goToAccount(): void {
     this.currentTab = 'account';
-    this.router.navigate(['/driver-account']);
+    this.router.navigate(['/account']);
   }
 
   goToOrders(): void {
     this.currentTab = 'orders';
-    this.router.navigate(['/driver-history']);
+    this.router.navigate(['/history']);
   }
 
   goToHome(): void {
-    window.location.href = '/driver-home';
+    window.location.href = '/home';
   }
 
   goToDeliveries(): void {
-    window.location.href = '/driver-home';
+    window.location.href = '/deliveries';
   }
 
   logout(): void {
