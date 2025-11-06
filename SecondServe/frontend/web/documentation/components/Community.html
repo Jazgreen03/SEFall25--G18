@@ -138,6 +138,34 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Community Component</p>
+<p>Displays the community resources directory and local organization listings.
+This component provides users with access to community organizations, support services,
+and local initiatives. It serves as a hub for discovering and connecting with
+community resources and support networks.</p>
+<p>Features:</p>
+<ul>
+<li>Standalone component architecture</li>
+<li>Router integration for organization detail navigation</li>
+<li>Community resource search and categorization</li>
+<li>Organization profiles and service information</li>
+<li>Location-based community resource discovery</li>
+</ul>
+<p>This component is rendered when navigating to the &#39;/community&#39; route and typically includes:</p>
+<ul>
+<li>Community organization directory with search and filters</li>
+<li>Resource categorization (food banks, shelters, healthcare, education, etc.)</li>
+<li>Organization profiles with contact information and services offered</li>
+<li>Location-based resource mapping</li>
+<li>Operating hours and availability status</li>
+<li>Volunteer opportunities and support needs</li>
+</ul>
+
+    </p>
 
 
 
@@ -215,6 +243,33 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Community Component
+ * 
+ * Displays the community resources directory and local organization listings.
+ * This component provides users with access to community organizations, support services,
+ * and local initiatives. It serves as a hub for discovering and connecting with
+ * community resources and support networks.
+ * 
+ * Features:
+ * - Standalone component architecture
+ * - Router integration for organization detail navigation
+ * - Community resource search and categorization
+ * - Organization profiles and service information
+ * - Location-based community resource discovery
+ * 
+ * @selector app-community
+ * @standalone true
+ * 
+ * @usage
+ * This component is rendered when navigating to the &#x27;/community&#x27; route and typically includes:
+ * - Community organization directory with search and filters
+ * - Resource categorization (food banks, shelters, healthcare, education, etc.)
+ * - Organization profiles with contact information and services offered
+ * - Location-based resource mapping
+ * - Operating hours and availability status
+ * - Volunteer opportunities and support needs
+ */
 @Component({
   selector: &#x27;app-community&#x27;,
   standalone: true,
@@ -222,8 +277,34 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./community.html&#x27;,
   styleUrl: &#x27;./community.css&#x27;,
 })
-export class Community {}
-</code></pre>
+export class Community {
+  /**
+   * Community Component
+   * 
+   * This component serves as the central interface for discovering and accessing
+   * community resources and local organizations. The actual implementation of
+   * organization listings, search functionality, and resource categorization
+   * are handled in the associated template and style files.
+   * 
+   * Potential future enhancements may include:
+   * - Advanced filtering by service type, eligibility requirements, or location
+   * - Real-time availability and capacity indicators
+   * - Interactive map view of community resources
+   * - Resource booking or appointment scheduling
+   * - User reviews and feedback for organizations
+   * - Volunteer sign-up and shift management
+   * - Community event integration with organization calendars
+   * - Multilingual resource information
+   * - Accessibility information for physical locations
+   * - Emergency service indicators and crisis resources
+   * - Community need alerts and urgent requests
+   * 
+   * The component&#x27;s responsive design and user-friendly interface are defined in community.css,
+   * while the resource listing structure and navigation elements are handled in community.html.
+   * RouterModule integration enables seamless navigation to detailed organization profiles
+   * and related community services.
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -354,7 +435,7 @@ export class Community {}
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Second Serve | Community</title>  <!-- FullCalendar CSS -->  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />  <!-- Your CSS -->  <link rel="stylesheet" href="community.css" /></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="donations.html">Donations</a>      <a href="community.html" class="active">Community</a>    </nav>  </header>  <!-- ---------------- Hero Section ---------------- -->  <section class="hero-section">    <h1>Join Our Community</h1>    <p>Get involved with Second Serve by volunteering or joining our local events that make an impact.</p>  </section>  <!-- ---------------- Community Section ---------------- -->  <section id="community-page">    <!-- Volunteer Section -->    <div class="community-section" id="volunteer-section">      <h2>Volunteer Opportunities</h2>      <p>Join our mission to reduce food waste and feed our communities. Sign up to become a Second Serve volunteer.</p>      <button id="volunteer-signup">Sign Up to Volunteer</button>    </div>    <!-- Events Section -->    <div class="community-section" id="events-section">      <h2>Upcoming Events</h2>      <p>Stay updated with local drives, community gatherings, and charity events near you.</p>      <button id="view-calendar">View Calendar</button>      <!-- Calendar Popup -->      <div id="calendar-popup" style="display:none;">        <div id="calendar-header">          <span id="close-calendar">&times;</span>          <h3>Events Calendar</h3>        </div>        <div id="calendar"></div>      </div>    </div>  </section>  <!-- FullCalendar JS -->  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>  <!-- ---------------- Script ---------------- -->  <script>    document.addEventListener("DOMContentLoaded", function() {      const calendarPopup = document.getElementById("calendar-popup");      const viewCalendarBtn = document.getElementById("view-calendar");      const closeCalendarBtn = document.getElementById("close-calendar");      // Show calendar      viewCalendarBtn.addEventListener("click", function() {        calendarPopup.style.display = "block";        // Initialize calendar once        if (!window.calendarInitialized) {          const calendarEl = document.getElementById("calendar");          const calendar = new FullCalendar.Calendar(calendarEl, {            initialView: \'dayGridMonth\',            events: [              { title: \'Food Drive - Dallas\', date: \'2025-11-15\' },              { title: \'Volunteer Meetup - Chicago\', date: \'2025-11-20\' },              { title: \'Holiday Food Distribution\', date: \'2025-12-01\' }            ]          });          calendar.render();          window.calendarInitialized = true;        }      });      // Close calendar      closeCalendarBtn.addEventListener("click", function() {        calendarPopup.style.display = "none";      });    });  </script></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Community'};
 </script>

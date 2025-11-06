@@ -142,6 +142,27 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Registration Component</p>
+<p>A multi-step registration form that handles user registration for different account types:</p>
+<ul>
+<li>Individual users</li>
+<li>Business/organization accounts</li>
+<li>Driver accounts</li>
+</ul>
+<p>Features:</p>
+<ul>
+<li>Two-step form process (credentials → details)</li>
+<li>Real-time form validation</li>
+<li>CSRF protection for API calls</li>
+<li>Automatic redirect on success</li>
+<li>User type-specific form fields</li>
+</ul>
+
+    </p>
 
 
 
@@ -331,12 +352,14 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/register/register.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/register/register.ts:56</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Component constructor</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -345,6 +368,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -359,6 +383,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>FormBuilder service for creating reactive forms</p>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>router</td>
@@ -371,6 +399,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Router service for navigation</p>
+
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>http</td>
@@ -383,6 +415,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>HttpClient service for API calls</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -424,21 +460,25 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="72"
-                                    class="link-to-prism">src/register/register.ts:72</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/register/register.ts:127</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Fetch CSRF cookie from backend</p>
+                        <div class="io-description"><p>Fetches CSRF token from backend for form submission security</p>
 </div>
 
                         <div class="io-description">
                             <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                         </div>
+                            <div class="io-description">
+                                <p>Promise that resolves when CSRF token is set</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -463,15 +503,15 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="140"
-                                    class="link-to-prism">src/register/register.ts:140</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="208"
+                                    class="link-to-prism">src/register/register.ts:208</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Go back to previous step</p>
+                        <div class="io-description"><p>Returns to the previous step in the multi-step form</p>
 </div>
 
                         <div class="io-description">
@@ -502,15 +542,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="62"
-                                    class="link-to-prism">src/register/register.ts:62</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="114"
+                                    class="link-to-prism">src/register/register.ts:114</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Step 1 submit: go to details step if valid</p>
+                        <div class="io-description"><p>Validates step 1 form and advances to step 2 if valid
+Shows validation errors if form is invalid</p>
 </div>
 
                         <div class="io-description">
@@ -543,15 +584,15 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="145"
-                                    class="link-to-prism">src/register/register.ts:145</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="216"
+                                    class="link-to-prism">src/register/register.ts:216</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Mark all controls as touched to show validation errors</p>
+                        <div class="io-description"><p>Marks all controls in a form group as touched to trigger validation display</p>
 </div>
 
                             <div class="io-description">
@@ -563,6 +604,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -577,6 +619,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>The form group to mark as touched</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -614,15 +660,22 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/register/register.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/register/register.ts:141</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Step 2 submit: send registration payload to API</p>
+                        <div class="io-description"><p>Handles final form submission</p>
+<ul>
+<li>Validates step 2 form</li>
+<li>Fetches CSRF token</li>
+<li>Maps user types to backend roles</li>
+<li>Sends registration payload to API</li>
+<li>Handles success/error responses</li>
+</ul>
 </div>
 
                         <div class="io-description">
@@ -655,14 +708,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="47"
-                                    class="link-to-prism">src/register/register.ts:47</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/register/register.ts:89</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Custom validator to ensure password and confirm password fields match</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -673,6 +728,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -687,6 +743,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>FormGroup containing password and confirmPassword controls</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -696,7 +756,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Validation error object or null if valid</p>
+
                             </div>
                 </td>
             </tr>
@@ -722,14 +783,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/register/register.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/register/register.ts:99</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Sets the user type for registration</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -740,6 +803,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -754,6 +818,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>The type of user account being created</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -789,14 +857,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="57"
-                                    class="link-to-prism">src/register/register.ts:57</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/register/register.ts:106</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Toggles password field visibility between text and password types</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -836,10 +906,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/register/register.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/register/register.ts:35</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current step in the multi-step form (1 = credentials, 2 = details)</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -862,10 +938,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/register/register.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/register/register.ts:44</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Form group for step 2 - additional user details</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -893,10 +975,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/register/register.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/register/register.ts:53</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Error message display for registration failures</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -918,10 +1006,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/register/register.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/register/register.ts:50</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loading state during form submission</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -944,10 +1038,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/register/register.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/register/register.ts:41</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Form group for step 1 - email and password credentials</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -969,10 +1069,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/register/register.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/register/register.ts:47</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Toggle state for password visibility</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1000,10 +1106,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/register/register.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/register/register.ts:56</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Success message display for successful registration</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1031,10 +1143,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/register/register.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/register/register.ts:38</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Selected user type for registration</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1060,9 +1178,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="152" class="link-to-prism">src/register/register.ts:152</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="225" class="link-to-prism">src/register/register.ts:225</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets email form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1082,9 +1207,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/register/register.ts:153</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="228" class="link-to-prism">src/register/register.ts:228</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets password form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1104,9 +1236,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/register/register.ts:154</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="231" class="link-to-prism">src/register/register.ts:231</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets confirmPassword form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1126,9 +1265,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="157" class="link-to-prism">src/register/register.ts:157</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="236" class="link-to-prism">src/register/register.ts:236</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets name form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1148,9 +1294,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">src/register/register.ts:158</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="239" class="link-to-prism">src/register/register.ts:239</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets address form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1170,9 +1323,16 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/register/register.ts:159</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">src/register/register.ts:242</a></div>
                                 </td>
                             </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>Gets businessType form control for validation messages</p>
+</div>
+
+                        </td>
+                    </tr>
 
             </tbody>
         </table>
@@ -1188,6 +1348,24 @@ import { Router } from &#x27;@angular/router&#x27;;
 import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { getCookie } from &#x27;../../utils&#x27;;
 
+/**
+ * Registration Component
+ * 
+ * A multi-step registration form that handles user registration for different account types:
+ * - Individual users
+ * - Business/organization accounts  
+ * - Driver accounts
+ * 
+ * Features:
+ * - Two-step form process (credentials → details)
+ * - Real-time form validation
+ * - CSRF protection for API calls
+ * - Automatic redirect on success
+ * - User type-specific form fields
+ * 
+ * @selector app-register
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-register&#x27;,
   standalone: true,
@@ -1196,52 +1374,86 @@ import { getCookie } from &#x27;../../utils&#x27;;
   styleUrls: [&#x27;./register.css&#x27;]
 })
 export class Register {
+  /** Current step in the multi-step form (1 &#x3D; credentials, 2 &#x3D; details) */
   currentStep &#x3D; 1;
+
+  /** Selected user type for registration */
   userType: &#x27;individual&#x27; | &#x27;business&#x27; | &#x27;driver&#x27; &#x3D; &#x27;individual&#x27;;
 
+  /** Form group for step 1 - email and password credentials */
   registerForm: FormGroup;
+
+  /** Form group for step 2 - additional user details */
   detailsForm: FormGroup;
 
+  /** Toggle state for password visibility */
   showPassword &#x3D; false;
+
+  /** Loading state during form submission */
   isLoading &#x3D; false;
+
+  /** Error message display for registration failures */
   errorMessage &#x3D; &#x27;&#x27;;
+
+  /** Success message display for successful registration */
   successMessage &#x3D; &#x27;&#x27;;
 
+  /**
+   * Component constructor
+   * @param fb FormBuilder service for creating reactive forms
+   * @param router Router service for navigation
+   * @param http HttpClient service for API calls
+   */
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient
   ) {
-    // Step 1 form: email/password
+    // Step 1 form: email and password with validation
     this.registerForm &#x3D; this.fb.group({
       email: [&#x27;&#x27;, [Validators.required, Validators.email]],
       password: [&#x27;&#x27;, [Validators.required, Validators.minLength(6)]],
       confirmPassword: [&#x27;&#x27;, [Validators.required]]
     }, { validator: this.passwordsMatchValidator });
 
-    // Step 2 form: additional details
+    // Step 2 form: additional details with validation
     this.detailsForm &#x3D; this.fb.group({
-      name: [&#x27;&#x27;],
-      address: [&#x27;&#x27;],
-      businessType: [&#x27;&#x27;]
+      name: [&#x27;&#x27;, [Validators.required, Validators.minLength(2)]],
+      address: [&#x27;&#x27;, [Validators.required, Validators.minLength(5)]],
+      businessType: [&#x27;&#x27;, [Validators.required]]
     });
   }
 
+  /**
+   * Custom validator to ensure password and confirm password fields match
+   * @param form FormGroup containing password and confirmPassword controls
+   * @returns Validation error object or null if valid
+   */
   private passwordsMatchValidator(form: FormGroup) {
     const pass &#x3D; form.get(&#x27;password&#x27;)?.value;
     const confirm &#x3D; form.get(&#x27;confirmPassword&#x27;)?.value;
     return pass &#x3D;&#x3D;&#x3D; confirm ? null : { mismatch: true };
   }
 
+  /**
+   * Sets the user type for registration
+   * @param type The type of user account being created
+   */
   setUserType(type: &#x27;individual&#x27; | &#x27;business&#x27; | &#x27;driver&#x27;) {
     this.userType &#x3D; type;
   }
 
+  /**
+   * Toggles password field visibility between text and password types
+   */
   togglePasswordVisibility() {
     this.showPassword &#x3D; !this.showPassword;
   }
 
-  /** Step 1 submit: go to details step if valid */
+  /**
+   * Validates step 1 form and advances to step 2 if valid
+   * Shows validation errors if form is invalid
+   */
   goToNextStep() {
     if (this.registerForm.valid) {
       this.currentStep &#x3D; 2;
@@ -1251,15 +1463,26 @@ export class Register {
     }
   }
 
-  /** Fetch CSRF cookie from backend */
+  /**
+   * Fetches CSRF token from backend for form submission security
+   * @returns Promise that resolves when CSRF token is set
+   */
   private getCsrfToken(): Promise&lt;void&gt; {
     return this.http.get(&#x27;http://localhost:8000/api/csrf/&#x27;, { withCredentials: true })
       .toPromise()
       .then(() &#x3D;&gt; console.log(&#x27;CSRF cookie set&#x27;));
   }
 
-  /** Step 2 submit: send registration payload to API */
+  /**
+   * Handles final form submission
+   * - Validates step 2 form
+   * - Fetches CSRF token
+   * - Maps user types to backend roles
+   * - Sends registration payload to API
+   * - Handles success/error responses
+   */
   async onSubmitFinal() {
+    // Validate step 2 form before submission
     if (!this.detailsForm.valid) {
       this.markFormGroupTouched(this.detailsForm);
       return;
@@ -1268,29 +1491,29 @@ export class Register {
     this.isLoading &#x3D; true;
     this.errorMessage &#x3D; &#x27;&#x27;;
 
-    // Ensure CSRF cookie exists
+    // Ensure CSRF cookie exists for secure form submission
     await this.getCsrfToken();
 
     const baseData &#x3D; this.registerForm.value;
     const extraData &#x3D; this.detailsForm.value;
-    
+
+    // Map frontend user types to backend role values
     let mappedUserType &#x3D; &#x27;&#x27;;
     switch (this.userType) {
-  case &#x27;individual&#x27;:
-    mappedUserType &#x3D; &#x27;user&#x27;;
-    break;
+      case &#x27;individual&#x27;:
+        mappedUserType &#x3D; &#x27;user&#x27;;
+        break;
+      case &#x27;business&#x27;:
+        mappedUserType &#x3D; &#x27;organization&#x27;;
+        break;
+      case &#x27;driver&#x27;:
+        mappedUserType &#x3D; &#x27;driver&#x27;;
+        break;
+      default:
+        mappedUserType &#x3D; &#x27;user&#x27;;  // fallback to individual user
+    }
 
-  case &#x27;business&#x27;:
-    mappedUserType &#x3D; &#x27;organization&#x27;;
-    break;
-
-  case &#x27;driver&#x27;:
-    mappedUserType &#x3D; &#x27;driver&#x27;;
-    break;
-
-  default:
-    mappedUserType &#x3D; &#x27;user&#x27;;  // fallback
-}
+    // Construct registration payload
     const payload &#x3D; {
       email: baseData.email,
       password: baseData.password,
@@ -1298,18 +1521,21 @@ export class Register {
       ...extraData
     };
 
+    // Get CSRF token for secure request
     const csrfToken &#x3D; getCookie(&#x27;csrftoken&#x27;) || &#x27;&#x27;;
     const headers &#x3D; new HttpHeaders({
       &#x27;X-CSRFToken&#x27;: csrfToken,
-      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,      // &lt;--- Explicitly tell Django it&#x27;s JSON
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
       &#x27;Accept&#x27;: &#x27;application/json&#x27;
     });
 
+    // Submit registration to backend API
     this.http.post(&#x27;http://localhost:8000/user/create/&#x27;, payload, { headers, withCredentials: true })
       .subscribe({
         next: (res: any) &#x3D;&gt; {
           this.isLoading &#x3D; false;
           this.successMessage &#x3D; &#x27;Registration successful! Redirecting...&#x27;;
+          // Redirect to login after successful registration
           setTimeout(() &#x3D;&gt; this.router.navigate([&#x27;/login&#x27;]), 1500);
         },
         error: (err) &#x3D;&gt; {
@@ -1319,29 +1545,45 @@ export class Register {
       });
   }
 
-  /** Go back to previous step */
+  /**
+   * Returns to the previous step in the multi-step form
+   */
   goBack() {
     this.currentStep &#x3D; 1;
   }
 
-  /** Mark all controls as touched to show validation errors */
+  /**
+   * Marks all controls in a form group as touched to trigger validation display
+   * @param formGroup The form group to mark as touched
+   */
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(key &#x3D;&gt; {
       formGroup.get(key)?.markAsTouched();
     });
   }
 
-  // Step 1 getters
+  // STEP 1 FORM GETTERS - Provides easy access to form controls for validation
+
+  /** Gets email form control for validation messages */
   get email() { return this.registerForm.get(&#x27;email&#x27;); }
+
+  /** Gets password form control for validation messages */
   get password() { return this.registerForm.get(&#x27;password&#x27;); }
+
+  /** Gets confirmPassword form control for validation messages */
   get confirmPassword() { return this.registerForm.get(&#x27;confirmPassword&#x27;); }
 
-  // Step 2 getters
+  // STEP 2 FORM GETTERS - Provides easy access to form controls for validation
+
+  /** Gets name form control for validation messages */
   get name() { return this.detailsForm.get(&#x27;name&#x27;); }
+
+  /** Gets address form control for validation messages */
   get address() { return this.detailsForm.get(&#x27;address&#x27;); }
+
+  /** Gets businessType form control for validation messages */
   get businessType() { return this.detailsForm.get(&#x27;businessType&#x27;); }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -1810,7 +2052,7 @@ export class Register {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="register-container">  <div class="register-card">    <!-- Logo and Header -->    <div class="header">      <div class="logo">        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">          <path d="M24 4L6 14V34L24 44L42 34V14L24 4Z" fill="#10B981" />          <path            d="M24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16Z"            fill="white" />        </svg>      </div>      <h1>SecondServe</h1>      <p class="tagline">Connecting Communities, Reducing Waste</p>    </div>    <!-- User Type Selection -->    <div class="user-type-toggle">      <button type="button" [class.active]="userType === \'individual\'" (click)="setUserType(\'individual\')"        class="toggle-btn">        Individual      </button>      <button type="button" [class.active]="userType === \'business\'" (click)="setUserType(\'business\')"        class="toggle-btn">        Restaurant/Store      </button>      <button type="button" [class.active]="userType === \'driver\'" (click)="setUserType(\'driver\')" class="toggle-btn">        Driver      </button>    </div>    <!-- Step 1: Email & Password -->    <form *ngIf="currentStep === 1" [formGroup]="registerForm" (ngSubmit)="goToNextStep()" class="register-form">      <div class="form-group">        <label for="email">Email Address</label>        <input id="email" formControlName="email" type="email" placeholder="Enter your email"          [class.error]="email?.invalid && email?.touched">        <span class="error-message" *ngIf="email?.invalid && email?.touched">          <span *ngIf="email?.errors?.[\'required\']">Email is required</span>          <span *ngIf="email?.errors?.[\'email\']">Enter a valid email</span>        </span>      </div>      <div class="form-group">        <label for="password">Password</label>        <div class="password-input-wrapper">          <input [type]="showPassword ? \'text\' : \'password\'" id="password" formControlName="password"            placeholder="Enter your password" [class.error]="password?.invalid && password?.touched">          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"            aria-label="Toggle password">            <span *ngIf="!showPassword">👁️</span>            <span *ngIf="showPassword">🙈</span>          </button>        </div>        <span class="error-message" *ngIf="password?.invalid && password?.touched">          <span *ngIf="password?.errors?.[\'required\']">Password is required</span>          <span *ngIf="password?.errors?.[\'minlength\']">Password must be at least 6 characters</span>        </span>      </div>      <div class="form-group">        <label for="confirmPassword">Confirm Password</label>        <input id="confirmPassword" formControlName="confirmPassword" type="password"          placeholder="Confirm your password" [class.error]="confirmPassword?.invalid && confirmPassword?.touched">        <span class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">          <span *ngIf="confirmPassword?.errors?.[\'required\']">Confirmation is required</span>          <span *ngIf="registerForm?.errors?.[\'mismatch\']">Passwords do not match</span>        </span>      </div>      <button type="submit" class="submit-btn">Next</button>    </form>    <!-- Step 2: Additional Details -->    <form *ngIf="currentStep === 2" [formGroup]="detailsForm" (ngSubmit)="onSubmitFinal()" class="register-form">      <div class="form-group">        <label for="name">Full Name</label>        <input id="name" formControlName="name" type="text" placeholder="Enter your name">      </div>      <div class="form-group" *ngIf="userType !== \'driver\'">        <label for="address">Address</label>        <input id="address" formControlName="address" type="text" placeholder="Enter your address">      </div>      <div class="form-group" *ngIf="userType === \'business\'">        <label for="businessType">Business Type</label>        <input id="businessType" formControlName="businessType" type="text" placeholder="Enter your business type">      </div>      <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>      <div class="alert-success" *ngIf="successMessage">{{ successMessage }}</div>      <button type="button" class="submit-btn" (click)="goBack()">Back</button>      <button type="submit" class="submit-btn" [disabled]="isLoading">        <span *ngIf="!isLoading">Register</span>        <span *ngIf="isLoading">Registering...</span>      </button>    </form>  </div>  <div class="mission-statement">    <p>      <strong>Our Mission:</strong> Connecting local restaurants and grocery stores with individuals facing food      insecurity, reducing waste while providing nutritious meals to those in need.    </p>  </div></div></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Register'};
 </script>

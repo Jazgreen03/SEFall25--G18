@@ -4,6 +4,15 @@ import { AuthService } from '../app/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+/**
+ * Account Management Component
+ * 
+ * Dynamic account management container that loads role-specific components based on user type.
+ * Acts as a router for different account management interfaces (user, organization, driver).
+ * 
+ * @selector app-account-management
+ * @standalone true
+ */
 @Component({
   selector: 'app-account-management',
   standalone: true,
@@ -12,7 +21,10 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./manage-account.css']
 })
 export class AccountManagement implements OnInit, AfterViewInit {
+  /** Reference to dynamic content container for loading role-specific components */
   @ViewChild('dynamicContent', { read: ViewContainerRef }) dynamicContent!: ViewContainerRef;
+
+  /** Current user role from auth service */
   private role: string | null = null;
 
   constructor(
@@ -33,6 +45,10 @@ export class AccountManagement implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Dynamically loads the appropriate account management component based on user role
+   * @param role The user role determining which component to load
+   */
   private async loadRoleContent(role: string) {
     this.http.get("http://localhost:8000/user/info", { withCredentials: true }).subscribe({
       next: async () => {

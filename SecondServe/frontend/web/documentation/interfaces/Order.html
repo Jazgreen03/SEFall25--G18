@@ -350,18 +350,18 @@ interface Order {
   styleUrls: [&#x27;./driver-order-history.css&#x27;],
 })
 export class DriverOrderHistory implements OnInit {
-  currentTab: &#x27;account&#x27; | &#x27;orders&#x27; | &#x27;deliveries&#x27; &#x3D; &#x27;deliveries&#x27;;
-  orders: Order[] &#x3D; [];
+  currentTab: &#x27;account&#x27; | &#x27;history&#x27; | &#x27;deliveries&#x27; &#x3D; &#x27;deliveries&#x27;;
+  history: Order[] &#x3D; [];
   loading &#x3D; false;
   error: string | null &#x3D; null;
-  activeTab &#x3D; &#x27;orders&#x27;;
+  activeTab &#x3D; &#x27;history&#x27;;
 
   private apiUrl &#x3D; &#x27;http://localhost:8080/api&#x27;;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadOrders();
@@ -369,14 +369,14 @@ export class DriverOrderHistory implements OnInit {
 
   // --- Navigation Methods --- //
   goToHome(): void {
-    this.router.navigate([&#x27;/driver-home&#x27;]);
+    this.router.navigate([&#x27;/home&#x27;]);
   }
 
   goToAccount(): void {
-    this.router.navigate([&#x27;/driver-account&#x27;]);
+    this.router.navigate([&#x27;/account&#x27;]);
   }
 
-  goToOrders(): void {
+  goToHistory(): void {
     this.activeTab &#x3D; &#x27;orders&#x27;;
     this.loadOrders();
   }
@@ -397,7 +397,7 @@ export class DriverOrderHistory implements OnInit {
 
     this.http.get&lt;Order[]&gt;(&#x60;${this.apiUrl}/driver/orders&#x60;).subscribe({
       next: (data) &#x3D;&gt; {
-        this.orders &#x3D; data;
+        this.history &#x3D; data;
         this.loading &#x3D; false;
       },
       error: (err) &#x3D;&gt; {

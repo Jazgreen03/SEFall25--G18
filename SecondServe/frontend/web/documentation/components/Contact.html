@@ -138,6 +138,15 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Contact Component</p>
+<p>Provides contact information and communication channels for users to reach the organization.
+Handles user inquiries, support requests, feedback, and general communication.</p>
+
+    </p>
 
 
 
@@ -215,6 +224,15 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Contact Component
+ * 
+ * Provides contact information and communication channels for users to reach the organization.
+ * Handles user inquiries, support requests, feedback, and general communication.
+ * 
+ * @selector app-contact
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-contact&#x27;,
   standalone: true,
@@ -222,8 +240,18 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./contact.html&#x27;,
   styleUrl: &#x27;./contact.css&#x27;,
 })
-export class Contact {}
-</code></pre>
+export class Contact {
+  /**
+   * Contact page component for user communication and support
+   * 
+   * Features typically include:
+   * - Contact form with validation
+   * - Organization contact details
+   * - Office hours and response times
+   * - FAQ section
+   * - Location information
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -310,7 +338,7 @@ export class Contact {}
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Contact Us | SecondServe</title>  <link rel="stylesheet" href="contact.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html">Mission</a>      <a href="contact.html" class="active">Contact</a>    </nav>  </header>  <!-- ---------------- Contact Section ---------------- -->  <section class="contact-hero">    <h1>Contact Us</h1>    <p>We’d love to hear from you! Reach out with any questions, partnerships, or ideas.</p>  </section>  <section class="contact-info">    <div class="contact-card">      <h2>Email</h2>      <p><strong>support@secondserve.org</strong></p>    </div>    <div class="contact-card">      <h2>Phone</h2>      <p><strong>(919) 555-2043</strong></p>    </div>    <div class="contact-card">      <h2>Headquarters</h2>      <p><strong>123 Greenway Blvd<br>Raleigh, NC 27601</strong></p>    </div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Connecting communities through food and compassion.</p>  </footer></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Contact'};
 </script>

@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+/**
+ * Restaurant data structure
+ * Represents a restaurant with available food items for pickup/delivery
+ */
 interface Restaurant {
   id: number;
   name: string;
@@ -16,6 +20,10 @@ interface Restaurant {
   openUntil: string;
 }
 
+/**
+ * Pickup request data structure
+ * Defines the payload for scheduling a food pickup or delivery
+ */
 interface PickupRequest {
   restaurantId: number;
   userId: number;
@@ -24,6 +32,15 @@ interface PickupRequest {
   items: number[];
 }
 
+/**
+ * User Home Component
+ * 
+ * Main dashboard for authenticated users to browse restaurants and schedule food pickups/deliveries.
+ * Displays available restaurants with food items and handles order scheduling.
+ * 
+ * @selector app-home
+ * @standalone true
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -45,101 +62,52 @@ export class UserHome implements OnInit {
   }
 
   // --- Navigation Methods --- //
+
+  /** Navigates to user account management page */
   goToAccount(): void {
     this.router.navigate(['/account']);
   }
 
+  /** Navigates to home page (current implementation refreshes page) */
   goToHome(): void {
-    // Navigate to orders page
     window.location.href = '/user-home';
   }
 
+  /** Navigates to order history page */
   goToOrders(): void {
     this.router.navigate(['/history']);
   }
 
+  /** Logs out user by clearing token and redirecting to login */
   logout(): void {
-    // clear token and navigate to login
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 
-  // --- API Methods --- //
+  // --- Restaurant Methods --- //
 
+  /** Loads available restaurants from API (currently commented out) */
   loadRestaurants(): void {
-    // this.loading = true;
-    // this.error = null;
-
-    // this.http.get<Restaurant[]>(`${this.apiUrl}/restaurants/available`)
-    //   .subscribe({
-    //     next: (data) => {
-    //       this.restaurants = data;
-    //       this.loading = false;
-    //     },
-    //     error: (err) => {
-    //       this.error = 'Failed to load restaurants.';
-    //       this.loading = false;
-    //       console.error('Error loading restaurants:', err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Schedules a food pickup with the specified restaurant (commented out) */
   schedulePickup(request: PickupRequest): void {
-    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // this.loading = true;
-
-    // this.http.post(`${this.apiUrl}/pickups/schedule`, request, { headers })
-    //   .subscribe({
-    //     next: () => {
-    //       alert('Pickup scheduled successfully!');
-    //       this.loading = false;
-    //     },
-    //     error: (err) => {
-    //       this.error = 'Failed to schedule pickup.';
-    //       this.loading = false;
-    //       console.error(err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Handles pickup button click for a restaurant */
   onPickupClick(restaurant: Restaurant): void {
-    // const pickupRequest: PickupRequest = {
-    //   restaurantId: restaurant.id,
-    //   userId: 1,
-    //   pickupTime: new Date(Date.now() + 3600000).toISOString(),
-    //   deliveryType: 'pickup',
-    //   items: []
-    // };
-    // this.schedulePickup(pickupRequest);
+    // Implementation pending API integration
   }
 
+  /** Handles delivery button click - prompts for address then schedules delivery */
   onDeliveryClick(restaurant: Restaurant): void {
-    // const address = prompt('Enter delivery address:');
-    // if (!address) return;
-
-    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // const deliveryRequest = {
-    //   restaurantId: restaurant.id,
-    //   deliveryAddress: address,
-    //   requestedTime: new Date().toISOString()
-    // };
-
-    // this.loading = true;
-    // this.http.post(`${this.apiUrl}/deliveries/request`, deliveryRequest, { headers })
-    //   .subscribe({
-    //     next: () => {
-    //       alert('Delivery requested!');
-    //       this.loading = false;
-    //     },
-    //     error: (err) => {
-    //       this.error = 'Delivery request failed.';
-    //       this.loading = false;
-    //       console.error(err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Refreshes the restaurant list */
   refreshRestaurants(): void {
-    //this.loadRestaurants();
+    // Implementation pending
   }
 }

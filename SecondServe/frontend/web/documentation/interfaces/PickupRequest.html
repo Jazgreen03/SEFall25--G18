@@ -144,6 +144,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Pickup request data structure
+Defines the payload for scheduling a food pickup or delivery</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -375,6 +383,10 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 
+/**
+ * Restaurant data structure
+ * Represents a restaurant with available food items for pickup/delivery
+ */
 interface Restaurant {
   id: number;
   name: string;
@@ -387,6 +399,10 @@ interface Restaurant {
   openUntil: string;
 }
 
+/**
+ * Pickup request data structure
+ * Defines the payload for scheduling a food pickup or delivery
+ */
 interface PickupRequest {
   restaurantId: number;
   userId: number;
@@ -395,6 +411,15 @@ interface PickupRequest {
   items: number[];
 }
 
+/**
+ * User Home Component
+ * 
+ * Main dashboard for authenticated users to browse restaurants and schedule food pickups/deliveries.
+ * Displays available restaurants with food items and handles order scheduling.
+ * 
+ * @selector app-home
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-home&#x27;,
   standalone: true,
@@ -416,105 +441,55 @@ export class UserHome implements OnInit {
   }
 
   // --- Navigation Methods --- //
+
+  /** Navigates to user account management page */
   goToAccount(): void {
     this.router.navigate([&#x27;/account&#x27;]);
   }
 
+  /** Navigates to home page (current implementation refreshes page) */
   goToHome(): void {
-    // Navigate to orders page
     window.location.href &#x3D; &#x27;/user-home&#x27;;
   }
 
+  /** Navigates to order history page */
   goToOrders(): void {
     this.router.navigate([&#x27;/history&#x27;]);
   }
 
+  /** Logs out user by clearing token and redirecting to login */
   logout(): void {
-    // clear token and navigate to login
     localStorage.removeItem(&#x27;authToken&#x27;);
     this.router.navigate([&#x27;/login&#x27;]);
   }
 
-  // --- API Methods --- //
+  // --- Restaurant Methods --- //
 
+  /** Loads available restaurants from API (currently commented out) */
   loadRestaurants(): void {
-    // this.loading &#x3D; true;
-    // this.error &#x3D; null;
-
-    // this.http.get&lt;Restaurant[]&gt;(&#x60;${this.apiUrl}/restaurants/available&#x60;)
-    //   .subscribe({
-    //     next: (data) &#x3D;&gt; {
-    //       this.restaurants &#x3D; data;
-    //       this.loading &#x3D; false;
-    //     },
-    //     error: (err) &#x3D;&gt; {
-    //       this.error &#x3D; &#x27;Failed to load restaurants.&#x27;;
-    //       this.loading &#x3D; false;
-    //       console.error(&#x27;Error loading restaurants:&#x27;, err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Schedules a food pickup with the specified restaurant (commented out) */
   schedulePickup(request: PickupRequest): void {
-    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    // this.loading &#x3D; true;
-
-    // this.http.post(&#x60;${this.apiUrl}/pickups/schedule&#x60;, request, { headers })
-    //   .subscribe({
-    //     next: () &#x3D;&gt; {
-    //       alert(&#x27;Pickup scheduled successfully!&#x27;);
-    //       this.loading &#x3D; false;
-    //     },
-    //     error: (err) &#x3D;&gt; {
-    //       this.error &#x3D; &#x27;Failed to schedule pickup.&#x27;;
-    //       this.loading &#x3D; false;
-    //       console.error(err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Handles pickup button click for a restaurant */
   onPickupClick(restaurant: Restaurant): void {
-    // const pickupRequest: PickupRequest &#x3D; {
-    //   restaurantId: restaurant.id,
-    //   userId: 1,
-    //   pickupTime: new Date(Date.now() + 3600000).toISOString(),
-    //   deliveryType: &#x27;pickup&#x27;,
-    //   items: []
-    // };
-    // this.schedulePickup(pickupRequest);
+    // Implementation pending API integration
   }
 
+  /** Handles delivery button click - prompts for address then schedules delivery */
   onDeliveryClick(restaurant: Restaurant): void {
-    // const address &#x3D; prompt(&#x27;Enter delivery address:&#x27;);
-    // if (!address) return;
-
-    // const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    // const deliveryRequest &#x3D; {
-    //   restaurantId: restaurant.id,
-    //   deliveryAddress: address,
-    //   requestedTime: new Date().toISOString()
-    // };
-
-    // this.loading &#x3D; true;
-    // this.http.post(&#x60;${this.apiUrl}/deliveries/request&#x60;, deliveryRequest, { headers })
-    //   .subscribe({
-    //     next: () &#x3D;&gt; {
-    //       alert(&#x27;Delivery requested!&#x27;);
-    //       this.loading &#x3D; false;
-    //     },
-    //     error: (err) &#x3D;&gt; {
-    //       this.error &#x3D; &#x27;Delivery request failed.&#x27;;
-    //       this.loading &#x3D; false;
-    //       console.error(err);
-    //     }
-    //   });
+    // Implementation pending API integration
   }
 
+  /** Refreshes the restaurant list */
   refreshRestaurants(): void {
-    //this.loadRestaurants();
+    // Implementation pending
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 </div>
 

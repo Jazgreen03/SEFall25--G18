@@ -144,6 +144,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>User data structure for account management
+Represents user profile information for display and updates</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -341,6 +349,10 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 
+/**
+ * User data structure for account management
+ * Represents user profile information for display and updates
+ */
 interface User {
   email: string;
   name: string;
@@ -348,6 +360,15 @@ interface User {
   password?: string;
 }
 
+/**
+ * User Account Management Component
+ * 
+ * Handles user profile management including viewing and updating account information.
+ * Provides functionality to update email, name, address, and password.
+ * 
+ * @selector app-manage-account
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-manage-account&#x27;,
   standalone: true,
@@ -356,32 +377,39 @@ interface User {
   styleUrls: [&#x27;./user-manage-account.css&#x27;],
 })
 export class UserAccountManagement implements OnInit {
+  /** Current user profile data */
   user: User &#x3D; {
     email: &#x27;&#x27;,
     name: &#x27;&#x27;,
     address: &#x27;&#x27;,
   };
 
+  /** Toggle state for password visibility */
   showPassword &#x3D; false;
+
+  /** Success message for user feedback */
   successMessage: string | null &#x3D; null;
+
+  /** Error message for user feedback */
   errorMessage: string | null &#x3D; null;
 
   private apiUrl &#x3D; &#x27;http://localhost:8080/api/users&#x27;;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
   }
 
+  /** Loads current user data from API */
   loadUser(): void {
-    // Fetch current user info
     this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/me&#x60;).subscribe({
       next: (data) &#x3D;&gt; (this.user &#x3D; data),
       error: (err) &#x3D;&gt; console.error(&#x27;Failed to load user&#x27;, err),
     });
   }
 
+  /** Updates user account information via API */
   updateAccount(): void {
     const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
     this.http.put(&#x60;${this.apiUrl}/update&#x60;, this.user, { headers }).subscribe({
@@ -398,33 +426,33 @@ export class UserAccountManagement implements OnInit {
     });
   }
 
+  /** Toggles password field visibility */
   togglePassword(): void {
     this.showPassword &#x3D; !this.showPassword;
   }
 
-  // Navigation / Header buttons
+  // --- Navigation Methods --- //
+
+  /** Reloads current account page */
   goToAccount(): void {
-    // Already on account page; can optionally reload
     this.loadUser();
   }
 
+  /** Navigates to home page */
   goToHome(): void {
-    // Navigate to home page
     window.location.href &#x3D; &#x27;/home&#x27;;
   }
 
+  /** Navigates to order history page */
   goToOrders(): void {
-    // Navigate to orders page
     window.location.href &#x3D; &#x27;/history&#x27;;
   }
 
+  /** Logs out user and redirects to login page */
   logout(): void {
-    // Clear session / redirect
-    // Example:
     window.location.href &#x3D; &#x27;/login&#x27;;
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 </div>
 

@@ -6,6 +6,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getCookie } from '../../utils';
 import { AuthService } from '../app/services/auth.service';
 
+/**
+ * Login Component
+ * 
+ * Handles user authentication with email/password login.
+ * Supports multiple user types (user, organization, driver) and role-based redirection.
+ * Includes CSRF protection and session management.
+ * 
+ * @selector app-login
+ * @standalone true
+ */
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,11 +24,23 @@ import { AuthService } from '../app/services/auth.service';
   styleUrls: ['./login.css']
 })
 export class Login {
+  /** Form group for login credentials */
   loginForm: FormGroup;
+
+  /** Toggle state for password visibility */
   showPassword = false;
+
+  /** Loading state during authentication */
   isLoading = false;
+
+  /** Error message display */
   errorMessage = '';
+
+  /** Success message display */
   successMessage = '';
+
+  /** Selected user type for login */
+  userType: 'user' | 'organization' | 'driver' = 'user';
 
   constructor(
     private fb: FormBuilder,
@@ -32,17 +54,17 @@ export class Login {
     });
   }
 
+  /** Toggles password field visibility */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  userType: 'user' | 'organization' | 'driver' = 'user';
-
+  /** Sets the user type for login */
   setUserType(type: 'user' | 'organization' | 'driver') {
     this.userType = type;
   }
 
-  /** Fetch CSRF cookie from backend */
+  /** Fetches CSRF token from backend for secure form submission */
   private getCsrfToken(): Promise<void> {
     return this.http
       .get('http://localhost:8000/api/csrf/', { withCredentials: true })
@@ -50,7 +72,7 @@ export class Login {
       .then(() => console.log('CSRF cookie set'));
   }
 
-  /** Handle form submission */
+  /** Handles login form submission and authentication */
   async onSubmit() {
     if (!this.loginForm.valid) {
       this.markFormGroupTouched(this.loginForm);
@@ -82,17 +104,17 @@ export class Login {
 
           const userRole = res['role'];
 
-          // First, set the role regardless of what it is
+          // Set role in auth service for application-wide access
           this.authService.setRole(userRole);
 
-          // Then check if it matches the selected user type for known roles
+          // Validate role matches selected user type
           const knownRoles = ['user', 'organization', 'driver'];
           if (knownRoles.includes(userRole) && userRole !== this.userType) {
             this.errorMessage = "This account type doesn't match your selection.";
             return;
           }
 
-          // ✅ Redirect based on role
+          // Redirect based on user role
           switch (userRole) {
             case 'user':
               this.router.navigate(['/home']);
@@ -115,14 +137,14 @@ export class Login {
       });
   }
 
-  /** Helper to mark all fields as touched */
+  /** Marks all form controls as touched to trigger validation display */
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(key => {
       formGroup.get(key)?.markAsTouched();
     });
   }
 
-  // Getters for cleaner template usage
+  // Form control getters for template validation
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
 }

@@ -8,6 +8,15 @@ import { UserHome } from '../user-home/user-home';
 import { OrgHome } from '../org-home/org-home';
 import { DriverHome } from '../driver-home/driver-home';
 
+/**
+ * Home Component
+ * 
+ * Dynamic home page container that loads role-specific dashboard components.
+ * Routes users to appropriate interfaces based on their authentication role.
+ * 
+ * @selector app-home
+ * @standalone true
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -16,7 +25,10 @@ import { DriverHome } from '../driver-home/driver-home';
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit, AfterViewInit {
+  /** Reference to dynamic content container for role-specific components */
   @ViewChild('dynamicContent', { read: ViewContainerRef }) dynamicContent!: ViewContainerRef;
+
+  /** Current user role from auth service */
   private role: string | null = null;
 
   constructor(
@@ -37,6 +49,11 @@ export class Home implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Loads the appropriate home/dashboard component based on user role
+   * Verifies user authentication before loading component
+   * @param role The user role determining which dashboard to display
+   */
   private loadRoleContent(role: string) {
     this.http.get("http://localhost:8000/user/info", { withCredentials: true }).subscribe({
       next: () => {

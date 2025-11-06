@@ -138,6 +138,34 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Restaurants Component</p>
+<p>Displays the restaurant directory and food resource listings for the platform.
+This component provides users with access to restaurant information, menus, locations,
+and food availability. It serves as a comprehensive directory for food resources
+within the community.</p>
+<p>Features:</p>
+<ul>
+<li>Standalone component architecture</li>
+<li>Router integration for restaurant detail navigation</li>
+<li>Restaurant search and filtering capabilities</li>
+<li>Location-based restaurant discovery</li>
+<li>Menu and availability information display</li>
+</ul>
+<p>This component is rendered when navigating to the &#39;/restaurants&#39; route and typically includes:</p>
+<ul>
+<li>Restaurant search functionality with filters (cuisine, location, price range)</li>
+<li>Interactive map or list view of restaurant locations</li>
+<li>Restaurant cards with key information (hours, contact, ratings)</li>
+<li>Menu browsing and food item availability</li>
+<li>Dietary restriction filtering (vegetarian, gluten-free, etc.)</li>
+<li>Restaurant favoriting and recent views</li>
+</ul>
+
+    </p>
 
 
 
@@ -215,6 +243,33 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Restaurants Component
+ * 
+ * Displays the restaurant directory and food resource listings for the platform.
+ * This component provides users with access to restaurant information, menus, locations,
+ * and food availability. It serves as a comprehensive directory for food resources
+ * within the community.
+ * 
+ * Features:
+ * - Standalone component architecture
+ * - Router integration for restaurant detail navigation
+ * - Restaurant search and filtering capabilities
+ * - Location-based restaurant discovery
+ * - Menu and availability information display
+ * 
+ * @selector app-restaurants
+ * @standalone true
+ * 
+ * @usage
+ * This component is rendered when navigating to the &#x27;/restaurants&#x27; route and typically includes:
+ * - Restaurant search functionality with filters (cuisine, location, price range)
+ * - Interactive map or list view of restaurant locations
+ * - Restaurant cards with key information (hours, contact, ratings)
+ * - Menu browsing and food item availability
+ * - Dietary restriction filtering (vegetarian, gluten-free, etc.)
+ * - Restaurant favoriting and recent views
+ */
 @Component({
   selector: &#x27;app-restaurants&#x27;,
   standalone: true,
@@ -222,8 +277,31 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./restaurants.html&#x27;,
   styleUrl: &#x27;./restaurants.css&#x27;,
 })
-export class Restaurants {}
-</code></pre>
+export class Restaurants {
+  /**
+   * Restaurants Component
+   * 
+   * This component serves as the main interface for discovering and interacting with
+   * restaurant resources within the platform. The actual implementation of restaurant
+   * listings, search functionality, and user interactions are handled in the associated
+   * template and style files.
+   * 
+   * Potential future enhancements may include:
+   * - Advanced search and filtering (by distance, ratings, dietary needs)
+   * - Real-time inventory integration for food availability
+   * - Online ordering and reservation capabilities
+   * - User reviews and rating system
+   * - Restaurant owner dashboards for menu management
+   * - Integration with food delivery services
+   * - Wait time and busy hour indicators
+   * - Special offers and promotions display
+   * - Social features (sharing restaurants, following favorites)
+   * 
+   * The component&#x27;s responsive design and visual presentation are defined in restaurants.css,
+   * while the restaurant listing structure and user interface elements are handled in restaurants.html.
+   * RouterModule integration allows for seamless navigation to individual restaurant detail pages.
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -327,7 +405,7 @@ export class Restaurants {}
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Partner Restaurants | SecondServe</title>  <!-- Leaflet CSS -->  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />  <!-- Your CSS -->  <link rel="stylesheet" href="restaurants.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html" class="active">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html">Mission</a>      <a href="contact.html">Contact</a>    </nav>  </header>  <!-- ---------------- Sponsor Map Section ---------------- -->  <section id="sponsor-map-section">    <h2>Find Restaurants / Grocery Stores Supporting SecondServe</h2>    <p>Hover over locations to see availability.</p>    <div id="sponsor-map"></div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Connecting surplus food to those in need.</p>  </footer>  <!-- Leaflet JS -->  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  <script>    document.addEventListener("DOMContentLoaded", function() {      // Initialize map      const map = L.map(\'sponsor-map\').setView([39.8283, -98.5795], 4);      // Add OpenStreetMap layer      L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {        attribution: \'© OpenStreetMap contributors\'      }).addTo(map);      // Example sponsor locations      const sponsors = [        { name: "Joe\'s Deli", type: "Restaurant", coords: [40.7128, -74.0060], availability: "Yes" },        { name: "FreshMart", type: "Grocery Store", coords: [34.0522, -118.2437], availability: "Limited" },        { name: "Tasty Eats", type: "Restaurant", coords: [41.8781, -87.6298], availability: "Yes" }      ];      // Add markers      sponsors.forEach(sponsor => {        const marker = L.marker(sponsor.coords).addTo(map);        marker.bindPopup(`<b>${sponsor.name}</b><br>${sponsor.type}<br>Availability: ${sponsor.availability}`);        marker.on(\'mouseover\', function() { this.openPopup(); });        marker.on(\'mouseout\', function() { this.closePopup(); });      });    });  </script></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Restaurants'};
 </script>
