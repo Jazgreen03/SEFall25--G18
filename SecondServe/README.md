@@ -1,18 +1,34 @@
 # 🥫 SecondServe
 
 <p align="center">
+  <!-- Technology Stack -->
   <img src="https://img.shields.io/badge/Frontend-Angular-red?logo=angular&logoColor=white" />
   <img src="https://img.shields.io/badge/Backend-Django-0C4B33?logo=django&logoColor=white" />
   <img src="https://img.shields.io/badge/Database-MongoDB-4EA94B?logo=mongodb&logoColor=white" />
   <img src="https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/Language-Python-blue?logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Language-TypeScript-3178C6?logo=typescript&logoColor=white" />
+
+  <!-- Code Quality -->
+  <img src="https://img.shields.io/badge/frontend_lint-ESLint-brightgreen" />
+  <img src="https://img.shields.io/badge/backend_lint-Flake8-brightgreen" />
+
+  <!-- Testing -->
+  <img src="https://img.shields.io/badge/frontend_testing-Karma-brightgreen" />
   <img src="./frontend/web/src/assets/coverage-badge.svg" />
-  <img src="./frontend/web/documentation/images/coverage-badge-documentation.svg" />
+  <img src="https://img.shields.io/badge/backend_testing-Pytest-brightgreen" />
   <img src="./backend/docs/source/_static/test_coverage.svg" />
+
+  <!-- Documentation -->
+  <img src="https://img.shields.io/badge/frontend_docs-CompDoc-brightgreen" />
+  <img src="./frontend/web/documentation/images/coverage-badge-documentation.svg" />
+  <img src="https://img.shields.io/badge/backend_docs-sphinx-brightgreen" />
   <img src="./backend/docs/source/_static/doc_coverage.svg" />
+
+  <!-- License -->
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
 </p>
+
 
 ---
 
