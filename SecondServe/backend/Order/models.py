@@ -2,6 +2,7 @@ from django.db import models
 from User.models import User
 from Inventory.models import Item
 from Organization.models import Organization
+import uuid
 
 STATUS_PLACED = "placed"
 STATUS_PREP = "preparing"
@@ -9,6 +10,12 @@ STATUS_READY = "ready"
 STATUS_TRANSIT = "in transit"
 STATUS_DELIVERED = "delivered"
 
+def generate_order_id() -> str:
+    """
+    Generate a unique Order ID for each new created order
+    """
+
+    return uuid.uuid4().hex[:10].upper()
 
 class Order(models.Model):
     """
@@ -34,13 +41,13 @@ class Order(models.Model):
         TRANSIT = STATUS_TRANSIT, "Order in Transit"
         DELIVERED = STATUS_DELIVERED, "Order Delivered"
 
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Customer")
     associatedOrg = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    orderID = models.IntegerField(unique=True, auto_created=True)
+    orderID = models.CharField(unique=True, default=generate_order_id)
     status = models.CharField(
         max_length=25, choices=StatusTypes.choices, default=STATUS_PLACED
     )
-    driver = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="Driver")
     driverAssigned = models.BooleanField(default=False)
 
     def get_items(self):

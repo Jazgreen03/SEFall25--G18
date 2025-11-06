@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+import json
 
 User = get_user_model()
 
@@ -18,17 +19,16 @@ class TestValidUserCreateOrganization(TestCase):
     # Creates a user with the location permission for testing purposes and logins them into the system
     def setUp(self):
         self.user = User.objects.create(
-            username="orgUser", email="org@email.com", password="123abc"
+            username="orgUser", email="org@email.com", password="123abc", role="organization"
         )
-        self.user.role = "location"
-        self.user.save()
 
         self.client.force_login(self.user)
 
     # Create a valid Organization and verify the response
     def test_valid_org_create(self):
         response = self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 201)
@@ -38,13 +38,15 @@ class TestValidUserCreateOrganization(TestCase):
 
         # Create the base case valid organization
         self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}), 
+            content_type="application/json",
         )
 
         # Invalid Type
         response = self.client.post(
             "/org/",
-            {"name": orgNameTwo, "type": invalid_orgType, "location": orgLocationTwo},
+            data=json.dumps({"name": orgNameTwo, "type": invalid_orgType, "location": orgLocationTwo}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 404)
@@ -52,7 +54,8 @@ class TestValidUserCreateOrganization(TestCase):
         # Invalid Name
         response = self.client.post(
             "/org/",
-            {"name": orgName, "type": valid_orgType, "location": orgLocationTwo},
+            data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocationTwo}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 409)
@@ -60,7 +63,8 @@ class TestValidUserCreateOrganization(TestCase):
         # Invalid Location
         response = self.client.post(
             "/org/",
-            {"name": orgNameTwo, "type": valid_orgType, "location": orgLocation},
+            data=json.dumps({"name": orgNameTwo, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 409)
@@ -71,7 +75,8 @@ class TestInvalidUserCreateOrganization(TestCase):
 
     def test_no_logged_in_user(self):
         response = self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 400)
@@ -86,7 +91,8 @@ class TestInvalidUserCreateOrganization(TestCase):
         self.client.force_login(self.user)
 
         response = self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 401)

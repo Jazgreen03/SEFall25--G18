@@ -27,24 +27,24 @@ def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     match user.role:
         case "user":
             if user is not order.recipient:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+                return JsonResponse({"details": "Invalid User!"}, status=403)
             orderDets = order.get_order_details_user()
         case "organization":
             org = Organization.objects.get(creator=user)
             if org is None or org is not order.associatedOrg:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+                return JsonResponse({"details": "Invalid User!"}, status=403)
             orderDets = order.get_order_details_org()
         case "driver":
             if user is not order.driver:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+                return JsonResponse({"details": "Invalid User!"}, status=403)
             orderDets = order.get_order_details_driver()
         case "admin":
             orderDets = order.get_order_details_admin()
         case _:
-            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
+            return JsonResponse({"details": "Invalid Role!"}, status=403)
 
     return JsonResponse(
-        {"details": "Order Retreived", "Order": orderDets}, statuscode=200
+        {"details": "Order Retreived", "Order": orderDets}, status=200
     )
 
 def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
@@ -53,11 +53,11 @@ def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
 
     order = Order.objects.get(orderID=orderID)
     
-    if user.role is not "driver":
-        return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+    if user.role != "driver":
+        return JsonResponse({"details": "Invalid User!"}, status=403)
     
     if order.driverAssigned:
-        return JsonResponse({"details": "Order has already been claimed!"}, statuscode=403)
+        return JsonResponse({"details": "Order has already been claimed!"}, status=403)
     
     order.driverAssigned = True
     order.driver = user
@@ -65,9 +65,9 @@ def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
     try:
         order.full_clean()
         order.save()
-        return JsonResponse({"details": "Order has been claimed"}, statuscode=200)
+        return JsonResponse({"details": "Order has been claimed"}, status=200)
     except:
-        return JsonResponse({"details": "Error Saving Order"}, statuscode=500)
+        return JsonResponse({"details": "Error Saving Order"}, status=500)
 
 
 
@@ -82,28 +82,31 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     user = request.user
 
     # Drivers can't be here
     if user.role == "driver":
-        return JsonResponse({"details": "Driver cannot view items"}, statuscode=403)
+        return JsonResponse({"details": "Driver cannot view items"}, status=403)
 
-    org = Organization.objects.get(name=orgName)
-
+    try:
+        org = Organization.objects.get(name=orgName)
+    except:
+        org = None
+        
     if org is None:
-        return JsonResponse({"details": "Organization doesn't exist"}, statuscode=404)
+        return JsonResponse({"details": "Organization doesn't exist"}, status=404)
 
     if user.role == "organization":
         if user != org.creator:
             return JsonResponse(
                 {"details": "User is not the creator for the given organization."},
-                statuscode=401,
+                status=401,
             )
 
     items = org.inv.get_items()
-    return JsonResponse({"items": items}, statuscode=200)
+    return JsonResponse({"items": items}, status=200)
 
 
 @require_http_methods(["POST"])
@@ -113,13 +116,13 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     user = request.user
 
     if user.role != "user":
         return JsonResponse(
-            {"details": "Invalid user role, cannot place order"}, statuscode=403
+            {"details": "Invalid user role, cannot place order"}, status=403
         )
 
     try:
@@ -172,7 +175,7 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     user = request.user
 
@@ -206,11 +209,11 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
                 returnOrders.append(order.get_order_details_org())
 
         case _:
-            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
+            return JsonResponse({"details": "Invalid Role!"}, status=403)
 
     return JsonResponse(
         {"details": "Active Orders Found", "Active Orders": returnOrders},
-        statuscode=200,
+        status=200,
     )
 
 
@@ -221,7 +224,7 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     user = request.user
 
@@ -245,10 +248,10 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
             allOpen.append(order.get_order_details_org())
 
     else:
-        return JsonResponse({"details": "Invalid User Role"}, statuscode=400)
+        return JsonResponse({"details": "Invalid User Role"}, status=400)
 
     return JsonResponse(
-        {"details": "Open Orders Found", "Orders": allOpen}, statuscode=200
+        {"details": "Open Orders Found", "Orders": allOpen}, status=200
     )
 
 
@@ -259,7 +262,7 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     user = request.user
 
@@ -272,7 +275,7 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     order = Order.objects.get(orderID=orderID)
 
     if order is None:
-        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
+        return JsonResponse({"details": "Order does not exist"}, status=404)
 
     currentStatus = order.status
 
@@ -280,15 +283,15 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     orgStatus = [order.StatusTypes.PLACED, order.StatusTypes.PREPARING]
 
     if currentStatus in driverStatus and user.role != "driver":
-        return JsonResponse({"details": "Invalid Role"}, statuscode=401)
+        return JsonResponse({"details": "Invalid Role"}, status=401)
 
     elif currentStatus in orgStatus and user.role != "organization":
-        return JsonResponse({"details": "Invalid Role"}, statuscode=401)
+        return JsonResponse({"details": "Invalid Role"}, status=401)
 
     newStatus = data.get("status")
 
     if order.check_newStatus(newStatus) is False:
-        return JsonResponse({"details": "Invalid New Status"}, statuscode=406)
+        return JsonResponse({"details": "Invalid New Status"}, status=406)
 
     try:
         order.status = newStatus
@@ -296,9 +299,9 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
         order.save()
     except Exception as e:
         print(e)
-        return JsonResponse({"details": "Invalid New Status"}, statuscode=406)
+        return JsonResponse({"details": "Invalid New Status"}, status=406)
 
-    return JsonResponse({"details": "Order Status Updated!"}, statuscode=200)
+    return JsonResponse({"details": "Order Status Updated!"}, status=200)
 
     
 @require_http_methods(["PUT", "GET"])
@@ -312,15 +315,15 @@ def singleOrderAction(request: HttpRequest, orderID: int) -> JsonResponse:
     """
 
     if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+        return JsonResponse({"details": "No User is logged in"}, status=400)
 
     order = Order.objects.get(orderID=orderID)
 
     if order is None:
-        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
+        return JsonResponse({"details": "Order does not exist"}, status=404)
     
     # Claim Order
-    if request.method is "PUT":
+    if request.method == "PUT":
         return claimOrder(request, orderID)
     # Get Order
     else:

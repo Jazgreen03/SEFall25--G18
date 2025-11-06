@@ -56,7 +56,7 @@ class UserManager(DjangoUserManager):
                 username=username, email=email, password=password, **extra_fields
             )
         except IntegrityError as e:
-            raise IntegrityError(f"Duplicate user data: {e}")
+            raise IntegrityError(f"Duplicate user data: {str(e)}")
 
         if password is None:
             user.set_unusable_password()

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "User",
     "Inventory",
     "Organization",
+    "Order",
     "corsheaders",  # Enable CORS support
     "MongoInit",
 ]
