@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from Organization.models import Organization, TYPE_GROCERYSTORE
-from Inventory.models import Inventory, Item
+from Inventory.models import Item
+from Order.models import Order, OrderedItem
 import json
 
 User = get_user_model()
@@ -117,9 +118,11 @@ class testNoLoggedInUser(TestCase):
         response = self.client.get("/order/0/")
         self.assertEqual(response.status_code, 400)
 
-class testGetAvailableItems(BaseOrderTestCase):
-
-    def test_invalid_user(self):
+class testInvalidUserRole(BaseOrderTestCase):
+    def test_invalid_place_order(self):
+        pass
+    
+    def test_invalid_get_available_items(self):
         # Driver
         self.client.force_login(self.user_driver)
         response = self.client.get("/items/bigOrg/")
@@ -130,6 +133,24 @@ class testGetAvailableItems(BaseOrderTestCase):
         response = self.client.get("/items/bigOrg/")
         self.assertEqual(response.status_code, 401)
 
+    def test_invalid_place_order(self):
+        # Driver
+        self.client.force_login(self.user_driver)
+        response = self.client.post("/order/place/")
+        self.assertEqual(response.status_code, 403)
+
+        # Org but not creator
+        self.client.force_login(self.user_org)
+        response = self.client.post("/order/place/")
+        self.assertEqual(response.status_code, 403)
+
+    def test_invalid_get_open_orders(self):
+        # User Account
+        self.client.force_login(self.user_a)
+        response = self.client.get("/orders/open/")
+        self.assertEqual(response.status_code, 403)
+
+class testGetAvailableItems(BaseOrderTestCase):
 
     def test_invalid_org(self):
 
@@ -167,13 +188,6 @@ class testGetAvailableItems(BaseOrderTestCase):
 
 class testPlaceOrder(BaseOrderTestCase):
 
-
-    def test_invalid_user(self):
-        # Driver
-
-        # Org
-        pass
-
     def test_invalid_order(self):
 
         # Org doesnt exist
@@ -195,8 +209,13 @@ class testGetActiveOrders(BaseOrderTestCase):
 
     def setUp(self):
 
-        # User-1 Creates Order
-            # 1 Pasta, 2 Lettuce
+        # User A Creates Order (1 Pasta, 2 Lettuce)
+        self.orderA = Order.objects.create(
+            recipient=self.user_a,
+            associatedOrg=self.org
+        )
+        
+        
 
         # User-2 Creates Order
             # 2 Milk, 3 Lettuce
@@ -206,14 +225,22 @@ class testGetActiveOrders(BaseOrderTestCase):
         return super().setUp()
 
     def test_valid_user(self):
+        # User A only sees their order
+
+
+        # User B only sees their order
 
         pass
 
     def test_valid_org(self):
 
+        # Org sees both Orders
+
         pass
 
     def test_valid_driver(self):
+
+        # Driver only sees their claimed order
 
         pass
 
