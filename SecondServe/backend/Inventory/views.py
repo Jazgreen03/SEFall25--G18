@@ -118,11 +118,16 @@ def add_to_inventory(request: HttpRequest) -> JsonResponse:
     # Get the Inventory
     inv = getInv(request.user)
 
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"details": "Invalid JSON"}, status=400)
+
     # Parse the parameters
-    itemName = request.POST.get("item_name")
-    itemQuantity = request.POST.get("quantity")
-    itemExpiration = request.POST.get("expiration")
-    itemType = request.POST.get("type")
+    itemName = data.get("item_name")
+    itemQuantity = data.get("quantity")
+    itemExpiration = data.get("expiration")
+    itemType = data.get("type")
 
     # Check that all arguments were passed properly
     if (
