@@ -1,4 +1,6 @@
 #!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
 # Check if --use-docker flag is passed to git commit
 USE_DOCKER_HOOKS=true
 for arg in "$@"; do
