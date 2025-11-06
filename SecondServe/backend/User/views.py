@@ -42,7 +42,7 @@ def createUser(request: HttpRequest) -> JsonResponse:
 
     role = data.get("role", "user")
 
-    if (role is "admin"):
+    if role == "admin":
         role = "user"
 
     user = User.objects.create_user(
@@ -51,7 +51,7 @@ def createUser(request: HttpRequest) -> JsonResponse:
         password=password,
         first_name=first_name,
         last_name=last_name,
-        role=role
+        role=role,
     )
 
     if user is not None:

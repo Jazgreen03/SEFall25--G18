@@ -38,7 +38,10 @@
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">JsonResponse</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span><span class="p">,</span> <span class="n">get_user_model</span>
 <span class="kn">from</span> <span class="nn">django.views.decorators.http</span> <span class="kn">import</span> <span class="n">require_http_methods</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span>
 <span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="createUser">
@@ -48,17 +51,22 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a User given the parameters provided in the HTTP Request</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
-    <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid JSON&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">email</span><span class="p">:</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">username</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">email</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Must provide valid Username, Password, and Email&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span>
+            <span class="p">{</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Must provide valid Username/Email and Password&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span>
         <span class="p">)</span>
 
-    <span class="n">first_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">last_name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
     <span class="k">if</span> <span class="p">(</span>
@@ -67,15 +75,22 @@
     <span class="p">):</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Username/Email Already Exists!&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">409</span><span class="p">)</span>
 
-    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span>
-        <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="n">last_name</span>
-    <span class="p">)</span>
-    <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>  <span class="c1"># hash the password</span>
-    <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span>
 
-    <span class="n">authuser</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">authuser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">authuser</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span><span class="p">:</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
+        <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+        <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+        <span class="n">first_name</span><span class="o">=</span><span class="n">first_name</span><span class="p">,</span>
+        <span class="n">last_name</span><span class="o">=</span><span class="n">last_name</span><span class="p">,</span>
+        <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;User Created and Logged in&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">201</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Authentication Failed&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span></div>
 
@@ -88,22 +103,29 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attempts to login a User with Username/Email and a Password</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
-    <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid JSON&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">username</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">email</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">email</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span>
             <span class="p">{</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Must Provide Username/Email and Password&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span>
         <span class="p">)</span>
 
-    <span class="n">User</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">email</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">user_obj</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span>
-            <span class="n">username</span> <span class="o">=</span> <span class="n">user_obj</span><span class="o">.</span><span class="n">username</span>
-        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid credentials&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Username/Email and/or Password&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span>
+            <span class="p">)</span>
+
+        <span class="n">username</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span>
 
     <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -112,7 +134,14 @@
         <span class="p">)</span>
 
     <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;User logged in&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;User logged in&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
+            <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">role</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 
@@ -140,7 +169,6 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;No User is Currently Logged In&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 
-    <span class="c1"># Parse JSON body for PUT requests</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
@@ -152,9 +180,12 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span> <span class="ow">or</span> <span class="n">new_val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Attribute or new value missing&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span><span class="p">)</span>
 
-    <span class="n">allowed_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">]</span>
+    <span class="n">allowed_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;user_type&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_attrs</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Attribute&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;user_type&quot;</span> <span class="ow">and</span> <span class="n">new_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;organization&quot;</span><span class="p">,</span> <span class="s2">&quot;driver&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid user type&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">406</span><span class="p">)</span>
 
     <span class="nb">setattr</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">new_val</span><span class="p">)</span>
     <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -172,10 +203,11 @@
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
         <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
-            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
-            <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span>
-            <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">last_name</span><span class="p">,</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_username</span><span class="p">(),</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_email</span><span class="p">(),</span>
+            <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_first_name</span><span class="p">(),</span>
+            <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_last_name</span><span class="p">(),</span>
+            <span class="s2">&quot;user_type&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_role</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 

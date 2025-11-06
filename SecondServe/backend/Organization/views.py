@@ -29,7 +29,7 @@ def createOrganization(request: HttpRequest) -> JsonResponse:
 
         if userHasOrgRole(request.user) is False:
             return JsonResponse({"details": "User has Invalid Role"}, status=401)
-        
+
         try:
             data = json.loads(request.body)
         except json.JSONDecodeError:

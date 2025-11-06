@@ -18,5 +18,5 @@ urlpatterns = [
     path("orders/", views.getActiveOrders),
     path("orders/open", views.getOpenOrders),
     path("order/<int: id>/update/", views.updateOrder),
-    path("order/<int: id>/", views.getOrder)
+    path("order/<int: id>/", views.getOrder),
 ]

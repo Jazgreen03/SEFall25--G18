@@ -33,8 +33,64 @@
 
           <div class="body" role="main">
             
-  <section id="user-views-module">
-<h1>User.views module<a class="headerlink" href="#user-views-module" title="Link to this heading">¶</a></h1>
+  <section id="module-User.views">
+<span id="user-views-module"></span><h1>User.views module<a class="headerlink" href="#module-User.views" title="Link to this heading">¶</a></h1>
+<p>Manages User Functionality, called by urls.py</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="User.views.createUser">
+<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">createUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#createUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.createUser" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a User given the parameters provided in the HTTP Request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="User.views.getUserInfo">
+<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">getUserInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#getUserInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.getUserInfo" title="Link to this definition">¶</a></dt>
+<dd><p>Returns basic details of the authenticated User</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="User.views.loginUser">
+<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">loginUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#loginUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.loginUser" title="Link to this definition">¶</a></dt>
+<dd><p>Attempts to login a User with Username/Email and a Password</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="User.views.logoutUser">
+<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">logoutUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#logoutUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.logoutUser" title="Link to this definition">¶</a></dt>
+<dd><p>Logs out the authenticated user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="User.views.updateUser">
+<span class="sig-prename descclassname"><span class="pre">User.views.</span></span><span class="sig-name descname"><span class="pre">updateUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/User/views.html#updateUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#User.views.updateUser" title="Link to this definition">¶</a></dt>
+<dd><p>Updates an attribute of the authenticated User</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
