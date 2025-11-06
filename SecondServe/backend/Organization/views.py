@@ -8,13 +8,14 @@ from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 from User.models import User
 from Organization.models import Organization
+import json
 
 
-def userHasLocationPerm(user: User) -> bool:
+def userHasOrgRole(user: User) -> bool:
     """
-    Checks if the Current User has the Location Role
+    Checks if the Current User has the Organization Role
     """
-    return user.get_role() == "location"
+    return user.get_role() == "organization"
 
 
 @require_http_methods(["POST"])
@@ -26,13 +27,18 @@ def createOrganization(request: HttpRequest) -> JsonResponse:
 
     if request.user.is_authenticated:
 
-        if userHasLocationPerm(request.user) is False:
+        if userHasOrgRole(request.user) is False:
             return JsonResponse({"details": "User has Invalid Role"}, status=401)
+        
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"details": "Invalid JSON"}, status=400)
 
         # Parse the data from the request
-        name = request.POST.get("name", "")
-        orgType = request.POST.get("type", "")
-        location = request.POST.get("location", "")
+        name = data.get("name", "")
+        orgType = data.get("type", "")
+        location = data.get("location", "")
 
         # Check if Organization already exists or if location is in use
         if (
