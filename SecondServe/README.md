@@ -103,6 +103,9 @@ It provides a real-time web interface for managing orders, deliveries, and donat
 |                     MongoDB 7                      |
 +----------------------------------------------------+
 ```
+A full list of implemented and planned API calls can be found here:
+[API Calls](https://docs.google.com/document/d/1Paz3SUgvcOmU-nMEijVQT0VJppHPpTnx9fusxWKQEj0/edit?usp=sharing)
+
 ---
 ## 🗂️ Project Structure
 
