@@ -29,7 +29,7 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
 </p>
 
-![](./media/demo.mp4)
+![](media/demo_compressed.mp4)
 *Some defined API calls are not fully implemented on the frontend and are mocked for demonstration purposes*
 
 ---
