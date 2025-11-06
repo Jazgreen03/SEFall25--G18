@@ -12,6 +12,68 @@ import json
 
 User = get_user_model()
 
+#################################
+#   Sub-functionality Methods   #
+#################################
+
+def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
+    """
+    Returns role-specific information about a Placed Order
+    """
+    user = request.user
+
+    order = Order.objects.get(orderID=orderID)
+
+    match user.role:
+        case "user":
+            if user is not order.recipient:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_user()
+        case "organization":
+            org = Organization.objects.get(creator=user)
+            if org is None or org is not order.associatedOrg:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_org()
+        case "driver":
+            if user is not order.driver:
+                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+            orderDets = order.get_order_details_driver()
+        case "admin":
+            orderDets = order.get_order_details_admin()
+        case _:
+            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
+
+    return JsonResponse(
+        {"details": "Order Retreived", "Order": orderDets}, statuscode=200
+    )
+
+def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
+
+    user = request.user
+
+    order = Order.objects.get(orderID=orderID)
+    
+    if user.role is not "driver":
+        return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+    
+    if order.driverAssigned:
+        return JsonResponse({"details": "Order has already been claimed!"}, statuscode=403)
+    
+    order.driverAssigned = True
+    order.driver = user
+
+    try:
+        order.full_clean()
+        order.save()
+        return JsonResponse({"details": "Order has been claimed"}, statuscode=200)
+    except:
+        return JsonResponse({"details": "Error Saving Order"}, statuscode=500)
+
+
+
+#################################
+#           API Calls           #
+#################################
 
 @require_http_methods(["GET"])
 def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
@@ -238,71 +300,28 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
 
     return JsonResponse({"details": "Order Status Updated!"}, statuscode=200)
 
-
-@require_http_methods(["GET"])
-def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
+    
+@require_http_methods(["PUT", "GET"])
+def singleOrderAction(request: HttpRequest, orderID: int) -> JsonResponse:
     """
-    Returns role-specific information about a Placed Order
+    Called when there is an action performed on a single Order Object, mainly to "get" or "claim" the Order
+
+    Based on the request method, it is passed to the appriopate submethod accordingly
+
+    Only accepts PUT and GET requests
     """
 
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
-
-    user = request.user
-
-    order = Order.objects.get(orderID=orderID)
-
-    if order is None:
-        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
-
-    match user.role:
-        case "user":
-            if user is not order.recipient:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
-            orderDets = order.get_order_details_user()
-        case "organization":
-            org = Organization.objects.get(creator=user)
-            if org is None or org is not order.associatedOrg:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
-            orderDets = order.get_order_details_org()
-        case "driver":
-            if user is not order.driver:
-                return JsonResponse({"details": "Invalid User!"}, statuscode=403)
-            orderDets = order.get_order_details_driver()
-        case "admin":
-            orderDets = order.get_order_details_admin()
-        case _:
-            return JsonResponse({"details": "Invalid Role!"}, statuscode=403)
-
-    return JsonResponse(
-        {"details": "Order Retreived", "Order": orderDets}, statuscode=200
-    )
-
-@require_http_methods(["PUT"])
-def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
-
-    if not request.user.is_authenticated:
-        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
-
-    user = request.user
 
     order = Order.objects.get(orderID=orderID)
 
     if order is None:
         return JsonResponse({"details": "Order does not exist"}, statuscode=404)
     
-    if user.role is not "driver":
-        return JsonResponse({"details": "Invalid User!"}, statuscode=403)
-    
-    if order.driverAssigned:
-        return JsonResponse({"details": "Order has already been claimed!"}, statuscode=403)
-    
-    order.driverAssigned = True
-    order.driver = user
-
-    try:
-        order.full_clean()
-        order.save()
-        return JsonResponse({"details": "Order has been claimed"}, statuscode=200)
-    except:
-        return JsonResponse({"details": "Error Saving Order"}, statuscode=500)
+    # Claim Order
+    if request.method is "PUT":
+        return claimOrder(request, orderID)
+    # Get Order
+    else:
+        return getOrder(request, orderID)

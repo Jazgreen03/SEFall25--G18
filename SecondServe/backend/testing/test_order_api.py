@@ -1,22 +1,84 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from Organization.models import Organization, TYPE_GROCERYSTORE
 import json
 
 User = get_user_model()
 
-class testGetAvailableItems(TestCase):
+class BaseOrderTestCase(TestCase):
+    """
+    Sets up a common baseline for test cases evaluating Order functionality
+    """
 
-    def setUp(self):
+    @classmethod
+    def setUpTestCase(self):
+        # Create User Account 1
+        self.user_a = User.objects.create_user(
+            username="userA", email="userA@gmail.com", password="alpha", role="user"
+        )
 
-        # Create Organization with three items in their inventory
+        # Create User Account 2
+        self.user_b = User.objects.create_user(
+            username="userB", email="userB@gmail.com", password="bravo", role="user"
+        )
 
-        return super().setUp()
+        # Create Driver Account
+        self.user_driver = User.objects.create_user(
+            username="driver", email="driving@gmail.com", password="driving", role="driver"
+        )
 
-    def test_invalid_user(self):
-        # Not logged in
+        # Create Organization User Account
+        self.user_org = User.objects.create_user(
+            username="orgUser", email="bigOrg@gmail.com", password="orgo", role="organization"
+        )
+
+        # Create Organization
+        self.org = Organization.objects.create(
+            name="BigOrg",
+            orgType=TYPE_GROCERYSTORE,
+            location="123 Highway NC",
+            user=self.user_org
+        )
+        
+
+        # Create Items for Inventory
+            # Pasta, Shelf Stable, 10, Expires 12-01-25
+            # Lettuce, Produce, 25, Expires 11-15-25
+            # Milk, Refrigderated, 5, Expires 11-30-25
+        
+        pass
+
+
+class testNoLoggedInUser(TestCase):
+
+    def test_get_available_items(self):
         response = self.client.get("/items/basicOrg/")
         self.assertEqual(response.status_code, 400)
 
+    def test_place_order(self):
+        response = self.client.post("/order/place/")
+        self.assertEqual(response.status_code, 400)
+
+    def test_get_active_orders(self):
+        response = self.client.get("/orders/")
+        self.assertEqual(response.status_code, 400)
+
+    def test_get_open_orders(self):
+        response = self.client.get("/orders/open/")
+        self.assertEqual(response.status_code, 400)
+
+    def test_update_order(self):
+        response = self.client.put("/order/0/update/")
+        self.assertEqual(response.status_code, 400)
+
+    def test_single_order_action(self):
+        response = self.client.get("/order/0/")
+        self.assertEqual(response.status_code, 400)
+
+
+class testGetAvailableItems(BaseOrderTestCase):
+
+    def test_invalid_user(self):
         # Driver
 
         # Org but not creator
@@ -35,18 +97,10 @@ class testGetAvailableItems(TestCase):
 
         pass
 
-class testPlaceOrder(TestCase):
-
-    def setUp(self):
-
-        # Create Organization with three items in their inventory
+class testPlaceOrder(BaseOrderTestCase):
 
 
-        return super().setUp()
-    
     def test_invalid_user(self):
-        # Not logged in
-
         # Driver
 
         # Org
@@ -69,21 +123,19 @@ class testPlaceOrder(TestCase):
 
         pass
 
-class testGetActiveOrders(TestCase):
+class testGetActiveOrders(BaseOrderTestCase):
 
     def setUp(self):
 
-        # Create Organization with three items in their inventory
-        # Driver has two claimed orders
-        # User has one claimed order
-        # Organization has three orders
+        # User-1 Creates Order
+            # 1 Pasta, 2 Lettuce
+
+        # User-2 Creates Order
+            # 2 Milk, 3 Lettuce
+
+        # Driver Claims User-2 Order
 
         return super().setUp()
-
-    def test_invalid_user(self):
-        # Not logged in
-
-        pass
 
     def test_valid_user(self):
 
@@ -97,20 +149,19 @@ class testGetActiveOrders(TestCase):
 
         pass
 
-class testGetOpenOrders(TestCase):
+class testGetOpenOrders(BaseOrderTestCase):
 
     def setUp(self):
 
-        # Create Organization with three items in their inventory
-        # Create three orders
-        # Driver A claims 1 order
-        # Driver B sees 2 open orders
+        # User-1 Creates Order
+            # 1 Pasta, 2 Lettuce
+
+        # User-2 Creates Order
+            # 2 Milk, 3 Lettuce
 
         return super().setUp()
 
     def test_invalid_user(self):
-        # Not logged in
-
         # User role
 
         pass
@@ -130,8 +181,6 @@ class testUpdateOrder(TestCase):
         return super().setUp()
 
     def test_invalid_user(self):
-        # Not logged in
-
         # User role
 
         pass
