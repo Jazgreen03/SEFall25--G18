@@ -73,17 +73,6 @@ services:
     networks:
       - appnet
 
-  # === Optional Frontend Test Runner ===
-  frontend-test:
-    build:
-      context: .
-      dockerfile: frontend/test.Dockerfile
-    container_name: frontend-test
-    depends_on:
-      - backend
-    networks:
-      - appnet
-
 # === Shared Docker Network ===
 networks:
   appnet:
