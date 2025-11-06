@@ -64,7 +64,6 @@ export class Login {
     // Ensure CSRF cookie exists first
     await this.getCsrfToken();
 
-
     const csrfToken = getCookie('csrftoken') || '';
     const headers = new HttpHeaders({
       'X-CSRFToken': csrfToken,
@@ -83,12 +82,15 @@ export class Login {
 
           const userRole = res['role'];
 
-          if (userRole !== this.userType) {
+          // First, set the role regardless of what it is
+          this.authService.setRole(userRole);
+
+          // Then check if it matches the selected user type for known roles
+          const knownRoles = ['user', 'organization', 'driver'];
+          if (knownRoles.includes(userRole) && userRole !== this.userType) {
             this.errorMessage = "This account type doesn't match your selection.";
             return;
           }
-
-          this.authService.setRole(userRole);
 
           // ✅ Redirect based on role
           switch (userRole) {

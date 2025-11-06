@@ -4,10 +4,6 @@ import { AuthService } from '../app/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { UserAccountManagement } from '../user-manage-account/user-manage-account';
-import { OrgAccountManagement } from '../org-manage-account/org-manage-account';
-import { DriverAccountManagement } from '../driver-manage-account/driver-manage-account';
-
 @Component({
   selector: 'app-account-management',
   standalone: true,
@@ -37,20 +33,26 @@ export class AccountManagement implements OnInit, AfterViewInit {
     }
   }
 
-  private loadRoleContent(role: string) {
+  private async loadRoleContent(role: string) {
     this.http.get("http://localhost:8000/user/info", { withCredentials: true }).subscribe({
-      next: () => {
+      next: async () => {
         console.log("Role content loading:", role);
         switch (role) {
-          case 'user':
+          case 'user': {
+            const { UserAccountManagement } = await import('../user-manage-account/user-manage-account');
             this.dynamicContent.createComponent(UserAccountManagement);
             break;
-          case 'organization':
+          }
+          case 'organization': {
+            const { OrgAccountManagement } = await import('../org-manage-account/org-manage-account');
             this.dynamicContent.createComponent(OrgAccountManagement);
             break;
-          case 'driver':
+          }
+          case 'driver': {
+            const { DriverAccountManagement } = await import('../driver-manage-account/driver-manage-account');
             this.dynamicContent.createComponent(DriverAccountManagement);
             break;
+          }
           default:
             this.router.navigate(['/']);
         }

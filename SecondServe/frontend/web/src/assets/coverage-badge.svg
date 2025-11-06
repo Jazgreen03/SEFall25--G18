@@ -1,20 +1,20 @@
-<svg width="146" height="20" viewBox="0 0 1460 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="angular coverage: 4.4%">
-  <title>angular coverage: 4.4%</title>
-  <linearGradient id="ZzmYI" x2="0" y2="100%">
+<svg width="153" height="20" viewBox="0 0 1530 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="angular coverage: 51.5%">
+  <title>angular coverage: 51.5%</title>
+  <linearGradient id="AkZqr" x2="0" y2="100%">
     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
     <stop offset="1" stop-opacity=".1"/>
   </linearGradient>
-  <mask id="lYVnL"><rect width="1460" height="200" rx="30" fill="#FFF"/></mask>
-  <g mask="url(#lYVnL)">
+  <mask id="QfEPC"><rect width="1530" height="200" rx="30" fill="#FFF"/></mask>
+  <g mask="url(#QfEPC)">
     <rect width="1060" height="200" fill="#555"/>
-    <rect width="400" height="200" fill="#E43" x="1060"/>
-    <rect width="1460" height="200" fill="url(#ZzmYI)"/>
+    <rect width="470" height="200" fill="#F73" x="1060"/>
+    <rect width="1530" height="200" fill="url(#AkZqr)"/>
   </g>
   <g aria-hidden="true" fill="#fff" text-anchor="start" font-family="Verdana,DejaVu Sans,sans-serif" font-size="110">
     <text x="60" y="148" textLength="960" fill="#000" opacity="0.25">angular coverage</text>
     <text x="50" y="138" textLength="960">angular coverage</text>
-    <text x="1115" y="148" textLength="300" fill="#000" opacity="0.25">4.4%</text>
-    <text x="1105" y="138" textLength="300">4.4%</text>
+    <text x="1115" y="148" textLength="370" fill="#000" opacity="0.25">51.5%</text>
+    <text x="1105" y="138" textLength="370">51.5%</text>
   </g>
   
 </svg>

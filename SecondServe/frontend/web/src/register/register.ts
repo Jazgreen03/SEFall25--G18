@@ -36,11 +36,11 @@ export class Register {
       confirmPassword: ['', [Validators.required]]
     }, { validator: this.passwordsMatchValidator });
 
-    // Step 2 form: additional details
+    // Step 2 form: additional details - ADDED VALIDATORS
     this.detailsForm = this.fb.group({
-      name: [''],
-      address: [''],
-      businessType: ['']
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.minLength(5)]],
+      businessType: ['', [Validators.required]]
     });
   }
 
@@ -77,6 +77,7 @@ export class Register {
 
   /** Step 2 submit: send registration payload to API */
   async onSubmitFinal() {
+    // KEEP the validation check since we now have proper validators
     if (!this.detailsForm.valid) {
       this.markFormGroupTouched(this.detailsForm);
       return;
@@ -90,24 +91,22 @@ export class Register {
 
     const baseData = this.registerForm.value;
     const extraData = this.detailsForm.value;
-    
+
     let mappedUserType = '';
     switch (this.userType) {
-  case 'individual':
-    mappedUserType = 'user';
-    break;
+      case 'individual':
+        mappedUserType = 'user';
+        break;
+      case 'business':
+        mappedUserType = 'organization';
+        break;
+      case 'driver':
+        mappedUserType = 'driver';
+        break;
+      default:
+        mappedUserType = 'user';  // fallback
+    }
 
-  case 'business':
-    mappedUserType = 'organization';
-    break;
-
-  case 'driver':
-    mappedUserType = 'driver';
-    break;
-
-  default:
-    mappedUserType = 'user';  // fallback
-}
     const payload = {
       email: baseData.email,
       password: baseData.password,
@@ -118,7 +117,7 @@ export class Register {
     const csrfToken = getCookie('csrftoken') || '';
     const headers = new HttpHeaders({
       'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json',      // <--- Explicitly tell Django it's JSON
+      'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
 
