@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from Organization.models import Organization, TYPE_GROCERYSTORE
+from Inventory.models import Inventory, Item
 import json
 
 User = get_user_model()
@@ -12,6 +13,18 @@ class BaseOrderTestCase(TestCase):
 
     @classmethod
     def setUpTestCase(self):
+        """
+        Creates four User Accounts, an Organization, and Three Items for the Organization Inventory
+        User Accounts:
+        * userA: userA/alpha, userA@gmail.com, user
+        * userB: userB/bravo, userB@gmail.com, user
+        * user_driver: driver/driving, driving@gmail.com, driver
+        * user_org: orgUser/orgo, bigOrg@gmail.com, organization
+        * user_notOrg: notOrg/orgoNoNo, notOrg@gmail.com, organization
+        """
+
+
+
         # Create User Account 1
         self.user_a = User.objects.create_user(
             username="userA", email="userA@gmail.com", password="alpha", role="user"
@@ -32,6 +45,11 @@ class BaseOrderTestCase(TestCase):
             username="orgUser", email="bigOrg@gmail.com", password="orgo", role="organization"
         )
 
+        # Create Organization User Account (not creator of org)
+        self.user_org_not = User.objects.create_user(
+            username="notOrg", email="notOrg@gmail.com", password="orgoNoNo", role="organization"
+        )
+
         # Create Organization
         self.org = Organization.objects.create(
             name="BigOrg",
@@ -39,20 +57,44 @@ class BaseOrderTestCase(TestCase):
             location="123 Highway NC",
             user=self.user_org
         )
-        
 
-        # Create Items for Inventory
-            # Pasta, Shelf Stable, 10, Expires 12-01-25
-            # Lettuce, Produce, 25, Expires 11-15-25
-            # Milk, Refrigderated, 5, Expires 11-30-25
+        # Create Items for Organization Inventory
+        orgInv = self.org.inv
         
-        pass
+        # Pasta, Shelf Stable, 10, Expires 12-01-25
+        self.itemP = Item.objects.create(
+            name="Pasta",
+            type= Item.ItemType.STABLE,
+            quantity = 10,
+            expiration="December 1, 2025",
+            inventoyr=orgInv
+        ).to_dict()
 
+        # Lettuce, Produce, 25, Expires 11-15-25
+        self.itemL = Item.objects.create(
+            name="Lettuce",
+            type= Item.ItemType.PRODUCE,
+            quantity = 25,
+            expiration="December 1, 2025",
+            inventoyr=orgInv
+        ).to_dict()
+
+        # Milk, Refrigderated, 5, Expires 11-30-25
+        self.itemM = Item.objects.create(
+            name="Milk",
+            type= Item.ItemType.REFRIG,
+            quantity = 5,
+            expiration="November 30, 2025",
+            inventoyr=orgInv
+        ).to_dict()
 
 class testNoLoggedInUser(TestCase):
+    """
+    Tests Order API functionality with no logged in User
+    """
 
     def test_get_available_items(self):
-        response = self.client.get("/items/basicOrg/")
+        response = self.client.get("/items/bigOrg/")
         self.assertEqual(response.status_code, 400)
 
     def test_place_order(self):
@@ -75,27 +117,53 @@ class testNoLoggedInUser(TestCase):
         response = self.client.get("/order/0/")
         self.assertEqual(response.status_code, 400)
 
-
 class testGetAvailableItems(BaseOrderTestCase):
 
     def test_invalid_user(self):
         # Driver
+        self.client.force_login(self.user_driver)
+        response = self.client.get("/items/bigOrg/")
+        self.assertEqual(response.status_code, 403)
 
         # Org but not creator
-
-        pass
+        self.client.force_login(self.user_org_not)
+        response = self.client.get("/items/bigOrg/")
+        self.assertEqual(response.status_code, 401)
 
 
     def test_invalid_org(self):
 
-        # Org doesnt exist
+        self.client.force_login(self.user_a)
 
-        pass
+        response = self.client.get("/items/fakeOrg/")
+        self.assertEqual(response.status_code, 404)
 
 
     def test_valid_get(self):
 
-        pass
+        self.client.force_login(self.user_a)
+
+        response = self.client.get("/items/bigOrg/")
+        self.assertEqual(response.status_code, 200)
+
+        responseItems = response.get("items")
+
+        for item in responseItems:
+            match item["name"]:
+                case "milk":
+                    self.assertEqual(item["type"], self.itemM["type"])
+                    self.assertEqual(item["quantity"], self.itemM["quantity"])
+                    self.assertEqual(item["expiration"], self.itemM["expiration"])
+                case "lettuce":
+                    self.assertEqual(item["type"], self.itemL["type"])
+                    self.assertEqual(item["quantity"], self.itemL["quantity"])
+                    self.assertEqual(item["expiration"], self.itemL.expiration)
+                case "pasta":
+                    self.assertEqual(item["type"], self.itemP["type"])
+                    self.assertEqual(item["quantity"], self.itemP["quantity"])
+                    self.assertEqual(item["expiration"], self.itemP["expiration"])
+                case _:
+                    self.assertFalse(True)
 
 class testPlaceOrder(BaseOrderTestCase):
 
