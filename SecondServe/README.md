@@ -136,7 +136,7 @@ The system runs with 4 main services, all defined in compose.yaml:
 | db | MongoDB instance | 27017 |
 | backend | Django API server | 8000 |
 | frontend | Angular build served via Nginx (production)| 80 |
-| frontend-dev | Angular live-reload dev server | 4200 |
+| angular-dev | Angular live-reload dev server | 4200 |
 
 ### ✅ To start the stack
 ```bash
@@ -148,18 +148,34 @@ Once started
 * 🧪 Frontend (Dev): http://localhost:4200
 * ⚙️ Backend API: http://localhost:8000
 * 📦 MongoDB: mongodb://localhost:27017
+
+By default the database generates the following users:
+* Role: User
+  * Emal: user@example.com
+  * Password: user123
+* Role: Organization
+  * Emal: org@example.com
+  * Password: org123
+* Role: Driver
+  * Emal: driver@example.com
+  * Password: driver123
+
+These default users can be edited or removed in ```./backend/MongoInit/management/commands/create_default_users.py```
+
 ---
 ## 🌍 Environments
 All key environment variables are stored in .env:
 ```env
 DJANGO_SECRET_KEY=your_secret_key
 DEBUG=True
-DJANGO_ALLOWED_HOSTS=localhost
+DJANGO_LOGLEVEL=info
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,localhost:4200
 DATABASE_NAME=dockerdjango
 DATABASE_USERNAME=dbuser
 DATABASE_PASSWORD=dbpassword
 DATABASE_HOST=db
 DATABASE_PORT=27017
+MAPBOX_API_TOKEN=your_api_token
 ```
 
 The Django secret key can be generated using the ```generateKey.py``` script found in the project's root directory.
@@ -185,15 +201,23 @@ npm run docs
 ---
 ## 🔍 Testing & Documentation
 ### Frontend
+Either through the angular-dev container or on a system with the Chrome env path set:
 ```bash 
 npm run test:coverage
+npm run coverage:badge
 npm run docs
 ```
 ### Backend
 While connected to the database through Docker container:
 ```bash 
-pytest --cov
-sphinx-build -b html docs/source docs/build
+coverage run -m pytest
+coverage xml -o coverage.xml
+coverage report -m
+coverage-badge -o docs/source/_static/test_coverage.svg -f
+
+sphinx-apidoc -o docs/source . testing/* mongo_migrations/* docs/* --separate
+docstr-coverage User SecondServe --skip-private --skip-magic --badge docs/source/_static/doc_coverage.svg
+sphinx-build -b html docs/source docs/build/html
 ```
 ### Generated Badges:
 * Angular Documentation Coverage
@@ -211,6 +235,7 @@ To contribute:
 ---
 
 ## 🧭 Future Enhancements
+* Admin control panel
 * Map integration for deliveries
 * Nutrition tracking and balancing for orders
 * Special dietary instructions for deliveries
@@ -221,59 +246,3 @@ To contribute:
 This project is licensed under the MIT License.
 
 Copyright 2025 SecondServe
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Project Structure:
-```
-SecondServe/
-├─ docker-compose.yml      # Docker configurations for running the project
-├─ env.template
-├─ .env                    # Local environment Variables
-├─ README.md
-├─ backend/                # The Django Project (handles Backend and Database functions)
-│  ├─ Dockerfile
-│  ├─ requirements.txt
-│  ├─ manage.py
-│  ├─ SecondServe/
-│  |  ├─ __init__.py
-|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
-│  |  ├─ settings.py       # Django settings used for Project management
-│  |  ├─ urls.py           # API Call Routing (Primarily to the different apps)
-|  |  ├─ asgi.py
-│  |  └─ wsgi.py
-│  ├─ Inventory/           # The Inventory "app" containing all Inventory-related functionality
-│  |  ├─ __init__.py
-|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
-│  |  ├─ models.py         # Data structures for Inventory and Item
-│  |  ├─ urls.py           # API Call Routing
-|  |  └─ views.py          # API Call Management and Execution
-│  ├─ Organization/        # The Organization "app" containing all Organization-related functionality
-│  |  ├─ __init__.py
-|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
-│  |  ├─ models.py         # Data structures for Organization
-│  |  ├─ urls.py           # API Call Routing
-|  |  └─ views.py          # API Call Management and Execution
-│  ├─ User/                # The User "app" containing all User-related functionality
-│  |  ├─ __init__.py
-|  |  ├─ apps.py           # Configurations to make sure ID's match with MongoDB defaults
-│  |  ├─ models.py         # Data structures for User
-│  |  ├─ urls.py           # API Call Routing
-|  |  └─ views.py          # API Call Management and Execution
-│  └─ testing/             # All the test cases for the backend
-│     ├─ test_core.py
-|     ├─ test_inventory_api.py
-|     ├─ test_inventory_models.py
-|     ├─ test_organization_api.py
-|     ├─ test_user_api.py
-│     └─ test_user_models.py
-└─ frontend/               # The Angular Project (handles Frontend functions)
-   ├─ Dockerfile
-   ├─ nginx.conf           # NGINX Config -> Routes backend calls through/from frontend
-   ├─ proxy.conf.json      # dev proxy to backend
-   └─ web/                 # Angular workspace
-```
