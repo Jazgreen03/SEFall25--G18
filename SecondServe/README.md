@@ -29,6 +29,8 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
 </p>
 
+[![SecondServe Demo](https://img.youtube.com/vi/ao3mUNlZECk/maxresdefault.jpg)](https://www.youtube.com/watch?v=ao3mUNlZECk)
+*Some defined API calls are not fully implemented on the frontend and are mocked for demonstration purposes*
 
 ---
 
@@ -101,6 +103,9 @@ It provides a real-time web interface for managing orders, deliveries, and donat
 |                     MongoDB 7                      |
 +----------------------------------------------------+
 ```
+A full list of implemented and planned API calls can be found here:
+[API Calls](https://docs.google.com/document/d/1Paz3SUgvcOmU-nMEijVQT0VJppHPpTnx9fusxWKQEj0/edit?usp=sharing)
+
 ---
 ## 🗂️ Project Structure
 
@@ -219,6 +224,12 @@ sphinx-apidoc -o docs/source . testing/* mongo_migrations/* docs/* --separate
 docstr-coverage User SecondServe --skip-private --skip-magic --badge docs/source/_static/doc_coverage.svg
 sphinx-build -b html docs/source docs/build/html
 ```
+### Documentation and Coverage Reports:
+* Frontend Docs: ```./frontend/web/documentation/index.html```
+* Frontend Coverage Report: ```./frontend/web/coverage/web/index.html```
+* Backend Docs: ```./backend/docs/build/html/index.html```
+* Backend Coverage Report: ```./backend/coverage.xml```
+
 ### Generated Badges:
 * Angular Documentation Coverage
 * Backend Documentation Coverage
