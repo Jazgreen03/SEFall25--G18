@@ -11,11 +11,11 @@ from Organization.models import Organization
 import json
 
 
-def userHasLocationPerm(user: User) -> bool:
+def userHasOrgRole(user: User) -> bool:
     """
-    Checks if the Current User has the Location Role
+    Checks if the Current User has the Organization Role
     """
-    return user.get_role() == "location"
+    return user.get_role() == "organization"
 
 
 @require_http_methods(["POST"])
@@ -27,7 +27,7 @@ def createOrganization(request: HttpRequest) -> JsonResponse:
 
     if request.user.is_authenticated:
 
-        if userHasLocationPerm(request.user) is False:
+        if userHasOrgRole(request.user) is False:
             return JsonResponse({"details": "User has Invalid Role"}, status=401)
         
         try:

@@ -14,6 +14,9 @@ User = get_user_model()
 
 @require_http_methods(["GET"])
 def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
+    """
+    Returns all Items that are available to be ordered by a User
+    """
     
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
@@ -35,6 +38,9 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
     
 @require_http_methods(["POST"])
 def placeOrder(request: HttpRequest) -> JsonResponse:
+    """
+    Allows a User to Place an Order, with one to many sub items
+    """
     
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
@@ -75,6 +81,10 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
         # Create the OrderedItem which will link to the overall Order object
         OrderedItem.objects.create(associatedItem=invItem,associatedOrder=order)
 
+        # Update the organization's inventory by subtracting the numItem from the inventory
+        invItem.quantity = invItem.quantity - itemQuantity
+        invItem.save()
+
     # Return the JSONResponse as a success with the OrderID
     return JsonResponse({"details": "Order has been placed",
                          "orderID": order.orderID}, 
@@ -82,7 +92,10 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
 
 @require_http_methods(["GET"])
 def getActiveOrders(request: HttpRequest) -> JsonResponse:
-    
+    """
+    Returns all Orders that are either active for a User, Claimed by a Driver, or Owned by an Organization
+    """
+
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
     
@@ -125,7 +138,10 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
 
 @require_http_methods(["GET"])
 def getOpenOrders(request: HttpRequest) -> JsonResponse:
-    
+    """
+    Returns all Orders that have not been claimed by a driver, or orders that are not in transit for an Organization
+    """
+
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
     
@@ -152,6 +168,9 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
     
 @require_http_methods(["PUT"])
 def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
+    """
+    Updates an Order status, tracking where the order is at any given time
+    """
     
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
@@ -196,7 +215,11 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
 
 @require_http_methods(["GET"])
 def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
-    
+    """
+    Returns role-specific information about a Placed Order
+    """
+
+
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, statuscode=400)
     

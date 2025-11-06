@@ -24,13 +24,11 @@ def checkUser(user: User) -> JsonResponse | None:
     if user.is_authenticated is False:
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
 
-    if (user.get_role() == "location") is False:
+    if (user.get_role() == "organization") is False:
         return JsonResponse({"details": "User has Invalid Role"}, status=401)
 
     if Organization.objects.filter(creator=user).first() is None:
-        return JsonResponse(
-            {"details": "User is not associated with Organization"}, status=404
-        )
+        return JsonResponse({"details": "User is not associated with Organization"}, status=404)
 
 
 def getInv(user: User) -> Inventory:
@@ -76,8 +74,7 @@ def editItem(attr: str, val: str, item: Item) -> JsonResponse | None:
     try:
         item.full_clean()
         item.save(update_fields=[updatedAttr])
-    except Exception as e:
-        print(e)
+    except:
         # Don't save the item cause its wrong
         return JsonResponse({"details": "Invalid Parameter Values"}, status=406)
 
