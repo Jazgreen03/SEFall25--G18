@@ -30,6 +30,9 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
 
     org = Organization.objects.get(name=orgName)
 
+    if org is None:
+        return JsonResponse({"details": "Organization doesn't exist"}, statuscode=404)
+
     if user.role == "organization":
         if user != org.creator:
             return JsonResponse(
@@ -274,3 +277,32 @@ def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
     return JsonResponse(
         {"details": "Order Retreived", "Order": orderDets}, statuscode=200
     )
+
+@require_http_methods(["PUT"])
+def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
+
+    if not request.user.is_authenticated:
+        return JsonResponse({"details": "No User is logged in"}, statuscode=400)
+
+    user = request.user
+
+    order = Order.objects.get(orderID=orderID)
+
+    if order is None:
+        return JsonResponse({"details": "Order does not exist"}, statuscode=404)
+    
+    if user.role is not "driver":
+        return JsonResponse({"details": "Invalid User!"}, statuscode=403)
+    
+    if order.driverAssigned:
+        return JsonResponse({"details": "Order has already been claimed!"}, statuscode=403)
+    
+    order.driverAssigned = True
+    order.driver = user
+
+    try:
+        order.full_clean()
+        order.save()
+        return JsonResponse({"details": "Order has been claimed"}, statuscode=200)
+    except:
+        return JsonResponse({"details": "Error Saving Order"}, statuscode=500)
