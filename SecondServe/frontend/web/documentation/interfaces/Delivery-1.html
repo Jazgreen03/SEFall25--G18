@@ -140,7 +140,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/driver-home/driver-home.ts</code>
+            <code>src/deliveries/deliveries.ts</code>
         </p>
 
 
@@ -466,10 +466,10 @@ interface Delivery {
   selector: &#x27;app-driver-home&#x27;,
   standalone: true,
   imports: [CommonModule],
-  templateUrl: &#x27;./driver-home.html&#x27;,
-  styleUrls: [&#x27;./driver-home.css&#x27;],
+  templateUrl: &#x27;./deliveries.html&#x27;,
+  styleUrls: [&#x27;./deliveries.css&#x27;],
 })
-export class DriverHome implements OnInit {
+export class Deliveries implements OnInit {
   currentTab: &#x27;account&#x27; | &#x27;orders&#x27; | &#x27;deliveries&#x27; | &#x27;history&#x27; &#x3D; &#x27;deliveries&#x27;;
   deliveries: Delivery[] &#x3D; [];
   loading &#x3D; false;
