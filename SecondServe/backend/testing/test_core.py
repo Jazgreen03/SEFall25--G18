@@ -1,1 +1,1 @@
-# from django.test import TestCases
+# from django.test import TestCase
