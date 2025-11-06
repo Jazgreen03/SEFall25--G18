@@ -1,133 +1,90 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-interface Delivery {
-  id: number;
-  foodName: string;
-  quantity: number;
-  recipient: string;
-  pickupTime: string;
-  driver?: string;
-  status: string;
-}
-
-interface InventoryItem {
-  id: number;
-  name: string;
-  quantity: number;
-  expiryDate: string;
-}
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-org-home',
   standalone: true,
-  imports: [CommonModule],
+  selector: 'app-inventory-management',
   templateUrl: './inventory-management.html',
   styleUrls: ['./inventory-management.css'],
+  imports: [CommonModule, DatePipe],
 })
 export class InventoryManagement implements OnInit {
-  activeDeliveries: Delivery[] = [];
-  inventory: InventoryItem[] = [];
-  loading = false;
-  error: string | null = null;
+  inventory: any[] = [];
+  loading = true;
 
-  private apiUrl = 'http://localhost:8080/api';
-
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.fetchInventory();
   }
 
-  /** Load both active deliveries and inventory items */
-  loadData(): void {
-    this.loading = true;
-    this.error = null;
-
-    // Simulated parallel API calls
-    setTimeout(() => {
-      try {
-        this.activeDeliveries = [
-          {
-            id: 1,
-            foodName: 'Fresh Sandwiches',
-            quantity: 25,
-            recipient: 'Downtown Shelter',
-            pickupTime: new Date('2025-10-31T13:00:00').toISOString(),
-            driver: 'John Doe',
-            status: 'Out for Delivery',
-          },
-          {
-            id: 2,
-            foodName: 'Canned Soup',
-            quantity: 50,
-            recipient: 'Food Aid Center',
-            pickupTime: new Date('2025-10-31T15:30:00').toISOString(),
-            status: 'Pending Pickup',
-          },
-        ];
-
-        this.inventory = [
-          { id: 1, name: 'Bread Loaves', quantity: 40, expiryDate: '2025-11-05' },
-          { id: 2, name: 'Apples', quantity: 100, expiryDate: '2025-11-10' },
-          { id: 3, name: 'Cereal Boxes', quantity: 25, expiryDate: '2025-12-01' },
-        ];
-      } catch (e) {
-        console.error(e);
-        this.error = 'Failed to load data. Please try again.';
-      } finally {
-        this.loading = false;
-      }
-    }, 800);
+  fetchInventory(): void {
+    this.http
+      .get<any>('http://localhost:8000/inventory/', { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          this.inventory = response.inventory || [];
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching inventory:', err);
+          this.loading = false;
+        },
+      });
   }
 
-  /** Reload data manually */
-  reloadData(): void {
-    this.loadData();
-  }
-
-  /** Mark inventory item for donation */
-  donateItem(item: InventoryItem): void {
-    const confirmed = confirm(`Mark "${item.name}" as donated?`);
-    if (!confirmed) return;
-
-    // Simulated API update
-    this.inventory = this.inventory.filter((i) => i.id !== item.id);
-    alert(`${item.name} marked for donation!`);
-  }
-
-  /** View more details about a delivery */
-  viewDeliveryDetails(delivery: Delivery): void {
-    alert(`Viewing details for: ${delivery.foodName}`);
-    // Optionally navigate to delivery details page:
-    // this.router.navigate(['/delivery', delivery.id]);
-  }
-
-  // --- Navigation Methods --- //
+  goToHome(): void {
+  this.router.navigate(['/home']);
+}
 
   goToAccount(): void {
     this.router.navigate(['/account']);
   }
 
-  goToHome(): void {
-    this.router.navigate(['/home']);
+  goToInventory(): void {
+    this.router.navigate(['/inventory-management']);
   }
+
+
+  donateItem(item: any): void {
+    const payload = {
+      item_name: item.name,
+      attributes: ['type'],
+      values: ['donated'],
+    };
+
+    this.http
+      .put('http://localhost:8000/inventory/edit/', payload, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          console.log('Donation marked successfully:', response);
+          this.fetchInventory();
+        },
+        error: (error) => {
+          console.error('Error marking donation:', error);
+        },
+      });
+  }
+
+  // ✅ NEW FUNCTIONS
 
   goToOrders(): void {
-    this.router.navigate(['/history']);
-  }
-
-  goToInventory(): void {
-    this.router.navigate(['/inventory']);
+    this.router.navigate(['/order-history']); // or your actual route name
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    this.http
+      .post('http://localhost:8000/logout/', {}, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          console.log('Logged out successfully');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('Error logging out:', err);
+        },
+      });
   }
 }

@@ -1,7 +1,6 @@
 <div class="inventory-container">
   <!-- Header -->
   <header class="inventory-header">
-    <!-- Logo / Home -->
     <div class="logo">
       <h1
         tabindex="0"
@@ -15,7 +14,6 @@
     </div>
 
     <div class="nav-buttons">
-      <!-- Account button is active since we're on this page -->
       <button class="nav-btn" (click)="goToAccount()">Account</button>
       <button class="nav-btn active" (click)="goToInventory()">Manage Inventory</button>
       <button class="nav-btn" (click)="goToOrders()">Order History</button>
@@ -43,5 +41,9 @@
     <ng-template #noInventory>
       <p class="no-results">All inventory has been donated — great job!</p>
     </ng-template>
+  </section>
+
+  <section *ngIf="loading" class="loading">
+    <p>Loading inventory...</p>
   </section>
 </div>

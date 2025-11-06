@@ -2,17 +2,8 @@
   <!-- Header -->
   <header class="main-header">
     <div class="logo">
-      <h1
-        tabindex="0"
-        (click)="goToHome()"
-        (keyup.enter)="goToHome()"
-        (keyup.space)="goToHome()"
-        style="cursor: pointer"
-      >
-        SecondServe
-      </h1>
+      <h1 (click)="goToHome()">SecondServe</h1>
     </div>
-
     <div class="nav-actions">
       <button class="nav-btn" (click)="goToAccount()">Account</button>
       <button class="nav-btn" (click)="goToInventory()">Manage Inventory</button>
@@ -21,69 +12,123 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero-section">
-    <h2 class="hero-title">Organization Dashboard</h2>
-    <p class="tagline">Manage your donations and track active deliveries</p>
+    <h1 class="hero-title">Organization Dashboard</h1>
+    <p class="tagline">Manage your donations and inventory efficiently</p>
   </section>
 
-  <!-- Loading & Error States -->
-  <div *ngIf="loading" class="loading">
-    <p>Loading data...</p>
-  </div>
+  <!-- Add Inventory Section -->
+  <section class="add-inventory-section">
+    <h2 class="section-heading">➕ Add Inventory Item</h2>
 
-  <div *ngIf="error" class="error">
-    <p>{{ error }}</p>
-    <button (click)="reloadData()" class="btn-secondary">Try Again</button>
-  </div>
+    <form (ngSubmit)="addItem()" class="add-item-form">
+      <input
+        type="text"
+        placeholder="Item Name"
+        [(ngModel)]="newItem.name"
+        name="name"
+        required
+      />
 
-  <!-- Active Deliveries Section -->
-  <section *ngIf="!loading" class="section">
-    <h3 class="section-title">🛻 Active Deliveries</h3>
+      <input
+        type="number"
+        placeholder="Quantity"
+        [(ngModel)]="newItem.quantity"
+        name="quantity"
+        required
+        min="1"
+      />
 
-    <div *ngIf="activeDeliveries.length > 0; else noDeliveries" class="card-grid">
-      <div *ngFor="let delivery of activeDeliveries" class="card">
-        <div class="card-header">
-          <h4>{{ delivery.foodName }}</h4>
-          <span class="status">{{ delivery.status }}</span>
-        </div>
-        <p><strong>Quantity:</strong> {{ delivery.quantity }}</p>
-        <p><strong>Recipient:</strong> {{ delivery.recipient }}</p>
-        <p><strong>Pickup Time:</strong> {{ delivery.pickupTime | date:'short' }}</p>
-        <p><strong>Driver:</strong> {{ delivery.driver || 'Unassigned' }}</p>
-        <div class="actions">
-          <button (click)="viewDeliveryDetails(delivery)" class="btn-secondary">
-            View Details
-          </button>
-        </div>
-      </div>
-    </div>
+      <input
+        type="date"
+        [(ngModel)]="newItem.expiryDate"
+        name="expiryDate"
+        required
+      />
 
-    <ng-template #noDeliveries>
-      <p class="no-results">No active deliveries at the moment.</p>
-    </ng-template>
+      <!-- ✅ Type dropdown for valid Django types -->
+      <select [(ngModel)]="newItem.type" name="type" required>
+        <option value="prepared">Prepared</option>
+        <option value="produce">Produce</option>
+        <option value="refrigerated">Refrigerated</option>
+        <option value="stable">Shelf Stable</option>
+      </select>
+
+      <button type="submit" class="btn-primary">Add Item</button>
+    </form>
   </section>
 
-  <!-- Undonated Inventory Section -->
+  <!-- Inventory Section -->
   <section *ngIf="!loading" class="section">
-    <h3 class="section-title">📦 Inventory Awaiting Donation</h3>
+    <h2 class="section-heading">📦 Inventory List</h2>
 
     <div *ngIf="inventory.length > 0; else noInventory" class="card-grid">
       <div *ngFor="let item of inventory" class="card">
-        <div class="card-header">
-          <h4>{{ item.name }}</h4>
-          <span class="status pending">Not Donated</span>
+        <!-- Normal View -->
+        <div *ngIf="editItemId !== item.id; else editMode">
+          <h3>{{ item.name }}</h3>
+          <p><strong>Type:</strong> {{ item.type }}</p>
+          <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+          <p><strong>Expires:</strong> {{ item.expiryDate | date: 'shortDate' }}</p>
+
+          <div class="actions">
+            <button (click)="editItemId = item.id" class="btn-secondary">Edit</button>
+            <button (click)="donateItem(item)" class="btn-primary">Mark Donated</button>
+          </div>
         </div>
-        <p><strong>Quantity:</strong> {{ item.quantity }}</p>
-        <p><strong>Expires:</strong> {{ item.expiryDate | date:'shortDate' }}</p>
-        <div class="actions">
-          <button (click)="donateItem(item)" class="btn-primary">Mark for Donation</button>
-        </div>
+
+        <!-- Edit Mode -->
+        <ng-template #editMode>
+          <h3>Editing {{ item.name }}</h3>
+
+          <input
+            type="text"
+            [(ngModel)]="item.name"
+            placeholder="Item Name"
+          />
+
+          <input
+            type="number"
+            [(ngModel)]="item.quantity"
+            placeholder="Quantity"
+            min="0"
+          />
+
+          <input
+            type="date"
+            [(ngModel)]="item.expiryDate"
+            placeholder="Expiration"
+          />
+
+          <select [(ngModel)]="item.type">
+            <option value="prepared">Prepared</option>
+            <option value="produce">Produce</option>
+            <option value="refrigerated">Refrigerated</option>
+            <option value="stable">Shelf Stable</option>
+          </select>
+
+
+          <div class="actions">
+            <button (click)="saveEdit(item)" class="btn-primary">Save</button>
+            <button (click)="editItemId = null" class="btn-secondary">Cancel</button>
+          </div>
+        </ng-template>
       </div>
     </div>
 
     <ng-template #noInventory>
-      <p class="no-results">All inventory has been donated — great job!</p>
+      <p class="no-results">No inventory items yet. Add some above!</p>
     </ng-template>
   </section>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading">
+    <p>Loading inventory...</p>
+  </div>
+
+  <!-- Error Display -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
 </div>
