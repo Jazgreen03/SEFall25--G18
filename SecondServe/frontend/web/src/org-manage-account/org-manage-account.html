@@ -36,8 +36,21 @@
 
       <!-- Name -->
       <div class="form-group">
-        <label for="name">Organization Name</label>
-        <input id="name" type="text" [(ngModel)]="user.name" name="name" required />
+        <label for="first-name"> Update Organization Name</label>
+        <input id="first-name" type="text" [(ngModel)]="user.name" name="first_name"required />
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="address">Update Address</label>
+        <input
+          id="address"
+          type="text"
+          [(ngModel)]="user.address"
+          name="address"
+          placeholder="Enter organization address"
+          required
+        />
       </div>
 
       <!-- Password -->

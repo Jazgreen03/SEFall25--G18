@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface User {
   email: string;
-  name: string;
+  first_name: string;
   password?: string;
 }
 
@@ -17,64 +17,100 @@ interface User {
   styleUrls: ['./driver-manage-account.css'],
 })
 export class DriverAccountManagement implements OnInit {
-  user: User = {
-    email: '',
-    name: '',
-  };
-
+  user: User = { email: '', first_name: '' };
   showPassword = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  updating = false;
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://localhost:8000/user'; // Django backend URL
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.loadUser();
+    this.loadUser(); // load current user if session exists
   }
 
+  /** Load currently logged-in user info */
   loadUser(): void {
-    // Fetch current user info
-    this.http.get<User>(`${this.apiUrl}/me`).subscribe({
-      next: (data) => (this.user = data),
-      error: (err) => console.error('Failed to load user', err),
-    });
-  }
-
-  updateAccount(): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(`${this.apiUrl}/update`, this.user, { headers }).subscribe({
-      next: () => {
-        this.successMessage = 'Account updated successfully!';
-        this.errorMessage = null;
-        this.user.password = ''; // clear password field
+    this.http.get<User>(`${this.apiUrl}/info/`, { withCredentials: true }).subscribe({
+      next: (data) => {
+        console.log('Logged in user:', data);
+        this.user = { ...data, password: '' };
       },
       error: (err) => {
-        this.errorMessage = 'Failed to update account.';
-        this.successMessage = null;
-        console.error(err);
+        console.error('Not logged in', err);
+        this.errorMessage = 'You must be logged in to manage your account.';
       },
     });
   }
+
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match = document.cookie.match(/csrftoken=([\w-]+)/);
+    return match ? match[1] : '';
+  }
+
+  /** Update account */
+  async updateAccount(): Promise<void> {
+    this.updating = true;
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    const csrfToken = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
+    });
+
+    try {
+      // First: update first_name
+      await this.http
+        .put(
+          `${this.apiUrl}/update/`,
+          { attribute: 'first_name', new_value: this.user.first_name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+
+      this.successMessage = 'Name updated successfully!';
+
+      // Second: update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'password', new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+
+        this.successMessage += ' Password updated successfully!';
+        this.user.password = '';
+      }
+    } catch (err: any) {
+      console.error('Update failed:', err);
+      this.errorMessage =
+        err.error?.details || 'Failed to update account. Make sure you are logged in.';
+    } finally {
+      this.updating = false;
+    }
+  }
+
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Navigation / Header buttons
   goToAccount(): void {
-    // Already on account page; can optionally reload
     this.loadUser();
   }
 
   goToHome(): void {
-    // Navigate to home page
     window.location.href = '/driver-home';
   }
 
   goToOrders(): void {
-    // Navigate to orders page
     window.location.href = '/driver-history';
   }
 
@@ -83,8 +119,6 @@ export class DriverAccountManagement implements OnInit {
   }
 
   logout(): void {
-    // Clear session / redirect
-    // Example:
     window.location.href = '/login';
   }
 }

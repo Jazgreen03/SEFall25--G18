@@ -80,18 +80,17 @@ export class Login {
           this.isLoading = false;
           this.successMessage = 'Login successful! Redirecting...';
           console.log('Login response:', res);
-
           const userRole = res['role'];
-
           this.authService.setRole(userRole);
 
-          // ✅ Redirect based on role
-          if (userRole == 'user' || userRole == "organization" || userRole == "driver") {
-            this.router.navigate(['/home']);
-          }
-          else {
-            this.router.navigate(['/']);
-          }
+      if (userRole === 'driver' || this.userType === 'driver') {
+        this.router.navigate(['/driver-home']);
+      } else if (userRole === 'organization' || this.userType === 'business') {
+        this.router.navigate(['/org-home']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+
           // switch (userRole) {
           //   case 'user':
           //     break;

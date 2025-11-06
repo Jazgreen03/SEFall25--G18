@@ -5,12 +5,13 @@ Django settings for SecondServe project.
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import sys
+from urllib.parse import quote_plus
 
 # -------------------------------------------------------------------
 # BASE DIR & Load .env
 # -------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Load .env from BASE_DIR or its parent
 dotenv_path = BASE_DIR / ".env"
 if not dotenv_path.exists():
@@ -21,7 +22,7 @@ load_dotenv(dotenv_path)
 # SECURITY
 # -------------------------------------------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dummy-secret-key-for-dev")
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]  # Allow all during development
 
 # -------------------------------------------------------------------
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     "User",
     "Inventory",
     "Organization",
-    "corsheaders",  # Enable CORS support
+    "corsheaders",
 ]
 
 # -------------------------------------------------------------------
@@ -74,19 +75,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "SecondServe.wsgi.application"
 
 # -------------------------------------------------------------------
-# DATABASE
+# DATABASE (MongoDB)
 # -------------------------------------------------------------------
+DB_USER = os.getenv("DATABASE_USERNAME", "rootuser")
+DB_PASSWORD = quote_plus(os.getenv("DATABASE_PASSWORD", "strongpassword123"))
+DB_HOST = os.getenv("DATABASE_HOST", "db")
+DB_PORT = int(os.getenv("DATABASE_PORT", 27017))
+DB_NAME = os.getenv("DATABASE_NAME", "SecondServe")
+DB_AUTH_SOURCE = os.getenv("DATABASE_AUTH_SOURCE", "admin")
+
+MONGO_URI = f"mongodb://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource={DB_AUTH_SOURCE}"
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
-        "HOST": os.getenv("DATABASE_HOST", "db"),
-        "PORT": int(os.getenv("DATABASE_PORT", 27017)),
-        "NAME": os.getenv("DATABASE_NAME", "SecondServe"),
-        "USER": os.getenv("DATABASE_USERNAME", ""),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD", ""),
-        "OPTIONS": {"authSource": os.getenv("DATABASE_AUTH_SOURCE", "admin")},
-        "TEST": {"NAME": os.getenv("DATABASE_TEST_NAME", "SecondServe_test")},
-    },
+        "HOST": MONGO_URI,
+        "NAME": DB_NAME,
+        "TEST": {"NAME": f"{DB_NAME}_test"},
+    }
 }
 
 DATABASE_ROUTERS = ["django_mongodb_backend.routers.MongoRouter"]
@@ -117,8 +124,6 @@ USE_TZ = True
 # STATIC FILES
 # -------------------------------------------------------------------
 STATIC_URL = "/static/"
-
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 
 # MongoDB-specific Migration Modules
@@ -132,15 +137,12 @@ MIGRATION_MODULES = {
 # CORS & CSRF SETTINGS (Angular frontend)
 # -------------------------------------------------------------------
 if DEBUG:
-    # Allow all origins in dev mode
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    # Use environment variable for production-safe configuration
     CORS_ALLOWED_ORIGINS = os.getenv(
         "CORS_ALLOWED_ORIGINS", "http://localhost:4200,http://127.0.0.1:4200"
     ).split(",")
 
-# ✅ CSRF trusted origins (Angular must be included here)
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
@@ -149,16 +151,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_METHODS = [
-    "GET",
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS",
-]
-
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 CORS_ALLOW_HEADERS = [
     "content-type",
     "x-csrftoken",
@@ -174,8 +167,10 @@ CORS_ALLOW_HEADERS = [
     "pragma",
 ]
 
-# Optional: disable automatic slash redirect for APIs
-APPEND_SLASH = True  # Change to False if you prefer URLs without a trailing slash
+
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = False
+APPEND_SLASH = True  # Change to False if you prefer URLs without trailing slash
 
 # -------------------------------------------------------------------
 # DEBUG OUTPUT (optional)
@@ -183,5 +178,5 @@ APPEND_SLASH = True  # Change to False if you prefer URLs without a trailing sla
 if DEBUG:
     print(f"BASE_DIR: {BASE_DIR}")
     print(f"Loaded .env from: {dotenv_path}")
-    print(f"Database host: {os.getenv('DATABASE_HOST', 'db')}")
+    print(f"Database URI: {MONGO_URI}")
     print(f"CSRF_TRUSTED_ORIGINS: {CSRF_TRUSTED_ORIGINS}")

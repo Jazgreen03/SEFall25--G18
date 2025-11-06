@@ -36,6 +36,15 @@
   cursor: pointer;
 }
 
+.account-card {
+  position: relative;
+  z-index: 1;
+}
+
+.password-input-wrapper input {
+  padding-right: 60px; /* avoid toggle button overlap */
+}
+
 .nav-buttons {
   display: flex;
   gap: 12px;

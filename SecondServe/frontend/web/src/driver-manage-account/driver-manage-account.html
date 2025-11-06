@@ -31,13 +31,13 @@
       <!-- Email (read-only) -->
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" type="email" [value]="user.email" readonly />
+        <input id="email" type="email" [(ngModel)]="user.email" name="email" required />
       </div>
 
       <!-- Name -->
       <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" [(ngModel)]="user.name" name="name" required />
+        <label for="first-name">Update Full Name</label>
+        <input id="first-name" type="text" [(ngModel)]="user.first_name" name="first_name" required />
       </div>
 
       <!-- Password -->
