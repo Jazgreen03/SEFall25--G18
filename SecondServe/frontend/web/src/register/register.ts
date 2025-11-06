@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getCookie } from '../../utils';
@@ -55,6 +55,16 @@ export class Register {
   /** Success message display for successful registration */
   successMessage = '';
 
+  private businessTypeValidator(getUserType: () => string): ValidatorFn {
+    return (control: AbstractControl) => {
+      const userType = getUserType();
+      if (userType === 'business' && !control.value) {
+        return { required: true };
+      }
+      return null;
+    };
+  }
+
   /**
    * Component constructor
    * @param fb FormBuilder service for creating reactive forms
@@ -77,7 +87,7 @@ export class Register {
     this.detailsForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
-      businessType: ['', [Validators.required]]
+      businessType: ['', [this.businessTypeValidator(() => this.userType)]]
     });
   }
 
@@ -140,10 +150,13 @@ export class Register {
    */
   async onSubmitFinal() {
     // Validate step 2 form before submission
+    console.log("submit start");
     if (!this.detailsForm.valid) {
       this.markFormGroupTouched(this.detailsForm);
       return;
     }
+    console.log("validate");
+
 
     this.isLoading = true;
     this.errorMessage = '';

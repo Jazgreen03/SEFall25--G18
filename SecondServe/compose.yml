@@ -12,8 +12,7 @@ services:
       - "${DATABASE_PORT:-27017}:27017"
     volumes:
       - mongo_data:/data/db
-      # Optional: initialization scripts (e.g., users or schema setup)
-      # - ./mongo-init/:/docker-entrypoint-initdb.d:ro
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
     env_file:
       - .env
     networks:
@@ -36,6 +35,10 @@ services:
       - db
     networks:
       - appnet
+    command: >
+      sh -c "python manage.py migrate &&
+          python manage.py create_default_users &&
+          python manage.py runserver 0.0.0.0:8000"
 
   # === Angular Frontend (Production via Nginx) ===
   frontend:

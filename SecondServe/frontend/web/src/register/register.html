@@ -92,7 +92,7 @@
       <div class="alert-success" *ngIf="successMessage">{{ successMessage }}</div>
 
       <button type="button" class="submit-btn" (click)="goBack()">Back</button>
-      <button type="submit" class="submit-btn" [disabled]="isLoading">
+      <button type="submit" class="submit-btn" (click)="onSubmitFinal()" [disabled]="isLoading">
         <span *ngIf="!isLoading">Register</span>
         <span *ngIf="isLoading">Registering...</span>
       </button>
