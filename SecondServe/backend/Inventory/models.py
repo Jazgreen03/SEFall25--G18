@@ -46,7 +46,7 @@ class Item(models.Model):
         max_length=13, choices=ItemType.choices, default=TYPE_PREPAREDFOOD
     )
     quantity = models.IntegerField()
-    expiration = models.DateTimeField()
+    expiration =  models.DateField()
     added = models.DateTimeField(auto_now_add=True)
     lastUpdated = models.DateTimeField(auto_now=True)
     inventory = models.ForeignKey(

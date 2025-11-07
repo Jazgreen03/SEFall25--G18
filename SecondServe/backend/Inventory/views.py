@@ -24,7 +24,7 @@ def checkUser(user: User) -> JsonResponse | None:
     if user.is_authenticated is False:
         return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
 
-    if (user.get_role() == "organization") is False:
+    if user.get_role() not in ["organization", "location"]:
         return JsonResponse({"details": "User has Invalid Role"}, status=401)
 
     if Organization.objects.filter(creator=user).first() is None:
@@ -48,9 +48,10 @@ def editItem(attr: str, val: str, item: Item) -> JsonResponse | None:
     """
     Edits a single Attribute of a given Item with a new Value
     """
+    print("EDIT DEBUG → attr:", attr, "val:", val, "type:", type(val))
 
     updatedAttr = ""
-
+    print(f"Editing {attr} with value {val} ({type(val)})")
     match attr:
         case "name":
             updatedAttr = "name"
@@ -68,14 +69,20 @@ def editItem(attr: str, val: str, item: Item) -> JsonResponse | None:
                 return JsonResponse({"details": "Invalid Attribute Passed"}, status=406)
         case "expiration":
             updatedAttr = "expiration"
-            eDate = datetime.strptime(val, "%B %d, %Y").date()
+            try:
+                eDate = datetime.strptime(val, "%Y-%m-%d").date()
+            except ValueError:
+                eDate = datetime.strptime(val, "%B %d, %Y").date()
             item.expiration = eDate
         case _:
             return JsonResponse({"details": "Invalid Attribute Passed"}, status=406)
 
+    
     try:
+        print("VALIDATING ITEM:", item.name, item.quantity, item.expiration)
         item.full_clean()
         item.save(update_fields=[updatedAttr])
+        return None
     except Exception as e:
         print(e)
         # Don't save the item cause its wrong
@@ -117,14 +124,14 @@ def add_to_inventory(request: HttpRequest) -> JsonResponse:
 
     # Get the Inventory
     inv = getInv(request.user)
-
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
-        return JsonResponse({"details": "Invalid JSON"}, status=400)
+        return JsonResponse({"details": "Invalid JSON format"}, status=400)
 
     # Parse the parameters
-    itemName = data.get("item_name")
+    # Parse the parameters
+    itemName = data.get("name")
     itemQuantity = data.get("quantity")
     itemExpiration = data.get("expiration")
     itemType = data.get("type")
@@ -147,7 +154,7 @@ def add_to_inventory(request: HttpRequest) -> JsonResponse:
     # Attempt to create the Item
     try:
         # Convert the expiration date to the proper format
-        eDate = datetime.strptime(itemExpiration, "%B %d, %Y").date()
+        eDate = datetime.strptime(itemExpiration, "%Y-%m-%d").date()
         Item.objects.create(
             name=itemName,
             quantity=itemQuantity,

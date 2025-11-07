@@ -42,8 +42,9 @@ def createUser(request: HttpRequest) -> JsonResponse:
 
     role = data.get("role", "user")
 
-    if role == "admin":
+    if (role == "admin"):
         role = "user"
+    
 
     user = User.objects.create_user(
         username=username,
@@ -51,10 +52,25 @@ def createUser(request: HttpRequest) -> JsonResponse:
         password=password,
         first_name=first_name,
         last_name=last_name,
-        role=role,
+        role=role
     )
 
     if user is not None:
+        from Organization.models import Organization
+        from Inventory.models import Inventory
+
+        if role == "organization":
+            # 1. Create inventory first
+            inv = Inventory.objects.create(org=username)  # or other required args
+
+            # 2. Create organization and link inventory
+            org = Organization.objects.create(
+                name=username,
+                creator=user,
+                inv=inv  # this is the field that must not be None
+            )
+            login(request, user)
+            return JsonResponse({"details": "User Created and Logged in"}, status=201)
         login(request, user)
         return JsonResponse({"details": "User Created and Logged in"}, status=201)
     return JsonResponse({"details": "Authentication Failed"}, status=500)
