@@ -90,9 +90,9 @@ class BaseOrderTestCase(TestCase):
         )
         cls.itemM = cls.itemMItem.to_dict()
 
-        cls.orderListA = [{"pasta", 1}, {"lettuce", 2}]
-        cls.orderListB = [{"milk", 2}, {"lettuce", 3}]
-        cls.fakeOrder = [{"wine", 1}, {"cash", 700}]
+        cls.orderListA = [{"name": "Pasta", "quantity": 1}, {"name": "Lettuce", "quantity": 2}]
+        cls.orderListB = [{"name":"Milk", "quantity":2}, {"name": "Lettuce", "quantity":3}]
+        cls.fakeOrder = [{"name":"wine", "quantity":1}, {"name": "cash", "quantity":700}]
 
 class TestNoLoggedInUser(TestCase):
     """
@@ -185,19 +185,19 @@ class testGetAvailableItems(BaseOrderTestCase):
         responseItems = response.get("items", [])
 
         for item in responseItems:
-            match item["name"]:
+            match item.get("name"):
                 case "milk":
-                    self.assertEqual(item["type"], self.itemM["type"])
-                    self.assertEqual(item["quantity"], self.itemM["quantity"])
-                    self.assertEqual(item["expiration"], self.itemM["expiration"])
+                    self.assertEqual(item.get("type"), self.itemM.get("type"))
+                    self.assertEqual(item.get("quantity"), self.itemM.get("quantity"))
+                    self.assertEqual(item.get("expiration"), self.itemM.get("expiration"))
                 case "lettuce":
-                    self.assertEqual(item["type"], self.itemL["type"])
-                    self.assertEqual(item["quantity"], self.itemL["quantity"])
-                    self.assertEqual(item["expiration"], self.itemL.expiration)
+                    self.assertEqual(item.get("type"), self.itemL.get("type"))
+                    self.assertEqual(item.get("quantity"), self.itemL.get("quantity"))
+                    self.assertEqual(item.get("expiration"), self.itemL.get("expiration"))
                 case "pasta":
-                    self.assertEqual(item["type"], self.itemP["type"])
-                    self.assertEqual(item["quantity"], self.itemP["quantity"])
-                    self.assertEqual(item["expiration"], self.itemP["expiration"])
+                    self.assertEqual(item.get("type"), self.itemP.get("type"))
+                    self.assertEqual(item.get("quantity"), self.itemP.get("quantity"))
+                    self.assertEqual(item.get("expiration"), self.itemP.get("expiration"))
                 case _:
                     self.assertFalse(True)
 
@@ -217,7 +217,7 @@ class testPlaceOrder(BaseOrderTestCase):
         response = self.client.post("/order/place/", data=json.dumps({"organization_name": "BigOrg", "items": self.fakeOrder}), content_type="application/json")
 
         # Invalid quantity
-        response = self.client.post("/order/place/", data=json.dumps({"organization_name": "BigOrg", "items": [{"name": "pasta", "quantity": 100}]}), content_type="application/json")
+        response = self.client.post("/order/place/", data=json.dumps({"organization_name": "BigOrg", "items": [{"name": "Pasta", "quantity": 100}]}), content_type="application/json")
         self.assertEqual(response.status_code, 404)
 
         pass
@@ -227,7 +227,7 @@ class testPlaceOrder(BaseOrderTestCase):
         self.client.force_login(self.user_a)
 
         # Single Item
-        response = self.client.post("/order/place/", data=json.dumps({"organization_name": "BigOrg", "items": [{"name": "pasta", "quantity": 1}]}), content_type="application/json")
+        response = self.client.post("/order/place/", data=json.dumps({"organization_name": "BigOrg", "items": [{"name": "Pasta", "quantity": 1}]}), content_type="application/json")
         self.assertEqual(response.status_code, 201)
 
         self.client.force_login(self.user_b)
@@ -292,69 +292,75 @@ class testGetActiveOrders(UpgradedOrderTestCase):
         self.client.force_login(self.user_a)
         response = self.client.get("/orders/")
         self.assertEqual(response.status_code, 200)
+        orders = response.json().get("Active Orders", [])
+        order = orders[0]
+
+        self.assertEqual(order.get("Order ID"), self.orderA.orderID)
 
 
         # User B only sees their order
         self.client.force_login(self.user_b)
         response = self.client.get("/orders/")
         self.assertEqual(response.status_code, 200)
+        orders = response.json().get("Active Orders", [])
+        order = orders[0]
+
+        self.assertEqual(order.get("Order ID"), self.orderB.orderID)
 
         pass
 
     def test_valid_org(self):
 
         # Org sees both Orders
+        self.client.force_login(self.user_org)
+        response = self.client.get("/orders/")
+        self.assertEqual(response.status_code, 200)
 
-        pass
+        orders = response.json().get("Active Orders", [])
+
+        self.assertEqual(len(orders), 2)
 
     def test_valid_driver(self):
 
         # Driver only sees their claimed order
+        self.client.force_login(self.user_driver)
+        response = self.client.get("/orders/")
+        self.assertEqual(response.status_code, 200)
+
+        orders = response.json().get("Active Orders", [])
+        order = orders[0]
+
+        self.assertEqual(order.get("Order ID"), self.orderB.orderID)
 
         pass
 
 class testGetOpenOrders(UpgradedOrderTestCase):
 
     def setUp(self):
-        
         super().setUp()
 
     def test_valid_org(self):
+        self.client.force_login(self.user_org)
+        response = self.client.get("/orders/open/")
+        self.assertEqual(response.status_code, 200)
 
-        pass
+        # Check there are two orders
+        orders = response.json().get("Orders", [])
 
-    def test_valid_driver(self):
+        self.assertEqual(len(orders), 2)
 
-        pass
-
-
-class testUpdateOrder(UpgradedOrderTestCase):
-
-    def setUp(self):
-        super().setUp()
-
-    def test_invalid_user(self):
-        # User role
-
-        pass
-
-    def test_invalid_status(self):
-
-        # Driver passes org status
-
-        # Org passes Driver status
-
-        # Driver passes invalid status
-        
-        pass
-
-    def test_valid_org(self):
-
-        pass
 
     def test_valid_driver(self):
+        self.client.force_login(self.user_driver)
+        response = self.client.get("/orders/open/")
+        self.assertEqual(response.status_code, 200)
 
-        pass
+        # Check the order pulled matches the right OrderID
+        orders = response.json().get("Orders", [])
+        self.assertEqual(len(orders), 1)
+        order = orders[0]
+
+        self.assertEqual(order.get("Order ID"), self.orderA.orderID)
 
 class testGetOrder(UpgradedOrderTestCase):
     
@@ -366,15 +372,15 @@ class testGetOrder(UpgradedOrderTestCase):
         self.client.force_login(self.user_driver)
 
         # Invalid ID
-        response = self.client.put("/order/0/")
+        response = self.client.get("/order/0/")
         self.assertEqual(response.status_code, 404)
 
     def test_valid_get_order(self):
 
         self.client.force_login(self.user_a)
 
-        response = self.client.put("/order/{self.orderA.orderID}/")
-        self.assertEqual(response.status_code, 404)
+        response = self.client.get(f"/order/{self.orderA.orderID}/")
+        self.assertEqual(response.status_code, 200)
 
 class testClaimOrder(UpgradedOrderTestCase):
     
@@ -390,12 +396,12 @@ class testClaimOrder(UpgradedOrderTestCase):
         self.assertEqual(response.status_code, 404)
 
         # Attempt to claim order already claimed
-        response = self.client.put("/order/{self.orderB.orderID}/")
+        response = self.client.put(f"/order/{self.orderB.orderID}/")
         self.assertEqual(response.status_code, 403)
 
 
     def test_valid_claim(self):
         self.client.force_login(self.user_driver)
 
-        response = self.client.put("/order/{self.orderA.orderID}/")
+        response = self.client.put(f"/order/{self.orderA.orderID}/")
         self.assertEqual(response.status_code, 200)

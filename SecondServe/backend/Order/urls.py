@@ -17,6 +17,6 @@ urlpatterns = [
     path("order/place/", views.placeOrder),
     path("orders/", views.getActiveOrders),
     path("orders/open/", views.getOpenOrders),
-    path("order/<int:orderID>/update/", views.updateOrder),
-    path("order/<int:orderID>/", views.singleOrderAction),
+    path("order/<str:orderID>/update/", views.updateOrder),
+    path("order/<str:orderID>/", views.singleOrderAction),
 ]

@@ -43,7 +43,7 @@ class Order(models.Model):
 
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Customer")
     associatedOrg = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    orderID = models.CharField(unique=True, default=generate_order_id)
+    orderID = models.CharField(max_length=12, unique=True, default=generate_order_id)
     status = models.CharField(
         max_length=25, choices=StatusTypes.choices, default=STATUS_PLACED
     )
@@ -51,7 +51,7 @@ class Order(models.Model):
     driverAssigned = models.BooleanField(default=False)
 
     def get_items(self):
-        self.items.filter(associatedOrder=self)
+        return self.items.filter(associatedOrder=self)
 
     def check_newStatus(self, newStatus) -> bool:
         statusProgression = [
@@ -89,7 +89,7 @@ class Order(models.Model):
 
     def get_simple(self):
         return {
-            "OrderID": self.orderID,
+            "Order ID": self.orderID,
             "Destination": self.recipient.get_first_name(),
             "Organization": self.associatedOrg.name,
             "Current Status": self.status,
@@ -112,7 +112,7 @@ class Order(models.Model):
         description = self.get_description()
 
         if self.driverAssigned:
-            driverStatus = self.driver.get_first_name() & " is assigned to Order"
+            driverStatus = self.driver.get_first_name() + " is assigned to Order"
         else:
             driverStatus = "No Assigned Driver"
 
@@ -128,7 +128,7 @@ class Order(models.Model):
         orgName = self.associatedOrg.name
 
         if self.driverAssigned:
-            driverStatus = self.driver.get_first_name() & " is assigned to Order"
+            driverStatus = self.driver.get_first_name() + " is assigned to Order"
         else:
             driverStatus = "No Assigned Driver"
 
@@ -171,7 +171,7 @@ class OrderedItem(models.Model):
     """
 
     associatedItem = models.ForeignKey(
-        Item, on_delete=models.CASCADE, related_name="items"
+        Item, on_delete=models.CASCADE, related_name="ordered_items"
     )
-    associatedOrder = models.ForeignKey(Order, on_delete=models.CASCADE)
+    associatedOrder = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     numOfItem = models.IntegerField(default=1)

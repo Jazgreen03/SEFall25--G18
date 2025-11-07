@@ -16,7 +16,7 @@ User = get_user_model()
 #   Sub-functionality Methods   #
 #################################
 
-def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
+def getOrder(request: HttpRequest, orderID: str) -> JsonResponse:
     """
     Returns role-specific information about a Placed Order
     """
@@ -26,7 +26,7 @@ def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
 
     match user.role:
         case "user":
-            if user is not order.recipient:
+            if user.id != order.recipient.id:
                 return JsonResponse({"details": "Invalid User!"}, status=403)
             orderDets = order.get_order_details_user()
         case "organization":
@@ -47,7 +47,7 @@ def getOrder(request: HttpRequest, orderID: int) -> JsonResponse:
         {"details": "Order Retreived", "Order": orderDets}, status=200
     )
 
-def claimOrder(request: HttpRequest, orderID: int)  -> JsonResponse:
+def claimOrder(request: HttpRequest, orderID: str)  -> JsonResponse:
 
     user = request.user
 
@@ -106,7 +106,9 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
             )
 
     items = org.inv.get_items()
-    return JsonResponse({"items": items}, status=200)
+
+    returnItems = [item.to_dict() for item in items]
+    return JsonResponse({"items": returnItems}, status=200)
 
 
 @require_http_methods(["POST"])
@@ -198,7 +200,7 @@ def getActiveOrders(request: HttpRequest) -> JsonResponse:
                 returnOrders.append(order.get_order_details_driver())
         case "organization":
             org = Organization.objects.get(creator=user)
-            orders = Order.objects.filter(associatedOrg=org.name)
+            orders = Order.objects.filter(associatedOrg=org)
             returnOrders = []
 
             for order in orders:
@@ -244,8 +246,7 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
                 Order.StatusTypes.PLACED,
                 Order.StatusTypes.PREPARING,
                 Order.StatusTypes.READY,
-            ]
-        )
+            ])
         allOpen = []
         for order in openOrders:
             allOpen.append(order.get_order_details_org())
@@ -259,7 +260,7 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
 
 
 @require_http_methods(["PUT"])
-def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
+def updateOrder(request: HttpRequest, orderID: str) -> JsonResponse:
     """
     Updates an Order status, tracking where the order is at any given time
     """
@@ -311,7 +312,7 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
 
     
 @require_http_methods(["PUT", "GET"])
-def singleOrderAction(request: HttpRequest, orderID: int) -> JsonResponse:
+def singleOrderAction(request: HttpRequest, orderID: str) -> JsonResponse:
     """
     Called when there is an action performed on a single Order Object, mainly to "get" or "claim" the Order
 
