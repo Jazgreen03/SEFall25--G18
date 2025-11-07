@@ -1,6 +1,7 @@
 <div class="inventory-container">
   <!-- Header -->
   <header class="inventory-header">
+    <!-- Logo / Home -->
     <div class="logo">
       <h1
         tabindex="0"
@@ -14,6 +15,7 @@
     </div>
 
     <div class="nav-buttons">
+      <!-- Account button is active since we're on this page -->
       <button class="nav-btn" (click)="goToAccount()">Account</button>
       <button class="nav-btn active" (click)="goToInventory()">Manage Inventory</button>
       <button class="nav-btn" (click)="goToOrders()">Order History</button>
@@ -21,7 +23,6 @@
     </div>
   </header>
 
-  <!-- Inventory Section -->
   <section *ngIf="!loading" class="section">
     <h3 class="section-title">📦 Inventory Awaiting Donation</h3>
 
@@ -29,23 +30,12 @@
       <div *ngFor="let item of inventory" class="card">
         <div class="card-header">
           <h4>{{ item.name }}</h4>
-          <span class="status" [class.donated]="item.donated">
-            {{ item.donated ? 'Donated' : 'Not Donated' }}
-          </span>
+          <span class="status pending">Not Donated</span>
         </div>
         <p><strong>Quantity:</strong> {{ item.quantity }}</p>
-        <p>
-          <strong>Expires:</strong> {{ item.expiryDate ? (item.expiryDate | date:'shortDate') : 'N/A' }}
-        </p>
+        <p><strong>Expires:</strong> {{ item.expiryDate | date:'shortDate' }}</p>
         <div class="actions">
-          <button
-            (click)="donateItem(item)"
-            class="btn-primary"
-            [disabled]="item.quantity <= 0 || item.donated"
-            [style.opacity]="item.quantity <= 0 || item.donated ? 0.5 : 1"
-          >
-            Mark for Donation
-          </button>
+          <button (click)="donateItem(item)" class="btn-primary">Mark for Donation</button>
         </div>
       </div>
     </div>
@@ -53,10 +43,5 @@
     <ng-template #noInventory>
       <p class="no-results">All inventory has been donated — great job!</p>
     </ng-template>
-  </section>
-
-  <!-- Loading -->
-  <section *ngIf="loading" class="loading">
-    <p>Loading inventory...</p>
   </section>
 </div>
