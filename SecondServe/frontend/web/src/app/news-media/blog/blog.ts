@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Blog Component
@@ -53,4 +54,10 @@ export class Blog {
    * The component's visual design and layout are defined in blog.css,
    * while the structure and content presentation are handled in blog.html.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

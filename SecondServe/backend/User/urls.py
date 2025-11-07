@@ -18,4 +18,6 @@ urlpatterns = [
     path("logout/", views.logoutUser),
     path("update/", views.updateUser),
     path("info/", views.getUserInfo),
+    
+    path("all/", views.getAllUsers, name="getAllUsers"),
 ]

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Events Component
@@ -43,4 +44,10 @@ export class Events {
    * The template (events.html) and styles (events.css) contain the actual
    * presentation logic and visual design for the events page.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

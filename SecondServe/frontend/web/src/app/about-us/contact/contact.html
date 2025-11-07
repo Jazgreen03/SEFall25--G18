@@ -9,26 +9,51 @@
 </head>
 
 <body>
-  <!-- ---------------- Header ---------------- -->
+  <!-- ================= Header ================= -->
   <header>
-    <div class="logo">SECOND SERVE</div>
+    <div class="logo">
+      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"
+        style="cursor: pointer">
+        SecondServe
+      </h1>
+    </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="community.html">Community</a>
-      <a href="restaurants.html">Restaurants</a>
-      <a href="events.html">Events</a>
-      <a href="blog.html">Blog</a>
-      <a href="mission.html">Mission</a>
-      <a href="contact.html" class="active">Contact</a>
+      <div class="nav-left">
+        <div class="dropdown">
+          <a href="#">Resources</a>
+          <div class="dropdown-content">
+            <a href="/donate">Donate</a>
+            <a href="/restaurants">Restaurants</a>
+            <a href="/community">Community Centers</a>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <a href="#">Media & About</a>
+          <div class="dropdown-content">
+            <a href="/events">Events</a>
+            <a href="/blog">Blog</a>
+            <a href="/mission">Mission</a>
+            <a href="/contact">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <a href="/login" class="login-btn">Login</a>
+      </div>
     </nav>
   </header>
 
-  <!-- ---------------- Contact Section ---------------- -->
-  <section class="contact-hero">
-    <h1>Contact Us</h1>
-    <p>We’d love to hear from you! Reach out with any questions, partnerships, or ideas.</p>
+  <!-- ================= Hero Section ================= -->
+  <section class="hero-section contact-hero">
+    <div class="hero-text">
+      <h1>Contact Us</h1>
+      <p>We’d love to hear from you! Reach out with any questions, partnerships, or ideas.</p>
+    </div>
   </section>
 
+  <!-- ================= Contact Cards ================= -->
   <section class="contact-info">
     <div class="contact-card">
       <h2>Email</h2>
@@ -46,7 +71,7 @@
     </div>
   </section>
 
-  <!-- ---------------- Footer ---------------- -->
+  <!-- ================= Footer ================= -->
   <footer>
     <p>© 2025 SecondServe | Connecting communities through food and compassion.</p>
   </footer>

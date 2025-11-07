@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
+
 /**
  * User data structure for account management
  * Represents user profile information for display and updates
  */
 interface User {
   email: string;
-  name: string;
+  first_name: string;
   address: string;
   password?: string;
 }
@@ -30,11 +32,12 @@ interface User {
   templateUrl: './user-manage-account.html',
   styleUrls: ['./user-manage-account.css'],
 })
+
 export class UserAccountManagement implements OnInit {
   /** Current user profile data */
   user: User = {
     email: '',
-    name: '',
+    first_name: '',
     address: '',
   };
 
@@ -46,8 +49,9 @@ export class UserAccountManagement implements OnInit {
 
   /** Error message for user feedback */
   errorMessage: string | null = null;
+  updating = false;
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://localhost:8000/user'; // Django backend URL
 
   constructor(private http: HttpClient) { }
 
@@ -55,29 +59,138 @@ export class UserAccountManagement implements OnInit {
     this.loadUser();
   }
 
-  /** Loads current user data from API */
+  /** Load currently logged-in user info */
   loadUser(): void {
-    this.http.get<User>(`${this.apiUrl}/me`).subscribe({
-      next: (data) => (this.user = data),
-      error: (err) => console.error('Failed to load user', err),
+    this.http.get<User>(`${this.apiUrl}/info/`, { withCredentials: true }).subscribe({
+      next: (data) => {
+        this.user = { ...data, password: '' };
+        console.log('Logged in user:', data);
+      },
+      error: (err) => {
+        console.error('Not logged in', err);
+        this.errorMessage = 'You must be logged in to manage your account.';
+      },
     });
   }
 
-  /** Updates user account information via API */
-  updateAccount(): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(`${this.apiUrl}/update`, this.user, { headers }).subscribe({
-      next: () => {
-        this.successMessage = 'Account updated successfully!';
-        this.errorMessage = null;
-        this.user.password = ''; // clear password field
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to update account.';
-        this.successMessage = null;
-        console.error(err);
-      },
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match = document.cookie.match(/csrftoken=([\w-]+)/);
+    return match ? match[1] : '';
+  }
+
+  /** Update account attributes (first_name, address, password) */
+  async updateAccount(): Promise<void> {
+    this.updating = true;
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCsrfToken(),
     });
+
+    try {
+      // Update first_name
+      await this.http
+        .put(
+          `${this.apiUrl}/update/`,
+          { attribute: 'first_name', new_value: this.user.first_name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+      this.successMessage = 'Name updated successfully!';
+
+      // Update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'password', new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage += ' Password updated successfully!';
+        this.user.password = '';
+      }
+
+      // Update address (if you handle it on backend)
+      if (this.user.address) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'address', new_value: this.user.address },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage += ' Address updated successfully!';
+      }
+    } catch (err) {
+      console.error('Update failed:', err);
+      this.errorMessage = 'Failed to update account. Make sure you are logged in.';
+    } finally {
+      this.updating = false;
+    }
+  }
+
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match = document.cookie.match(/csrftoken=([\w-]+)/);
+    return match ? match[1] : '';
+  }
+
+  /** Update account attributes (first_name, address, password) */
+  async updateAccount(): Promise<void> {
+    this.updating = true;
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': this.getCsrfToken(),
+    });
+
+    try {
+      // Update first_name
+      await this.http
+        .put(
+          `${this.apiUrl}/update/`,
+          { attribute: 'first_name', new_value: this.user.first_name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+      this.successMessage = 'Name updated successfully!';
+
+      // Update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'password', new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage += ' Password updated successfully!';
+        this.user.password = '';
+      }
+
+      // Update address (if you handle it on backend)
+      if (this.user.address) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'address', new_value: this.user.address },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage += ' Address updated successfully!';
+      }
+    } catch (err) {
+      console.error('Update failed:', err);
+      this.errorMessage = 'Failed to update account. Make sure you are logged in.';
+    } finally {
+      this.updating = false;
+    }
   }
 
   /** Toggles password field visibility */
@@ -89,7 +202,7 @@ export class UserAccountManagement implements OnInit {
 
   /** Reloads current account page */
   goToAccount(): void {
-    this.loadUser();
+    this.loadUser(); // reload user info
   }
 
   /** Navigates to home page */

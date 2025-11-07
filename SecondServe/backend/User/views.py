@@ -100,7 +100,7 @@ def loginUser(request: HttpRequest) -> JsonResponse:
         {
             "details": "User logged in",
             "email": user.email,
-            "role": user.role,
+            "role": user.get_role(),
         },
         status=200,
     )
@@ -136,16 +136,24 @@ def updateUser(request: HttpRequest) -> JsonResponse:
     if not attr or new_val is None:
         return JsonResponse({"details": "Attribute or new value missing"}, status=406)
 
-    allowed_attrs = ["first_name", "last_name", "email", "user_type"]
+    allowed_attrs = ["first_name", "last_name", "email", "user_type", "password", "address"]
     if attr not in allowed_attrs:
         return JsonResponse({"details": "Invalid Attribute"}, status=406)
 
-    if attr == "user_type" and new_val not in ["user", "organization", "driver"]:
-        return JsonResponse({"details": "Invalid user type"}, status=406)
+    # Special handling for user_type
+    if attr == "user_type":
+        if new_val not in ["user", "organization", "driver"]:
+            return JsonResponse({"details": "Invalid user type"}, status=406)
+        setattr(request.user, attr, new_val)
+    # Special handling for password
+    elif attr == "password":
+        request.user.set_password(new_val)
+    else:
+        setattr(request.user, attr, new_val)
 
-    setattr(request.user, attr, new_val)
     request.user.save()
     return JsonResponse({"details": "Attribute Updated"}, status=200)
+
 
 
 @require_http_methods(["GET"])
@@ -165,3 +173,16 @@ def getUserInfo(request: HttpRequest) -> JsonResponse:
         return JsonResponse(info, status=200)
 
     return JsonResponse({"details": "No User is Currently Logged In"}, status=400)
+
+@require_http_methods(["GET"])
+@csrf_exempt  # optional, but helpful if accessed from frontend directly
+def getAllUsers(request: HttpRequest) -> JsonResponse:
+    """
+    Returns a list of all registered users with basic info.
+    """
+    users = User.objects.all().values("id", "username", "email", "first_name", "last_name")
+
+    # Convert QuerySet to list for JsonResponse
+    user_list = list(users)
+
+    return JsonResponse(user_list, safe=False, status=200)

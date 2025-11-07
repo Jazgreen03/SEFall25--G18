@@ -101,7 +101,6 @@ export class Login {
           this.isLoading = false;
           this.successMessage = 'Login successful! Redirecting...';
           console.log('Login response:', res);
-
           const userRole = res['role'];
 
           // Set role in auth service for application-wide access

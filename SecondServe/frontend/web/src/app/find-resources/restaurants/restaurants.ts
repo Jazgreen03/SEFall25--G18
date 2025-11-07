@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Restaurants Component
@@ -60,4 +61,10 @@ export class Restaurants {
    * while the restaurant listing structure and user interface elements are handled in restaurants.html.
    * RouterModule integration allows for seamless navigation to individual restaurant detail pages.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

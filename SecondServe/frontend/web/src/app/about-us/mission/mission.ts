@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Mission Component
@@ -62,4 +63,10 @@ export class Mission {
    * RouterModule integration allows for easy navigation to related About Us pages such as
    * Contact information or team details.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

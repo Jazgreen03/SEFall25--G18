@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Donate Component
@@ -56,4 +57,10 @@ export class Donate {
    * The component's visual design and responsive layout are defined in donate.css,
    * while the donation form structure and user interaction are handled in donate.html.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Community Component
@@ -63,4 +64,11 @@ export class Community {
    * RouterModule integration enables seamless navigation to detailed organization profiles
    * and related community services.
    */
+
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

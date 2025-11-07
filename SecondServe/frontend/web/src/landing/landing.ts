@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 /**
  * Landing Component
@@ -23,4 +24,10 @@ export class Landing {
    * Landing page component - serves as the application's homepage
    * Provides introduction to the platform and navigation to key sections
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }

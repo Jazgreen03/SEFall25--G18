@@ -13,6 +13,15 @@ interface Delivery {
   status: 'Pending' | 'Accepted' | 'Completed';
 }
 
+interface ClaimedOrder {
+  id: number;
+  status: 'Pending' | 'In Transit' | 'Delivered';
+  deliveryAddress: string;
+  items: { name: string; quantity: number }[];
+  organization: string;
+}
+
+
 @Component({
   selector: 'app-driver-home',
   standalone: true,
@@ -22,7 +31,8 @@ interface Delivery {
 })
 export class DriverHome implements OnInit {
   currentTab: 'account' | 'orders' | 'deliveries' | 'history' = 'deliveries';
-  deliveries: Delivery[] = [];
+  deliveries: Delivery[] = [];        // Open deliveries
+  claimedOrders: ClaimedOrder[] = [];  // Orders already claimed by driver
   loading = false;
   error: string | null = null;
 
@@ -35,6 +45,7 @@ export class DriverHome implements OnInit {
 
   ngOnInit(): void {
     this.loadDeliveries();
+    this.loadClaimedOrders();
   }
 
   // --- Navigation Methods --- //
@@ -79,8 +90,28 @@ export class DriverHome implements OnInit {
     });
   }
 
+  loadClaimedOrders(): void {
+    this.loading = true;
+    this.error = null;
+
+    this.http.get<ClaimedOrder[]>(`${this.apiUrl}/orders/`).subscribe({
+      next: (data) => {
+        this.claimedOrders = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load claimed orders.';
+        this.loading = false;
+        console.error('Error loading claimed orders:', err);
+      },
+    });
+  }
+
+
+
   refreshDeliveries(): void {
     this.loadDeliveries();
+    this.loadClaimedOrders();
   }
 
   acceptDelivery(delivery: Delivery): void {
@@ -99,4 +130,17 @@ export class DriverHome implements OnInit {
         },
       });
   }
+
+  updateOrderStatus(orderId: number, newStatus: 'In Transit' | 'Delivered') {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.put(`${this.apiUrl}/order/${orderId}/update/`, { new_status: newStatus }, { headers })
+    .subscribe({
+      next: () => {
+        alert(`Order ${orderId} updated to ${newStatus}`);
+        this.loadClaimedOrders(); // reload claimed orders
+      },
+      error: (err) => console.error('Failed to update order:', err)
+    });
+}
+
 }
