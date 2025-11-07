@@ -1,10 +1,25 @@
 # frontend/Dockerfile.dev
 FROM node:22-alpine
+
+# Install system dependencies
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+
+# Set up Chrome environment variable
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    PUPPETEER_SKIP_DOWNLOAD=true
+
+# Workdir
 WORKDIR /app
+
+# Copy dependencies
 COPY frontend/web/package*.json ./
 RUN npm ci --legacy-peer-deps
-#COPY frontend/web/ ./
-# Add this line:
+
+# Copy proxy config (and optionally the rest of the source)
 COPY frontend/proxy.conf.json ./proxy.conf.json
+# COPY frontend/web/ ./   # uncomment when needed
+
 EXPOSE 4200
+
+# Start Angular in dev mode
 CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--proxy-config", "/app/proxy.conf.json"]

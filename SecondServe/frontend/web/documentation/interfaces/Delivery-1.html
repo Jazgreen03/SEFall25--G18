@@ -480,7 +480,7 @@ export class DriverHome implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadDeliveries();
@@ -489,16 +489,16 @@ export class DriverHome implements OnInit {
   // --- Navigation Methods --- //
   goToAccount(): void {
     this.currentTab &#x3D; &#x27;account&#x27;;
-    this.router.navigate([&#x27;/driver-account&#x27;]);
+    this.router.navigate([&#x27;/account&#x27;]);
   }
 
   goToOrders(): void {
     this.currentTab &#x3D; &#x27;orders&#x27;;
-    this.router.navigate([&#x27;/driver-history&#x27;]);
+    this.router.navigate([&#x27;/history&#x27;]);
   }
 
   goToHome(): void {
-    window.location.href &#x3D; &#x27;/driver-home&#x27;;
+    window.location.href &#x3D; &#x27;/home&#x27;;
   }
 
   goToDeliveries(): void {

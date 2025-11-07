@@ -18,18 +18,18 @@ interface Order {
   styleUrls: ['./driver-order-history.css'],
 })
 export class DriverOrderHistory implements OnInit {
-  currentTab: 'account' | 'orders' | 'deliveries' = 'deliveries';
-  orders: Order[] = [];
+  currentTab: 'account' | 'history' | 'deliveries' = 'deliveries';
+  history: Order[] = [];
   loading = false;
   error: string | null = null;
-  activeTab = 'orders';
+  activeTab = 'history';
 
   private apiUrl = 'http://localhost:8080/api';
 
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadOrders();
@@ -37,14 +37,14 @@ export class DriverOrderHistory implements OnInit {
 
   // --- Navigation Methods --- //
   goToHome(): void {
-    this.router.navigate(['/driver-home']);
+    this.router.navigate(['/home']);
   }
 
   goToAccount(): void {
-    this.router.navigate(['/driver-account']);
+    this.router.navigate(['/account']);
   }
 
-  goToOrders(): void {
+  goToHistory(): void {
     this.activeTab = 'orders';
     this.loadOrders();
   }
@@ -65,7 +65,7 @@ export class DriverOrderHistory implements OnInit {
 
     this.http.get<Order[]>(`${this.apiUrl}/driver/orders`).subscribe({
       next: (data) => {
-        this.orders = data;
+        this.history = data;
         this.loading = false;
       },
       error: (err) => {

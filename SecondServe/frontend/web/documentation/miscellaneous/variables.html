@@ -425,32 +425,77 @@ This is used to serve static assets like JS, CSS, and images.</p>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>[
+  // CORE APPLICATION ROUTES
+  /** Default route - Landing page shown at application root */
   { path: &#x27;&#x27;, component: Landing },
+
+  /** Main dashboard/home page after authentication */
   { path: &#x27;home&#x27;, component: Home },
-  //{ path: &#x27;user-home&#x27;, component: UserHome },
-  { path: &#x27;org-home&#x27;, component: OrgHome },
-  { path: &#x27;driver-home&#x27;, component: DriverHome },
+
+  /** User authentication routes */
   { path: &#x27;login&#x27;, component: Login },
   { path: &#x27;register&#x27;, component: Register },
-  { path: &#x27;user-account&#x27;, component: UserAccountManagement },
-  { path: &#x27;org-account&#x27;, component: OrgAccountManagement },
-  { path: &#x27;driver-account&#x27;, component: DriverAccountManagement },
-  { path: &#x27;user-history&#x27;, component: UserOrderHistory },
-  { path: &#x27;org-history&#x27;, component: OrgOrderHistory },
-  { path: &#x27;driver-history&#x27;, component: DriverOrderHistory },
+
+  // USER MANAGEMENT ROUTES
+  /** User account settings and profile management */
+  { path: &#x27;account&#x27;, component: AccountManagement },
+
+  /** User order history and past transactions */
+  { path: &#x27;history&#x27;, component: OrderHistory },
+
+  // OPERATIONS ROUTES
+  /** Inventory management for businesses/organizations */
   { path: &#x27;inventory&#x27;, component: InventoryManagement },
+
+  /** Delivery tracking and management system */
   { path: &#x27;deliveries&#x27;, component: Deliveries },
+
+  // GET INVOLVED ROUTES
+  /** Donation portal for contributors and supporters */
   { path: &#x27;donate&#x27;, component: Donate },
+
+  // RESOURCE DIRECTORY ROUTES
+  /** Restaurant directory and food resource listings */
   { path: &#x27;restaurants&#x27;, component: Restaurants },
+
+  /** Community resources and local organization directory */
   { path: &#x27;community&#x27;, component: Community },
+
+  // NEWS &amp; MEDIA ROUTES
+  /** Events calendar and upcoming community events */
   { path: &#x27;events&#x27;, component: Events },
+
+  /** Blog articles and news updates */
   { path: &#x27;blog&#x27;, component: Blog },
+
+  // ABOUT US ROUTES
+  /** Company mission, vision, and values information */
   { path: &#x27;mission&#x27;, component: Mission },
+
+  /** Contact form and company contact information */
   { path: &#x27;contact&#x27;, component: Contact }
 ]</code>
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Application Routes Configuration</p>
+<p>Defines the routing structure for the entire Angular application.
+Maps URL paths to their corresponding components for navigation.</p>
+<p>Route Categories:</p>
+<ul>
+<li>Core Application: Landing, authentication, main dashboard</li>
+<li>User Management: Account settings, order history</li>
+<li>Operations: Inventory, deliveries management</li>
+<li>Get Involved: Donation and contribution flows</li>
+<li>Resources: Restaurant and community resource directories</li>
+<li>News &amp; Media: Events, blog content</li>
+<li>About Us: Company information and contact</li>
+</ul>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -477,6 +522,20 @@ This is used to serve static assets like JS, CSS, and images.</p>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>[
+  /**
+   * Catch-all route configuration
+   * 
+   * Applies prerendering to ALL application routes using the wildcard pattern &#x27;**&#x27;
+   * This means every route in the application will be pre-rendered as static HTML
+   * during the build process, providing:
+   * - Faster initial page loads
+   * - Better SEO through server-rendered content
+   * - Improved performance on slow client devices
+   * - Consistent rendering across different environments
+   * 
+   * @path &#x27;**&#x27; - Matches all routes in the application
+   * @renderMode RenderMode.Prerender - Enables static generation at build time
+   */
   {
     path: &#x27;**&#x27;,
     renderMode: RenderMode.Prerender
@@ -485,6 +544,16 @@ This is used to serve static assets like JS, CSS, and images.</p>
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Server-Side Rendering (SSR) Routes Configuration</p>
+<p>Defines rendering strategies for Angular Universal server-side rendering.
+Configures how different routes should be handled during server-side rendering.</p>
+<p>This configuration enables static site generation (prerendering) for all routes,
+providing optimal performance and SEO benefits across the entire application.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>

@@ -35,6 +35,10 @@ services:
       - db
     networks:
       - appnet
+    command: >
+      sh -c "python manage.py migrate &&
+          python manage.py create_default_users &&
+          python manage.py runserver 0.0.0.0:8000"
 
   # === Angular Frontend (Production via Nginx) ===
   frontend:
@@ -64,17 +68,6 @@ services:
     command: npm run start -- --host 0.0.0.0 --port 4200 --poll=1000 --proxy-config /app/proxy.conf.json
     ports:
       - "4200:4200"
-    depends_on:
-      - backend
-    networks:
-      - appnet
-
-  # === Optional Frontend Test Runner ===
-  frontend-test:
-    build:
-      context: .
-      dockerfile: frontend/test.Dockerfile
-    container_name: frontend-test
     depends_on:
       - backend
     networks:

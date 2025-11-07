@@ -26,7 +26,7 @@ export class OrgAccountManagement implements OnInit {
 
   private apiUrl = 'http://localhost:8000/user'; // backend URL for org routes
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -117,11 +117,13 @@ export class OrgAccountManagement implements OnInit {
   }
 
   goToHome(): void {
-    window.location.href = '/org-home';
+    // Navigate to home page
+    window.location.href = '/home';
   }
 
   goToOrders(): void {
-    window.location.href = '/org-history';
+    // Navigate to orders page
+    window.location.href = '/history';
   }
 
   goToInventory(): void {

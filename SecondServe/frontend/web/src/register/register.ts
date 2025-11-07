@@ -33,7 +33,8 @@ export class Register {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      name: [''] 
     }, { validator: this.passwordsMatchValidator });
 
     // Step 2 form: additional details
@@ -109,6 +110,7 @@ export class Register {
     mappedUserType = 'user';  // fallback
 }
     const payload = {
+      username: baseData.name || baseData.email,
       email: baseData.email,
       password: baseData.password,
       role: mappedUserType,
@@ -131,7 +133,7 @@ export class Register {
         },
         error: (err) => {
           this.isLoading = false;
-          this.errorMessage = err.error?.message || 'Registration failed.';
+          this.errorMessage = err.error?.details || 'Registration failed.';
         }
       });
   }

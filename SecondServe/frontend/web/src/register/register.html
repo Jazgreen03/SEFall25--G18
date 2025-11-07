@@ -67,16 +67,16 @@
           <span *ngIf="registerForm?.errors?.['mismatch']">Passwords do not match</span>
         </span>
       </div>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" formControlName="name" type="text" placeholder="Enter your name">
+      </div>
 
       <button type="submit" class="submit-btn">Next</button>
     </form>
 
     <!-- Step 2: Additional Details -->
     <form *ngIf="currentStep === 2" [formGroup]="detailsForm" (ngSubmit)="onSubmitFinal()" class="register-form">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input id="name" formControlName="name" type="text" placeholder="Enter your name">
-      </div>
 
       <div class="form-group" *ngIf="userType !== 'driver'">
         <label for="address">Address</label>

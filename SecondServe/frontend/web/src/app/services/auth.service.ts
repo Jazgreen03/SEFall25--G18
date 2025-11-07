@@ -2,6 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+/**
+ * Authentication Service
+ * 
+ * Manages user role information in memory and session storage.
+ * Provides role-based authentication state across the application.
+ * 
+ * @injectable providedIn: 'root'
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -11,14 +19,20 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  /** Set user role and persist it */
+  /**
+   * Sets the user role in memory and session storage
+   * @param role The user role to store
+   */
   setRole(role: string) {
     console.log('AuthService: setRole ->', role);
     this.role = role;
     localStorage.setItem('userRole', role);
   }
 
-  /** Get user role, fallback to localStorage */
+  /**
+   * Gets the current user role
+   * @returns The user role or null if not set
+   */
   getRole(): string | null {
     if (!this.role) {
       this.role = localStorage.getItem('userRole');

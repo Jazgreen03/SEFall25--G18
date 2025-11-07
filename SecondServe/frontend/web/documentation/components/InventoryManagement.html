@@ -1000,7 +1000,7 @@ export class InventoryManagement implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -1073,15 +1073,15 @@ export class InventoryManagement implements OnInit {
   // --- Navigation Methods --- //
 
   goToAccount(): void {
-    this.router.navigate([&#x27;/org-account&#x27;]);
+    this.router.navigate([&#x27;/account&#x27;]);
   }
 
   goToHome(): void {
-    this.router.navigate([&#x27;/org-home&#x27;]);
+    this.router.navigate([&#x27;/home&#x27;]);
   }
 
   goToOrders(): void {
-    this.router.navigate([&#x27;/org-history&#x27;]);
+    this.router.navigate([&#x27;/history&#x27;]);
   }
 
   goToInventory(): void {
@@ -1473,7 +1473,7 @@ header h1 {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><div class="inventory-container">  <!-- Header -->  <header class="inventory-header">    <!-- Logo / Home -->    <div class="logo">      <h1        tabindex="0"        (click)="goToHome()"        (keyup.enter)="goToHome()"        (keyup.space)="goToHome()"        style="cursor: pointer"      >        SecondServe      </h1>    </div>    <div class="nav-buttons">      <!-- Account button is active since we\'re on this page -->      <button class="nav-btn" (click)="goToAccount()">Account</button>      <button class="nav-btn active" (click)="goToInventory()">Manage Inventory</button>      <button class="nav-btn" (click)="goToOrders()">Order History</button>      <button class="logout-btn" (click)="logout()">Logout</button>    </div>  </header>  <section *ngIf="!loading" class="section">    <h3 class="section-title">📦 Inventory Awaiting Donation</h3>    <div *ngIf="inventory.length > 0; else noInventory" class="card-grid">      <div *ngFor="let item of inventory" class="card">        <div class="card-header">          <h4>{{ item.name }}</h4>          <span class="status pending">Not Donated</span>        </div>        <p><strong>Quantity:</strong> {{ item.quantity }}</p>        <p><strong>Expires:</strong> {{ item.expiryDate | date:\'shortDate\' }}</p>        <div class="actions">          <button (click)="donateItem(item)" class="btn-primary">Mark for Donation</button>        </div>      </div>    </div>    <ng-template #noInventory>      <p class="no-results">All inventory has been donated — great job!</p>    </ng-template>  </section></div></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'InventoryManagement'};
 </script>

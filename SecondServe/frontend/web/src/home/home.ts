@@ -37,9 +37,11 @@ export class Home implements AfterViewInit {
         this.dynamicContent.createComponent(UserHome);
         break;
       case 'organization':
+        console.log("Loading Organization home");
         this.dynamicContent.createComponent(OrgHome);
         break;
       case 'driver':
+        console.log("Loading Driver home");
         this.dynamicContent.createComponent(DriverHome);
         break;
       default:

@@ -22,7 +22,7 @@ load_dotenv(dotenv_path)
 # SECURITY
 # -------------------------------------------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dummy-secret-key-for-dev")
-DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
+DEBUG = True
 ALLOWED_HOSTS = ["*"]  # Allow all during development
 
 # -------------------------------------------------------------------
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "User",
     "Inventory",
     "Organization",
-    "corsheaders",
+    "corsheaders",  # Enable CORS support
 ]
 
 # -------------------------------------------------------------------

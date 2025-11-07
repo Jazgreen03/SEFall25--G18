@@ -10,7 +10,7 @@
     <div class="nav-actions">
       <button class="nav-btn" (click)="goToAccount()">Account</button>
       <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
-      <button class="nav-btn active" (click)="goToOrders()">Order History</button>
+      <button class="nav-btn active" (click)="goToHistory()">Order History</button>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </header>
@@ -34,8 +34,8 @@
   </div>
 
   <!-- Orders List -->
-  <div *ngIf="!loading && orders.length > 0" class="orders-section">
-    <div class="order-card" *ngFor="let order of orders">
+  <div *ngIf="!loading && history.length > 0" class="orders-section">
+    <div class="order-card" *ngFor="let order of history">
       <div class="order-header">
         <h3>Order #{{ order.id }}</h3>
         <span class="order-status" [ngClass]="order.status.toLowerCase()">{{ order.status }}</span>
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div *ngIf="!loading && orders.length === 0" class="no-orders">
+  <div *ngIf="!loading && history.length === 0" class="no-orders">
     <p>You have no past orders.</p>
   </div>
 </div>
