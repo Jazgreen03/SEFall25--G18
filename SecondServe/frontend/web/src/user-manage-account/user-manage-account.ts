@@ -133,65 +133,6 @@ export class UserAccountManagement implements OnInit {
     }
   }
 
-  /** Fetch CSRF token from cookie */
-  getCsrfToken(): string {
-    const match = document.cookie.match(/csrftoken=([\w-]+)/);
-    return match ? match[1] : '';
-  }
-
-  /** Update account attributes (first_name, address, password) */
-  async updateAccount(): Promise<void> {
-    this.updating = true;
-    this.successMessage = null;
-    this.errorMessage = null;
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-CSRFToken': this.getCsrfToken(),
-    });
-
-    try {
-      // Update first_name
-      await this.http
-        .put(
-          `${this.apiUrl}/update/`,
-          { attribute: 'first_name', new_value: this.user.first_name },
-          { headers, withCredentials: true }
-        )
-        .toPromise();
-      this.successMessage = 'Name updated successfully!';
-
-      // Update password if provided
-      if (this.user.password) {
-        await this.http
-          .put(
-            `${this.apiUrl}/update/`,
-            { attribute: 'password', new_value: this.user.password },
-            { headers, withCredentials: true }
-          )
-          .toPromise();
-        this.successMessage += ' Password updated successfully!';
-        this.user.password = '';
-      }
-
-      // Update address (if you handle it on backend)
-      if (this.user.address) {
-        await this.http
-          .put(
-            `${this.apiUrl}/update/`,
-            { attribute: 'address', new_value: this.user.address },
-            { headers, withCredentials: true }
-          )
-          .toPromise();
-        this.successMessage += ' Address updated successfully!';
-      }
-    } catch (err) {
-      console.error('Update failed:', err);
-      this.errorMessage = 'Failed to update account. Make sure you are logged in.';
-    } finally {
-      this.updating = false;
-    }
-  }
 
   /** Toggles password field visibility */
   togglePassword(): void {

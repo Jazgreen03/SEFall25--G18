@@ -41,17 +41,10 @@ export const routes: Routes = [
   /** Main dashboard/home page after authentication */
   { path: 'home', component: Home },
   //{ path: 'user-home', component: UserHome },
-  { path: 'org-home', component: OrgHome },
-  { path: 'driver-home', component: DriverHome },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
-  { path: 'user-account', component: UserAccountManagement },
-  { path: 'org-account', component: OrgAccountManagement },
-  { path: 'driver-home', component: DriverHome },
-  { path: 'driver-account', component: DriverAccountManagement },
-  { path: 'user-history', component: UserOrderHistory },
-  { path: 'org-history', component: OrgOrderHistory },
-  { path: 'driver-history', component: DriverOrderHistory },
+  { path: 'driver-account', component: AccountManagement },
+  { path: 'user-history', component: OrderHistory },
 
   // USER MANAGEMENT ROUTES
   /** User account settings and profile management */
