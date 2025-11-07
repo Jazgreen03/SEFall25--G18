@@ -227,13 +227,151 @@ within the community.</p>
     </table>
 </section>
 
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goToHome" >goToHome</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
 
 
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/find-resources/restaurants/restaurants.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Restaurants Component</p>
+<p>This component serves as the main interface for discovering and interacting with
+restaurant resources within the platform. The actual implementation of restaurant
+listings, search functionality, and user interactions are handled in the associated
+template and style files.</p>
+<p>Potential future enhancements may include:</p>
+<ul>
+<li>Advanced search and filtering (by distance, ratings, dietary needs)</li>
+<li>Real-time inventory integration for food availability</li>
+<li>Online ordering and reservation capabilities</li>
+<li>User reviews and rating system</li>
+<li>Restaurant owner dashboards for menu management</li>
+<li>Integration with food delivery services</li>
+<li>Wait time and busy hour indicators</li>
+<li>Special offers and promotions display</li>
+<li>Social features (sharing restaurants, following favorites)</li>
+</ul>
+<p>The component&#39;s responsive design and visual presentation are defined in restaurants.css,
+while the restaurant listing structure and user interface elements are handled in restaurants.html.
+RouterModule integration allows for seamless navigation to individual restaurant detail pages.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
 
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToHome"></a>
+                    <span class="name">
+                        <span ><b>goToHome</b></span>
+                        <a href="#goToHome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToHome()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/find-resources/restaurants/restaurants.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </div>
 
@@ -242,6 +380,7 @@ within the community.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 /**
  * Restaurants Component
@@ -301,12 +440,20 @@ export class Restaurants {
    * while the restaurant listing structure and user interface elements are handled in restaurants.html.
    * RouterModule integration allows for seamless navigation to individual restaurant detail pages.
    */
-}</code></pre>
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate([&#x27;/&#x27;]);
+  }
+}
+</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang&#x3D;&quot;en&quot;&gt;
+
 &lt;head&gt;
   &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
   &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
@@ -318,18 +465,41 @@ export class Restaurants {
   &lt;!-- Your CSS --&gt;
   &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;restaurants.css&quot;&gt;
 &lt;/head&gt;
+
 &lt;body&gt;
   &lt;!-- ---------------- Header ---------------- --&gt;
   &lt;header&gt;
-    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;
+      &lt;h1 tabindex&#x3D;&quot;0&quot; (click)&#x3D;&quot;goToHome()&quot; (keyup.enter)&#x3D;&quot;goToHome()&quot; (keyup.space)&#x3D;&quot;goToHome()&quot;
+        style&#x3D;&quot;cursor: pointer&quot;&gt;
+        SecondServe
+      &lt;/h1&gt;
+    &lt;/div&gt;
     &lt;nav&gt;
-      &lt;a href&#x3D;&quot;index.html&quot;&gt;Home&lt;/a&gt;
-      &lt;a href&#x3D;&quot;community.html&quot;&gt;Community&lt;/a&gt;
-      &lt;a href&#x3D;&quot;restaurants.html&quot; class&#x3D;&quot;active&quot;&gt;Restaurants&lt;/a&gt;
-      &lt;a href&#x3D;&quot;events.html&quot;&gt;Events&lt;/a&gt;
-      &lt;a href&#x3D;&quot;blog.html&quot;&gt;Blog&lt;/a&gt;
-      &lt;a href&#x3D;&quot;mission.html&quot;&gt;Mission&lt;/a&gt;
-      &lt;a href&#x3D;&quot;contact.html&quot;&gt;Contact&lt;/a&gt;
+      &lt;div class&#x3D;&quot;nav-left&quot;&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Resources&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Media &amp; About&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;nav-right&quot;&gt;
+        &lt;a href&#x3D;&quot;/login&quot; class&#x3D;&quot;login-btn&quot;&gt;Login&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt;
 
@@ -348,7 +518,7 @@ export class Restaurants {
   &lt;!-- Leaflet JS --&gt;
   &lt;script src&#x3D;&quot;https://unpkg.com/leaflet/dist/leaflet.js&quot;&gt;&lt;/script&gt;
   &lt;script&gt;
-    document.addEventListener(&quot;DOMContentLoaded&quot;, function() {
+    document.addEventListener(&quot;DOMContentLoaded&quot;, function () {
       // Initialize map
       const map &#x3D; L.map(&#x27;sponsor-map&#x27;).setView([39.8283, -98.5795], 4);
 
@@ -368,14 +538,14 @@ export class Restaurants {
       sponsors.forEach(sponsor &#x3D;&gt; {
         const marker &#x3D; L.marker(sponsor.coords).addTo(map);
         marker.bindPopup(&#x60;&lt;b&gt;${sponsor.name}&lt;/b&gt;&lt;br&gt;${sponsor.type}&lt;br&gt;Availability: ${sponsor.availability}&#x60;);
-        marker.on(&#x27;mouseover&#x27;, function() { this.openPopup(); });
-        marker.on(&#x27;mouseout&#x27;, function() { this.closePopup(); });
+        marker.on(&#x27;mouseover&#x27;, function () { this.openPopup(); });
+        marker.on(&#x27;mouseout&#x27;, function () { this.closePopup(); });
       });
     });
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+
+&lt;/html&gt;</code></pre>
     </div>
 
 
@@ -404,7 +574,7 @@ export class Restaurants {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Partner Restaurants | SecondServe</title>  <!-- Leaflet CSS -->  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />  <!-- Your CSS -->  <link rel="stylesheet" href="restaurants.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html" class="active">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html">Mission</a>      <a href="contact.html">Contact</a>    </nav>  </header>  <!-- ---------------- Sponsor Map Section ---------------- -->  <section id="sponsor-map-section">    <h2>Find Restaurants / Grocery Stores Supporting SecondServe</h2>    <p>Hover over locations to see availability.</p>    <div id="sponsor-map"></div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Connecting surplus food to those in need.</p>  </footer>  <!-- Leaflet JS -->  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  <script>    document.addEventListener("DOMContentLoaded", function() {      // Initialize map      const map = L.map(\'sponsor-map\').setView([39.8283, -98.5795], 4);      // Add OpenStreetMap layer      L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {        attribution: \'© OpenStreetMap contributors\'      }).addTo(map);      // Example sponsor locations      const sponsors = [        { name: "Joe\'s Deli", type: "Restaurant", coords: [40.7128, -74.0060], availability: "Yes" },        { name: "FreshMart", type: "Grocery Store", coords: [34.0522, -118.2437], availability: "Limited" },        { name: "Tasty Eats", type: "Restaurant", coords: [41.8781, -87.6298], availability: "Yes" }      ];      // Add markers      sponsors.forEach(sponsor => {        const marker = L.marker(sponsor.coords).addTo(map);        marker.bindPopup(`<b>${sponsor.name}</b><br>${sponsor.type}<br>Availability: ${sponsor.availability}`);        marker.on(\'mouseover\', function() { this.openPopup(); });        marker.on(\'mouseout\', function() { this.closePopup(); });      });    });  </script></body></html></div>'
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Partner Restaurants | SecondServe</title>  <!-- Leaflet CSS -->  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />  <!-- Your CSS -->  <link rel="stylesheet" href="restaurants.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer">        SecondServe      </h1>    </div>    <nav>      <div class="nav-left">        <div class="dropdown">          <a href="#">Resources</a>          <div class="dropdown-content">            <a href="/donate">Donate</a>            <a href="/restaurants">Restaurants</a>            <a href="/community">Community Centers</a>          </div>        </div>        <div class="dropdown">          <a href="#">Media & About</a>          <div class="dropdown-content">            <a href="/events">Events</a>            <a href="/blog">Blog</a>            <a href="/mission">Mission</a>            <a href="/contact">Contact</a>          </div>        </div>      </div>      <div class="nav-right">        <a href="/login" class="login-btn">Login</a>      </div>    </nav>  </header>  <!-- ---------------- Sponsor Map Section ---------------- -->  <section id="sponsor-map-section">    <h2>Find Restaurants / Grocery Stores Supporting SecondServe</h2>    <p>Hover over locations to see availability.</p>    <div id="sponsor-map"></div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Connecting surplus food to those in need.</p>  </footer>  <!-- Leaflet JS -->  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  <script>    document.addEventListener("DOMContentLoaded", function () {      // Initialize map      const map = L.map(\'sponsor-map\').setView([39.8283, -98.5795], 4);      // Add OpenStreetMap layer      L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {        attribution: \'© OpenStreetMap contributors\'      }).addTo(map);      // Example sponsor locations      const sponsors = [        { name: "Joe\'s Deli", type: "Restaurant", coords: [40.7128, -74.0060], availability: "Yes" },        { name: "FreshMart", type: "Grocery Store", coords: [34.0522, -118.2437], availability: "Limited" },        { name: "Tasty Eats", type: "Restaurant", coords: [41.8781, -87.6298], availability: "Yes" }      ];      // Add markers      sponsors.forEach(sponsor => {        const marker = L.marker(sponsor.coords).addTo(map);        marker.bindPopup(`<b>${sponsor.name}</b><br>${sponsor.type}<br>Availability: ${sponsor.availability}`);        marker.on(\'mouseover\', function () { this.openPopup(); });        marker.on(\'mouseout\', function () { this.closePopup(); });      });    });  </script></body></html></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Restaurants'};

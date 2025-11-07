@@ -163,11 +163,11 @@ Provides role-based authentication state across the application.</p>
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#role" >role</a>
+                                <a href="#apiUrl" >apiUrl</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#roleKey" >roleKey</a>
+                                <a href="#role" >role</a>
                             </li>
                         </ul>
                     </td>
@@ -185,7 +185,16 @@ Provides role-based authentication state across the application.</p>
                                 <a href="#clearRole" >clearRole</a>
                             </li>
                             <li>
+                                <a href="#getCurrentUser" >getCurrentUser</a>
+                            </li>
+                            <li>
                                 <a href="#getRole" >getRole</a>
+                            </li>
+                            <li>
+                                <a href="#login" >login</a>
+                            </li>
+                            <li>
+                                <a href="#logout" >logout</a>
                             </li>
                             <li>
                                 <a href="#setRole" >setRole</a>
@@ -202,6 +211,54 @@ Provides role-based authentication state across the application.</p>
     </table>
 </section>
 
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/services/auth.service.ts:18</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
             <section data-compodoc="block-methods">
     
@@ -228,19 +285,58 @@ Provides role-based authentication state across the application.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="42"
-                                    class="link-to-prism">src/app/services/auth.service.ts:42</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/services/auth.service.ts:45</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Clears the user role from memory and session storage</p>
+                        <div class="io-description"><p>Clear role from memory and storage</p>
 </div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCurrentUser"></a>
+                    <span class="name">
+                        <span ><b>getCurrentUser</b></span>
+                        <a href="#getCurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCurrentUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/services/auth.service.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Get current user info from backend (requires session cookie)</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
 
                         </div>
                 </td>
@@ -267,8 +363,8 @@ Provides role-based authentication state across the application.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="29"
-                                    class="link-to-prism">src/app/services/auth.service.ts:29</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/services/auth.service.ts:36</a></div>
                         </td>
                     </tr>
 
@@ -294,6 +390,126 @@ Provides role-based authentication state across the application.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="login"></a>
+                    <span class="name">
+                        <span ><b>login</b></span>
+                        <a href="#login"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>login(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/app/services/auth.service.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Login user, store session cookie automatically</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>password</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                        <span ><b>logout</b></span>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>logout()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/services/auth.service.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Logout user and clear stored role</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="setRole"></a>
                     <span class="name">
                         <span ><b>setRole</b></span>
@@ -310,8 +526,8 @@ Provides role-based authentication state across the application.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="20"
-                                    class="link-to-prism">src/app/services/auth.service.ts:20</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/app/services/auth.service.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -374,6 +590,38 @@ Provides role-based authentication state across the application.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="apiUrl"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>apiUrl</b></span>
+                        <a href="#apiUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;http://localhost:8000/user&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/services/auth.service.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="role"></a>
                     <span class="name">
                             <span class="modifier">Private</span>
@@ -395,39 +643,7 @@ Provides role-based authentication state across the application.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/auth.service.ts:14</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="roleKey"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>roleKey</b></span>
-                        <a href="#roleKey"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;userRole&#x27;</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/auth.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/auth.service.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -441,6 +657,8 @@ Provides role-based authentication state across the application.</p>
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { Observable, tap } from &#x27;rxjs&#x27;;
 
 /**
  * Authentication Service
@@ -450,18 +668,23 @@ Provides role-based authentication state across the application.</p>
  * 
  * @injectable providedIn: &#x27;root&#x27;
  */
-@Injectable({ providedIn: &#x27;root&#x27; })
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
 export class AuthService {
-  private roleKey &#x3D; &#x27;userRole&#x27;;
   private role: string | null &#x3D; null;
+  private apiUrl &#x3D; &#x27;http://localhost:8000/user&#x27;; // Django backend URL
+
+  constructor(private http: HttpClient) {}
 
   /**
    * Sets the user role in memory and session storage
    * @param role The user role to store
    */
   setRole(role: string) {
+    console.log(&#x27;AuthService: setRole -&gt;&#x27;, role);
     this.role &#x3D; role;
-    sessionStorage.setItem(this.roleKey, role);
+    localStorage.setItem(&#x27;userRole&#x27;, role);
   }
 
   /**
@@ -469,21 +692,45 @@ export class AuthService {
    * @returns The user role or null if not set
    */
   getRole(): string | null {
-    // If already stored in memory, return it
-    if (this.role) return this.role;
-
-    // Otherwise retrieve from sessionStorage
-    const stored &#x3D; sessionStorage.getItem(this.roleKey);
-    this.role &#x3D; stored;
-    return stored;
+    if (!this.role) {
+      this.role &#x3D; localStorage.getItem(&#x27;userRole&#x27;);
+    }
+    console.log(&#x27;AuthService: getRole -&gt;&#x27;, this.role);
+    return this.role;
   }
 
-  /**
-   * Clears the user role from memory and session storage
-   */
+  /** Clear role from memory and storage */
   clearRole() {
     this.role &#x3D; null;
-    sessionStorage.removeItem(this.roleKey);
+    localStorage.removeItem(&#x27;userRole&#x27;);
+  }
+
+  /** Login user, store session cookie automatically */
+  login(email: string, password: string): Observable&lt;any&gt; {
+    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+    return this.http.post(
+      &#x60;${this.apiUrl}/login/&#x60;,
+      { email, password },
+      { headers, withCredentials: true } // important: keeps session cookie
+    ).pipe(
+      tap((res: any) &#x3D;&gt; {
+        if (res?.role) {
+          this.setRole(res.role); // store role after login
+        }
+      })
+    );
+  }
+
+  /** Logout user and clear stored role */
+  logout(): Observable&lt;any&gt; {
+    return this.http.post(&#x60;${this.apiUrl}/logout/&#x60;, {}, { withCredentials: true }).pipe(
+      tap(() &#x3D;&gt; this.clearRole())
+    );
+  }
+
+  /** Get current user info from backend (requires session cookie) */
+  getCurrentUser(): Observable&lt;any&gt; {
+    return this.http.get(&#x60;${this.apiUrl}/info/&#x60;, { withCredentials: true });
   }
 }</code></pre>
     </div>

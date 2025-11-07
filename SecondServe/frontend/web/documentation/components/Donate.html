@@ -226,13 +226,148 @@ one-time donations, recurring contributions, and donation amount selection.</p>
     </table>
 </section>
 
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goToHome" >goToHome</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
 
 
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/get-involved/donate/donate.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Donate Component</p>
+<p>This component serves as the main container for donation-related functionality.
+The actual donation forms, payment processing, and user interface elements
+are implemented in the associated template and style files.</p>
+<p>Potential future enhancements may include:</p>
+<ul>
+<li>Integration with payment processors (Stripe, PayPal, etc.)</li>
+<li>Recurring donation scheduling</li>
+<li>Donation tier benefits display</li>
+<li>Corporate matching donation information</li>
+<li>Donation impact visualization</li>
+<li>Multiple currency support</li>
+<li>Tax deduction information</li>
+<li>Donation history for returning donors</li>
+</ul>
+<p>The component&#39;s visual design and responsive layout are defined in donate.css,
+while the donation form structure and user interaction are handled in donate.html.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
 
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToHome"></a>
+                    <span class="name">
+                        <span ><b>goToHome</b></span>
+                        <a href="#goToHome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToHome()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/get-involved/donate/donate.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </div>
 
@@ -241,6 +376,7 @@ one-time donations, recurring contributions, and donation amount selection.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 /**
  * Donate Component
@@ -296,84 +432,135 @@ export class Donate {
    * The component&#x27;s visual design and responsive layout are defined in donate.css,
    * while the donation form structure and user interaction are handled in donate.html.
    */
-}</code></pre>
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate([&#x27;/&#x27;]);
+  }
+}
+</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">
-&lt;header&gt;
-  &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
-&lt;/header&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang&#x3D;&quot;en&quot;&gt;
 
-&lt;section class&#x3D;&quot;hero-section&quot;&gt;
-  &lt;h1&gt;Make a Donation&lt;/h1&gt;
-  &lt;p&gt;
-    Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish communities.
-  &lt;/p&gt;
-&lt;/section&gt;
+&lt;head&gt;
+  &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+  &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+  &lt;title&gt;SecondServe&lt;/title&gt;
+  &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;donate.css&quot;&gt;
+&lt;/head&gt;
 
-&lt;section class&#x3D;&quot;donate-form&quot;&gt;
-  &lt;h2&gt;Donate Now&lt;/h2&gt;
-  &lt;form&gt;
-    &lt;!-- Name &amp; Email --&gt;
-    &lt;label for&#x3D;&quot;name&quot;&gt;Name&lt;/label&gt;
-    &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Your Name&quot;&gt;
-
-    &lt;label for&#x3D;&quot;email&quot;&gt;Email&lt;/label&gt;
-    &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Your Email&quot;&gt;
-
-    &lt;label for&#x3D;&quot;company&quot;&gt;Donor&lt;/label&gt;
-    &lt;select id&#x3D;&quot;company&quot;&gt;
-      &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donor Type&lt;/option&gt;
-      &lt;option value&#x3D;&quot;restaurant&quot;&gt;Restaurant&lt;/option&gt;
-      &lt;option value&#x3D;&quot;grocery&quot;&gt;Grocery Store&lt;/option&gt;
-      &lt;option value&#x3D;&quot;self&quot;&gt;Self&lt;/option&gt;
-    &lt;/select&gt;
-
-    &lt;label for&#x3D;&quot;donation-type&quot;&gt;Donation Type&lt;/label&gt;
-    &lt;select id&#x3D;&quot;donation-type&quot;&gt;
-      &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donation Type&lt;/option&gt;
-      &lt;option value&#x3D;&quot;amount&quot;&gt;Amount&lt;/option&gt;
-      &lt;option value&#x3D;&quot;food&quot;&gt;Food&lt;/option&gt;
-    &lt;/select&gt;
-
-    &lt;div id&#x3D;&quot;amount-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
-      &lt;label for&#x3D;&quot;donation-amount&quot;&gt;Donation Amount&lt;/label&gt;
-      &lt;input type&#x3D;&quot;number&quot; id&#x3D;&quot;donation-amount&quot; placeholder&#x3D;&quot;$50&quot;&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;
+      &lt;h1 tabindex&#x3D;&quot;0&quot; (click)&#x3D;&quot;goToHome()&quot; (keyup.enter)&#x3D;&quot;goToHome()&quot; (keyup.space)&#x3D;&quot;goToHome()&quot;
+        style&#x3D;&quot;cursor: pointer&quot;&gt;
+        SecondServe
+      &lt;/h1&gt;
     &lt;/div&gt;
+    &lt;nav&gt;
+      &lt;div class&#x3D;&quot;nav-left&quot;&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Resources&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
 
-    &lt;div id&#x3D;&quot;food-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
-      &lt;label for&#x3D;&quot;food-details&quot;&gt;Food Details&lt;/label&gt;
-      &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;food-details&quot; placeholder&#x3D;&quot;e.g., 10 lbs of rice&quot;&gt;
-    &lt;/div&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Media &amp; About&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
 
-    &lt;button type&#x3D;&quot;submit&quot;&gt;Donate&lt;/button&gt;
-  &lt;/form&gt;
-&lt;/section&gt;
-
-&lt;script&gt;
-  const donationSelect &#x3D; document.getElementById(&quot;donation-type&quot;);
-  const amountInput &#x3D; document.getElementById(&quot;amount-input&quot;);
-  const foodInput &#x3D; document.getElementById(&quot;food-input&quot;);
-
-  donationSelect.addEventListener(&quot;change&quot;, function() {
-    if (this.value &#x3D;&#x3D;&#x3D; &quot;amount&quot;) {
-      amountInput.style.display &#x3D; &quot;block&quot;;
-      foodInput.style.display &#x3D; &quot;none&quot;;
-    } else if (this.value &#x3D;&#x3D;&#x3D; &quot;food&quot;) {
-      amountInput.style.display &#x3D; &quot;none&quot;;
-      foodInput.style.display &#x3D; &quot;block&quot;;
-    } else {
-      amountInput.style.display &#x3D; &quot;none&quot;;
-      foodInput.style.display &#x3D; &quot;none&quot;;
-    }
-  });
-&lt;/script&gt;
+      &lt;div class&#x3D;&quot;nav-right&quot;&gt;
+        &lt;a href&#x3D;&quot;/login&quot; class&#x3D;&quot;login-btn&quot;&gt;Login&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
 
 
-&lt;footer&gt;
-  &lt;p&gt;© 2025 Second Serve — All Rights Reserved.&lt;/p&gt;
-&lt;/footer&gt;</code></pre>
+  &lt;section class&#x3D;&quot;hero-section&quot;&gt;
+    &lt;h1&gt;Make a Donation&lt;/h1&gt;
+    &lt;p&gt;
+      Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish
+      communities.
+    &lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;donate-form&quot;&gt;
+    &lt;h2&gt;Donate Now&lt;/h2&gt;
+    &lt;form&gt;
+      &lt;!-- Name &amp; Email --&gt;
+      &lt;label for&#x3D;&quot;name&quot;&gt;Name&lt;/label&gt;
+      &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Your Name&quot;&gt;
+
+      &lt;label for&#x3D;&quot;email&quot;&gt;Email&lt;/label&gt;
+      &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Your Email&quot;&gt;
+
+      &lt;label for&#x3D;&quot;company&quot;&gt;Donor&lt;/label&gt;
+      &lt;select id&#x3D;&quot;company&quot;&gt;
+        &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donor Type&lt;/option&gt;
+        &lt;option value&#x3D;&quot;restaurant&quot;&gt;Restaurant&lt;/option&gt;
+        &lt;option value&#x3D;&quot;grocery&quot;&gt;Grocery Store&lt;/option&gt;
+        &lt;option value&#x3D;&quot;self&quot;&gt;Self&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;label for&#x3D;&quot;donation-type&quot;&gt;Donation Type&lt;/label&gt;
+      &lt;select id&#x3D;&quot;donation-type&quot;&gt;
+        &lt;option value&#x3D;&quot;&quot; disabled selected&gt;Select Donation Type&lt;/option&gt;
+        &lt;option value&#x3D;&quot;amount&quot;&gt;Amount&lt;/option&gt;
+        &lt;option value&#x3D;&quot;food&quot;&gt;Food&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;div id&#x3D;&quot;amount-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
+        &lt;label for&#x3D;&quot;donation-amount&quot;&gt;Donation Amount&lt;/label&gt;
+        &lt;input type&#x3D;&quot;number&quot; id&#x3D;&quot;donation-amount&quot; placeholder&#x3D;&quot;$50&quot;&gt;
+      &lt;/div&gt;
+
+      &lt;div id&#x3D;&quot;food-input&quot; style&#x3D;&quot;display:none;&quot;&gt;
+        &lt;label for&#x3D;&quot;food-details&quot;&gt;Food Details&lt;/label&gt;
+        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;food-details&quot; placeholder&#x3D;&quot;e.g., 10 lbs of rice&quot;&gt;
+      &lt;/div&gt;
+
+      &lt;button type&#x3D;&quot;submit&quot;&gt;Donate&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+
+  &lt;script&gt;
+    const donationSelect &#x3D; document.getElementById(&quot;donation-type&quot;);
+    const amountInput &#x3D; document.getElementById(&quot;amount-input&quot;);
+    const foodInput &#x3D; document.getElementById(&quot;food-input&quot;);
+
+    donationSelect.addEventListener(&quot;change&quot;, function () {
+      if (this.value &#x3D;&#x3D;&#x3D; &quot;amount&quot;) {
+        amountInput.style.display &#x3D; &quot;block&quot;;
+        foodInput.style.display &#x3D; &quot;none&quot;;
+      } else if (this.value &#x3D;&#x3D;&#x3D; &quot;food&quot;) {
+        amountInput.style.display &#x3D; &quot;none&quot;;
+        foodInput.style.display &#x3D; &quot;block&quot;;
+      } else {
+        amountInput.style.display &#x3D; &quot;none&quot;;
+        foodInput.style.display &#x3D; &quot;none&quot;;
+      }
+    });
+  &lt;/script&gt;
+
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2025 SecondServe — All Rights Reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
     </div>
 
 
@@ -402,7 +589,7 @@ export class Donate {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><header>  <div class="logo">SECOND SERVE</div></header><section class="hero-section">  <h1>Make a Donation</h1>  <p>    Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish communities.  </p></section><section class="donate-form">  <h2>Donate Now</h2>  <form>    <!-- Name & Email -->    <label for="name">Name</label>    <input type="text" id="name" placeholder="Your Name">    <label for="email">Email</label>    <input type="email" id="email" placeholder="Your Email">    <label for="company">Donor</label>    <select id="company">      <option value="" disabled selected>Select Donor Type</option>      <option value="restaurant">Restaurant</option>      <option value="grocery">Grocery Store</option>      <option value="self">Self</option>    </select>    <label for="donation-type">Donation Type</label>    <select id="donation-type">      <option value="" disabled selected>Select Donation Type</option>      <option value="amount">Amount</option>      <option value="food">Food</option>    </select>    <div id="amount-input" style="display:none;">      <label for="donation-amount">Donation Amount</label>      <input type="number" id="donation-amount" placeholder="$50">    </div>    <div id="food-input" style="display:none;">      <label for="food-details">Food Details</label>      <input type="text" id="food-details" placeholder="e.g., 10 lbs of rice">    </div>    <button type="submit">Donate</button>  </form></section><script>  const donationSelect = document.getElementById("donation-type");  const amountInput = document.getElementById("amount-input");  const foodInput = document.getElementById("food-input");  donationSelect.addEventListener("change", function() {    if (this.value === "amount") {      amountInput.style.display = "block";      foodInput.style.display = "none";    } else if (this.value === "food") {      amountInput.style.display = "none";      foodInput.style.display = "block";    } else {      amountInput.style.display = "none";      foodInput.style.display = "none";    }  });</script><footer>  <p>© 2025 Second Serve — All Rights Reserved.</p></footer></div>'
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>SecondServe</title>  <link rel="stylesheet" href="donate.css"></head><body>  <header>    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer">        SecondServe      </h1>    </div>    <nav>      <div class="nav-left">        <div class="dropdown">          <a href="#">Resources</a>          <div class="dropdown-content">            <a href="/donate">Donate</a>            <a href="/restaurants">Restaurants</a>            <a href="/community">Community Centers</a>          </div>        </div>        <div class="dropdown">          <a href="#">Media & About</a>          <div class="dropdown-content">            <a href="/events">Events</a>            <a href="/blog">Blog</a>            <a href="/mission">Mission</a>            <a href="/contact">Contact</a>          </div>        </div>      </div>      <div class="nav-right">        <a href="/login" class="login-btn">Login</a>      </div>    </nav>  </header>  <section class="hero-section">    <h1>Make a Donation</h1>    <p>      Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish      communities.    </p>  </section>  <section class="donate-form">    <h2>Donate Now</h2>    <form>      <!-- Name & Email -->      <label for="name">Name</label>      <input type="text" id="name" placeholder="Your Name">      <label for="email">Email</label>      <input type="email" id="email" placeholder="Your Email">      <label for="company">Donor</label>      <select id="company">        <option value="" disabled selected>Select Donor Type</option>        <option value="restaurant">Restaurant</option>        <option value="grocery">Grocery Store</option>        <option value="self">Self</option>      </select>      <label for="donation-type">Donation Type</label>      <select id="donation-type">        <option value="" disabled selected>Select Donation Type</option>        <option value="amount">Amount</option>        <option value="food">Food</option>      </select>      <div id="amount-input" style="display:none;">        <label for="donation-amount">Donation Amount</label>        <input type="number" id="donation-amount" placeholder="$50">      </div>      <div id="food-input" style="display:none;">        <label for="food-details">Food Details</label>        <input type="text" id="food-details" placeholder="e.g., 10 lbs of rice">      </div>      <button type="submit">Donate</button>    </form>  </section>  <script>    const donationSelect = document.getElementById("donation-type");    const amountInput = document.getElementById("amount-input");    const foodInput = document.getElementById("food-input");    donationSelect.addEventListener("change", function () {      if (this.value === "amount") {        amountInput.style.display = "block";        foodInput.style.display = "none";      } else if (this.value === "food") {        amountInput.style.display = "none";        foodInput.style.display = "block";      } else {        amountInput.style.display = "none";        foodInput.style.display = "none";      }    });  </script>  <footer>    <p>© 2025 SecondServe — All Rights Reserved.</p>  </footer></body></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Donate'};

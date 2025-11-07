@@ -226,13 +226,155 @@ partners, and stakeholders.</p>
     </table>
 </section>
 
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goToHome" >goToHome</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
 
 
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/about-us/mission/mission.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Mission Component</p>
+<p>This component presents the foundational principles and purpose of the organization.
+It serves to inspire trust, communicate values, and align users with the platform&#39;s
+overarching goals. The content typically focuses on:</p>
+<ul>
+<li>The &quot;why&quot; behind the platform&#39;s existence</li>
+<li>The problem being solved or need being addressed</li>
+<li>The intended impact on the community or industry</li>
+<li>The ethical framework guiding decision-making</li>
+</ul>
+<p>Potential content sections may include:</p>
+<ul>
+<li>Founding story and historical context</li>
+<li>Core mission statement and value proposition</li>
+<li>Vision for future growth and community impact</li>
+<li>Team member profiles and organizational culture</li>
+<li>Key milestones and achievement highlights</li>
+<li>Testimonials from community members or partners</li>
+<li>Call-to-action for involvement or support</li>
+</ul>
+<p>The component&#39;s inspirational design and typographic hierarchy are defined in mission.css,
+while the narrative structure and content presentation are handled in mission.html.
+RouterModule integration allows for easy navigation to related About Us pages such as
+Contact information or team details.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
 
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToHome"></a>
+                    <span class="name">
+                        <span ><b>goToHome</b></span>
+                        <a href="#goToHome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToHome()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/app/about-us/mission/mission.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </div>
 
@@ -241,6 +383,7 @@ partners, and stakeholders.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 /**
  * Mission Component
@@ -302,29 +445,60 @@ export class Mission {
    * RouterModule integration allows for easy navigation to related About Us pages such as
    * Contact information or team details.
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate([&#x27;/&#x27;]);
+  }
 }</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang&#x3D;&quot;en&quot;&gt;
+
 &lt;head&gt;
   &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
   &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
   &lt;title&gt;Our Mission | SecondServe&lt;/title&gt;
   &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;mission.css&quot;&gt;
 &lt;/head&gt;
+
 &lt;body&gt;
   &lt;!-- ---------------- Header ---------------- --&gt;
   &lt;header&gt;
-    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;
+      &lt;h1 tabindex&#x3D;&quot;0&quot; (click)&#x3D;&quot;goToHome()&quot; (keyup.enter)&#x3D;&quot;goToHome()&quot; (keyup.space)&#x3D;&quot;goToHome()&quot;
+        style&#x3D;&quot;cursor: pointer&quot;&gt;
+        SecondServe
+      &lt;/h1&gt;
+    &lt;/div&gt;
     &lt;nav&gt;
-      &lt;a href&#x3D;&quot;index.html&quot;&gt;Home&lt;/a&gt;
-      &lt;a href&#x3D;&quot;community.html&quot;&gt;Community&lt;/a&gt;
-      &lt;a href&#x3D;&quot;restaurants.html&quot;&gt;Restaurants&lt;/a&gt;
-      &lt;a href&#x3D;&quot;events.html&quot;&gt;Events&lt;/a&gt;
-      &lt;a href&#x3D;&quot;blog.html&quot;&gt;Blog&lt;/a&gt;
-      &lt;a href&#x3D;&quot;mission.html&quot; class&#x3D;&quot;active&quot;&gt;Mission&lt;/a&gt;
+      &lt;div class&#x3D;&quot;nav-left&quot;&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Resources&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Media &amp; About&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;nav-right&quot;&gt;
+        &lt;a href&#x3D;&quot;/login&quot; class&#x3D;&quot;login-btn&quot;&gt;Login&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt;
 
@@ -333,22 +507,23 @@ export class Mission {
     &lt;div class&#x3D;&quot;mission-text&quot;&gt;
       &lt;h1&gt;Our Mission&lt;/h1&gt;
       &lt;p&gt;
-        SecondServe is a revolutionary platform bridging the gap between food surplus and food insecurity. 
-        We empower local restaurants and grocery stores to donate non-retail, soon-to-expire food directly 
-        to families and individuals in need. Through an intuitive interface, users can view participating 
-        locations, schedule pickups or deliveries, and gain access to fresh, nutritious food that would 
+        SecondServe is a revolutionary platform bridging the gap between food surplus and food insecurity.
+        We empower local restaurants and grocery stores to donate non-retail, soon-to-expire food directly
+        to families and individuals in need. Through an intuitive interface, users can view participating
+        locations, schedule pickups or deliveries, and gain access to fresh, nutritious food that would
         otherwise go to waste.
       &lt;/p&gt;
       &lt;p&gt;
-        Our mission is simple yet powerful — to &lt;strong&gt;reduce food waste, fight hunger, and strengthen 
-        community connections&lt;/strong&gt;. Participating businesses not only make a positive social impact but 
+        Our mission is simple yet powerful — to &lt;strong&gt;reduce food waste, fight hunger, and strengthen
+          community connections&lt;/strong&gt;. Participating businesses not only make a positive social impact but
         also benefit from tax-deductible donations and recognition as sustainability leaders in their communities.
       &lt;/p&gt;
       &lt;p class&#x3D;&quot;mission-quote&quot;&gt;“Together, we can turn surplus into service.”&lt;/p&gt;
     &lt;/div&gt;
 
     &lt;div class&#x3D;&quot;mission-image&quot;&gt;
-      &lt;img src&#x3D;&quot;https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg&quot; alt&#x3D;&quot;Food Donation&quot;&gt;
+      &lt;img src&#x3D;&quot;https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg&quot;
+        alt&#x3D;&quot;Food Donation&quot;&gt;
     &lt;/div&gt;
   &lt;/section&gt;
 
@@ -357,9 +532,8 @@ export class Mission {
     &lt;p&gt;© 2025 SecondServe | Building a stronger, waste-free community.&lt;/p&gt;
   &lt;/footer&gt;
 &lt;/body&gt;
-&lt;/html&gt;
 
-</code></pre>
+&lt;/html&gt;</code></pre>
     </div>
 
 
@@ -388,7 +562,7 @@ export class Mission {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Our Mission | SecondServe</title>  <link rel="stylesheet" href="mission.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html" class="active">Mission</a>    </nav>  </header>  <!-- ---------------- Mission Section ---------------- -->  <section class="mission-hero">    <div class="mission-text">      <h1>Our Mission</h1>      <p>        SecondServe is a revolutionary platform bridging the gap between food surplus and food insecurity.         We empower local restaurants and grocery stores to donate non-retail, soon-to-expire food directly         to families and individuals in need. Through an intuitive interface, users can view participating         locations, schedule pickups or deliveries, and gain access to fresh, nutritious food that would         otherwise go to waste.      </p>      <p>        Our mission is simple yet powerful — to <strong>reduce food waste, fight hunger, and strengthen         community connections</strong>. Participating businesses not only make a positive social impact but         also benefit from tax-deductible donations and recognition as sustainability leaders in their communities.      </p>      <p class="mission-quote">“Together, we can turn surplus into service.”</p>    </div>    <div class="mission-image">      <img src="https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg" alt="Food Donation">    </div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Building a stronger, waste-free community.</p>  </footer></body></html></div>'
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Our Mission | SecondServe</title>  <link rel="stylesheet" href="mission.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer">        SecondServe      </h1>    </div>    <nav>      <div class="nav-left">        <div class="dropdown">          <a href="#">Resources</a>          <div class="dropdown-content">            <a href="/donate">Donate</a>            <a href="/restaurants">Restaurants</a>            <a href="/community">Community Centers</a>          </div>        </div>        <div class="dropdown">          <a href="#">Media & About</a>          <div class="dropdown-content">            <a href="/events">Events</a>            <a href="/blog">Blog</a>            <a href="/mission">Mission</a>            <a href="/contact">Contact</a>          </div>        </div>      </div>      <div class="nav-right">        <a href="/login" class="login-btn">Login</a>      </div>    </nav>  </header>  <!-- ---------------- Mission Section ---------------- -->  <section class="mission-hero">    <div class="mission-text">      <h1>Our Mission</h1>      <p>        SecondServe is a revolutionary platform bridging the gap between food surplus and food insecurity.        We empower local restaurants and grocery stores to donate non-retail, soon-to-expire food directly        to families and individuals in need. Through an intuitive interface, users can view participating        locations, schedule pickups or deliveries, and gain access to fresh, nutritious food that would        otherwise go to waste.      </p>      <p>        Our mission is simple yet powerful — to <strong>reduce food waste, fight hunger, and strengthen          community connections</strong>. Participating businesses not only make a positive social impact but        also benefit from tax-deductible donations and recognition as sustainability leaders in their communities.      </p>      <p class="mission-quote">“Together, we can turn surplus into service.”</p>    </div>    <div class="mission-image">      <img src="https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg"        alt="Food Donation">    </div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Building a stronger, waste-free community.</p>  </footer></body></html></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Mission'};

@@ -356,17 +356,13 @@ interface User {
   styleUrls: [&#x27;./org-manage-account.css&#x27;],
 })
 export class OrgAccountManagement implements OnInit {
-  user: User &#x3D; {
-    email: &#x27;&#x27;,
-    name: &#x27;&#x27;,
-    address: &#x27;&#x27;,
-  };
-
+  user: User &#x3D; { email: &#x27;&#x27;, name: &#x27;&#x27;, address: &#x27;&#x27; };
   showPassword &#x3D; false;
   successMessage: string | null &#x3D; null;
   errorMessage: string | null &#x3D; null;
+  updating &#x3D; false;
 
-  private apiUrl &#x3D; &#x27;http://localhost:8080/api/users&#x27;;
+  private apiUrl &#x3D; &#x27;http://localhost:8000/user&#x27;; // backend URL for org routes
 
   constructor(private http: HttpClient) { }
 
@@ -374,37 +370,87 @@ export class OrgAccountManagement implements OnInit {
     this.loadUser();
   }
 
+  /** Load currently logged-in org user info */
   loadUser(): void {
-    // Fetch current user info
-    this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/me&#x60;).subscribe({
-      next: (data) &#x3D;&gt; (this.user &#x3D; data),
-      error: (err) &#x3D;&gt; console.error(&#x27;Failed to load user&#x27;, err),
+    this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/info/&#x60;, { withCredentials: true }).subscribe({
+      next: (data) &#x3D;&gt; {
+        console.log(&#x27;Logged in organization:&#x27;, data);
+        this.user &#x3D; { ...data, password: &#x27;&#x27; };
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Not logged in&#x27;, err);
+        this.errorMessage &#x3D; &#x27;You must be logged in to manage your organization account.&#x27;;
+      },
     });
   }
 
-  updateAccount(): void {
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    this.http.put(&#x60;${this.apiUrl}/update&#x60;, this.user, { headers }).subscribe({
-      next: () &#x3D;&gt; {
-        this.successMessage &#x3D; &#x27;Account updated successfully!&#x27;;
-        this.errorMessage &#x3D; null;
-        this.user.password &#x3D; &#x27;&#x27;; // clear password field
-      },
-      error: (err) &#x3D;&gt; {
-        this.errorMessage &#x3D; &#x27;Failed to update account.&#x27;;
-        this.successMessage &#x3D; null;
-        console.error(err);
-      },
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match &#x3D; document.cookie.match(/csrftoken&#x3D;([\w-]+)/);
+    return match ? match[1] : &#x27;&#x27;;
+  }
+
+  /** Update account info */
+  async updateAccount(): Promise&lt;void&gt; {
+    this.updating &#x3D; true;
+    this.successMessage &#x3D; null;
+    this.errorMessage &#x3D; null;
+
+    const csrfToken &#x3D; this.getCsrfToken();
+    const headers &#x3D; new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      &#x27;X-CSRFToken&#x27;: csrfToken,
     });
+
+    try {
+      // Update name
+      await this.http
+        .put(
+          &#x60;${this.apiUrl}/update/&#x60;,
+          { attribute: &#x27;first_name&#x27;, new_value: this.user.name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+
+      // Update address
+      await this.http
+        .put(
+          &#x60;${this.apiUrl}/update/&#x60;,
+          { attribute: &#x27;address&#x27;, new_value: this.user.address },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+
+      this.successMessage &#x3D; &#x27;Organization details updated successfully!&#x27;;
+
+      // Update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            &#x60;${this.apiUrl}/update/&#x60;,
+            { attribute: &#x27;password&#x27;, new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+
+        this.successMessage +&#x3D; &#x27; Password updated successfully!&#x27;;
+        this.user.password &#x3D; &#x27;&#x27;;
+      }
+    } catch (err: any) {
+      console.error(&#x27;Update failed:&#x27;, err);
+      this.errorMessage &#x3D;
+        err.error?.details || &#x27;Failed to update organization account. Make sure you are logged in.&#x27;;
+    } finally {
+      this.updating &#x3D; false;
+    }
   }
 
   togglePassword(): void {
     this.showPassword &#x3D; !this.showPassword;
   }
 
-  // Navigation / Header buttons
+  // ---------------- Navigation ----------------
   goToAccount(): void {
-    // Already on account page; can optionally reload
     this.loadUser();
   }
 
@@ -423,8 +469,6 @@ export class OrgAccountManagement implements OnInit {
   }
 
   logout(): void {
-    // Clear session / redirect
-    // Example:
     window.location.href &#x3D; &#x27;/login&#x27;;
   }
 }

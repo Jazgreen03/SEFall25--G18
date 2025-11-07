@@ -431,10 +431,11 @@ This is used to serve static assets like JS, CSS, and images.</p>
 
   /** Main dashboard/home page after authentication */
   { path: &#x27;home&#x27;, component: Home },
-
-  /** User authentication routes */
+  //{ path: &#x27;user-home&#x27;, component: UserHome },
   { path: &#x27;login&#x27;, component: Login },
   { path: &#x27;register&#x27;, component: Register },
+  { path: &#x27;driver-account&#x27;, component: AccountManagement },
+  { path: &#x27;user-history&#x27;, component: OrderHistory },
 
   // USER MANAGEMENT ROUTES
   /** User account settings and profile management */

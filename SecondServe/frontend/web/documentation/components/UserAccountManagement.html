@@ -244,6 +244,9 @@ Provides functionality to update email, name, address, and password.</p>
                                 <a href="#successMessage" >successMessage</a>
                             </li>
                             <li>
+                                <a href="#updating" >updating</a>
+                            </li>
+                            <li>
                                 <a href="#user" >user</a>
                             </li>
                         </ul>
@@ -258,6 +261,9 @@ Provides functionality to update email, name, address, and password.</p>
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                <a href="#getCsrfToken" >getCsrfToken</a>
+                            </li>
                             <li>
                                 <a href="#goToAccount" >goToAccount</a>
                             </li>
@@ -280,6 +286,7 @@ Provides functionality to update email, name, address, and password.</p>
                                 <a href="#togglePassword" >togglePassword</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#updateAccount" >updateAccount</a>
                             </li>
                         </ul>
@@ -305,7 +312,7 @@ Provides functionality to update email, name, address, and password.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/user-manage-account/user-manage-account.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/user-manage-account/user-manage-account.ts:54</a></div>
                             </td>
                         </tr>
 
@@ -356,6 +363,45 @@ Provides functionality to update email, name, address, and password.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getCsrfToken"></a>
+                    <span class="name">
+                        <span ><b>getCsrfToken</b></span>
+                        <a href="#getCsrfToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getCsrfToken()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fetch CSRF token from cookie</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="goToAccount"></a>
                     <span class="name">
                         <span ><b>goToAccount</b></span>
@@ -372,8 +418,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="91"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:91</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:145</a></div>
                         </td>
                     </tr>
 
@@ -411,8 +457,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:150</a></div>
                         </td>
                     </tr>
 
@@ -450,8 +496,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="101"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:101</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="155"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:155</a></div>
                         </td>
                     </tr>
 
@@ -489,15 +535,15 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:63</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Loads current user data from API</p>
+                        <div class="io-description"><p>Load currently logged-in user info</p>
 </div>
 
                         <div class="io-description">
@@ -528,8 +574,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="106"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:106</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:160</a></div>
                         </td>
                     </tr>
 
@@ -567,8 +613,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -604,8 +650,8 @@ Provides functionality to update email, name, address, and password.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="84"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:84</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:138</a></div>
                         </td>
                     </tr>
 
@@ -629,6 +675,7 @@ Provides functionality to update email, name, address, and password.</p>
                 <td class="col-md-4">
                     <a name="updateAccount"></a>
                     <span class="name">
+                            <span class="modifier">Async</span>
                         <span ><b>updateAccount</b></span>
                         <a href="#updateAccount"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -636,26 +683,27 @@ Provides functionality to update email, name, address, and password.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>updateAccount()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateAccount()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="67"
-                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:67</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/user-manage-account/user-manage-account.ts:83</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Updates user account information via API</p>
+                        <div class="io-description"><p>Update account attributes (first_name, address, password)</p>
 </div>
 
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                         </div>
                 </td>
@@ -688,12 +736,12 @@ Provides functionality to update email, name, address, and password.</p>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>&#x27;http://localhost:8080/api/users&#x27;</code>
+                        <i>Default value : </i><code>&#x27;http://localhost:8000/user&#x27;</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/user-manage-account/user-manage-account.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/user-manage-account/user-manage-account.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -724,7 +772,7 @@ Provides functionality to update email, name, address, and password.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/user-manage-account/user-manage-account.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/user-manage-account/user-manage-account.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -755,7 +803,7 @@ Provides functionality to update email, name, address, and password.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/user-manage-account/user-manage-account.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/user-manage-account/user-manage-account.ts:45</a></div>
                         </td>
                     </tr>
 
@@ -792,7 +840,7 @@ Provides functionality to update email, name, address, and password.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/user-manage-account/user-manage-account.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/user-manage-account/user-manage-account.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -802,6 +850,31 @@ Provides functionality to update email, name, address, and password.</p>
 </div>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updating"></a>
+                    <span class="name">
+                        <span ><b>updating</b></span>
+                        <a href="#updating"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/user-manage-account/user-manage-account.ts:52</a></div>
+                        </td>
+                    </tr>
+
 
         </tbody>
     </table>
@@ -826,14 +899,14 @@ Provides functionality to update email, name, address, and password.</p>
                     <td class="col-md-4">
                         <i>Default value : </i><code>{
     email: &#x27;&#x27;,
-    name: &#x27;&#x27;,
+    first_name: &#x27;&#x27;,
     address: &#x27;&#x27;,
   }</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/user-manage-account/user-manage-account.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/user-manage-account/user-manage-account.ts:38</a></div>
                         </td>
                     </tr>
 
@@ -857,13 +930,15 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 
+
+
 /**
  * User data structure for account management
  * Represents user profile information for display and updates
  */
 interface User {
   email: string;
-  name: string;
+  first_name: string;
   address: string;
   password?: string;
 }
@@ -884,11 +959,12 @@ interface User {
   templateUrl: &#x27;./user-manage-account.html&#x27;,
   styleUrls: [&#x27;./user-manage-account.css&#x27;],
 })
+
 export class UserAccountManagement implements OnInit {
   /** Current user profile data */
   user: User &#x3D; {
     email: &#x27;&#x27;,
-    name: &#x27;&#x27;,
+    first_name: &#x27;&#x27;,
     address: &#x27;&#x27;,
   };
 
@@ -900,8 +976,9 @@ export class UserAccountManagement implements OnInit {
 
   /** Error message for user feedback */
   errorMessage: string | null &#x3D; null;
+  updating &#x3D; false;
 
-  private apiUrl &#x3D; &#x27;http://localhost:8080/api/users&#x27;;
+  private apiUrl &#x3D; &#x27;http://localhost:8000/user&#x27;; // Django backend URL
 
   constructor(private http: HttpClient) { }
 
@@ -909,30 +986,80 @@ export class UserAccountManagement implements OnInit {
     this.loadUser();
   }
 
-  /** Loads current user data from API */
+  /** Load currently logged-in user info */
   loadUser(): void {
-    this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/me&#x60;).subscribe({
-      next: (data) &#x3D;&gt; (this.user &#x3D; data),
-      error: (err) &#x3D;&gt; console.error(&#x27;Failed to load user&#x27;, err),
+    this.http.get&lt;User&gt;(&#x60;${this.apiUrl}/info/&#x60;, { withCredentials: true }).subscribe({
+      next: (data) &#x3D;&gt; {
+        this.user &#x3D; { ...data, password: &#x27;&#x27; };
+        console.log(&#x27;Logged in user:&#x27;, data);
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Not logged in&#x27;, err);
+        this.errorMessage &#x3D; &#x27;You must be logged in to manage your account.&#x27;;
+      },
     });
   }
 
-  /** Updates user account information via API */
-  updateAccount(): void {
-    const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
-    this.http.put(&#x60;${this.apiUrl}/update&#x60;, this.user, { headers }).subscribe({
-      next: () &#x3D;&gt; {
-        this.successMessage &#x3D; &#x27;Account updated successfully!&#x27;;
-        this.errorMessage &#x3D; null;
-        this.user.password &#x3D; &#x27;&#x27;; // clear password field
-      },
-      error: (err) &#x3D;&gt; {
-        this.errorMessage &#x3D; &#x27;Failed to update account.&#x27;;
-        this.successMessage &#x3D; null;
-        console.error(err);
-      },
-    });
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match &#x3D; document.cookie.match(/csrftoken&#x3D;([\w-]+)/);
+    return match ? match[1] : &#x27;&#x27;;
   }
+
+  /** Update account attributes (first_name, address, password) */
+  async updateAccount(): Promise&lt;void&gt; {
+    this.updating &#x3D; true;
+    this.successMessage &#x3D; null;
+    this.errorMessage &#x3D; null;
+
+    const headers &#x3D; new HttpHeaders({
+      &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+      &#x27;X-CSRFToken&#x27;: this.getCsrfToken(),
+    });
+
+    try {
+      // Update first_name
+      await this.http
+        .put(
+          &#x60;${this.apiUrl}/update/&#x60;,
+          { attribute: &#x27;first_name&#x27;, new_value: this.user.first_name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+      this.successMessage &#x3D; &#x27;Name updated successfully!&#x27;;
+
+      // Update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            &#x60;${this.apiUrl}/update/&#x60;,
+            { attribute: &#x27;password&#x27;, new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage +&#x3D; &#x27; Password updated successfully!&#x27;;
+        this.user.password &#x3D; &#x27;&#x27;;
+      }
+
+      // Update address (if you handle it on backend)
+      if (this.user.address) {
+        await this.http
+          .put(
+            &#x60;${this.apiUrl}/update/&#x60;,
+            { attribute: &#x27;address&#x27;, new_value: this.user.address },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+        this.successMessage +&#x3D; &#x27; Address updated successfully!&#x27;;
+      }
+    } catch (err) {
+      console.error(&#x27;Update failed:&#x27;, err);
+      this.errorMessage &#x3D; &#x27;Failed to update account. Make sure you are logged in.&#x27;;
+    } finally {
+      this.updating &#x3D; false;
+    }
+  }
+
 
   /** Toggles password field visibility */
   togglePassword(): void {
@@ -943,7 +1070,7 @@ export class UserAccountManagement implements OnInit {
 
   /** Reloads current account page */
   goToAccount(): void {
-    this.loadUser();
+    this.loadUser(); // reload user info
   }
 
   /** Navigates to home page */
@@ -998,7 +1125,7 @@ export class UserAccountManagement implements OnInit {
       &lt;!-- Name --&gt;
       &lt;div class&#x3D;&quot;form-group&quot;&gt;
         &lt;label for&#x3D;&quot;name&quot;&gt;Name&lt;/label&gt;
-        &lt;input id&#x3D;&quot;name&quot; type&#x3D;&quot;text&quot; [(ngModel)]&#x3D;&quot;user.name&quot; name&#x3D;&quot;name&quot; required&gt;
+        &lt;input id&#x3D;&quot;name&quot; type&#x3D;&quot;text&quot; [(ngModel)]&#x3D;&quot;user.first_name&quot; name&#x3D;&quot;name&quot; required&gt;
       &lt;/div&gt;
 
       &lt;!-- Address --&gt;
@@ -1276,7 +1403,7 @@ export class UserAccountManagement implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="account-container">  <!-- Header -->  <header class="account-header">    <!-- Logo / Home -->    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer;">        SecondServe      </h1>    </div>    <div class="nav-buttons">      <!-- Account button is active since we\'re on this page -->      <button class="nav-btn active" (click)="goToAccount()">Account</button>      <button class="nav-btn" (click)="goToOrders()">Order History</button>      <button class="logout-btn" (click)="logout()">Logout</button>    </div>  </header>  <!-- Account Card -->  <div class="account-card">    <h2>Account Management</h2>    <form (ngSubmit)="updateAccount()" class="account-form">      <!-- Email (read-only) -->      <div class="form-group">        <label for="email">Email</label>        <input id="email" type="email" [value]="user.email" readonly>      </div>      <!-- Name -->      <div class="form-group">        <label for="name">Name</label>        <input id="name" type="text" [(ngModel)]="user.name" name="name" required>      </div>      <!-- Address -->      <div class="form-group">        <label for="address">Address</label>        <input id="address" type="text" [(ngModel)]="user.address" name="address" required>      </div>      <!-- Password -->      <div class="form-group password-input-wrapper">        <label for="new-password">New Password</label>        <input id="new-password" [type]="showPassword ? \'text\' : \'password\'" [(ngModel)]="user.password"          name="password">        <button type="button" class="toggle-password" (click)="togglePassword()">          {{ showPassword ? \'Hide\' : \'Show\' }}        </button>      </div>      <button type="submit" class="submit-btn">Update Account</button>    </form>    <div *ngIf="successMessage" class="alert-success">      {{ successMessage }}    </div>    <div *ngIf="errorMessage" class="alert-error">      {{ errorMessage }}    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="account-container">  <!-- Header -->  <header class="account-header">    <!-- Logo / Home -->    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer;">        SecondServe      </h1>    </div>    <div class="nav-buttons">      <!-- Account button is active since we\'re on this page -->      <button class="nav-btn active" (click)="goToAccount()">Account</button>      <button class="nav-btn" (click)="goToOrders()">Order History</button>      <button class="logout-btn" (click)="logout()">Logout</button>    </div>  </header>  <!-- Account Card -->  <div class="account-card">    <h2>Account Management</h2>    <form (ngSubmit)="updateAccount()" class="account-form">      <!-- Email (read-only) -->      <div class="form-group">        <label for="email">Email</label>        <input id="email" type="email" [value]="user.email" readonly>      </div>      <!-- Name -->      <div class="form-group">        <label for="name">Name</label>        <input id="name" type="text" [(ngModel)]="user.first_name" name="name" required>      </div>      <!-- Address -->      <div class="form-group">        <label for="address">Address</label>        <input id="address" type="text" [(ngModel)]="user.address" name="address" required>      </div>      <!-- Password -->      <div class="form-group password-input-wrapper">        <label for="new-password">New Password</label>        <input id="new-password" [type]="showPassword ? \'text\' : \'password\'" [(ngModel)]="user.password"          name="password">        <button type="button" class="toggle-password" (click)="togglePassword()">          {{ showPassword ? \'Hide\' : \'Show\' }}        </button>      </div>      <button type="submit" class="submit-btn">Update Account</button>    </form>    <div *ngIf="successMessage" class="alert-success">      {{ successMessage }}    </div>    <div *ngIf="errorMessage" class="alert-error">      {{ errorMessage }}    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserAccountManagement'};

@@ -462,6 +462,15 @@ interface Delivery {
   status: &#x27;Pending&#x27; | &#x27;Accepted&#x27; | &#x27;Completed&#x27;;
 }
 
+interface ClaimedOrder {
+  id: number;
+  status: &#x27;Pending&#x27; | &#x27;In Transit&#x27; | &#x27;Delivered&#x27;;
+  deliveryAddress: string;
+  items: { name: string; quantity: number }[];
+  organization: string;
+}
+
+
 @Component({
   selector: &#x27;app-driver-home&#x27;,
   standalone: true,
@@ -471,7 +480,8 @@ interface Delivery {
 })
 export class DriverHome implements OnInit {
   currentTab: &#x27;account&#x27; | &#x27;orders&#x27; | &#x27;deliveries&#x27; | &#x27;history&#x27; &#x3D; &#x27;deliveries&#x27;;
-  deliveries: Delivery[] &#x3D; [];
+  deliveries: Delivery[] &#x3D; [];        // Open deliveries
+  claimedOrders: ClaimedOrder[] &#x3D; [];  // Orders already claimed by driver
   loading &#x3D; false;
   error: string | null &#x3D; null;
 
@@ -484,6 +494,7 @@ export class DriverHome implements OnInit {
 
   ngOnInit(): void {
     this.loadDeliveries();
+    this.loadClaimedOrders();
   }
 
   // --- Navigation Methods --- //
@@ -528,8 +539,28 @@ export class DriverHome implements OnInit {
     });
   }
 
+  loadClaimedOrders(): void {
+    this.loading &#x3D; true;
+    this.error &#x3D; null;
+
+    this.http.get&lt;ClaimedOrder[]&gt;(&#x60;${this.apiUrl}/orders/&#x60;).subscribe({
+      next: (data) &#x3D;&gt; {
+        this.claimedOrders &#x3D; data;
+        this.loading &#x3D; false;
+      },
+      error: (err) &#x3D;&gt; {
+        this.error &#x3D; &#x27;Failed to load claimed orders.&#x27;;
+        this.loading &#x3D; false;
+        console.error(&#x27;Error loading claimed orders:&#x27;, err);
+      },
+    });
+  }
+
+
+
   refreshDeliveries(): void {
     this.loadDeliveries();
+    this.loadClaimedOrders();
   }
 
   acceptDelivery(delivery: Delivery): void {
@@ -548,6 +579,19 @@ export class DriverHome implements OnInit {
         },
       });
   }
+
+  updateOrderStatus(orderId: number, newStatus: &#x27;In Transit&#x27; | &#x27;Delivered&#x27;) {
+  const headers &#x3D; new HttpHeaders({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
+  this.http.put(&#x60;${this.apiUrl}/order/${orderId}/update/&#x60;, { new_status: newStatus }, { headers })
+    .subscribe({
+      next: () &#x3D;&gt; {
+        alert(&#x60;Order ${orderId} updated to ${newStatus}&#x60;);
+        this.loadClaimedOrders(); // reload claimed orders
+      },
+      error: (err) &#x3D;&gt; console.error(&#x27;Failed to update order:&#x27;, err)
+    });
+}
+
 }
 </code></pre>
     </div>

@@ -208,13 +208,130 @@ Handles user inquiries, support requests, feedback, and general communication.</
     </table>
 </section>
 
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goToHome" >goToHome</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
 
 
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/about-us/contact/contact.ts:21</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
 
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToHome"></a>
+                    <span class="name">
+                        <span ><b>goToHome</b></span>
+                        <a href="#goToHome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToHome()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="25"
+                                    class="link-to-prism">src/app/about-us/contact/contact.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </div>
 
@@ -223,7 +340,7 @@ Handles user inquiries, support requests, feedback, and general communication.</
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
-
+import { Router } from &#x27;@angular/router&#x27;;
 /**
  * Contact Component
  * 
@@ -241,17 +358,14 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   styleUrl: &#x27;./contact.css&#x27;,
 })
 export class Contact {
-  /**
-   * Contact page component for user communication and support
-   * 
-   * Features typically include:
-   * - Contact form with validation
-   * - Organization contact details
-   * - Office hours and response times
-   * - FAQ section
-   * - Location information
-   */
-}</code></pre>
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate([&#x27;/&#x27;]);
+  }
+}
+</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -266,26 +380,51 @@ export class Contact {
 &lt;/head&gt;
 
 &lt;body&gt;
-  &lt;!-- ---------------- Header ---------------- --&gt;
+  &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Header &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
   &lt;header&gt;
-    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;
+      &lt;h1 tabindex&#x3D;&quot;0&quot; (click)&#x3D;&quot;goToHome()&quot; (keyup.enter)&#x3D;&quot;goToHome()&quot; (keyup.space)&#x3D;&quot;goToHome()&quot;
+        style&#x3D;&quot;cursor: pointer&quot;&gt;
+        SecondServe
+      &lt;/h1&gt;
+    &lt;/div&gt;
     &lt;nav&gt;
-      &lt;a href&#x3D;&quot;index.html&quot;&gt;Home&lt;/a&gt;
-      &lt;a href&#x3D;&quot;community.html&quot;&gt;Community&lt;/a&gt;
-      &lt;a href&#x3D;&quot;restaurants.html&quot;&gt;Restaurants&lt;/a&gt;
-      &lt;a href&#x3D;&quot;events.html&quot;&gt;Events&lt;/a&gt;
-      &lt;a href&#x3D;&quot;blog.html&quot;&gt;Blog&lt;/a&gt;
-      &lt;a href&#x3D;&quot;mission.html&quot;&gt;Mission&lt;/a&gt;
-      &lt;a href&#x3D;&quot;contact.html&quot; class&#x3D;&quot;active&quot;&gt;Contact&lt;/a&gt;
+      &lt;div class&#x3D;&quot;nav-left&quot;&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Resources&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Media &amp; About&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;nav-right&quot;&gt;
+        &lt;a href&#x3D;&quot;/login&quot; class&#x3D;&quot;login-btn&quot;&gt;Login&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt;
 
-  &lt;!-- ---------------- Contact Section ---------------- --&gt;
-  &lt;section class&#x3D;&quot;contact-hero&quot;&gt;
-    &lt;h1&gt;Contact Us&lt;/h1&gt;
-    &lt;p&gt;We’d love to hear from you! Reach out with any questions, partnerships, or ideas.&lt;/p&gt;
+  &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Hero Section &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
+  &lt;section class&#x3D;&quot;hero-section contact-hero&quot;&gt;
+    &lt;div class&#x3D;&quot;hero-text&quot;&gt;
+      &lt;h1&gt;Contact Us&lt;/h1&gt;
+      &lt;p&gt;We’d love to hear from you! Reach out with any questions, partnerships, or ideas.&lt;/p&gt;
+    &lt;/div&gt;
   &lt;/section&gt;
 
+  &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Contact Cards &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
   &lt;section class&#x3D;&quot;contact-info&quot;&gt;
     &lt;div class&#x3D;&quot;contact-card&quot;&gt;
       &lt;h2&gt;Email&lt;/h2&gt;
@@ -303,7 +442,7 @@ export class Contact {
     &lt;/div&gt;
   &lt;/section&gt;
 
-  &lt;!-- ---------------- Footer ---------------- --&gt;
+  &lt;!-- &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Footer &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; --&gt;
   &lt;footer&gt;
     &lt;p&gt;© 2025 SecondServe | Connecting communities through food and compassion.&lt;/p&gt;
   &lt;/footer&gt;
@@ -338,7 +477,7 @@ export class Contact {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Contact Us | SecondServe</title>  <link rel="stylesheet" href="contact.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html">Mission</a>      <a href="contact.html" class="active">Contact</a>    </nav>  </header>  <!-- ---------------- Contact Section ---------------- -->  <section class="contact-hero">    <h1>Contact Us</h1>    <p>We’d love to hear from you! Reach out with any questions, partnerships, or ideas.</p>  </section>  <section class="contact-info">    <div class="contact-card">      <h2>Email</h2>      <p><strong>support@secondserve.org</strong></p>    </div>    <div class="contact-card">      <h2>Phone</h2>      <p><strong>(919) 555-2043</strong></p>    </div>    <div class="contact-card">      <h2>Headquarters</h2>      <p><strong>123 Greenway Blvd<br>Raleigh, NC 27601</strong></p>    </div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Connecting communities through food and compassion.</p>  </footer></body></html></div>'
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Contact Us | SecondServe</title>  <link rel="stylesheet" href="contact.css"></head><body>  <!-- ================= Header ================= -->  <header>    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer">        SecondServe      </h1>    </div>    <nav>      <div class="nav-left">        <div class="dropdown">          <a href="#">Resources</a>          <div class="dropdown-content">            <a href="/donate">Donate</a>            <a href="/restaurants">Restaurants</a>            <a href="/community">Community Centers</a>          </div>        </div>        <div class="dropdown">          <a href="#">Media & About</a>          <div class="dropdown-content">            <a href="/events">Events</a>            <a href="/blog">Blog</a>            <a href="/mission">Mission</a>            <a href="/contact">Contact</a>          </div>        </div>      </div>      <div class="nav-right">        <a href="/login" class="login-btn">Login</a>      </div>    </nav>  </header>  <!-- ================= Hero Section ================= -->  <section class="hero-section contact-hero">    <div class="hero-text">      <h1>Contact Us</h1>      <p>We’d love to hear from you! Reach out with any questions, partnerships, or ideas.</p>    </div>  </section>  <!-- ================= Contact Cards ================= -->  <section class="contact-info">    <div class="contact-card">      <h2>Email</h2>      <p><strong>support@secondserve.org</strong></p>    </div>    <div class="contact-card">      <h2>Phone</h2>      <p><strong>(919) 555-2043</strong></p>    </div>    <div class="contact-card">      <h2>Headquarters</h2>      <p><strong>123 Greenway Blvd<br>Raleigh, NC 27601</strong></p>    </div>  </section>  <!-- ================= Footer ================= -->  <footer>    <p>© 2025 SecondServe | Connecting communities through food and compassion.</p>  </footer></body></html></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Contact'};

@@ -212,13 +212,133 @@ Typically includes hero section, feature overview, and call-to-action elements.<
     </table>
 </section>
 
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goToHome" >goToHome</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
 
 
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/landing/landing.ts:22</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Landing page component - serves as the application&#39;s homepage
+Provides introduction to the platform and navigation to key sections</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
 
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToHome"></a>
+                    <span class="name">
+                        <span ><b>goToHome</b></span>
+                        <a href="#goToHome"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToHome()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="30"
+                                    class="link-to-prism">src/landing/landing.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 </div>
 
@@ -227,6 +347,7 @@ Typically includes hero section, feature overview, and call-to-action elements.<
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
 
 /**
  * Landing Component
@@ -249,6 +370,12 @@ export class Landing {
    * Landing page component - serves as the application&#x27;s homepage
    * Provides introduction to the platform and navigation to key sections
    */
+  constructor(
+    private router: Router,
+  ) { }
+  goToHome(): void {
+    this.router.navigate([&#x27;/&#x27;]);
+  }
 }</code></pre>
     </div>
 
@@ -259,78 +386,78 @@ export class Landing {
 &lt;head&gt;
   &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
   &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
-  &lt;title&gt;Second Serve&lt;/title&gt;
+  &lt;title&gt;SecondServe&lt;/title&gt;
   &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;landing.css&quot;&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
-
-  &lt;!-- ---------------- Header Page ---------------- --&gt;
+  &lt;!-- Header --&gt;
   &lt;header&gt;
-    &lt;div class&#x3D;&quot;logo&quot;&gt;SECOND SERVE&lt;/div&gt;
+    &lt;div class&#x3D;&quot;logo&quot;&gt;
+      &lt;h1 tabindex&#x3D;&quot;0&quot; (click)&#x3D;&quot;goToHome()&quot; (keyup.enter)&#x3D;&quot;goToHome()&quot; (keyup.space)&#x3D;&quot;goToHome()&quot;
+        style&#x3D;&quot;cursor: pointer&quot;&gt;
+        SecondServe
+      &lt;/h1&gt;
+    &lt;/div&gt;
     &lt;nav&gt;
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;Get Involved&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a routerLink&#x3D;&quot;/login&quot;&gt;Login&lt;/a&gt;
-          &lt;a routerLink&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+      &lt;div class&#x3D;&quot;nav-left&quot;&gt;
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Resources&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/donate&quot;&gt;Donate&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;dropdown&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot;&gt;Media &amp; About&lt;/a&gt;
+          &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
+            &lt;a href&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
+            &lt;a href&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;Find Restaurants &amp; Resources&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a routerLink&#x3D;&quot;/restaurants&quot;&gt;Restaurants&lt;/a&gt;
-          &lt;a routerLink&#x3D;&quot;/community&quot;&gt;Community Centers&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;News &amp; Media&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a routerLink&#x3D;&quot;/events&quot;&gt;Events&lt;/a&gt;
-          &lt;a routerLink&#x3D;&quot;/blog&quot;&gt;Blog&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div class&#x3D;&quot;dropdown&quot;&gt;
-        &lt;a href&#x3D;&quot;#&quot;&gt;About Us&lt;/a&gt;
-        &lt;div class&#x3D;&quot;dropdown-content&quot;&gt;
-          &lt;a routerLink&#x3D;&quot;/mission&quot;&gt;Mission&lt;/a&gt;
-          &lt;a routerLink&#x3D;&quot;/contact&quot;&gt;Contact&lt;/a&gt;
-        &lt;/div&gt;
+      &lt;div class&#x3D;&quot;nav-right&quot;&gt;
+        &lt;a href&#x3D;&quot;/login&quot; class&#x3D;&quot;login-btn&quot;&gt;Login&lt;/a&gt;
       &lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt;
 
-  &lt;!-- ---------------- Img ---------------- --&gt;
+  &lt;!-- Hero Section: Image + Text Side by Side --&gt;
   &lt;section class&#x3D;&quot;hero-section&quot;&gt;
     &lt;img src&#x3D;&quot;https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg&quot;
       alt&#x3D;&quot;Family enjoying a meal&quot;&gt;
-    &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt;
-    &lt;p&gt;
-      &lt;strong&gt;SecondServe&lt;/strong&gt; is redefining how communities fight food waste and hunger.
-      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into
-      meaningful meals —
-      reducing waste, supporting local families, and helping businesses claim charitable contributions.
-      Together, we can build a future where every meal serves a purpose.
-    &lt;/p&gt;
+    &lt;div class&#x3D;&quot;hero-text&quot;&gt;
+      &lt;h1&gt;Are you ready to serve smarter?&lt;/h1&gt;
+      &lt;p&gt;
+        &lt;strong&gt;SecondServe&lt;/strong&gt; is redefining how communities fight food waste and hunger.
+        By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into
+        meaningful meals — reducing waste, supporting local families, and helping businesses claim charitable
+        contributions.
+        Together, we can build a future where every meal serves a purpose.
+      &lt;/p&gt;
+    &lt;/div&gt;
   &lt;/section&gt;
 
+
+  &lt;!-- Mission Quote --&gt;
   &lt;section class&#x3D;&quot;mission-quote&quot;&gt;
     &lt;h2&gt;“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”
     &lt;/h2&gt;
   &lt;/section&gt;
 
-  &lt;!-- ---------------- Donation Images ---------------- --&gt;
+  &lt;!-- Donation Gallery --&gt;
   &lt;section class&#x3D;&quot;donation-gallery&quot;&gt;
     &lt;img src&#x3D;&quot;https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg&quot;
       alt&#x3D;&quot;Our community workers!&quot;&gt;
     &lt;img src&#x3D;&quot;https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg&quot; alt&#x3D;&quot;Donation Boxes&quot;&gt;
   &lt;/section&gt;
 
-  &lt;!-- ---------------- Food Stats ---------------- --&gt;
+  &lt;!-- Food Stats --&gt;
   &lt;section class&#x3D;&quot;food-stats&quot;&gt;
     &lt;h2&gt;Food Insecurity in the United States&lt;/h2&gt;
     &lt;div class&#x3D;&quot;stats-container&quot;&gt;
@@ -349,10 +476,10 @@ export class Landing {
     &lt;/div&gt;
   &lt;/section&gt;
 
+  &lt;!-- Footer --&gt;
   &lt;footer&gt;
-    &lt;p&gt;© 2025 Second Serve — All Rights Reserved.&lt;/p&gt;
+    &lt;p&gt;© 2025 SecondServe — All Rights Reserved.&lt;/p&gt;
   &lt;/footer&gt;
-
 &lt;/body&gt;
 
 &lt;/html&gt;</code></pre>
@@ -362,62 +489,83 @@ export class Landing {
                 <p class="comment">
                     <code>./landing.css</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">/* app.css */
-
+                <pre class="line-numbers"><code class="language-scss">/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; General Layout &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 body {
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #1f2937;
   background-color: #f9f9f9;
-  font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
-  color: #2b2b2b;
+  box-sizing: border-box;
 }
 
-/* ---------------- Header ---------------- */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Header Section &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 header {
-  padding: 3rem 3rem;
-  background-color: #1d684c;
-  /* solid green */
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100vw;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 3.5rem;
-  /* big logo text */
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  cursor: pointer;
 }
 
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Navbar Section &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 nav {
   display: flex;
-  gap: 2rem;
-  /* space between main menu items */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
 }
 
-/* Dropdown container */
+.nav-left {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-right {
+  margin-left: auto;
+  /* push login button to far right */
+}
+
 .dropdown {
   position: relative;
 }
 
-/* Main dropdown link */
 .dropdown&gt;a {
-  color: white;
+  color: #1f2937;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.3rem;
-  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  display: inline-block;
 }
 
-/* Arrow indicator */
 .dropdown&gt;a::after {
   content: &quot; ▼&quot;;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
-/* Dropdown content */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -431,9 +579,12 @@ nav {
   z-index: 200;
 }
 
-/* Dropdown links */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .dropdown-content a {
-  color: #1d684c;
+  color: #059669;
   padding: 0.8rem 1rem;
   display: block;
   text-decoration: none;
@@ -444,201 +595,59 @@ nav {
   background-color: #f2f2f2;
 }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
+/* Login Button */
+.login-btn {
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-nav a:hover {
-  color: #a8e0c3;
-  /* lighter green hover */
+.login-btn:hover {
+  background-color: #059669;
 }
 
-/* ---------------- Sections ---------------- */
-section {
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #1d684c;
-  margin-bottom: 1.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-}
-
-/* ---------------- Slideshow ---------------- */
-.slideshow-container {
-  position: relative;
-  max-width: 2000px;
-  height: 600px;
-  margin: 0 auto 2rem;
-  overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* automatic slideshow animation */
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  25% {
-    opacity: 1;
-  }
-
-  35% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-.slide:nth-child(1) {
-  animation: fade 16s infinite;
-  animation-delay: 0s;
-}
-
-.slide:nth-child(2) {
-  animation: fade 16s infinite;
-  animation-delay: 4s;
-}
-
-.slide:nth-child(3) {
-  animation: fade 16s infinite;
-  animation-delay: 8s;
-}
-
-.slide:nth-child(4) {
-  animation: fade 16s infinite;
-  animation-delay: 12s;
-}
-
-/* ---------------- Footer ---------------- */
-footer {
-  background-color: #f2f2f2;
-  padding: 2rem;
-  text-align: center;
-  border-top: 1px solid #ccc;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-/* ---------------- Responsive ---------------- */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 2rem;
-  }
-
-  nav {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .dropdown-content {
-    position: relative;
-    box-shadow: none;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  .slideshow-container {
-    height: 250px;
-  }
-}
-
-/* ---------------- Hero Section CSS important ---------------- */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Hero Section &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 .hero-section {
-  width: 100%;
-  height: 600px;
-  /* keep the same height */
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  /* push content down */
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  overflow: hidden;
-  background: none;
-  /* remove black background */
-  padding-top: 50px;
-  /* moves image down from top */
-  position: relative;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
 }
 
 .hero-section img {
   width: 100%;
-  height: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 15px;
   object-fit: cover;
-  /* fills section without stretching */
-  object-position: center 70%;
 }
 
-.hero-section h1 {
-  position: absolute;
-  color: #fff;
-  font-size: 3.0rem;
-  text-align: center;
-  z-index: 2;
-  padding: 0 20px;
-  top: 20%;
-  /* move heading lower */
+.hero-text {
+  max-width: 600px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.hero-section p {
-  position: absolute;
-  color: #f4eeee;
-  font-size: 1.6rem;
-  text-align: center;
-  max-width: 800px;
-  z-index: 2;
-  padding: 0 20px;
-  top: 50%;
-  /* move paragraph lower */
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-/* ---------------- Mission Quote ---------------- */
+.hero-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Mission Quote &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 .mission-quote {
   background-color: #e8f5e9;
   padding: 4rem 2rem;
@@ -646,15 +655,15 @@ footer {
 }
 
 .mission-quote h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #1d684c;
-  font-weight: 800;
+  font-weight: 700;
   max-width: 900px;
   margin: 0 auto;
   line-height: 1.4;
 }
 
-/* ---------------- Donation Images ---------------- */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Donation Gallery &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 .donation-gallery {
   display: flex;
   justify-content: center;
@@ -667,6 +676,7 @@ footer {
 .donation-gallery img {
   width: 45%;
   max-width: 600px;
+  height: auto;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
@@ -676,7 +686,7 @@ footer {
   transform: scale(1.03);
 }
 
-/* ---------------- Food Stats ---------------- */
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Food Stats &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
 .food-stats {
   background-color: #ffffff;
   padding: 4rem 2rem;
@@ -684,7 +694,7 @@ footer {
 }
 
 .food-stats h2 {
-  font-size: 2.3rem;
+  font-size: 2rem;
   color: #1d684c;
   margin-bottom: 2rem;
 }
@@ -692,14 +702,14 @@ footer {
 .stats-container {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
 .stat-box {
   background-color: #e8f5e9;
   border-radius: 10px;
-  padding: 2rem 3rem;
+  padding: 2rem 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 260px;
   transition: transform 0.3s ease;
@@ -710,24 +720,83 @@ footer {
 }
 
 .stat-box h3 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #1d684c;
   margin-bottom: 0.5rem;
 }
 
 .stat-box p {
-  font-size: 1.1rem;
-  color: #333;
+  font-size: 1rem;
+  color: #374151;
 }
 
-/* ---------------- Responsive ---------------- */
-@media (max-width: 768px) {
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Footer &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+footer {
+  background-color: #f2f2f2;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Responsive &#x3D;&#x3D;&#x3D;&#x3D;&#x3D; */
+@media (max-width: 1024px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
   .donation-gallery img {
     width: 90%;
   }
 
+  .stats-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1rem;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-right {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+  }
+
+  .dropdown-content {
+    position: relative;
+    right: auto;
+    left: 0;
+    box-shadow: none;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
   .mission-quote h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 
   .stat-box {
@@ -761,7 +830,7 @@ footer {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="landing.css"></head><body>  <!-- ---------------- Header Page ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a routerLink="/login">Login</a>          <a routerLink="/donate">Donate</a>        </div>      </div>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a routerLink="/restaurants">Restaurants</a>          <a routerLink="/community">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a routerLink="/events">Events</a>          <a routerLink="/blog">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a routerLink="/mission">Mission</a>          <a routerLink="/contact">Contact</a>        </div>      </div>    </nav>  </header>  <!-- ---------------- Img ---------------- -->  <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section>  <section class="mission-quote">    <h2>“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”    </h2>  </section>  <!-- ---------------- Donation Images ---------------- -->  <section class="donation-gallery">    <img src="https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg"      alt="Our community workers!">    <img src="https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg" alt="Donation Boxes">  </section>  <!-- ---------------- Food Stats ---------------- -->  <section class="food-stats">    <h2>Food Insecurity in the United States</h2>    <div class="stats-container">      <div class="stat-box">        <h3>44 Million+</h3>        <p>Americans struggle with food insecurity.</p>      </div>      <div class="stat-box">        <h3>1 in 5</h3>        <p>Children experience hunger each year.</p>      </div>      <div class="stat-box">        <h3>30-40%</h3>        <p>Of all U.S. food is wasted annually.</p>      </div>    </div>  </section>  <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer></body></html></div>'
+        var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>SecondServe</title>  <link rel="stylesheet" href="landing.css"></head><body>  <!-- Header -->  <header>    <div class="logo">      <h1 tabindex="0" (click)="goToHome()" (keyup.enter)="goToHome()" (keyup.space)="goToHome()"        style="cursor: pointer">        SecondServe      </h1>    </div>    <nav>      <div class="nav-left">        <div class="dropdown">          <a href="#">Resources</a>          <div class="dropdown-content">            <a href="/donate">Donate</a>            <a href="/restaurants">Restaurants</a>            <a href="/community">Community Centers</a>          </div>        </div>        <div class="dropdown">          <a href="#">Media & About</a>          <div class="dropdown-content">            <a href="/events">Events</a>            <a href="/blog">Blog</a>            <a href="/mission">Mission</a>            <a href="/contact">Contact</a>          </div>        </div>      </div>      <div class="nav-right">        <a href="/login" class="login-btn">Login</a>      </div>    </nav>  </header>  <!-- Hero Section: Image + Text Side by Side -->  <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <div class="hero-text">      <h1>Are you ready to serve smarter?</h1>      <p>        <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.        By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into        meaningful meals — reducing waste, supporting local families, and helping businesses claim charitable        contributions.        Together, we can build a future where every meal serves a purpose.      </p>    </div>  </section>  <!-- Mission Quote -->  <section class="mission-quote">    <h2>“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”    </h2>  </section>  <!-- Donation Gallery -->  <section class="donation-gallery">    <img src="https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg"      alt="Our community workers!">    <img src="https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg" alt="Donation Boxes">  </section>  <!-- Food Stats -->  <section class="food-stats">    <h2>Food Insecurity in the United States</h2>    <div class="stats-container">      <div class="stat-box">        <h3>44 Million+</h3>        <p>Americans struggle with food insecurity.</p>      </div>      <div class="stat-box">        <h3>1 in 5</h3>        <p>Children experience hunger each year.</p>      </div>      <div class="stat-box">        <h3>30-40%</h3>        <p>Of all U.S. food is wasted annually.</p>      </div>    </div>  </section>  <!-- Footer -->  <footer>    <p>© 2025 SecondServe — All Rights Reserved.</p>  </footer></body></html></div>'
     var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Landing'};
