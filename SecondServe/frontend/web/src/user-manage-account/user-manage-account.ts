@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+/**
+ * User data structure for account management
+ * Represents user profile information for display and updates
+ */
 interface User {
   email: string;
   name: string;
@@ -10,6 +14,15 @@ interface User {
   password?: string;
 }
 
+/**
+ * User Account Management Component
+ * 
+ * Handles user profile management including viewing and updating account information.
+ * Provides functionality to update email, name, address, and password.
+ * 
+ * @selector app-manage-account
+ * @standalone true
+ */
 @Component({
   selector: 'app-manage-account',
   standalone: true,
@@ -18,32 +31,39 @@ interface User {
   styleUrls: ['./user-manage-account.css'],
 })
 export class UserAccountManagement implements OnInit {
+  /** Current user profile data */
   user: User = {
     email: '',
     name: '',
     address: '',
   };
 
+  /** Toggle state for password visibility */
   showPassword = false;
+
+  /** Success message for user feedback */
   successMessage: string | null = null;
+
+  /** Error message for user feedback */
   errorMessage: string | null = null;
 
   private apiUrl = 'http://localhost:8080/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
   }
 
+  /** Loads current user data from API */
   loadUser(): void {
-    // Fetch current user info
     this.http.get<User>(`${this.apiUrl}/me`).subscribe({
       next: (data) => (this.user = data),
       error: (err) => console.error('Failed to load user', err),
     });
   }
 
+  /** Updates user account information via API */
   updateAccount(): void {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.http.put(`${this.apiUrl}/update`, this.user, { headers }).subscribe({
@@ -60,29 +80,30 @@ export class UserAccountManagement implements OnInit {
     });
   }
 
+  /** Toggles password field visibility */
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Navigation / Header buttons
+  // --- Navigation Methods --- //
+
+  /** Reloads current account page */
   goToAccount(): void {
-    // Already on account page; can optionally reload
     this.loadUser();
   }
 
+  /** Navigates to home page */
   goToHome(): void {
-    // Navigate to home page
     window.location.href = '/home';
   }
 
+  /** Navigates to order history page */
   goToOrders(): void {
-    // Navigate to orders page
     window.location.href = '/history';
   }
 
+  /** Logs out user and redirects to login page */
   logout(): void {
-    // Clear session / redirect
-    // Example:
     window.location.href = '/login';
   }
 }

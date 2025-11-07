@@ -21,8 +21,8 @@ load_dotenv(dotenv_path)
 # SECURITY
 # -------------------------------------------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dummy-secret-key-for-dev")
-DEBUG = True
-ALLOWED_HOSTS = ["*"]  # Allow all during development
+DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     "User",
     "Inventory",
     "Organization",
+    "Order",
     "corsheaders",  # Enable CORS support
+    "MongoInit",
 ]
 
 # -------------------------------------------------------------------

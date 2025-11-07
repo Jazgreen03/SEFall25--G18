@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../app/services/auth.service';
 
 interface Delivery {
   id: number;
@@ -38,7 +39,8 @@ export class OrgHome implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -111,15 +113,16 @@ export class OrgHome implements OnInit {
   // --- Navigation Methods --- //
 
   goToAccount(): void {
-    this.router.navigate(['/org-account']);
+    this.router.navigate(['/account']);
   }
 
   goToHome(): void {
-    this.router.navigate(['/org-home']);
+    this.router.navigate(['/home']);
   }
 
   goToOrders(): void {
-    this.router.navigate(['/orders']);
+    this.router.navigate(['/history']);
+
   }
 
   goToInventory(): void {
@@ -127,6 +130,7 @@ export class OrgHome implements OnInit {
   }
 
   logout(): void {
+    this.authService.clearRole();
     localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }

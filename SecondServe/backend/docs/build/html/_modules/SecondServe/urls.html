@@ -51,6 +51,7 @@
 <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
 <span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">path</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">ensure_csrf_cookie</span>
 
 
 <div class="viewcode-block" id="health">
@@ -60,10 +61,21 @@
 
 
 
+<div class="viewcode-block" id="csrf">
+<a class="viewcode-back" href="../../SecondServe.urls.html#SecondServe.urls.csrf">[docs]</a>
+<span class="nd">@ensure_csrf_cookie</span>
+<span class="k">def</span> <span class="nf">csrf</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;CSRF cookie set&quot;</span><span class="p">})</span></div>
+
+
+
 <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">path</span><span class="p">(</span><span class="s2">&quot;admin/&quot;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
     <span class="n">path</span><span class="p">(</span><span class="s2">&quot;api/health/&quot;</span><span class="p">,</span> <span class="n">health</span><span class="p">),</span>
     <span class="n">path</span><span class="p">(</span><span class="s2">&quot;user/&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">((</span><span class="s2">&quot;User.urls&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">))),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;inventory/&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">((</span><span class="s2">&quot;Inventory.urls&quot;</span><span class="p">))),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;org/&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">((</span><span class="s2">&quot;Organization.urls&quot;</span><span class="p">))),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;api/csrf/&quot;</span><span class="p">,</span> <span class="n">csrf</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
 

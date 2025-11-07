@@ -37,9 +37,9 @@ class Item(models.Model):
 
     class ItemType(models.TextChoices):
         STABLE = TYPE_SHELFSTABLE, "Shelf Stable"
-        FROZEN = TYPE_PREPAREDFOOD, "Prepared"
+        PREPED = TYPE_PREPAREDFOOD, "Prepared"
         REFRIG = TYPE_REFRIGERATED, "Refrigerated"
-        OTHER = TYPE_PRODUCE, "Produce"
+        PRODUCE = TYPE_PRODUCE, "Produce"
 
     name = models.CharField(max_length=256)
     type = models.CharField(
@@ -53,7 +53,7 @@ class Item(models.Model):
         Inventory, on_delete=models.CASCADE, related_name="items"
     )
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
 
         expiration_str = self.expiration.strftime("%B {day}, %Y").format(
             day=self.expiration.day

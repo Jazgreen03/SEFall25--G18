@@ -22,7 +22,7 @@ class TestInvalidUser(TestCase):
         self.user = User.objects.create(
             username="orgUser", email="org@email.com", password="123abc"
         )
-        self.user.role = "location"
+        self.user.role = "organization"
         self.user.save()
 
         # Log user in
@@ -99,25 +99,27 @@ class TestAddItem(TestCase):
         self.user = User.objects.create(
             username="orgUser", email="org@email.com", password="123abc"
         )
-        self.user.role = "location"
+        self.user.role = "organization"
         self.user.save()
 
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
     def test_valid_item_add(self):
         # Add the item
         response = self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "pasta",
                 "quantity": "30",
                 "expiration": "December 31, 2030",
                 "type": "stable",
-            },
+            }),
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 201)
@@ -138,13 +140,14 @@ class TestAddItem(TestCase):
 
         # Add a second item
         response = self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "milk",
                 "quantity": "5",
                 "expiration": "November 30, 2025",
                 "type": "refrigerated",
-            },
+            }),
+            content_type="application/json",
         )
         self.assertEqual(response.status_code, 201)
 
@@ -173,57 +176,62 @@ class TestUpdateInventory(TestCase):
         self.user = User.objects.create(
             username="orgUser", email="org@email.com", password="123abc"
         )
-        self.user.role = "location"
+        self.user.role = "organization"
         self.user.save()
 
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         # Item 1
         self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "pasta",
                 "quantity": "30",
                 "expiration": "December 31, 2030",
                 "type": "stable",
-            },
+            }),
+            content_type="application/json",
         )
 
         # Item 2
         self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "milk",
                 "quantity": "5",
                 "expiration": "November 30, 2025",
                 "type": "refrigerated",
-            },
+            }),
+            content_type="application/json",
         )
 
         # Item 3
         self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "lettuce",
                 "quantity": "15",
                 "expiration": "November 15, 2025",
                 "type": "produce",
-            },
+            }),
+            content_type="application/json",
         )
 
         # Item 4
         self.client.post(
-            "/inventory/add/",
+            "/inventory/add/", data=json.dumps(
             {
                 "item_name": "pizza",
                 "quantity": "1",
                 "expiration": "November 5, 2025",
                 "type": "prepared",
-            },
+            }),
+            content_type="application/json",
         )
 
     def test_valid_single_attr_update(self):
@@ -387,24 +395,26 @@ class TestEditItem(TestCase):
         self.user = User.objects.create(
             username="orgUser", email="org@email.com", password="123abc"
         )
-        self.user.role = "location"
+        self.user.role = "organization"
         self.user.save()
 
         self.client.force_login(self.user)
 
         self.client.post(
-            "/org/", {"name": orgName, "type": valid_orgType, "location": orgLocation}
+            "/org/", data=json.dumps({"name": orgName, "type": valid_orgType, "location": orgLocation}),
+            content_type="application/json",
         )
 
         # Item
         self.client.post(
-            "/inventory/add/",
+            "/inventory/add/",data=json.dumps(
             {
                 "item_name": "pasta",
                 "quantity": 30,
                 "expiration": "December 31, 2030",
                 "type": "stable",
-            },
+            }),
+            content_type="application/json",
         )
 
     def test_valid_single_attr_edit(self):

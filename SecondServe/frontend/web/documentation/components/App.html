@@ -138,6 +138,22 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Root Application Component</p>
+<p>The main application component that serves as the root of the Angular application.
+Handles routing, layout management, and global application state.</p>
+<p>Features:</p>
+<ul>
+<li>Manages router outlet for navigation</li>
+<li>Tracks current route for conditional layout rendering</li>
+<li>Provides navigation methods</li>
+<li>Controls layout visibility based on route</li>
+</ul>
+
+    </p>
 
 
 
@@ -260,12 +276,14 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/app.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/app.ts:33</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
+                            <div class="io-description"><p>Component constructor</p>
+</div>
                             <div>
                                     <b>Parameters :</b>
                                     <table class="params">
@@ -274,6 +292,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -288,6 +307,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <p>Router service for navigation and route tracking</p>
+
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -327,14 +350,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="24"
-                                    class="link-to-prism">src/app/app.ts:24</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">src/app/app.ts:55</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the login page
+Used for navigation controls in the layout template</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -364,19 +390,26 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="27"
-                                    class="link-to-prism">src/app/app.ts:27</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/app/app.ts:64</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Determines whether to show the main application layout
+Hides layout on login page for a clean authentication experience</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                         </div>
+                            <div class="io-description">
+                                <p>boolean indicating if layout should be displayed</p>
+
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -411,10 +444,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/app.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/app.ts:30</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Current active route path for conditional layout logic</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -438,10 +477,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/app.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/app.ts:33</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Application title using Angular signals for reactive updates</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -456,6 +501,21 @@ import { RouterOutlet, Router, NavigationEnd } from &#x27;@angular/router&#x27;;
 import { filter } from &#x27;rxjs/operators&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 
+/**
+ * Root Application Component
+ * 
+ * The main application component that serves as the root of the Angular application.
+ * Handles routing, layout management, and global application state.
+ * 
+ * Features:
+ * - Manages router outlet for navigation
+ * - Tracks current route for conditional layout rendering
+ * - Provides navigation methods
+ * - Controls layout visibility based on route
+ * 
+ * @selector app-root
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-root&#x27;,
   standalone: true,
@@ -463,25 +523,46 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
   templateUrl: &#x27;./app.html&#x27;,
   styleUrl: &#x27;./app.css&#x27;
 })
-
 export class App {
+  /** Current active route path for conditional layout logic */
   currentRoute &#x3D; &#x27;&#x27;;
+
+  /** Application title using Angular signals for reactive updates */
   protected readonly title &#x3D; signal(&#x27;web&#x27;);
+
+  /**
+   * Component constructor
+   * @param router Router service for navigation and route tracking
+   */
   constructor(private router: Router) {
+    /**
+     * Subscribe to router events to track navigation changes
+     * Filters for NavigationEnd events to update currentRoute
+     */
     this.router.events.pipe(
       filter(event &#x3D;&gt; event instanceof NavigationEnd)
     ).subscribe((event: any) &#x3D;&gt; {
       this.currentRoute &#x3D; event.url;
     });
   }
+
+  /**
+   * Navigates to the login page
+   * Used for navigation controls in the layout template
+   */
   onLogin() {
     this.router.navigate([&#x27;/login&#x27;]);
   }
+
+  /**
+   * Determines whether to show the main application layout
+   * Hides layout on login page for a clean authentication experience
+   * @returns boolean indicating if layout should be displayed
+   */
   showLayout(): boolean {
     return this.currentRoute !&#x3D;&#x3D; &#x27;/login&#x27;;
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -600,7 +681,7 @@ export class App {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="app.css"></head><body>  <router-outlet></router-outlet>  <!-- ---------------- Header Page ---------------- -->  <!-- <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a href="restaurants.html">Restaurants</a>          <a href="grocery.html">Grocery Stores</a>          <a href="community.html">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a href="volunteer.html">Volunteer</a>          <a href="donate.html">Donate</a>          <a href="partner.html">Partner With Us</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a href="press.html">Press Releases</a>          <a href="events.html">Events</a>          <a href="blog.html">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a href="mission.html">Mission</a>          <a href="team.html">Team</a>          <a href="contact.html">Contact</a>        </div>      </div>    </nav>  </header> -->  <!-- ---------------- Img ---------------- -->  <!-- <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section> -->  <!-- ---------------- About Section ---------------- -->  <!-- <section>    <h2>ABOUT SECOND SERVE</h2>    <p>      Individuals facing food insecurity can see participating locations and schedule pickups or deliveries,      while participating stores reduce waste and claim charitable action for tax purposes.      SecondServe empowers both donors and recipients through a simple, impactful platform.    </p>  </section> -->  <!-- ---------------- Footer ---------------- -->  <!-- <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer> --></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'App'};
 </script>

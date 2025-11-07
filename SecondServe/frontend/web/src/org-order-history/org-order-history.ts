@@ -29,7 +29,7 @@ export class OrgOrderHistory implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadOrders();
@@ -37,11 +37,11 @@ export class OrgOrderHistory implements OnInit {
 
   // --- Navigation ---
   goToHome(): void {
-    this.router.navigate(['/org-home']);
+    this.router.navigate(['/home']);
   }
 
   goToAccount(): void {
-    this.router.navigate(['/org-account']);
+    this.router.navigate(['/account']);
   }
 
   goToOrders(): void {
