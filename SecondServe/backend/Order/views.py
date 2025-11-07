@@ -94,7 +94,7 @@ def getAvailableItems(request: HttpRequest, orgName: str) -> JsonResponse:
         org = Organization.objects.get(name=orgName)
     except:
         org = None
-        
+
     if org is None:
         return JsonResponse({"details": "Organization doesn't exist"}, status=404)
 
@@ -130,7 +130,10 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
     except json.JSONDecodeError:
         return JsonResponse({"details": "Invalid JSON"}, status=400)
 
-    org = Organization.objects.get(name=data.get("organization_name"))
+    try:
+        org = Organization.objects.get(name=data.get("organization_name"))
+    except:
+        org = None
 
     if org is None:
         return JsonResponse({"details": "Organization does not exist"}, status=404)
@@ -142,8 +145,8 @@ def placeOrder(request: HttpRequest) -> JsonResponse:
     order = Order.objects.create(recipient=user, associatedOrg=org)
 
     for oitem in orderedItems:
-        itemName = oitem[0]
-        itemQuantity = oitem[1]
+        itemName = oitem["name"]
+        itemQuantity = oitem["quantity"]
 
         invItem = orgInv.get_item(itemName=itemName)
 
@@ -248,7 +251,7 @@ def getOpenOrders(request: HttpRequest) -> JsonResponse:
             allOpen.append(order.get_order_details_org())
 
     else:
-        return JsonResponse({"details": "Invalid User Role"}, status=400)
+        return JsonResponse({"details": "Invalid User Role"}, status=403)
 
     return JsonResponse(
         {"details": "Open Orders Found", "Orders": allOpen}, status=200
@@ -272,7 +275,10 @@ def updateOrder(request: HttpRequest, orderID: int) -> JsonResponse:
         return JsonResponse({"details": "Invalid JSON"}, status=400)
 
     # Does order exist?
-    order = Order.objects.get(orderID=orderID)
+    try:
+        order = Order.objects.get(orderID=orderID)
+    except:
+        return JsonResponse({"details": "Order does not exist"}, status=404)
 
     if order is None:
         return JsonResponse({"details": "Order does not exist"}, status=404)
@@ -317,9 +323,9 @@ def singleOrderAction(request: HttpRequest, orderID: int) -> JsonResponse:
     if not request.user.is_authenticated:
         return JsonResponse({"details": "No User is logged in"}, status=400)
 
-    order = Order.objects.get(orderID=orderID)
-
-    if order is None:
+    try:
+        Order.objects.get(orderID=orderID)
+    except:
         return JsonResponse({"details": "Order does not exist"}, status=404)
     
     # Claim Order

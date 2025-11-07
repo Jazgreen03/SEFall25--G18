@@ -47,7 +47,7 @@ class Order(models.Model):
     status = models.CharField(
         max_length=25, choices=StatusTypes.choices, default=STATUS_PLACED
     )
-    driver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="Driver")
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="Driver", null=True)
     driverAssigned = models.BooleanField(default=False)
 
     def get_items(self):
