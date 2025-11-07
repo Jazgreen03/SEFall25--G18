@@ -142,6 +142,15 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Landing Component</p>
+<p>The main landing page component that serves as the entry point to the application.
+Typically includes hero section, feature overview, and call-to-action elements.</p>
+
+    </p>
 
 
 
@@ -219,6 +228,15 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Landing Component
+ * 
+ * The main landing page component that serves as the entry point to the application.
+ * Typically includes hero section, feature overview, and call-to-action elements.
+ * 
+ * @selector app-landing
+ * @standalone true
+ */
 @Component({
   selector: &#x27;app-landing&#x27;,
   standalone: true,
@@ -226,7 +244,12 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./landing.html&#x27;,
   styleUrls: [&#x27;./landing.css&#x27;]
 })
-export class Landing { }</code></pre>
+export class Landing {
+  /**
+   * Landing page component - serves as the application&#x27;s homepage
+   * Provides introduction to the platform and navigation to key sections
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -739,7 +762,7 @@ footer {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Second Serve</title>  <link rel="stylesheet" href="landing.css"></head><body>  <!-- ---------------- Header Page ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <div class="dropdown">        <a href="#">Get Involved</a>        <div class="dropdown-content">          <a routerLink="/login">Login</a>          <a routerLink="/donate">Donate</a>        </div>      </div>      <div class="dropdown">        <a href="#">Find Restaurants & Resources</a>        <div class="dropdown-content">          <a routerLink="/restaurants">Restaurants</a>          <a routerLink="/community">Community Centers</a>        </div>      </div>      <div class="dropdown">        <a href="#">News & Media</a>        <div class="dropdown-content">          <a routerLink="/events">Events</a>          <a routerLink="/blog">Blog</a>        </div>      </div>      <div class="dropdown">        <a href="#">About Us</a>        <div class="dropdown-content">          <a routerLink="/mission">Mission</a>          <a routerLink="/contact">Contact</a>        </div>      </div>    </nav>  </header>  <!-- ---------------- Img ---------------- -->  <section class="hero-section">    <img src="https://wfmchealth.org/wp-content/uploads/2019/03/family-enjoying-meal-around-table-at-home-MQUJWYT-2.jpg"      alt="Family enjoying a meal">    <h1>Are you ready to serve smarter?</h1>    <p>      <strong>SecondServe</strong> is redefining how communities fight food waste and hunger.      By connecting local restaurants and grocery stores with those in need, we transform soon-to-expire food into      meaningful meals —      reducing waste, supporting local families, and helping businesses claim charitable contributions.      Together, we can build a future where every meal serves a purpose.    </p>  </section>  <section class="mission-quote">    <h2>“Together, we transform excess into impact — ensuring that no meal goes to waste, and no family goes hungry.”    </h2>  </section>  <!-- ---------------- Donation Images ---------------- -->  <section class="donation-gallery">    <img src="https://www.palomar.edu/news/wp-content/uploads/sites/50/2017/11/Food-Bank-1024x768.jpg"      alt="Our community workers!">    <img src="https://sdwordsandpictures.com/wp-content/uploads/2020/07/IMG_7601.jpg" alt="Donation Boxes">  </section>  <!-- ---------------- Food Stats ---------------- -->  <section class="food-stats">    <h2>Food Insecurity in the United States</h2>    <div class="stats-container">      <div class="stat-box">        <h3>44 Million+</h3>        <p>Americans struggle with food insecurity.</p>      </div>      <div class="stat-box">        <h3>1 in 5</h3>        <p>Children experience hunger each year.</p>      </div>      <div class="stat-box">        <h3>30-40%</h3>        <p>Of all U.S. food is wasted annually.</p>      </div>    </div>  </section>  <footer>    <p>© 2025 Second Serve — All Rights Reserved.</p>  </footer></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Landing'};
 </script>

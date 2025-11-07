@@ -1,5 +1,5 @@
 // karma.conf.js
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -8,32 +8,40 @@ module.exports = function(config) {
       require('karma-chrome-launcher'),
       require('karma-coverage'),
       require('karma-jasmine-html-reporter'),
-      //require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
-      clearContext: false
+      clearContext: false, // Leave Jasmine Spec Runner output visible in browser
     },
+
+    // ✅ Coverage output configuration
     coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'),
       reporters: [
-        { type: 'html', subdir: 'web' },          // HTML report in coverage/web
-        { type: 'lcovonly', subdir: '.', file: 'lcov.info' } // lcov at coverage/lcov.info
+        { type: 'html', subdir: 'web' },                     // Full HTML report
+        { type: 'lcovonly', subdir: '.', file: 'lcov.info' }, // LCOV for external tools
+        { type: 'json', subdir: 'web', file: 'coverage-final.json' }, // ✅ For badge generator
+        { type: 'text-summary' },                            // Summary in console
       ],
-      fixWebpackSourcePaths: true
+      fixWebpackSourcePaths: true,
     },
+
     reporters: ['progress', 'kjhtml', 'coverage'],
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
+
+    // ✅ Headless browser setup
     browsers: ['ChromeHeadlessNoSandbox'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-gpu']
-      }
+        flags: ['--no-sandbox', '--disable-gpu'],
+      },
     },
-    singleRun: true,               // ensures coverage files are written
-    restartOnFileChange: false
+
+    singleRun: true, // Ensures tests run once and exit (useful in CI)
+    restartOnFileChange: false,
   });
 };

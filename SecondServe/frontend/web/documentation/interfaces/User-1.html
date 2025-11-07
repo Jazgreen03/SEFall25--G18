@@ -368,7 +368,7 @@ export class OrgAccountManagement implements OnInit {
 
   private apiUrl &#x3D; &#x27;http://localhost:8080/api/users&#x27;;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -410,12 +410,12 @@ export class OrgAccountManagement implements OnInit {
 
   goToHome(): void {
     // Navigate to home page
-    window.location.href &#x3D; &#x27;/org-home&#x27;;
+    window.location.href &#x3D; &#x27;/home&#x27;;
   }
 
   goToOrders(): void {
     // Navigate to orders page
-    window.location.href &#x3D; &#x27;/org-history&#x27;;
+    window.location.href &#x3D; &#x27;/history&#x27;;
   }
 
   goToInventory(): void {

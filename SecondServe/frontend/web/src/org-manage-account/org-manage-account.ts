@@ -18,66 +18,112 @@ interface User {
   styleUrls: ['./org-manage-account.css'],
 })
 export class OrgAccountManagement implements OnInit {
-  user: User = {
-    email: '',
-    name: '',
-    address: '',
-  };
-
+  user: User = { email: '', name: '', address: '' };
   showPassword = false;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  updating = false;
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://localhost:8000/user'; // backend URL for org routes
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadUser();
   }
 
+  /** Load currently logged-in org user info */
   loadUser(): void {
-    // Fetch current user info
-    this.http.get<User>(`${this.apiUrl}/me`).subscribe({
-      next: (data) => (this.user = data),
-      error: (err) => console.error('Failed to load user', err),
+    this.http.get<User>(`${this.apiUrl}/info/`, { withCredentials: true }).subscribe({
+      next: (data) => {
+        console.log('Logged in organization:', data);
+        this.user = { ...data, password: '' };
+      },
+      error: (err) => {
+        console.error('Not logged in', err);
+        this.errorMessage = 'You must be logged in to manage your organization account.';
+      },
     });
   }
 
-  updateAccount(): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.put(`${this.apiUrl}/update`, this.user, { headers }).subscribe({
-      next: () => {
-        this.successMessage = 'Account updated successfully!';
-        this.errorMessage = null;
-        this.user.password = ''; // clear password field
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to update account.';
-        this.successMessage = null;
-        console.error(err);
-      },
+  /** Fetch CSRF token from cookie */
+  getCsrfToken(): string {
+    const match = document.cookie.match(/csrftoken=([\w-]+)/);
+    return match ? match[1] : '';
+  }
+
+  /** Update account info */
+  async updateAccount(): Promise<void> {
+    this.updating = true;
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    const csrfToken = this.getCsrfToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
     });
+
+    try {
+      // Update name
+      await this.http
+        .put(
+          `${this.apiUrl}/update/`,
+          { attribute: 'first_name', new_value: this.user.name },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+
+      // Update address
+      await this.http
+        .put(
+          `${this.apiUrl}/update/`,
+          { attribute: 'address', new_value: this.user.address },
+          { headers, withCredentials: true }
+        )
+        .toPromise();
+
+      this.successMessage = 'Organization details updated successfully!';
+
+      // Update password if provided
+      if (this.user.password) {
+        await this.http
+          .put(
+            `${this.apiUrl}/update/`,
+            { attribute: 'password', new_value: this.user.password },
+            { headers, withCredentials: true }
+          )
+          .toPromise();
+
+        this.successMessage += ' Password updated successfully!';
+        this.user.password = '';
+      }
+    } catch (err: any) {
+      console.error('Update failed:', err);
+      this.errorMessage =
+        err.error?.details || 'Failed to update organization account. Make sure you are logged in.';
+    } finally {
+      this.updating = false;
+    }
   }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Navigation / Header buttons
+  // ---------------- Navigation ----------------
   goToAccount(): void {
-    // Already on account page; can optionally reload
     this.loadUser();
   }
 
   goToHome(): void {
     // Navigate to home page
-    window.location.href = '/org-home';
+    window.location.href = '/home';
   }
 
   goToOrders(): void {
     // Navigate to orders page
-    window.location.href = '/org-history';
+    window.location.href = '/history';
   }
 
   goToInventory(): void {
@@ -85,8 +131,6 @@ export class OrgAccountManagement implements OnInit {
   }
 
   logout(): void {
-    // Clear session / redirect
-    // Example:
     window.location.href = '/login';
   }
 }

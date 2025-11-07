@@ -26,7 +26,7 @@ export class UserOrderHistory implements OnInit {
   // Add activeTab for navbar highlighting
   activeTab = 'orders';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.loadOrders();
@@ -91,7 +91,8 @@ export class UserOrderHistory implements OnInit {
   // New: goToOrders for the template
   goToOrders() {
     this.activeTab = 'orders';
-    this.router.navigate(['/orders']);
+    this.router.navigate(['/history']);
+
   }
 
   logout() {

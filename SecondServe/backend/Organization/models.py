@@ -29,9 +29,11 @@ class OrganizationManager(models.Manager):
         inv = Inventory.objects.create(org=name)
 
         # Create the Organization with all the necessary variables and save to database
-        Organization.objects.create(
+        orgObj = Organization.objects.create(
             name=name, orgType=orgType, location=location, inv=inv, creator=user
         )
+
+        return orgObj
 
 
 class Organization(models.Model):

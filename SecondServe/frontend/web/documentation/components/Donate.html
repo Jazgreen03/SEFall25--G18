@@ -138,6 +138,33 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Donate Component</p>
+<p>Provides the donation interface for users to contribute financially to the platform or cause.
+This component handles the presentation and interaction for donation flows, including
+one-time donations, recurring contributions, and donation amount selection.</p>
+<p>Features:</p>
+<ul>
+<li>Standalone component architecture</li>
+<li>Router integration for navigation within donation flows</li>
+<li>Flexible donation amount options</li>
+<li>Secure payment processing interface</li>
+<li>Donation tracking and confirmation</li>
+</ul>
+<p>This component is rendered when navigating to the &#39;/donate&#39; route and typically includes:</p>
+<ul>
+<li>Donation amount selection (fixed amounts or custom input)</li>
+<li>Payment method integration (credit card, PayPal, etc.)</li>
+<li>Recurring vs one-time donation options</li>
+<li>Donation purpose selection (if applicable)</li>
+<li>Tax receipt information</li>
+<li>Donation confirmation and thank you messages</li>
+</ul>
+
+    </p>
 
 
 
@@ -215,6 +242,32 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Donate Component
+ * 
+ * Provides the donation interface for users to contribute financially to the platform or cause.
+ * This component handles the presentation and interaction for donation flows, including
+ * one-time donations, recurring contributions, and donation amount selection.
+ * 
+ * Features:
+ * - Standalone component architecture
+ * - Router integration for navigation within donation flows
+ * - Flexible donation amount options
+ * - Secure payment processing interface
+ * - Donation tracking and confirmation
+ * 
+ * @selector app-donate
+ * @standalone true
+ * 
+ * @usage
+ * This component is rendered when navigating to the &#x27;/donate&#x27; route and typically includes:
+ * - Donation amount selection (fixed amounts or custom input)
+ * - Payment method integration (credit card, PayPal, etc.)
+ * - Recurring vs one-time donation options
+ * - Donation purpose selection (if applicable)
+ * - Tax receipt information
+ * - Donation confirmation and thank you messages
+ */
 @Component({
   selector: &#x27;app-donate&#x27;,
   standalone: true,
@@ -222,8 +275,28 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./donate.html&#x27;,
   styleUrl: &#x27;./donate.css&#x27;,
 })
-export class Donate {}
-</code></pre>
+export class Donate {
+  /**
+   * Donate Component
+   * 
+   * This component serves as the main container for donation-related functionality.
+   * The actual donation forms, payment processing, and user interface elements
+   * are implemented in the associated template and style files.
+   * 
+   * Potential future enhancements may include:
+   * - Integration with payment processors (Stripe, PayPal, etc.)
+   * - Recurring donation scheduling
+   * - Donation tier benefits display
+   * - Corporate matching donation information
+   * - Donation impact visualization
+   * - Multiple currency support
+   * - Tax deduction information
+   * - Donation history for returning donors
+   * 
+   * The component&#x27;s visual design and responsive layout are defined in donate.css,
+   * while the donation form structure and user interaction are handled in donate.html.
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -330,7 +403,7 @@ export class Donate {}
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><header>  <div class="logo">SECOND SERVE</div></header><section class="hero-section">  <h1>Make a Donation</h1>  <p>    Your contribution helps us redirect surplus food to families in need. Together, we can reduce waste and nourish communities.  </p></section><section class="donate-form">  <h2>Donate Now</h2>  <form>    <!-- Name & Email -->    <label for="name">Name</label>    <input type="text" id="name" placeholder="Your Name">    <label for="email">Email</label>    <input type="email" id="email" placeholder="Your Email">    <label for="company">Donor</label>    <select id="company">      <option value="" disabled selected>Select Donor Type</option>      <option value="restaurant">Restaurant</option>      <option value="grocery">Grocery Store</option>      <option value="self">Self</option>    </select>    <label for="donation-type">Donation Type</label>    <select id="donation-type">      <option value="" disabled selected>Select Donation Type</option>      <option value="amount">Amount</option>      <option value="food">Food</option>    </select>    <div id="amount-input" style="display:none;">      <label for="donation-amount">Donation Amount</label>      <input type="number" id="donation-amount" placeholder="$50">    </div>    <div id="food-input" style="display:none;">      <label for="food-details">Food Details</label>      <input type="text" id="food-details" placeholder="e.g., 10 lbs of rice">    </div>    <button type="submit">Donate</button>  </form></section><script>  const donationSelect = document.getElementById("donation-type");  const amountInput = document.getElementById("amount-input");  const foodInput = document.getElementById("food-input");  donationSelect.addEventListener("change", function() {    if (this.value === "amount") {      amountInput.style.display = "block";      foodInput.style.display = "none";    } else if (this.value === "food") {      amountInput.style.display = "none";      foodInput.style.display = "block";    } else {      amountInput.style.display = "none";      foodInput.style.display = "none";    }  });</script><footer>  <p>© 2025 Second Serve — All Rights Reserved.</p></footer></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Donate'};
 </script>

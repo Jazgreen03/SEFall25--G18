@@ -37,4 +37,5 @@ urlpatterns = [
     path("inventory/", include(("Inventory.urls"))),
     path("org/", include(("Organization.urls"))),
     path("api/csrf/", csrf),
+    path("", include(("Order.urls"))), # Basically because it has /items/, /order/, and /orders/, all the "extra" calls get sent here
 ]

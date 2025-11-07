@@ -8,7 +8,7 @@
     </div>
 
     <div class="nav-actions">
-      <button class="nav-btn" (click)="goToAccount()">Account</button>
+      <button class="nav-btn" (click)="goToAccount()">Account Management</button>
       <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
       <button class="nav-btn" (click)="goToOrders()">Order History</button>
       <button class="logout-btn" (click)="logout()">Logout</button>
@@ -35,7 +35,7 @@
     <button (click)="refreshDeliveries()" class="btn-secondary">Try Again</button>
   </div>
 
-  <!-- Delivery Cards -->
+  <!-- Available Delivery Cards -->
   <section *ngIf="!loading && deliveries.length > 0" class="delivery-grid">
     <div *ngFor="let delivery of deliveries" class="delivery-card">
       <div class="delivery-info">
@@ -60,9 +60,57 @@
     </div>
   </section>
 
-  <!-- No Results -->
-  <div *ngIf="!loading && deliveries.length === 0" class="no-results">
-    <p>No deliveries available at this time.</p>
-    <p>Check back soon or refresh the list.</p>
+
+<!-- Claimed Orders -->
+<section *ngIf="!loading && claimedOrders.length > 0" class="delivery-grid">
+  <h2 style="grid-column: 1/-1; font-size: 1.8rem; font-weight: 700; color: white; margin-top:2rem;">
+    Claimed Orders
+  </h2>
+
+  <div *ngFor="let order of claimedOrders" class="delivery-card">
+    <div class="delivery-info">
+      <h3>Order ID: {{ order.id }}</h3>
+      <p>Status: <strong>{{ order.status }}</strong></p>
+      <p>Delivery Address: {{ order.deliveryAddress }}</p>
+      <p>Organization: {{ order.organization }}</p>
+      <p><strong>{{ order.items.length }}</strong> items</p>
+
+      <div class="food-types">
+        <span *ngFor="let item of order.items" class="food-tag">{{ item.name }} x{{ item.quantity }}</span>
+      </div>
+
+      <!-- Action Buttons to Update Status -->
+      <div class="actions">
+        <button 
+          *ngIf="order.status === 'Pending'" 
+          (click)="updateOrderStatus(order.id, 'In Transit')" 
+          class="btn-pickup">
+          Mark In Transit
+        </button>
+
+        <button 
+          *ngIf="order.status === 'In Transit'" 
+          (click)="updateOrderStatus(order.id, 'Delivered')" 
+          class="btn-pickup">
+          Mark Delivered
+        </button>
+      </div>
+    </div>
   </div>
+</section>
+
+
+<!-- No Claimed Orders -->
+<div *ngIf="!loading && claimedOrders.length === 0" class="no-results">
+  <p style="font-size: 1.4rem; font-weight: 600; color: white;">
+    You haven't claimed any orders yet.
+  </p>
+</div>
+
+<!-- No Available Deliveries -->
+<div *ngIf="!loading && deliveries.length === 0" class="no-results">
+  <p style="font-size: 1.4rem; font-weight: 600; color: white;">
+    No deliveries available at this time.
+  </p>
+  <p style="color: white;">Check back soon or refresh the list.</p>
 </div>

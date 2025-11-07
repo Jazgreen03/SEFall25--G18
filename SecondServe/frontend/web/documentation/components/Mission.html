@@ -138,6 +138,33 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Mission Component</p>
+<p>Displays the organization&#39;s mission, vision, values, and overall purpose.
+This component serves as an informational page that communicates the core
+principles, goals, and philosophical foundation of the platform to users,
+partners, and stakeholders.</p>
+<p>Features:</p>
+<ul>
+<li>Standalone component architecture</li>
+<li>Router integration for seamless navigation within About Us section</li>
+<li>Engaging presentation of organizational philosophy</li>
+<li>Responsive design for optimal viewing across devices</li>
+</ul>
+<p>This component is rendered when navigating to the &#39;/mission&#39; route and typically includes:</p>
+<ul>
+<li>Organization mission statement and core purpose</li>
+<li>Vision for the future and long-term goals</li>
+<li>Core values and guiding principles</li>
+<li>Impact metrics and success stories</li>
+<li>Team information and organizational structure</li>
+<li>Historical background and founding story</li>
+</ul>
+
+    </p>
 
 
 
@@ -215,6 +242,32 @@
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { RouterModule } from &#x27;@angular/router&#x27;;
 
+/**
+ * Mission Component
+ * 
+ * Displays the organization&#x27;s mission, vision, values, and overall purpose.
+ * This component serves as an informational page that communicates the core
+ * principles, goals, and philosophical foundation of the platform to users,
+ * partners, and stakeholders.
+ * 
+ * Features:
+ * - Standalone component architecture
+ * - Router integration for seamless navigation within About Us section
+ * - Engaging presentation of organizational philosophy
+ * - Responsive design for optimal viewing across devices
+ * 
+ * @selector app-mission
+ * @standalone true
+ * 
+ * @usage
+ * This component is rendered when navigating to the &#x27;/mission&#x27; route and typically includes:
+ * - Organization mission statement and core purpose
+ * - Vision for the future and long-term goals
+ * - Core values and guiding principles
+ * - Impact metrics and success stories
+ * - Team information and organizational structure
+ * - Historical background and founding story
+ */
 @Component({
   selector: &#x27;app-mission&#x27;,
   standalone: true,
@@ -222,8 +275,34 @@ import { RouterModule } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./mission.html&#x27;,
   styleUrl: &#x27;./mission.css&#x27;,
 })
-export class Mission {}
-</code></pre>
+export class Mission {
+  /**
+   * Mission Component
+   * 
+   * This component presents the foundational principles and purpose of the organization.
+   * It serves to inspire trust, communicate values, and align users with the platform&#x27;s
+   * overarching goals. The content typically focuses on:
+   * 
+   * - The &quot;why&quot; behind the platform&#x27;s existence
+   * - The problem being solved or need being addressed
+   * - The intended impact on the community or industry
+   * - The ethical framework guiding decision-making
+   * 
+   * Potential content sections may include:
+   * - Founding story and historical context
+   * - Core mission statement and value proposition
+   * - Vision for future growth and community impact
+   * - Team member profiles and organizational culture
+   * - Key milestones and achievement highlights
+   * - Testimonials from community members or partners
+   * - Call-to-action for involvement or support
+   * 
+   * The component&#x27;s inspirational design and typographic hierarchy are defined in mission.css,
+   * while the narrative structure and content presentation are handled in mission.html.
+   * RouterModule integration allows for easy navigation to related About Us pages such as
+   * Contact information or team details.
+   */
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
@@ -310,7 +389,7 @@ export class Mission {}
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Our Mission | SecondServe</title>  <link rel="stylesheet" href="mission.css"></head><body>  <!-- ---------------- Header ---------------- -->  <header>    <div class="logo">SECOND SERVE</div>    <nav>      <a href="index.html">Home</a>      <a href="community.html">Community</a>      <a href="restaurants.html">Restaurants</a>      <a href="events.html">Events</a>      <a href="blog.html">Blog</a>      <a href="mission.html" class="active">Mission</a>    </nav>  </header>  <!-- ---------------- Mission Section ---------------- -->  <section class="mission-hero">    <div class="mission-text">      <h1>Our Mission</h1>      <p>        SecondServe is a revolutionary platform bridging the gap between food surplus and food insecurity.         We empower local restaurants and grocery stores to donate non-retail, soon-to-expire food directly         to families and individuals in need. Through an intuitive interface, users can view participating         locations, schedule pickups or deliveries, and gain access to fresh, nutritious food that would         otherwise go to waste.      </p>      <p>        Our mission is simple yet powerful — to <strong>reduce food waste, fight hunger, and strengthen         community connections</strong>. Participating businesses not only make a positive social impact but         also benefit from tax-deductible donations and recognition as sustainability leaders in their communities.      </p>      <p class="mission-quote">“Together, we can turn surplus into service.”</p>    </div>    <div class="mission-image">      <img src="https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg" alt="Food Donation">    </div>  </section>  <!-- ---------------- Footer ---------------- -->  <footer>    <p>© 2025 SecondServe | Building a stronger, waste-free community.</p>  </footer></body></html></div>'
-    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
+    var COMPONENTS = [{'name': 'AccountManagement', 'selector': 'app-account-management'},{'name': 'App', 'selector': 'app-root'},{'name': 'Blog', 'selector': 'app-blog'},{'name': 'Community', 'selector': 'app-community'},{'name': 'Contact', 'selector': 'app-contact'},{'name': 'Deliveries', 'selector': 'app-driver-home'},{'name': 'Donate', 'selector': 'app-donate'},{'name': 'DriverAccountManagement', 'selector': 'app-manage-account'},{'name': 'DriverHome', 'selector': 'app-driver-home'},{'name': 'DriverOrderHistory', 'selector': 'app-driver-order-history'},{'name': 'Events', 'selector': 'app-events'},{'name': 'Home', 'selector': 'app-home'},{'name': 'InventoryManagement', 'selector': 'app-org-home'},{'name': 'Landing', 'selector': 'app-landing'},{'name': 'Login', 'selector': 'app-login'},{'name': 'Mission', 'selector': 'app-mission'},{'name': 'OrderHistory', 'selector': 'app-history'},{'name': 'OrgAccountManagement', 'selector': 'app-manage-account'},{'name': 'OrgHome', 'selector': 'app-org-home'},{'name': 'OrgOrderHistory', 'selector': 'app-org-order-history'},{'name': 'Register', 'selector': 'app-register'},{'name': 'Restaurants', 'selector': 'app-restaurants'},{'name': 'UserAccountManagement', 'selector': 'app-manage-account'},{'name': 'UserHome', 'selector': 'app-home'},{'name': 'UserOrderHistory', 'selector': 'app-order-history'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'Mission'};
 </script>

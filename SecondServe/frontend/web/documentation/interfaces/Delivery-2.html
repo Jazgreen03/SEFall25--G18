@@ -493,7 +493,7 @@ export class InventoryManagement implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -566,15 +566,15 @@ export class InventoryManagement implements OnInit {
   // --- Navigation Methods --- //
 
   goToAccount(): void {
-    this.router.navigate([&#x27;/org-account&#x27;]);
+    this.router.navigate([&#x27;/account&#x27;]);
   }
 
   goToHome(): void {
-    this.router.navigate([&#x27;/org-home&#x27;]);
+    this.router.navigate([&#x27;/home&#x27;]);
   }
 
   goToOrders(): void {
-    this.router.navigate([&#x27;/org-history&#x27;]);
+    this.router.navigate([&#x27;/history&#x27;]);
   }
 
   goToInventory(): void {
