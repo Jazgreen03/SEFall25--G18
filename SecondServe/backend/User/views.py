@@ -154,6 +154,32 @@ def updateUser(request: HttpRequest) -> JsonResponse:
     request.user.save()
     return JsonResponse({"details": "Attribute Updated"}, status=200)
 
+@require_http_methods(["GET"])
+def available_deliveries(request: HttpRequest) -> JsonResponse:
+    # Example data
+    deliveries = [
+        {
+            "id": 1,
+            "restaurantName": "Fresh Eats",
+            "pickupAddress": "123 Main St",
+            "deliveryAddress": "456 Oak Ave",
+            "items": ["Sandwiches", "Salad"],
+            "requestedTime": "2025-11-10T12:30:00",
+            "status": "Pending"
+        },
+        {
+            "id": 2,
+            "restaurantName": "Healthy Bites",
+            "pickupAddress": "789 Market St",
+            "deliveryAddress": "321 Elm St",
+            "items": ["Soup", "Bread"],
+            "requestedTime": "2025-11-10T13:00:00",
+            "status": "Pending"
+        }
+    ]
+    return JsonResponse(deliveries, safe=False)
+
+
 
 
 @require_http_methods(["GET"])
@@ -186,3 +212,17 @@ def getAllUsers(request: HttpRequest) -> JsonResponse:
     user_list = list(users)
 
     return JsonResponse(user_list, safe=False, status=200)
+
+@csrf_exempt
+def accept_delivery(request):
+    if request.method != "POST":
+        return JsonResponse({"detail": "Method not allowed"}, status=405)
+    try:
+        data = json.loads(request.body)
+        delivery_id = data.get("deliveryId")
+        if not delivery_id:
+            return JsonResponse({"detail": "deliveryId missing"}, status=400)
+        # Logic to mark as accepted (save to DB, etc.)
+        return JsonResponse({"detail": f"Delivery {delivery_id} accepted"}, status=200)
+    except json.JSONDecodeError:
+        return JsonResponse({"detail": "Invalid JSON"}, status=400)

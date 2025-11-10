@@ -21,7 +21,6 @@ interface ClaimedOrder {
   organization: string;
 }
 
-
 @Component({
   selector: 'app-driver-home',
   standalone: true,
@@ -31,17 +30,14 @@ interface ClaimedOrder {
 })
 export class DriverHome implements OnInit {
   currentTab: 'account' | 'orders' | 'deliveries' | 'history' = 'deliveries';
-  deliveries: Delivery[] = [];        // Open deliveries
-  claimedOrders: ClaimedOrder[] = [];  // Orders already claimed by driver
+  deliveries: Delivery[] = [];        // Open deliveries from restaurants
+  claimedOrders: ClaimedOrder[] = []; // Orders already claimed by driver
   loading = false;
   error: string | null = null;
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'http://localhost:8000/api/driver';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.loadDeliveries();
@@ -73,74 +69,95 @@ export class DriverHome implements OnInit {
   }
 
   // --- API Methods --- //
-  loadDeliveries(): void {
-    this.loading = true;
-    this.error = null;
 
-    this.http.get<Delivery[]>(`${this.apiUrl}/driver/deliveries/available`).subscribe({
-      next: (data) => {
-        this.deliveries = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load deliveries.';
-        this.loading = false;
-        console.error('Error loading deliveries:', err);
-      },
-    });
-  }
+  /** Load all available deliveries from restaurants */
+ loadDeliveries(): void {
+  this.loading = true;
+  this.error = null;
 
-  loadClaimedOrders(): void {
-    this.loading = true;
-    this.error = null;
+  this.http.get<Delivery[]>(`${this.apiUrl}/deliveries/available/`).subscribe({
+    next: (data) => {
+      this.deliveries = data;
+      this.loading = false;
 
-    this.http.get<ClaimedOrder[]>(`${this.apiUrl}/orders/`).subscribe({
-      next: (data) => {
-        this.claimedOrders = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Failed to load claimed orders.';
-        this.loading = false;
-        console.error('Error loading claimed orders:', err);
-      },
-    });
-  }
+      // Show message if list is empty
+      if (this.deliveries.length === 0) {
+        this.error = 'No deliveries are available at this time.';
+      } else {
+        this.error = null;
+      }
+    },
+    error: (err) => {
+      console.error(err);
+      // Only show real error if HTTP request fails
+      this.error = 'Failed to load deliveries. Please try again later.';
+      this.loading = false;
+    },
+  });
+}
 
 
-
+  /** Refresh both open and claimed deliveries */
   refreshDeliveries(): void {
     this.loadDeliveries();
     this.loadClaimedOrders();
   }
 
-  acceptDelivery(delivery: Delivery): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    this.http
-      .post(`${this.apiUrl}/driver/deliveries/accept`, { deliveryId: delivery.id }, { headers })
-      .subscribe({
-        next: () => {
-          alert(`Delivery ${delivery.id} accepted!`);
-          this.loadDeliveries(); // reload list after accepting
-        },
-        error: (err) => {
-          this.error = 'Failed to accept delivery.';
-          console.error(err);
-        },
-      });
-  }
-
-  updateOrderStatus(orderId: number, newStatus: 'In Transit' | 'Delivered') {
+ acceptDelivery(delivery: Delivery): void {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.put(`${this.apiUrl}/order/${orderId}/update/`, { new_status: newStatus }, { headers })
+  this.http.post(`${this.apiUrl}/deliveries/accept/`, { deliveryId: delivery.id }, { headers })
     .subscribe({
       next: () => {
-        alert(`Order ${orderId} updated to ${newStatus}`);
-        this.loadClaimedOrders(); // reload claimed orders
+        alert(`Delivery ${delivery.id} accepted!`);
+        
+        // Remove from available deliveries
+        this.deliveries = this.deliveries.filter(d => d.id !== delivery.id);
+
+        // Add to claimed orders
+        const claimed: ClaimedOrder = {
+          id: delivery.id,
+          status: 'Pending',
+          deliveryAddress: delivery.deliveryAddress,
+          items: delivery.items.map(item => ({ name: item, quantity: 1 })),
+          organization: delivery.restaurantName,
+        };
+        this.claimedOrders.push(claimed);
+
       },
-      error: (err) => console.error('Failed to update order:', err)
+      error: (err) => {
+        this.error = 'Failed to accept delivery.';
+        console.error(err);
+      },
+  });
+}
+ /** Load claimed orders assigned to this driver */
+loadClaimedOrders(): void {
+  const driverUsername = localStorage.getItem('username');
+  if (!driverUsername) return;
+
+  this.http
+    .get<ClaimedOrder[]>(`${this.apiUrl}/deliveries/claimed/${driverUsername}`)
+    .subscribe({
+      next: (data) => {
+        this.claimedOrders = data;
+      },
+      error: (err) => {
+        console.error('Failed to load claimed deliveries:', err);
+        this.error = 'Failed to load claimed deliveries.';
+      },
     });
 }
 
+  /** Update the status of a claimed order */
+  updateOrderStatus(orderId: number, newStatus: 'In Transit' | 'Delivered') {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.put(`${this.apiUrl}/order/${orderId}/update/`, { new_status: newStatus }, { headers })
+      .subscribe({
+        next: () => {
+          alert(`Order ${orderId} updated to ${newStatus}`);
+          this.loadClaimedOrders(); // reload claimed orders
+        },
+        error: (err) => console.error('Failed to update order:', err)
+      });
+  }
 }

@@ -13,11 +13,12 @@ from django.urls import path
 import User.views as views
 
 urlpatterns = [
+    path('deliveries/available/', views.available_deliveries),
+    path('deliveries/accept/', views.accept_delivery),
     path("create/", views.createUser),
     path("login/", views.loginUser),
     path("logout/", views.logoutUser),
     path("update/", views.updateUser),
     path("info/", views.getUserInfo),
-    
     path("all/", views.getAllUsers, name="getAllUsers"),
 ]

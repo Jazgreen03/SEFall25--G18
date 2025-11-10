@@ -93,13 +93,35 @@ export class InventoryManagement implements OnInit {
 
   /** Mark inventory item for donation */
   donateItem(item: InventoryItem): void {
-    const confirmed = confirm(`Mark "${item.name}" as donated?`);
-    if (!confirmed) return;
+  const confirmed = confirm(`Mark "${item.name}" as donated?`);
+  if (!confirmed) return;
 
-    // Simulated API update
-    this.inventory = this.inventory.filter((i) => i.id !== item.id);
-    alert(`${item.name} marked for donation!`);
-  }
+  // Get the logged-in restaurant's username
+  const restaurantUsername = localStorage.getItem('username');
+
+  // Prepare the delivery data to send to backend
+  const payload = {
+    restaurantName: restaurantUsername,
+    items: [item.name],
+    quantity: item.quantity,
+    pickupAddress: 'Restaurant Address',  // replace with real data if available
+    deliveryAddress: 'Food Bank / Organization' // or dynamically assigned later
+  };
+
+  // Send to backend API
+  this.http.post(`${this.apiUrl}/deliveries`, payload).subscribe({
+    next: () => {
+      alert(`${item.name} marked for donation and sent for delivery!`);
+      // Remove the donated item from inventory (frontend)
+      this.inventory = this.inventory.filter((i) => i.id !== item.id);
+    },
+    error: (err) => {
+      console.error('Donation failed:', err);
+      alert('Failed to mark donation — please try again.');
+    }
+  });
+}
+
 
   /** View more details about a delivery */
   viewDeliveryDetails(delivery: Delivery): void {

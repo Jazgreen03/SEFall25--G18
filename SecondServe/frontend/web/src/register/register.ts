@@ -108,6 +108,14 @@ export class Register {
    */
   setUserType(type: 'individual' | 'business' | 'driver') {
     this.userType = type;
+    const addressControl = this.detailsForm.get('address');
+
+    if (type === 'driver') {
+      addressControl?.clearValidators();
+    } else {
+      addressControl?.setValidators([Validators.required, Validators.minLength(5)]);
+    }
+    addressControl?.updateValueAndValidity();
   }
 
   /**

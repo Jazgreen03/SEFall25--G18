@@ -21,96 +21,68 @@
     <p class="tagline">Take on deliveries and reduce food waste</p>
 
     <div class="search-section">
-      <button (click)="loadDeliveries()" class="btn-primary">Load Available Deliveries</button>
+      <button (click)="loadDeliveries()" class="btn-primary">Show All Deliveries</button>
     </div>
   </section>
 
   <!-- Loading & Error States -->
-  <div *ngIf="loading" class="loading">
+   <section class="hero-section">
+    <h2 class="hero-title">Available Deliveries</h2>
+    <button (click)="refreshDeliveries()" class="btn-primary">Load Available Deliveries</button>
+  </section>
+
+   <div *ngIf="loading" class="loading">
     <p>Loading deliveries...</p>
   </div>
 
   <div *ngIf="error" class="error">
     <p>{{ error }}</p>
-    <button (click)="refreshDeliveries()" class="btn-secondary">Try Again</button>
   </div>
 
-  <!-- Available Delivery Cards -->
+   <!-- Available Delivery Cards -->
   <section *ngIf="!loading && deliveries.length > 0" class="delivery-grid">
     <div *ngFor="let delivery of deliveries" class="delivery-card">
-      <div class="delivery-info">
-        <h3>{{ delivery.restaurantName }}</h3>
-        <p class="address">{{ delivery.pickupAddress }}</p>
-        <p class="">to</p>
-        <p class="address">{{ delivery.deliveryAddress }}</p>
+      <h3>Restaurant: {{ delivery.restaurantName }}</h3>
+      <p>Pickup Address: {{ delivery.pickupAddress }}</p>
+      <p>Delivery Address: {{ delivery.deliveryAddress }}</p>
+      <p>Requested Time: {{ delivery.requestedTime | date:'short' }}</p>
 
-        <div class="food-types">
-          <span *ngFor="let item of delivery.items" class="food-tag">{{ item }}</span>
-        </div>
+      <div class="food-types">
+        <span *ngFor="let item of delivery.items" class="food-tag">{{ item }}</span>
+      </div>
 
-        <div class="availability">
-          <p><strong>{{ delivery.items.length }}</strong> items to deliver</p>
-          <!--<p class="expiry">Pickup by: {{ delivery.pickupBy | date:'short' }}</p>-->
-        </div>
-
-        <div class="actions">
-          <button (click)="acceptDelivery(delivery)" class="btn-pickup">Accept Delivery</button>
-        </div>
+      <div class="actions">
+        <button (click)="acceptDelivery(delivery)" class="btn-pickup">Accept Delivery</button>
       </div>
     </div>
   </section>
 
+  <!-- Claimed Orders -->
+  <section *ngIf="!loading && claimedOrders.length > 0" class="delivery-grid">
+    <h2 style="grid-column: 1/-1; font-size: 1.8rem; font-weight: 700; color: white; margin-top:2rem;">
+      Claimed Orders
+    </h2>
 
-<!-- Claimed Orders -->
-<section *ngIf="!loading && claimedOrders.length > 0" class="delivery-grid">
-  <h2 style="grid-column: 1/-1; font-size: 1.8rem; font-weight: 700; color: white; margin-top:2rem;">
-    Claimed Orders
-  </h2>
-
-  <div *ngFor="let order of claimedOrders" class="delivery-card">
-    <div class="delivery-info">
+    <div *ngFor="let order of claimedOrders" class="delivery-card">
       <h3>Order ID: {{ order.id }}</h3>
       <p>Status: <strong>{{ order.status }}</strong></p>
       <p>Delivery Address: {{ order.deliveryAddress }}</p>
       <p>Organization: {{ order.organization }}</p>
-      <p><strong>{{ order.items.length }}</strong> items</p>
 
       <div class="food-types">
         <span *ngFor="let item of order.items" class="food-tag">{{ item.name }} x{{ item.quantity }}</span>
       </div>
 
-      <!-- Action Buttons to Update Status -->
       <div class="actions">
-        <button 
-          *ngIf="order.status === 'Pending'" 
-          (click)="updateOrderStatus(order.id, 'In Transit')" 
-          class="btn-pickup">
+        <button *ngIf="order.status === 'Pending'" (click)="updateOrderStatus(order.id, 'In Transit')" class="btn-pickup">
           Mark In Transit
         </button>
-
-        <button 
-          *ngIf="order.status === 'In Transit'" 
-          (click)="updateOrderStatus(order.id, 'Delivered')" 
-          class="btn-pickup">
+        <button *ngIf="order.status === 'In Transit'" (click)="updateOrderStatus(order.id, 'Delivered')" class="btn-pickup">
           Mark Delivered
         </button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- No Claimed Orders -->
-<div *ngIf="!loading && claimedOrders.length === 0" class="no-results">
-  <p style="font-size: 1.4rem; font-weight: 600; color: white;">
-    You haven't claimed any orders yet.
-  </p>
-</div>
-
-<!-- No Available Deliveries -->
-<div *ngIf="!loading && deliveries.length === 0" class="no-results">
-  <p style="font-size: 1.4rem; font-weight: 600; color: white;">
-    No deliveries available at this time.
-  </p>
-  <p style="color: white;">Check back soon or refresh the list.</p>
 </div>

@@ -31,7 +31,9 @@ def csrf(request):
 
 
 urlpatterns = [
+    
     path("admin/", admin.site.urls),
+    path('api/driver/', include('User.urls')),
     path("api/health/", health),
     path("user/", include(("User.urls", "user"))),
     path("inventory/", include(("Inventory.urls"))),
