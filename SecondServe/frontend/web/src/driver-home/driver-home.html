@@ -9,8 +9,7 @@
 
     <div class="nav-actions">
       <button class="nav-btn" (click)="goToAccount()">Account Management</button>
-      <button class="nav-btn" (click)="goToDeliveries()">Available Deliveries</button>
-      <button class="nav-btn" (click)="goToOrders()">Order History</button>
+      <button class="nav-btn" (click)="goToDeliveries()">Routes</button> 
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </header>
@@ -19,10 +18,6 @@
   <section class="hero-section">
     <h2 class="hero-title">Helping connect surplus food to those in need</h2>
     <p class="tagline">Take on deliveries and reduce food waste</p>
-
-    <div class="search-section">
-      <button (click)="loadDeliveries()" class="btn-primary">Show All Deliveries</button>
-    </div>
   </section>
 
   <!-- Loading & Error States -->

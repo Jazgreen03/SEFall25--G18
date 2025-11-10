@@ -107,7 +107,7 @@ export class DriverAccountManagement implements OnInit {
   }
 
   goToHome(): void {
-    window.location.href = '/driver-home';
+    window.location.href = '/home';
   }
 
   goToOrders(): void {

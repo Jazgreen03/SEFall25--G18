@@ -206,4 +206,40 @@ footer {
   #sponsor-map-section p {
     font-size: 0.95rem;
   }
+  
+}
+.map-section {
+  text-align: center;
+  margin: 2rem 0;
+  color: white;
+}
+
+.map-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.map-container {
+  display: inline-block;
+  position: relative;
+  width: 80%;
+  max-width: 900px;
+}
+
+.map-image {
+  width: 100;       /* controls width, e.g., 80% of container */
+  max-width: 800px; /* optional max width */
+  height: auto;     /* maintain aspect ratio */
+  display: block;   /* remove inline spacing */
+  margin: 0 auto;   /* center the image */
+  border-radius: 12px; /* optional rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* optional shadow */
+}
+
+
+.route-marker {
+  position: absolute;
+  font-size: 1.5rem;
+  transform: translate(-50%, -50%);
 }

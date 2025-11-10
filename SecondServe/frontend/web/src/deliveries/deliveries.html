@@ -8,51 +8,49 @@
     </div>
 
     <div class="nav-actions">
-      <button class="nav-btn" (click)="goToAccount()">Account</button>
-      <button class="nav-btn active" (click)="goToDeliveries()">Available Deliveries</button>
-      <button class="nav-btn" (click)="goToOrders()">Order History</button>
+      <button class="nav-btn" (click)="goToHome()">Home</button>
+      <button class="nav-btn" (click)="goToAccount()">Account Management</button>
+      <button class="nav-btn active" (click)="goToDeliveries()">Routes</button>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </header>
 
-  <!-- Loading & Error States -->
-  <div *ngIf="loading" class="loading">
-    <p>Loading deliveries...</p>
-  </div>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h2>Available Routes to Use</h2>
+    <p class="tagline">Find out your route for your deliveries</p>
 
-  <div *ngIf="error" class="error">
-    <p>{{ error }}</p>
-    <button (click)="refreshDeliveries()" class="btn-secondary">Try Again</button>
-  </div>
+  </section>
 
-  <!-- Delivery Cards -->
-  <section *ngIf="!loading && deliveries.length > 0" class="delivery-grid">
+  <section class="map-section">
+  <h2>Available Routes</h2>
+  <div class="map-container" style="position: relative;">
+    <img src="https://i.pinimg.com/originals/55/33/51/553351425827ec1e8ed662373e7f94ea.png" 
+         alt="Map of the United States" 
+         class="map-image">
+
+    <!-- Example route markers -->
+    <div class="route-marker" style="top: 25%; left: 35%;">📍</div>
+    <div class="route-marker" style="top: 50%; left: 60%;">📍</div>
+    <div class="route-marker" style="top: 70%; left: 40%;">📍</div>
+  </div>
+</section>
+
+  <!-- Delivery Grid -->
+  <section *ngIf="deliveries.length > 0" class="delivery-grid">
     <div *ngFor="let delivery of deliveries" class="delivery-card">
-      <div class="delivery-info">
+      <div class="restaurant-info">
         <h3>{{ delivery.restaurantName }}</h3>
-        <p class="address">{{ delivery.pickupAddress }}</p>
-        <p class="">to</p>
-        <p class="address">{{ delivery.deliveryAddress }}</p>
-
+        <p class="address">Pickup: {{ delivery.pickupAddress }}</p>
+        <p class="address">Delivery: {{ delivery.deliveryAddress }}</p>
+        <p class="expiry">Requested Time: {{ delivery.requestedTime | date:'short' }}</p>
         <div class="food-types">
           <span *ngFor="let item of delivery.items" class="food-tag">{{ item }}</span>
         </div>
-
-        <div class="availability">
-          <p><strong>{{ delivery.items.length }}</strong> items to deliver</p>
-          <!--<p class="expiry">Pickup by: {{ delivery.pickupBy | date:'short' }}</p>-->
-        </div>
-
         <div class="actions">
           <button (click)="acceptDelivery(delivery)" class="btn-pickup">Accept Delivery</button>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- No Results -->
-  <div *ngIf="!loading && deliveries.length === 0" class="no-results">
-    <p>No deliveries available at this time.</p>
-    <p>Check back soon or refresh the list.</p>
-  </div>
 </div>
